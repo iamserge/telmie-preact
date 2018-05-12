@@ -1,0 +1,16 @@
+@import './src/style/variables';
+#prosList {
+	width: 78%;
+	float: right;
+
+	&.full {
+		margin-top: 20px;
+		width: 100%;
+	}
+}
+
+@media (max-width: 880px) {
+	#prosList {
+		width: 100%;
+	}
+}

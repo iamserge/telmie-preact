@@ -1,0 +1,41 @@
+@import './src/style/variables';
+#pagination {
+	width: 79%;
+	float: right;
+	margin-bottom: 50px;
+	text-align: center;
+	#previous {
+		float: left;
+	}
+	#next {
+		float: right;
+	}
+	#pages {
+		display: inline-block;
+		> a {
+			margin: 0 5px;
+		}
+	}
+	a {
+		background-color: $lightBackgroundGrey;
+    border-radius: 50px;
+    color: #2e2e2e;
+    padding: 12px 32px;
+		transition: all .2s;
+		&.disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+		&.active, &:hover {
+			color:white;
+			text-decoration: none !important;
+			background-color: $red;
+		}
+	}
+
+}
+@media (max-width: 880px) {
+	#pagination {
+		width: 100%;
+	}
+}

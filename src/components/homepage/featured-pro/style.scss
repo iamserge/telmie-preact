@@ -1,0 +1,61 @@
+@import './src/style/variables';
+.pro {
+
+	> a {
+		text-decoration: none !important;
+		width: 100%;
+		display: block;
+
+		&:hover {
+			text-decoration: none !important;
+		}
+		img {
+		}
+		h3 {
+	    font-size: 20px;
+	    margin: 10px 0 0 0;
+	    color: white;
+		}
+		h4 {
+			font-size: 20px;
+			margin: 0;
+			color: $lightRed2;
+
+		}
+	}
+
+}
+.spinnerContainer {
+	position: absolute;
+  width: 97%;
+  height: 60.5%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255,255, 0.8);
+  z-index: 100;
+	> div {
+		position: absolute;
+		top:50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+.imageContainer {
+	position: absolute;
+	width: 97%;
+	&.hidden {
+		display: none;
+	}
+	img {
+		width: 100%;
+	}
+	span {
+		cursor: pointer;
+    position: absolute;
+    color: $lightRed2;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+		transform: translate(-50%, -50%);
+	}
+}

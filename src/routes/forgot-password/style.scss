@@ -1,0 +1,36 @@
+
+@import './src/style/variables';
+:global {
+	#forgotPassword {
+		margin-top: 40px;
+		text-align: center;
+		p {
+			margin: 40px 0;
+		}
+		.inputContainer {
+			width: 40%;
+			margin: 0 auto;
+			display: flex;
+			input {
+				flex-grow: 1;
+				width: auto;
+				display: inline-block;
+			}
+		}
+	}
+	.message {
+
+	  padding: 20px;
+	  text-align: center;
+	  margin: 0 auto 20px auto;
+		width: 40%;
+		&.failure {
+			color: $red;
+			background: $lightRed;
+		}
+		&.success {
+			color: green;
+			background-color: rgba(0, 128, 0, 0.07);
+		}
+	}
+}

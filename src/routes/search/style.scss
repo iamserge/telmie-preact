@@ -1,0 +1,45 @@
+
+@import './src/style/variables';
+:global {
+	#search {
+		> h2 {
+			margin: 40px 0;
+			font-size: 40px;
+			text-align: center;
+			span {
+				color: $red;
+				font-weight: bold;
+				&.count {
+					color: $grey;
+					font-size: 16px;
+					display: block;
+					opacity: 0.5;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+	.empty {
+	  width: 79%;
+	  float: right;
+	  text-align: center;
+	  background-color: #f1f1f187;
+	  padding: 20px 0;
+	  border-radius: 10px;
+	  margin: 10px 0 40px;
+		span {
+			font-weight: bold;
+			color: $red;
+		}
+	}
+	#searchContainer {
+
+	}
+	@media (max-width: 880px) {
+		#search {
+			> h2 {
+				font-size: 30px !important;
+			}
+		}
+	}
+}

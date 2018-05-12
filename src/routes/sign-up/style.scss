@@ -1,0 +1,13 @@
+
+@import './src/style/variables';
+:global {
+	#signUp {
+		> h2 {
+			text-align: center;
+			color: #444;
+		}
+	}
+	.subtitle {
+		color: #444
+	}
+}

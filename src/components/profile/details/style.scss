@@ -1,0 +1,42 @@
+@import './src/style/variables';
+.details {
+	h2 {
+		a {
+			float: right;
+			font-size: 16px;
+			display: inline-block;
+			vertical-align: bottom;
+			position: relative;
+			top: 23px;
+			span {
+				margin-left: 5px;
+				font-size: 14px;
+			}
+		}
+	}
+	.inner {
+		padding: 20px;
+    box-shadow: 0 0 11px rgba(0,0,0,.1);
+		> div {
+			display: inline-block;
+			width: 50%;
+			margin-bottom: 10px;
+			.key {
+				width: 100px;
+				display: inline-block;
+			}
+			.value {
+				font-weight: bold;
+			}
+		}
+	}
+}
+@media (max-width: 880px) {
+	.details {
+		.inner {
+			> div {
+				width: 100%;				
+			}
+		}
+	}
+}

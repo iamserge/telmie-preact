@@ -1,0 +1,130 @@
+@import './src/style/variables';
+.pros {
+
+}
+.person {
+	margin-bottom: 20px;
+	position: relative;
+	border-bottom: 1px solid $lightGrey;
+	padding: 20px;
+	margin-bottom: 40px;
+	box-shadow: 0 0 11px rgba(0,0,0,.1);
+  border-radius: 20px;
+	border: 2px solid transparent;
+	transition: border .2s;
+	cursor: pointer;
+	&:hover {
+		border: 2px solid $red;
+	}
+	> div {
+		overflow: hidden;
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+.image {
+	width: 102px;
+	position: relative;
+	&:after {
+		content: "";
+		background-image: url('/assets/avatar_mask.png');
+		width: 102px;
+		height: 102px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
+	img {
+		width: 100px;
+    height: 100px;
+    object-fit: cover;
+	}
+}
+.info {
+	width: 60%;
+	margin-left: 20px;
+	height: 107px;
+  position: relative;
+	h2 {
+    margin-bottom: 0;
+    font-size: 22px;
+	}
+	h3 {
+    margin-top: 2px;
+		font-size: 16px;
+		font-weight: bold;
+		color: $red;
+		span {
+	    background-color: $backgroundGrey;
+	    color: white;
+	    padding: 4px 9px;
+	    font-size: 13px;
+	    border-radius: 10px;
+	    margin-left: 8px;
+		}
+	}
+	.raiting {
+		position: absolute;
+		bottom: 0;
+		span {
+			text-transform: uppercase;
+			color: $grey;
+			font-size: 14px;
+		}
+		> div {
+			display: inline-block;
+			margin-left: 10px;
+	    position: relative;
+	    top: 12px;
+		}
+	}
+}
+.price {
+	width: 20%;
+	float: right;
+	text-align: right;
+	font-size: 22px;
+	span {
+		font-size: 16px;
+		color: $grey;
+	}
+}
+
+@media (max-width: 880px) {
+	.image {
+		 width: 75px;
+		 &:after {
+			 width: 75px;
+			 height: 75px;
+			 background-size: 100%;
+		 }
+		 img {
+			 width: 73px;
+			 height: 73px;
+		 }
+	}
+	.price {
+		width: 40%;
+		position: relative;
+    top: -20px;
+	}
+	.info {
+		overflow: visible !important;
+		.raiting {
+			left: -95px;
+		  text-align: center;
+		  bottom: -32px;
+			> span {
+				display: block;
+			}
+			> div {
+				top: -5px;
+				margin: 0;
+				> span {
+					font-size: 18px !important;
+				}
+			}
+		}
+	}
+}

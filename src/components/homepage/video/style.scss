@@ -1,0 +1,42 @@
+@import './src/style/variables';
+.videoContainer {
+	height: 506px;
+	background-color: $blue;
+}
+.playButton {
+  background: rgba(61, 82, 115, 0.65);
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+	> span {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+		font-size: 140px;
+		cursor: pointer;
+	}
+	h2 {
+		color: white;
+		font-weight: bold;
+		position: absolute;
+		left: 30px;
+		top: 40px;
+		text-align: left;
+		font-size: 50px;
+		.subTitle {
+			display: block;
+			color: $lightRed2;
+		}
+	}
+}
+@media (max-width: 880px) {
+	.videoContainer {
+		height: 300px;
+	}
+}

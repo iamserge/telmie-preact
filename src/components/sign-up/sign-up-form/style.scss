@@ -1,0 +1,142 @@
+@import './src/style/variables';
+.signUpForm {
+	width: 450px;
+	margin: 0 auto;
+	button {
+    height: 60px;
+    font-size: 18px;
+    margin-top: 20px;
+    width: 100%;
+    font-weight: bold;
+	}
+}
+#passwordContainer {
+	position: relative;
+
+}
+#eyeContainer {
+	cursor: pointer;
+	color: $grey;
+	position: absolute;
+	bottom: 4px;
+	right: 17px;
+	font-size: 27px;
+}
+.terms {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  width: 86%;
+  margin: 30px auto -10px auto;
+  opacity: 0.6;
+  a {
+		text-decoration: underline;
+	}
+}
+#proSwitch {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 20px;
+  > div {
+  	position: relative;
+    top: 2px;
+
+	}
+}
+#proFormContainer {
+	margin-top: 20px;
+	padding: 20px;
+	background-color: #f5f5f5;
+}
+#selectContainer {
+	select {
+		height: 50px;
+	}
+}
+#descriptionContainer {
+	div[class="validation-tooltip"] {
+		bottom: 35px;
+	}
+}
+#services {
+	position: relative;
+	> label {
+		display: block;
+    margin-bottom: 5px;
+	}
+	> div {
+		display: flex;
+	  background-color: #fff;
+	  border: 1px solid $lightGrey;
+	  font-size: 14px;
+		margin-bottom: 20px;
+
+		> div {
+			flex-grow: 1;
+			box-sizing: border-box;
+			padding: 15px 0;
+			border-right: 1px solid $lightGrey;
+			text-align: center;
+			cursor: pointer;
+			&:hover, &.selected  {
+				background-color: $red;
+				color: white;
+
+			}
+			&:last-child {
+				border-right: none;
+			}
+		}
+	}
+
+	div[class="validation-tooltip"] {
+	  color: white;
+	  position: absolute;
+		left: -230px;
+	  display: block;
+	  width: 215px;
+	  background: $red;
+	  padding: 10px;
+	  font-size: 12px;
+	  text-align: center;
+	  border-radius: 10px;
+	  bottom: -8px;
+	}
+}
+.rate {
+	text-align: center;
+	font-size: 14px;
+	> span {
+		color: $red;
+		font-size: 30px;
+	}
+}
+#professionDescription {
+	height: 100px;
+}
+.free {
+	color: $red;
+	font-size: 20px;
+}
+.success {
+	font-size: 26px;
+	margin: 40px 0;
+	text-align: center;
+	span {
+		color: $red;
+		font-weight: bold;
+	}
+}
+.failure {
+	color: $red;
+  background: $lightRed;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 880px) {
+	.signUpForm {
+		width: 100%;
+	}
+}

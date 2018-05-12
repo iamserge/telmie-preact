@@ -1,0 +1,198 @@
+@import './src/style/variables';
+@import './src/style/images';
+#searchContainer {
+	margin-right: 40px;
+	&.home {
+		&.collapsed {
+			#searchModal {
+					position: static !important;
+				  margin: -40px auto 120px auto;
+				  width: 700px;
+					transform: translate(0,0);
+					> div {
+						form {
+							input {
+								font-size: 26px;
+								height: 60px;
+							}
+							a {
+								top: 8px;
+								span {
+							    font-size: 36px;
+								}
+							}
+						}
+					}
+			}
+		}
+
+
+
+	}
+	&.collapsed {
+		> a {
+			display: none;
+		}
+		#searchModal {
+			bottom: auto;
+	    height: 80px;
+	    background: transparent;
+	    right: auto;
+	    width: 400px;
+	    overflow: hidden;
+	    left: 50%;
+	    transform: translate(-50%,0);
+	    position: absolute;
+			> div {
+				form {
+					width: 100%;
+				  bottom: auto;
+				  height: auto;
+				  top: 18px;
+					input {
+						height: 40px;
+					  font-size: 18px;
+					  border-width: 2px;
+						text-align: center;
+					}
+					a {
+						span {
+							font-size: 26px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	> div {
+		> button {
+	    text-transform: none;
+		  height: 34px;
+		  padding: 0 34px 0 45px;
+		  line-height: normal;
+		  position: relative;
+		  margin-top: 3px;
+		  background-repeat: no-repeat;
+		  background-size: 20px;
+		  background-position: 10px;
+			display: none;
+			@extend %proIcon;
+
+		}
+	}
+}
+#searchModal {
+	background-color: rgb(255, 255, 255);
+	transition: top .3s, width .3s, height .3s;
+	opacity: 0;
+	display: block;
+  top: -100%;
+	bottom: auto;
+	&.collapsed {
+
+	}
+	> div {
+		background-color: transparent;
+		transform: scale(0.55);
+		transition: transform .4s;
+		height: 100%;
+		width: 90%;
+		margin: 0 auto;
+		> a {
+			display: none;
+		}
+		> button {
+			background: transparent;
+			border: none;
+		}
+		form {
+	    background-color: #fff;
+	    margin: auto;
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    display: block;
+	    width: 50%;
+	    max-width: 800px;
+	    height: 111px;
+			> div {
+				input {
+					text-align: left;
+	    		padding-left: 20px;
+	    		border-bottom: 5px solid $red;
+				}
+				ul {
+					list-style: none;
+					margin-top: 20px;
+					li {
+						cursor: pointer;
+						margin-bottom: 10px;
+						font-size: 28px;
+					}
+				}
+			}
+
+			a {
+		    position: absolute;
+			  right: 10px;
+			  top: 0px;
+				transition: color .2s;
+				span {
+					font-size: 50px;
+				}
+				&:hover {
+					color: $red;
+				}
+			}
+		}
+	}
+	&.visible {
+		display: block;
+		opacity: 1;
+		top: 0;
+		bottom: 0;
+		> div {
+			transform: scale(1);
+		}
+	}
+}
+
+
+.withIcon {
+	background-repeat: no-repeat;
+  background-position: 10px;
+}
+
+@media (max-width: 880px) {
+	#searchContainer {
+		position: absolute;
+		right: -20px;
+		&.collapsed {
+			#searchModal {
+				width: 46px;
+		    top: -31px;
+		    right: 66px;
+				> div {
+					form {
+						input {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+	#searchModal {
+		> div {
+			form {
+				width: 90%;
+				input {
+					font-size: 24px;
+				}
+			}
+		}
+	}
+}

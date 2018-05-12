@@ -1,0 +1,34 @@
+@import './src/style/variables';
+.mainTitle {
+	padding: 100px 0;
+	text-align: center;
+	h2 {
+		color: $black;
+		font-weight: bold;
+		margin-bottom: 0;
+		font-size: 56px
+
+	}
+	h3 {
+		color: $lightRed2;
+		font-weight: bold;
+		margin: -20px 0 0 0 !important;
+		font-size: 56px
+	}
+}
+@media (max-width: 880px) {
+	.mainTitle {
+		padding: 20px 0;
+    text-align: center;
+		h2 {
+			line-height: 40px;
+	    font-size: 40px;
+	    margin-bottom: 20px;
+
+		}
+		h3 {
+			font-size: 40px;
+    	margin: 25px 0 20px !important;
+		}
+	}
+}

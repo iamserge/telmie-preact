@@ -1,0 +1,19 @@
+
+@import './src/style/variables';
+:global {
+
+	#staticPage {
+		.spinner {
+			margin-top: 40px;
+		}
+		h2 {
+	    margin: 30px 0 10px 0;
+		}
+		h3 {
+			margin: 0;
+		}
+		p {
+			margin: 10px 0 40px 0;
+		}
+	}
+}

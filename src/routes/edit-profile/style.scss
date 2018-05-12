@@ -1,0 +1,18 @@
+
+@import './src/style/variables';
+:global {
+	#editProfile {
+		h1 {
+			margin-bottom: 40px;
+		}
+	}
+	#signUp {
+		> h2 {
+			text-align: center;
+			color: #444;
+		}
+	}
+	.subtitle {
+		color: #444
+	}
+}

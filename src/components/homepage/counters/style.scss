@@ -1,0 +1,24 @@
+@import './src/style/variables';
+.counters {
+	border-top: 5px solid $lightRed2;
+	text-align: center;
+  padding: 50px 0 104px;
+	> div {
+		display: inline-block;
+		color: $blue;
+		font-weight: bold;
+		font-size: 50px;
+		letter-spacing: -1px;
+    margin: 0 39px;
+    width: 26%;
+    min-width: 250px;
+
+		> span {
+			font-size: 125px;
+			letter-spacing: -5px;
+			color: $lightRed2;
+			display: block;
+			margin-bottom: -44px;
+		}
+	}
+}

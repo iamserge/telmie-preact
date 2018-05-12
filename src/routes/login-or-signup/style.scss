@@ -1,0 +1,36 @@
+
+@import './src/style/variables';
+:global {
+  #loginOrSignup {
+    text-align: center;
+    h1 {
+      margin-top: 40px;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      margin: 20px 0 40px 0;
+      color: #333;
+    }
+    a {
+      background-color: $red;
+      color: white;
+      display: block;
+      max-width: 200px;
+      margin: 0 auto;
+      padding: 5px 0;
+      font-size: 18px;
+      font-weight: bold;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    span {
+      display: inline-block;
+      margin: 5px 20px;
+    }
+    .note {
+      opacity: 0.7;
+    }
+  }
+}
