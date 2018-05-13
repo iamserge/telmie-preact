@@ -12,14 +12,16 @@
   position: absolute;
   top: 0;
   left: 0;
+    > img {
+        }
 	> span {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		color: white;
 		font-size: 140px;
 		cursor: pointer;
+        
 	}
 	h2 {
 		color: white;

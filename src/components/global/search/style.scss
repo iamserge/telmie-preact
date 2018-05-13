@@ -2,10 +2,11 @@
 @import './src/style/images';
 #searchContainer {
 	margin-right: 40px;
+    padding-bottom: 40px;
 	&.home {
 		&.collapsed {
 			#searchModal {
-					position: static !important;
+				    position: static !important;
 				  margin: -40px auto 120px auto;
 				  width: 700px;
 					transform: translate(0,0);
@@ -18,7 +19,7 @@
 							a {
 								top: 8px;
 								span {
-							    font-size: 36px;
+							    font-size: 46px;
 								}
 							}
 						}
@@ -53,11 +54,10 @@
 						height: 40px;
 					  font-size: 18px;
 					  border-width: 2px;
-						text-align: center;
 					}
 					a {
 						span {
-							font-size: 26px;
+							font-size: 36px;
 						}
 					}
 				}
@@ -115,14 +115,14 @@
 	    left: 0;
 	    right: 0;
 	    display: block;
-	    width: 50%;
-	    max-width: 800px;
+	    width: 100%;
+	    max-width: 980px;
 	    height: 111px;
 			> div {
 				input {
 					text-align: left;
 	    		padding-left: 20px;
-	    		border-bottom: 5px solid $red;
+	    		border-bottom: 2px solid $lightRed2;
 				}
 				ul {
 					list-style: none;
@@ -141,7 +141,7 @@
 			  top: 0px;
 				transition: color .2s;
 				span {
-					font-size: 50px;
+					font-size: 70px;
 				}
 				&:hover {
 					color: $red;
@@ -163,7 +163,7 @@
 
 .withIcon {
 	background-repeat: no-repeat;
-  background-position: 10px;
+    background-position: 10px;
 }
 
 @media (max-width: 880px) {

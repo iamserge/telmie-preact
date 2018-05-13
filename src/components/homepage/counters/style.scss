@@ -1,24 +1,83 @@
 @import './src/style/variables';
 .counters {
-	border-top: 5px solid $lightRed2;
-	text-align: center;
-  padding: 50px 0 104px;
+    max-width: 980px;
+    margin: 0 auto;
+	text-align: left;
+    padding: 0;
 	> div {
 		display: inline-block;
 		color: $blue;
-		font-weight: bold;
-		font-size: 50px;
+		font-weight: 500;
+		font-size: 35px;
 		letter-spacing: -1px;
-    margin: 0 39px;
-    width: 26%;
-    min-width: 250px;
+        margin: 0 70px 0;
+        padding:  0 0  60px 30px;
+        line-height: 40px;
+        border-left: 2px solid $blue;
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
 
 		> span {
-			font-size: 125px;
-			letter-spacing: -5px;
+			font-size: 110px;
+			letter-spacing: -4px;
 			color: $lightRed2;
+            line-height: 105px;
 			display: block;
-			margin-bottom: -44px;
+            font-weight: 900;
 		}
+        &:first-child:before {
+            font-family: 'icomoon' !important;
+            content: "\e055";
+            display: block;
+            font-size: 65px;
+            display: block;
+            text-align: center;
+            border: solid 2px $blue;
+            width: 90px;
+            height: 90px;
+            line-height: 90px;
+            border-radius: 50% 50% 50% 0;
+            margin-bottom: -60px;
+            position: relative;
+            left: -32px;
+            top: -100px;
+        }
+        &:nth-child(2):before {
+            font-family: 'icomoon' !important;
+            content: "\e040";
+            font-size: 60px;
+            display: block;
+            text-align: center;
+            line-height: 90px;
+            border: solid 2px $blue;
+            width: 90px;
+            height: 90px;
+            border-radius: 50% 50% 50% 0;
+            margin-bottom: -60px;
+            position: relative;
+            left: -32px;
+            top: -100px;
+        }
+        &:last-child:before {
+            font-family: 'icomoon' !important;
+            border: solid 2px $blue;
+            content: "\e015";
+            font-size: 60px;
+            display: block;
+            text-align: center;
+            width: 90px;
+            height: 90px;
+            line-height: 80px;
+            border-radius: 50% 50% 50% 0;
+            margin-bottom: -60px;
+            position: relative;
+            left: -32px;
+            top: -100px;
+        }
+        
 	}
 }

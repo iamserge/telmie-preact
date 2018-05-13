@@ -9,7 +9,7 @@ const PlayButton = <button className={style.playButton}>
 		How it works
 		<div className={style.subTitle}>Play video</div>
 	</h2>
-	<FontAwesome name='play' />
+	<img src="/assets/icn_play.svg" width="180" height="180" />
 </button>;
 
 export default class Video extends Component {
