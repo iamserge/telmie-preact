@@ -48,6 +48,10 @@ a {
 .uk-container {
 	min-height: calc(100% - 161px);
 	margin-bottom: 100px;
+    @media (max-width: 880px) {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 .uk-container-small {
 	width: 980px;
@@ -58,6 +62,10 @@ a {
 	h2 {
 		color: $red;
 	}
+    @media (max-width: 880px) {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 .uk-close {
   position: absolute;
@@ -213,9 +221,9 @@ button {
 
 .vimeo {
 	position: relative;
-	height: 506px;
+	height: 515px;
 	margin: 0 auto;
-	width: 900px;
+	width: 980px;
 
 	iframe, object, embed {
 		 position: absolute;

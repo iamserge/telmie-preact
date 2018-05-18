@@ -168,8 +168,6 @@
 
 @media (max-width: 880px) {
 	#searchContainer {
-		position: absolute;
-		right: -20px;
 		&.collapsed {
 			#searchModal {
 				width: 46px;

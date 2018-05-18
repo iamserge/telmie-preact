@@ -20,7 +20,7 @@ export default class FeaturedServices extends Component {
 				<div className={style.left}>
 					{serviceTitle}
 				</div>
-				<div className={style.right}>
+				<div className="service-desc">
 					{serviceText}
 				</div>
 				{typeof serviceIcon != 'undefined' && (
@@ -35,7 +35,7 @@ export default class FeaturedServices extends Component {
 			<div className="uk-container uk-container-small uk-container-inner">
 				<div className={style.featuredServices}>
 					<h2>Featured services</h2>
-					<div className={style.servicesContainer}>
+					<div className="{style.servicesContainer}">
 						{ this.props.services.map((service, index) => this.renderService(service, index))}
 					</div>
 				</div>

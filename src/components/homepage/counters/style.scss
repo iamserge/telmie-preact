@@ -5,12 +5,13 @@
 	text-align: left;
     padding: 0;
 	> div {
+        position: relative;
 		display: inline-block;
 		color: $blue;
 		font-weight: 500;
 		font-size: 35px;
 		letter-spacing: -1px;
-        margin: 0 70px 0;
+        margin: 0 110px 0 0;
         padding:  0 0  60px 30px;
         line-height: 40px;
         border-left: 2px solid $blue;
@@ -29,55 +30,51 @@
 			display: block;
             font-weight: 900;
 		}
-        &:first-child:before {
+        &:before {
             font-family: 'icomoon' !important;
-            content: "\e055";
-            display: block;
-            font-size: 65px;
-            display: block;
-            text-align: center;
             border: solid 2px $blue;
-            width: 90px;
-            height: 90px;
-            line-height: 90px;
-            border-radius: 50% 50% 50% 0;
-            margin-bottom: -60px;
+            display: block;
             position: relative;
-            left: -32px;
-            top: -100px;
-        }
-        &:nth-child(2):before {
-            font-family: 'icomoon' !important;
-            content: "\e040";
             font-size: 60px;
-            display: block;
-            text-align: center;
-            line-height: 90px;
-            border: solid 2px $blue;
-            width: 90px;
-            height: 90px;
-            border-radius: 50% 50% 50% 0;
-            margin-bottom: -60px;
-            position: relative;
-            left: -32px;
-            top: -100px;
-        }
-        &:last-child:before {
-            font-family: 'icomoon' !important;
-            border: solid 2px $blue;
-            content: "\e015";
-            font-size: 60px;
-            display: block;
             text-align: center;
             width: 90px;
             height: 90px;
             line-height: 80px;
             border-radius: 50% 50% 50% 0;
             margin-bottom: -60px;
-            position: relative;
             left: -32px;
             top: -100px;
         }
+        &:first-child:before {
+            content: "\e055";
+            font-size: 65px;
+            line-height: 90px;
+        }
+        &:nth-child(2):before {
+            content: "\e040";
+        }
+        &:last-child:before {
+            content: "\e015";
+        }
         
 	}
+    @media (max-width: 880px) {
+        > div {
+            display: block;
+            width: 100%;
+            border-left: 0;
+            &:before {
+                display:inline-block;
+                position: static;
+                margin: 0;
+                margin-right: 40px;
+                position: relative;
+                left: 0;
+                top: 0;
+            }
+            > span {
+            display: inline-block;
+        }
+        }
+    }
 }

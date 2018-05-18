@@ -7,10 +7,17 @@
 	h2 {
 		font-size: 50px;
     margin: 10px 0 30px 0!important;
-    font-weight: bold;
+    font-weight: 500;
 		color: white;
 	}
 
+}
+#homepage div.slider-control-centerleft,
+#homepage div.slider-control-centerright {
+    background: #ff565c url(/assets/plus.svg) center center/40px 40px no-repeat;
+    &:hover {
+    background-color: $red;
+    }
 }
 
 

@@ -1,6 +1,15 @@
 @import './src/style/variables';
+@keyframes pulse {
+	25% {
+		transform: scale(1.05);
+	}
+
+	75% {
+		transform: scale(.95);
+	}
+}
 .videoContainer {
-	height: 506px;
+	height: 515px;
 	background-color: $blue;
 }
 .playButton {
@@ -12,6 +21,7 @@
   position: absolute;
   top: 0;
   left: 0;
+cursor: pointer;
     > img {
         }
 	> span {
@@ -20,17 +30,24 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		font-size: 140px;
-		cursor: pointer;
-        
 	}
+    &:hover > img {
+            animation-name: pulse;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
 	h2 {
 		color: white;
 		font-weight: bold;
 		position: absolute;
-		left: 30px;
-		top: 40px;
+		left: 40px;
+		top: 30px;
 		text-align: left;
 		font-size: 50px;
+        line-height: 55px;
+        font-weight: 500;
+        text-transform: none;
 		.subTitle {
 			display: block;
 			color: $lightRed2;

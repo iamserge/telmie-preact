@@ -29,16 +29,31 @@
 }
 
 #mainButton {
-  margin: 100px auto;
+  margin: 100px auto 140px;
   display: block;
-  width: 360px;
-  height: 60px;
-  font-size: 20px;
-  font-weight: bold;
+  width: 400px;
+  height: 80px;
+  font-size: 30px;
+  font-weight: 500;
+    position: relative;
+    text-transform: none;
 	background-color: $lightRed2;
+    &:hover {
+        background-color: $red;
+    }
+/*    &:before {
+        content: "\e000";
+        font-family: 'icomoon' !important;
+        display: block;
+        font-size: 55px;
+        position: absolute;
+        
+    }*/
 }
 @media (max-width: 880px) {
 	#mainButton {
-		width: 100%;
+		width: 80%;
+        margin-top: 70px;
+        margin-bottom: 220px;
 	}
 }
