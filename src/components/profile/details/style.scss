@@ -15,8 +15,6 @@
 		}
 	}
 	.inner {
-		padding: 20px;
-    box-shadow: 0 0 11px rgba(0,0,0,.1);
 		> div {
 			display: inline-block;
 			width: 50%;
@@ -24,9 +22,16 @@
 			.key {
 				width: 100px;
 				display: inline-block;
+                color: $blue;
+                text-align: right;
+                margin-right: 10px;
 			}
 			.value {
-				font-weight: bold;
+				font-weight: 400;
+                font-size: 18px;
+                border-bottom: solid 1px $lightGrey;
+                display: inline-block;
+                min-width: 70%;
 			}
 		}
 	}

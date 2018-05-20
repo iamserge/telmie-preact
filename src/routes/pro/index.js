@@ -53,7 +53,7 @@ class Search extends Component {
 	render() {
 
 		return (
-			<div id="pro" className="uk-container" >
+			<div id="pro" className="uk-container uk-container-small" >
 				<Helmet
 					title="Telmie | Pro"
 				/>

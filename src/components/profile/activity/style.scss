@@ -1,12 +1,16 @@
 @import './src/style/variables';
 .activity {
-	margin: 10px 0;
-	padding: 10px 0;
+	margin: 0;
+	padding: 16px 0;
 	font-size: 14px;
+    border-bottom: solid 1px $lightGrey;
+    &:last-child {
+        border-bottom: none;
+    }
 	> div {
 		display: inline-block;
 		flex-grow: 1;
-		width: 15%;
+		width: 12%;
 	}
 	.type {
     width: 8%;
@@ -20,19 +24,22 @@
 		}
 	}
 	.contact {
-		width: 35%;
+		width: 40%;
 		cursor: pointer;
 		h3 {
 			display: inline-block;
-			font-size: 16px;
+			font-size: 18px;
 			text-transform: capitalize;
 			margin: 0;
 		}
 		> div {
-	    margin-top: 2px;
-    	font-size: 13px;
-    	font-weight: 700;
+	    margin-top: 3px;
+    	font-size: 14px;
+    	font-weight: 500;
     	color: $red;
+            &.info {
+                margin-left: 10px;
+            }
 			.profession {
 		    background-color: $backgroundGrey;
 		    color: white;
@@ -78,13 +85,13 @@
 
 .relatedActivities {
 	width: 100% !important;
-	text-align: right;
 	position: relative;
 	top: -10px;
 	&.expanded {
 
 		.container {
 			max-height: 1000px;
+            margin-bottom: 20px;
 		}
 		.relatedTitle {
 			span {
@@ -93,12 +100,13 @@
 		}
 	}
 	.relatedTitle {
-    width: 53%;
-    text-align: center;
+    width: 60%;
+    text-align: left;
     display: block;
     position: absolute;
+    color: $lightRed2;
     right: 0;
-    bottom: -20px;
+    bottom: -10px;
     text-decoration: underline;
     cursor: pointer;
 	}
@@ -111,10 +119,11 @@
 		margin-bottom: 10px;
 		> div {
 			display: inline-block;
-			width: 15%;
+			width: 12%;
 			text-align: left;
 			&.relatedDate {
 				width: 20%;
+                margin-left: 40%;
 			}
 		}
 	}
@@ -125,13 +134,12 @@
 	.activity {
 
 		> div {
-			vertical-align: top;
 		}
 
 		.contact {
-			width: 29%;
-			text-align: center;
-
+            div.info {
+                margin-left: 0;
+            }
 		}
 		.date {
 

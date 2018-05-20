@@ -1,11 +1,9 @@
 @import './src/style/variables';
 #footer {
-	position: fixed;
-	bottom: 0;
 	width: 100%;
 	background-color: white;
 	background-color: #fff;
-  padding: 20px;
+    padding: 20px;
 	z-index: 1000;
 	box-shadow: 0 0 5px rgba(0,0,0,.05);
 	span {
@@ -32,6 +30,9 @@
 @media (max-width: 880px) {
 	#footer {
 		display: block;
+        nav {
+            margin: 0 auto;
+        }
 	}
 	#left {
 		text-align: center;

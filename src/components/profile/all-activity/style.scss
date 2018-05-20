@@ -51,17 +51,18 @@
 	font-weight: bold;
 	> div {
 		display: inline-block;
-		width: 15%;
+		width: 12%;
 	}
 	.type {
 		width: 8%;
 	}
 	.contact {
-		width: 35%;
+		width: 40%;
 	}
 	.date {
 		width: 20%;
 	}
+    border-bottom: 1px solid $blue;
 
 }
 .spinnerContainer {

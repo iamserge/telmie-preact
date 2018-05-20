@@ -171,13 +171,17 @@
 		&.collapsed {
 			#searchModal {
 				width: 46px;
-		    top: -31px;
+		    top: 0;
 		    right: 66px;
 				> div {
 					form {
 						input {
 							display: none;
 						}
+                        a {
+                            right: 0;
+                            top: -5px;
+                        }
 					}
 				}
 			}

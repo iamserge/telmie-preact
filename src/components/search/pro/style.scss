@@ -6,13 +6,15 @@
 	margin-bottom: 20px;
 	position: relative;
 	border-bottom: 1px solid $lightGrey;
-	padding: 20px;
-	margin-bottom: 40px;
-	box-shadow: 0 0 11px rgba(0,0,0,.1);
-  border-radius: 20px;
+	padding: 15px 20px;
+	margin-bottom: 25px;
 	border: 2px solid transparent;
+    border-bottom: 2px solid $lightGrey;
 	transition: border .2s;
 	cursor: pointer;
+    &:last-child {
+        border-bottom: 2px solid transparent;
+    }
 	&:hover {
 		border: 2px solid $red;
 	}
@@ -47,13 +49,16 @@
 	height: 107px;
   position: relative;
 	h2 {
+        padding-top: 6px;
     margin-bottom: 0;
-    font-size: 22px;
+    font-size: 25px;
+        color: $black;
+            padding-left: 0;
 	}
 	h3 {
     margin-top: 2px;
-		font-size: 16px;
-		font-weight: bold;
+		font-size: 17px;
+		font-weight: 500;
 		color: $red;
 		span {
 	    background-color: $backgroundGrey;
@@ -66,7 +71,7 @@
 	}
 	.raiting {
 		position: absolute;
-		bottom: 0;
+		bottom: 5px;
 		span {
 			text-transform: uppercase;
 			color: $grey;
@@ -85,6 +90,7 @@
 	float: right;
 	text-align: right;
 	font-size: 22px;
+    padding-top: 6px;
 	span {
 		font-size: 16px;
 		color: $grey;
@@ -105,24 +111,29 @@
 		 }
 	}
 	.price {
-		width: 40%;
 		position: relative;
-    top: -20px;
+        top: 28px;
 	}
 	.info {
 		overflow: visible !important;
+        position: static;
+        height: 90px;
+        h3 {
+            margin-bottom: 0;
+        }
 		.raiting {
-			left: -95px;
-		  text-align: center;
-		  bottom: -32px;
+            position: absolute;
+            right: 20px;
+            top: 15px;
 			> span {
-				display: block;
+				display: inline-block;
+                font-size: 14px;
 			}
 			> div {
-				top: -5px;
-				margin: 0;
+				top: 7px;
+				margin: 0 0 0 10px;
 				> span {
-					font-size: 18px !important;
+					font-size: 19px !important;
 				}
 			}
 		}
