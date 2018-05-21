@@ -1,46 +1,57 @@
 @import './src/style/variables';
 .featuredServices {
-	padding: 50px 0;
+	padding: 0;
+    margin: 0 -40px 0 -40px;
 	h2 {
 		font-size: 50px;
-    margin: 40px 0 30px!important;
-    font-weight: 700;
+    margin: 40px 0 30px 40px!important;
+    font-weight: 500;
     color: $blue;
 	}
 
 }
 .service {
 	background-color: $lightRed2;
-	padding: 20px 60px;
-  display: flex;
-  margin-bottom: 20px;
+	padding: 20px 40px 40px;
+    width: 300px;
+    margin-right: 40px;
+  display: inline-block;
+    position: relative;
   color: white;
-  font-size: 24px;
+  font-size: 20px;
+    line-height: 23px;
+    min-height: 150px;
 	position: relative;
 	.left {
-    font-size: 50px;
-    font-weight: bold;
+        border-top: solid 2px white;
+    font-size: 38px;
+    margin-top: 120px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
     color: white;
-    border-right: 3px solid white;
-    padding-right: 50px;
-    margin-right: 50px;
-    line-height: 104px;
-		width: 35%;
+    line-height: 50px;
 	}
 	.right {
-		padding-right: 70px;
 	}
 	img {
     position: absolute;
-    right: 10px;
+    top: 20px;
     max-width: 100px;
-    top: 50%;
-    transform: translate(0,-50%);
+    left: 30px;
 	}
+    &:nth-child(n+3) {
+        margin-right: 0;
+    }
+    &:hover {
+        background-color: $red;
+    }
 }
 
 @media (max-width: 880px) {
 	.featuredServices {
+        margin: 0;
+        box-sizing: border-box;
 		h2 {
 			font-size: 30px;
 			text-align: center;
@@ -49,16 +60,17 @@
 	.service {
 		padding: 10px;
 		display: block;
-		text-align: center;
 		font-size: 16px;
+        width: 100%;
+        padding-left: 160px;
+        border-bottom: solid 2px white;
 		.left {
-			text-align: center;
 			width: 100%;
 			border: none;
 			padding: 0;
 			line-height: normal;
-			font-size: 20px;
-			margin: 10px 0 10px;
+			font-size: 30px;
+			margin: 0 0 20px;
 		}
 	}
 

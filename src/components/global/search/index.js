@@ -258,7 +258,7 @@ export default class Header extends Component {
 				        inputProps={inputProps}
 				      />
 							<a href="#" className="withIcon" onClick={this.performSearch} >
-								<FontAwesome name='search' />
+								<span class="icon-magnifying-glass"></span>
 							</a>
 
 	         </form>

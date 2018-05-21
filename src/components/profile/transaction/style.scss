@@ -4,7 +4,10 @@
 	margin: 10px 0;
 	padding: 10px 0;
 	font-size: 14px;
-
+    border-bottom: solid 1px $lightGrey;
+    &:last-child {
+        border-bottom: 0;
+    }
 	> div {
 		flex-grow: 1;
 		width: 15%;
@@ -38,14 +41,14 @@
 		cursor: pointer;
 		h3 {
 			display: inline-block;
-			font-size: 16px;
+			font-size: 18px;
 			text-transform: capitalize;
 			margin: 0;
 		}
 		> div {
 	    margin-top: 2px;
-    	font-size: 13px;
-    	font-weight: 700;
+        font-size: 14px;
+    	font-weight: 500;
     	color: $red;
 			.profession {
 		    background-color: $backgroundGrey;
@@ -85,7 +88,7 @@
 }
 .info {
 	display: inline-block;
-	width: 80%;
+	width: 83%;
 	float: right;
 
 }

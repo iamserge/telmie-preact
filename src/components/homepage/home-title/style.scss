@@ -1,34 +1,45 @@
 @import './src/style/variables';
 .mainTitle {
 	padding: 100px 0;
-	text-align: center;
+	text-align: left;
 	h2 {
-		color: $black;
-		font-weight: bold;
+		color: $blue;
+		font-weight: 500;
 		margin-bottom: 0;
-		font-size: 56px
+		font-size: 54px
 
 	}
 	h3 {
 		color: $lightRed2;
-		font-weight: bold;
+		font-weight: 500;
 		margin: -20px 0 0 0 !important;
-		font-size: 56px
+		font-size: 54px;
+        &:after {
+            content: url(/assets/redhex.svg); 
+            display: inline-block;
+            width: 32px; 
+            height: 32px;
+            @media (max-width: 880px) {
+                width: 25px; 
+                height: 25px;
+            }
+            padding-left: 8px;
+        }
 	}
 }
 @media (max-width: 880px) {
 	.mainTitle {
-		padding: 20px 0;
-    text-align: center;
+		padding: 60px 0 40px;
+        text-align: left;
 		h2 {
-			line-height: 40px;
-	    font-size: 40px;
-	    margin-bottom: 20px;
-
+            line-height: 25px;
+            font-size: 40px;
+            margin-bottom: 0;
 		}
 		h3 {
 			font-size: 40px;
-    	margin: 25px 0 20px !important;
-		}
+    	    margin: 0 !important;
+        }
 	}
 }
+    
