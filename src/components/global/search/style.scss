@@ -20,6 +20,9 @@
 								top: 8px;
 								span {
 							    font-size: 46px;
+                                    &:hover {
+                                        text-decoration: none;
+                                    }
 								}
 							}
 						}
@@ -145,6 +148,9 @@
 				}
 				&:hover {
 					color: $red;
+                    span {
+                    text-decoration: none;
+                        }
 				}
 			}
 		}
@@ -176,7 +182,6 @@
 				> div {
 					form {
 						input {
-							display: none;
 						}
                         a {
                             right: 0;
