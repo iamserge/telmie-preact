@@ -93,7 +93,6 @@
   top: -100%;
 	bottom: auto;
 	&.collapsed {
-
 	}
 	> div {
 		background-color: transparent;
@@ -182,6 +181,7 @@
 				> div {
 					form {
 						input {
+                            display: none;
 						}
                         a {
                             right: 0;

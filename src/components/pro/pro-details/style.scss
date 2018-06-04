@@ -26,11 +26,12 @@
 }
 .image {
 	width: 250px;
+    height: 250px;
 	position: relative;
 	overflow: hidden;
 	&:after {
 		content: "";
-		background-image: url('/assets/avatar_mask_large.png');
+		background-image: url('/assets/avatar_mask_xlarge.png');
     width: 250px;
     height: 250px;
 		position: absolute;
@@ -43,8 +44,8 @@
     width: 248px;
     height: 248px;
     object-fit: cover;
-		    position: relative;
-    top: 2px;
+	position: relative;
+    top: 1px;
     left: 1px;
 	}
 }

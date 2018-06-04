@@ -5,7 +5,8 @@
 html, body {
 	height: 100%;
 	width: 100%;
-	padding: 30px 0 94px 0 !important;
+	padding: 40px 0 0 !important;
+    box-sizing: border-box;
 	overflow: visible !important;
 	margin: 0;
 	font-family: 'Roboto', arial, sans-serif;
@@ -46,7 +47,7 @@ a {
 	transition: none;
 }
 .uk-container {
-	min-height: calc(100% - 161px);
+	min-height: calc(100% - 181px);
     @media (max-width: 880px) {
         width: 100%;
         box-sizing: border-box;
@@ -61,12 +62,13 @@ a {
         padding-top: 20px;
         padding-left: 20px;
         color: $blue;
+        text-transform: capitalize;
 	}
 	h2 {
 		color: $red;
         padding-left: 20px;
 	}
-    margin-bottom: 100px;
+    margin-bottom: 80px;
     @media (max-width: 880px) {
         width: 100%;
         box-sizing: border-box;

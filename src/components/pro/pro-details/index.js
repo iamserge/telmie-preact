@@ -35,9 +35,9 @@ export default class Pro extends Component {
 				<div className={style.imageContainer}>
 					<div className={style.image}>
 						{ (person.avatar != null) ? (
-							<img src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
+							<img class="hexmask" src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
 						) : (
-							<img src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
+							<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 						)}
 					</div>
 					{ this.state.showCallProPopup ? (
