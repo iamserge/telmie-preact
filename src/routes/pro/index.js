@@ -11,7 +11,7 @@ import Spinner from '../../components/global/spinner';
 import Redirect from '../../components/global/redirect';
 import { checkIfLoggedIn } from '../../utils';
 
-class Search extends Component {
+class Pro extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -53,7 +53,7 @@ class Search extends Component {
 	render() {
 
 		return (
-			<div id="pro" className="uk-container uk-container-small" >
+			<div id="pro" className="uk-container" >
 				<Helmet
 					title="Telmie | Pro"
 				/>
@@ -80,4 +80,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Search);
+)(Pro);

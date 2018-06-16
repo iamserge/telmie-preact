@@ -150,11 +150,11 @@ class Header extends Component {
 					) : (
             <div>
               <Link href="/profile">My Account</Link>
-              <li><Link href="/my-pros">My Pros</Link></li>
+              <Link href="/my-pros">My Pros</Link>
               {(user.pro != null) && (
-                  <li><Link href="/my-clients">My Clients</Link></li>
+                  <Link href="/my-clients">My Clients</Link>
               )}
-              <li><Link href="/my-shortlist">My Shortlist</Link></li>
+              <Link href="/my-shortlist">My Shortlist</Link>
 							<Link href="/transactions">Money</Link>
 							<Link href="/edit-profile">Edit Profile</Link>
               <a onClick={()=>this.logOff()}>Log out</a>

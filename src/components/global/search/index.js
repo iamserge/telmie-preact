@@ -197,7 +197,8 @@ export default class Header extends Component {
     if (e.key === 'Enter') {
       e.preventDefault();
       this.closeModal();
-      route('/search/' + this.state.searchValue);
+      let searchTerm = (this.state.searchValue.length > 0) ? this.state.searchValue : " ";
+      route('/search/' + searchTerm);
     }
   }
   performSearch(e){

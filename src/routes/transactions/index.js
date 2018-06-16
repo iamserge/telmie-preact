@@ -37,19 +37,19 @@ class AllTransactions extends Component {
 			this.props.getTransactions(this.props.userData.userAuth);
 		}
 
-	}
+}
 
-		nextPage(){
+	nextPage(){
 		this.setState({
-			currentPage: this.state.currentPage++
+			 currentPage: this.state.currentPage + 1
 		});
-		this.changeTransactionsPage(this.state.currentPage++);
+		this.changeTransactionsPage(this.state.currentPage );
 	}
 	previousPage(){
 		this.setState({
-			currentPage: this.state.currentPage--
+			currentPage: this.state.currentPage - 1
 		});
-		this.changeTransactionsPage(this.state.currentPage--);
+		this.changeTransactionsPage(this.state.currentPage );
 	}
 	changePage(page) {
 		this.setState({
