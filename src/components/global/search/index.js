@@ -257,9 +257,7 @@ export default class Header extends Component {
 				        renderSuggestion={renderSuggestion}
 				        inputProps={inputProps}
 				      />
-							<a href="#" className="withIcon" onClick={this.performSearch}
-                                onMouseOver="this.style.color='#0F0'"
-                                onMouseOut="this.style.color='#00F'">
+							<a href="#" className="withIcon" onClick={this.performSearch}>
 								<span class="icon-magnifying-glass"></span>
 							</a>
 
