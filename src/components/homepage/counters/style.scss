@@ -13,7 +13,7 @@
 		letter-spacing: -1px;
         margin: 0 110px 0 0;
         padding:  0 0  60px 30px;
-        line-height: 40px;
+        line-height: 20px;
         border-left: 2px solid $blue;
         &:first-child {
             margin-left: 0;
@@ -61,19 +61,27 @@
     @media (max-width: 880px) {
         > div {
             display: block;
+            box-sizing: border-box;
             width: 100%;
             border-left: 0;
+            padding-left: 180px;
+            white-space: nowrap;
+            > span {
+                margin-left: -5px;
+            }
             &:before {
-                display:inline-block;
-                position: static;
+                display: block;
+                position: absolute;
                 margin: 0;
-                margin-right: 40px;
-                position: relative;
-                left: 0;
-                top: -15px;
+                left: 40px;
+                top: 5px;
+                border-radius: 50% 50% 0 50%;
+            }
+            &:first-child {
             }
             > span {
-            display: inline-block;
+                display: block;
+                border-bottom: 2px solid $blue;
         }
         }
     }

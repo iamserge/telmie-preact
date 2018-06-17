@@ -10,7 +10,7 @@ export default class Counters extends Component {
 		const counterData = counter.counter;
 		return (
 			<div>
-					<span>{counterData[0].text}</span> {counterData[1].text}
+					<span>{counterData[0].text}</span><br/> {counterData[1].text}
 			</div>
 		)
 	}
@@ -18,7 +18,6 @@ export default class Counters extends Component {
 		return (
 			<div className={style.counters}>
 				{ this.props.counters.map(counter => this.renderCounter(counter))}
-
 			</div>
 		)
 	}

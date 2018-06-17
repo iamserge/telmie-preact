@@ -296,6 +296,12 @@ button {
 @media (max-width: 880px) {
     .uk-container-small {
         width: auto;
+        h1 {
+            padding-left: 0;
+        }
+        h2 {
+            padding-left: 0;
+        }
     }
 	.vimeo {
 		width: auto;

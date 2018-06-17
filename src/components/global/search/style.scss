@@ -6,7 +6,7 @@
 	&.home {
 		&.collapsed {
 			#searchModal {
-				    position: static !important;
+				  position: static !important;
 				  margin: -40px auto 120px auto;
 				  width: 700px;
 					transform: translate(0,0);
@@ -21,7 +21,7 @@
 								span {
 							    font-size: 46px;
                                     &:hover {
-                                        text-decoration: none;
+                                        text-decoration: none !important;
                                     }
 								}
 							}
@@ -147,8 +147,8 @@
 				}
 				&:hover {
 					color: $red;
+                    text-decoration: none !important;
                     span {
-                    text-decoration: none;
                         }
 				}
 			}
@@ -175,9 +175,9 @@
 	#searchContainer {
 		&.collapsed {
 			#searchModal {
-				width: 46px;
-		    top: 0;
-		    right: 66px;
+                width: 46px;
+		        top: 0;
+		        right: 66px;
 				> div {
 					form {
 						input {
@@ -191,7 +191,29 @@
 				}
 			}
 		}
+        &.home {
+		&.collapsed {
+            #searchModal {
+                width: 100%;
+					> div {
+						form {
+							input {
+                                display: inline-block;
+							}
+							a {
+								span {
+                                    &:hover {
+                                        text-decoration: none;
+                                    }
+								}
+							}
+						}
+					}
+                
+            }
+        }
 	}
+    }
 	#searchModal {
 		> div {
 			form {
