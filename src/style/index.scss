@@ -5,7 +5,8 @@
 html, body {
 	height: 100%;
 	width: 100%;
-	padding: 30px 0 94px 0 !important;
+	padding: 40px 0 0 !important;
+    box-sizing: border-box;
 	overflow: visible !important;
 	margin: 0;
 	font-family: 'Roboto', arial, sans-serif;
@@ -27,9 +28,7 @@ a {
 		text-decoration: underline !important;
 	}
 }
-#app {
-	height: 100%;
-}
+
 .uk-modal {
 	opacity: 1;
 	transition: none;
@@ -46,7 +45,7 @@ a {
 	transition: none;
 }
 .uk-container {
-	min-height: calc(100% - 161px);
+	min-height: calc(100% - 174px);
     @media (max-width: 880px) {
         width: 100%;
         box-sizing: border-box;
@@ -55,18 +54,19 @@ a {
 .uk-container-small {
 	width: 980px;
 	h1 {
-		text-align: left;
+		text-align: center;
         margin-top: 40px;
         font-weight: 500;
         padding-top: 20px;
         padding-left: 20px;
         color: $blue;
+        text-transform: capitalize;
 	}
 	h2 {
 		color: $red;
         padding-left: 20px;
 	}
-    margin-bottom: 100px;
+    margin-bottom: 80px;
     @media (max-width: 880px) {
         width: 100%;
         box-sizing: border-box;
@@ -77,6 +77,7 @@ a {
     h2 {
         padding-left: 0;
     }
+    
 }
 .uk-close {
   position: absolute;
@@ -290,6 +291,12 @@ button {
 	}
 }
 
+#app {
+	min-height: 500px;
+}
+.mainContainer {
+	height: calc(100% - 80px);
+}
 @media (max-width: 880px) {
     .uk-container-small {
         width: auto;

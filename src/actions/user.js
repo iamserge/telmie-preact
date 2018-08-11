@@ -35,6 +35,11 @@ const loggedOff = (response) => ({
 	type: actionTypes.LOGGED_OFF
 });
 
+const photoUploaded = (photo) => ({
+	type: actionTypes.PHOTO_UPLOADED,
+	photo
+});
+
 const editSuccess = (response, userAuth) => ({
 	type: actionTypes.EDIT_SUCCESS,
   userData: response,
@@ -178,3 +183,12 @@ export const getTransactions = (authData) => async (dispatch) => {
 	dispatch(transactionsReceived(response));
 
 };
+
+
+export const uploadPhoto = (authData, photo) => async (dispatch) => {
+	const photoUrl = await user.uploadPhoto(authData, photo);
+
+	dispatch(photoUploaded(photoUrl));
+
+};
+

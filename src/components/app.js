@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h, Component, Fragment } from 'preact';
 import { Router } from 'preact-router';
 
 import Header from './global/header';
@@ -80,30 +80,31 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<Header />
-				<Router onChange={this.handleRoute}>
-					<Search path={routes.SEARCH} />
-					<Pro path={routes.PRO} />
-					<Activity path={routes.MY_PROS} isProCalls = { false } />
-					<Activity path={routes.MY_CLIENTS} isProCalls = { true } />
-					<Shortlist path={routes.MY_SHORTLIST} />
-					<Shortlist path={routes.MY_SHORTLIST} />
+				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
+					<Router onChange={this.handleRoute}>
+						<Search path={routes.SEARCH} />
+						<Pro path={routes.PRO} />
+						<Activity path={routes.MY_PROS} isProCalls = { false } />
+						<Activity path={routes.MY_CLIENTS} isProCalls = { true } />
+						<Shortlist path={routes.MY_SHORTLIST} />
+						<Shortlist path={routes.MY_SHORTLIST} />
 
-					<AllTransactions path={routes.TRANSACTIONS} />
-					<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
-					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
-					<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
-					<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>
-					<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
-					<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
+						<AllTransactions path={routes.TRANSACTIONS} />
+						<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
+						<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
+						<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
+						<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>
+						<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
+						<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
 
-
-					<LogIn path = { routes.LOG_IN } />
-					<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
-					<Profile path = { routes.PROFILE } />
-					<EditProfile path = { routes.EDIT_PROFILE } />
-					<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />
-					<ForgotPassword path = { routes.FORGOT_PASSWORD } />
-				</Router>
+						<LogIn path = { routes.LOG_IN } />
+						<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
+						<Profile path = { routes.PROFILE } />
+						<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
+						<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />
+						<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+					</Router>
+				</div>
 				<Footer />
 			</div>
 		);

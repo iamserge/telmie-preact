@@ -131,3 +131,25 @@ export function resetPassword(email){
 		throw new Error(error.message);
 	});
 }
+
+export function uploadPhoto(authData, photo){
+	let headers = new Headers();
+	headers.append("Content-Type", "multipart/from-data");
+	headers.append("Authorization", "Basic " + authData);
+	let formData = new FormData();
+	formData.append('file', photo);
+	console.log(formData.get('file'));
+	return fetch(apiUrls.UPLOAD_PHOTO, { credentials: 'include', method: 'POST',  headers: headers, body: formData }).then(response => {
+    if (response.status === 401){
+			return {};
+		} else {
+			return {
+				success: true
+			};
+		}
+
+	}, error => {
+		throw new Error(error.message);
+	});
+}
+

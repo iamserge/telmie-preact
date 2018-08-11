@@ -10,5 +10,6 @@ export const apiUrls = {
   GET_TRANSACTIONS: apiRoot + 'cards/history',
   VERIFY_USER: apiRoot + 'users/signup',
   ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist',
-  RESET_PASSWORD: apiRoot  + 'security/reset'
+  RESET_PASSWORD: apiRoot  + 'security/reset',
+  UPLOAD_PHOTO: apiRoot + 'image'
 }

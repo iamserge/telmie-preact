@@ -19,7 +19,7 @@ class Activity extends Component {
 
 	}
 	componentDidMount(){
-		if (this.props.userData.userAuth) {
+		if (this.props.userData.userAuth && this.props.shortlistPros.length == 0) {
 			let that = this;
 			this.setState({
 				loading: true

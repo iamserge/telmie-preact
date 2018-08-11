@@ -19,7 +19,8 @@ export const actionTypes = {
 	VERIFY_FAILURE: 'VERIFY_FAILURE',
 	VERIFY_SUCCESS: 'VERIFY_SUCCESS',
 	RESET_SUCCESS: 'RESET_SUCCESS',
-	RESET_FAILURE: 'RESET_FAILURE'
+	RESET_FAILURE: 'RESET_FAILURE',
+	PHOTO_UPLOADED: 'PHOTO_UPLOADED'
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

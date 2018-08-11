@@ -35,29 +35,17 @@ export default class Pro extends Component {
 				<div className={style.imageContainer}>
 					<div className={style.image}>
 						{ (person.avatar != null) ? (
-							<img src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
+							<img class="hexmask" src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
 						) : (
-							<img src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
+							<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 						)}
 					</div>
-					{ this.state.showCallProPopup ? (
-						<div>
-
-							<div className="modal" onClick={()=>{this.setState({showCallProPopup: false})}}>
-								<a class="uk-modal-close uk-close"></a>
-							</div>
-							<div className="modalInner">
-								<span className={style.note}>Please, download the <a target="_blank" href="https://itunes.apple.com/us/app/telmie/id1345950689">Telmie App</a> on your Apple device to call the Pro. In the near future it will be possible to call directly from the website. Thank you!</span>
-								<a href="https://itunes.apple.com/us/app/telmie/id1345950689" target="_blank"><img style="width:150px;height:51px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxohVpmd3NAgCI4gViHb91fWNHeZqSDNlztqhaJs_ea5B791nnxw" /></a>
-							</div>
-						</div>
-					) : (
-							<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
-					)}
+					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
 
 
-					{this.props.shortlisted ? (
-						<span className={style.success}><span aria-hidden="true" class="fa fa-check"></span> Added</span>
+
+					{this.props.isShortlisted ? (
+						<span className={style.success}><span aria-hidden="true" class="fa fa-check"></span> Shortlisted</span>
 					) : (
 						<button  id={style.callPro} className="uk-button" onClick={() => {this.props.addToShortlist(person.id)}}>Shortlist</button>
 					)}
@@ -70,9 +58,9 @@ export default class Pro extends Component {
 						<h3>{person.pro.profession}</h3>
 					</div>
 					<div className={style.prof}>
-						<div>{person.pro.category}</div>
+						<Link href={"/search/" + person.pro.category} >{person.pro.category}</Link>
 						<FontAwesome name="angle-right"/>
-						<div>{person.pro.profession}</div>
+						<Link href={"/search/" + person.pro.subCategory} >{person.pro.subCategory}</Link>
 					</div>
 					<p className="description">
 						{person.pro.professionDescription}
@@ -98,7 +86,18 @@ export default class Pro extends Component {
 						<YouTube videoId={ person.pro.video } opts = {youtubeOptions} />
 					</div>
 				)}
-
+				{ this.state.showCallProPopup && (
+					<div>
+						<div className="modal" onClick={()=>{this.setState({showCallProPopup: false})}}>
+							<a class="uk-modal-close uk-close"></a>
+						</div>
+						<div className="modalInner">
+							<span className={style.note}>Please, download the <a target="_blank" href="https://itunes.apple.com/us/app/telmie/id1345950689">Telmie App</a> on your Apple device to call the Pro. In the near future it will be possible to call directly from the website. Thank you!</span>
+							<a href="https://itunes.apple.com/us/app/telmie/id1345950689" target="_blank"><img style="width:150px;height:51px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxohVpmd3NAgCI4gViHb91fWNHeZqSDNlztqhaJs_ea5B791nnxw" /></a>
+						</div>
+					</div>
+				)}
+				
 			</div>
 		)
 	}

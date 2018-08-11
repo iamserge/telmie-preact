@@ -34,7 +34,14 @@ class Pro extends Component {
 	    that.setState({ pro: data, loading: false });
 		});
 	}
-
+	isShortlisted(){
+		let shortlisted = this.state.shortlisted;
+		if (this.props.shortlistPros.length == 0 ) return shortlisted;
+		this.props.shortlistPros.forEach((shortlistPro)=>{
+			if (shortlistPro.id == this.state.pro.id) shortlisted = true;
+		});
+		return shortlisted;
+	}
 	componentWillReceiveProps(nextProps){
 
 	}
@@ -43,7 +50,7 @@ class Pro extends Component {
 		let that = this;
 		addToShortlist(userId, this.props.userData.userAuth).then(function(data) {
 			that.setState({
-				shortlisted: true
+				isShortlisted: true
 			})
 		}).catch(function(error) {
 
@@ -60,7 +67,7 @@ class Pro extends Component {
 				{(Object.keys(this.state.pro).length === 0 || this.state.loading) ? (
 					<Spinner />
 				) : (
-					<ProDetails person = { this.state.pro } addToShortlist = { this.shortlist } shortlisted = { this.state.shortlisted } />
+					<ProDetails isShortlisted = { this.isShortlisted() } person = { this.state.pro } addToShortlist = { this.shortlist }  />
 				)}
 
 			</div>
@@ -72,7 +79,9 @@ class Pro extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	userData: state.loggedInUser
+	userData: state.loggedInUser,
+	shortlistPros: state.shortlistPros
+
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

@@ -1,16 +1,15 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
 import Switch from 'react-toggle-switch'
-import FontAwesome from 'react-fontawesome';
-import Select from 'react-select';
 import SimpleReactValidator from 'simple-react-validator';
 import { apiRoot } from '../../../api';
+import { generateProfessionsArray } from '../../../utils';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
+import ImageUploader from 'react-images-upload';
 
-const Services = [
+let Services = [
 	{
 		name: "Education",
 		categories: ["Language tutor", "Language practice", "Exams preparation", "Science", "Business studies", "Social science", "Drawing", "Music", "Dance"]
@@ -53,7 +52,9 @@ export default class EditProfileForm extends Component {
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.onSliderChange = this.onSliderChange.bind(this);
 		this.signUp = this.signUp.bind(this);
+		this.onDrop = this.onDrop.bind(this);
 		this.validator = new SimpleReactValidator();
+		
 	}
 
 	signUp(){
@@ -78,7 +79,6 @@ export default class EditProfileForm extends Component {
 		} else {
 			this.validator.showMessages();
 			this.forceUpdate();
-
 		}
 	}
 	componentDidMount(){
@@ -95,10 +95,12 @@ export default class EditProfileForm extends Component {
 		})
 
 	}
-
+	onDrop(picture) {
+		this.props.uploadPhoto(this.props.userData.userAuth, picture[0]);
+	}
 	onSliderChange(rate) {
-    this.setState({ rate: rate.toFixed(2)  })
-  }
+		this.setState({ rate: rate.toFixed(2)  })
+	}
 	handleSelectChange(e){
 		this.setState({sectorCategory: event.target.value});
 	}
@@ -112,6 +114,10 @@ export default class EditProfileForm extends Component {
 
 	render({}) {
 		const userData  = this.props.userData;
+		let maxRate = (this.props.regData && this.props.regData.max_rate)  ? this.props.regData.max_rate : 10,
+				step = (this.props.regData && this.props.regData.rate_slider_step)  ? this.props.regData.rate_slider_step : 0.1;
+
+		if (this.props.regData && this.props.regData.registration_profession_options) Services = generateProfessionsArray(this.props.regData.registration_profession_options);
 
 		if (!this.state.loading) {
 			return (
@@ -128,9 +134,15 @@ export default class EditProfileForm extends Component {
 							)}
 						</div>
 						<div className={style.upload}>
-							<button onClick={()=>{}} className="uk-button">
-								Upload new
-							</button>
+
+							<ImageUploader
+								withIcon={false}
+								buttonText='Upload new'
+								onChange={this.onDrop}
+								imgExtension={['.jpg', '.png', '.gif']}
+								maxFileSize={5242880}
+							/>
+							
 						</div>
 
 					</div>
@@ -163,7 +175,7 @@ export default class EditProfileForm extends Component {
 						</div>
 						<div className="input-container">
 							<label for="dateOfBirth">Date of birth</label>
-							<input type="text" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
+							<input type="date" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
 						</div>
 						{ (!this.state.pro) && (
 							<div className="switchContainer" id={style.proSwitch}>
@@ -217,16 +229,22 @@ export default class EditProfileForm extends Component {
 									<div className="input-container" id={style.rateContainer}>
 										<label for="rate">Rate</label>
 										<Slider
-						          min={0.1}
-						          max={20}
-						          step={0.1}
+						          min={0}
+						          max={maxRate}
+						          step={step}
 						          value={this.state.rate}
 						          onChange={this.onSliderChange}
 						        />
-										<div className={style.rate}>
-											<span>£{this.state.rate} </span>
-											per minute
-										</div>
+										{this.state.rate == "0.00" ? (
+											<div className={style.rate}>
+												<span className={style.free}>Free</span>
+											</div>
+										): (
+											<div className={style.rate}>
+												<span>£{this.state.rate} </span>
+												per minute
+											</div>
+										)}
 									</div>
 								</div>
 							</div>

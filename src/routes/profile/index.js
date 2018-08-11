@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import style from './style.scss';
-import { getProCalls, getPersonalCalls, getTransactions } from '../../actions/user';
+import { getProCalls, getPersonalCalls, getTransactions, getShortlist } from '../../actions/user';
 
 import { route } from 'preact-router';
 import Details from '../../components/profile/details';
@@ -32,6 +32,7 @@ class Profile extends Component {
 			this.props.getProCalls(nextProps.userData.userAuth);
 			this.props.getPersonalCalls(nextProps.userData.userAuth);
 			this.props.getTransactions(nextProps.userData.userAuth);
+			this.props.getShortlist(nextProps.userData.userAuth)
 		}
 
 	}
@@ -59,7 +60,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 	getProCalls,
 	getPersonalCalls,
-	getTransactions
+	getTransactions,
+	getShortlist
 }, dispatch);
 
 export default connect(
