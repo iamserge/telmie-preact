@@ -25,12 +25,17 @@ const rootReducer = combineReducers({
 	loggedInUserActivity: user.activity,
 	loggedInUserTransactions: user.transactions,
 	registerSuccess: user.registerSuccess,
-	registerFailure: user.registerFailure,
+	registerFailureMessage: user.registerFailureMessage,
 	verifySuccess: user.verifySuccess,
 	verifyFailure: user.verifyFailure,
 	resetSuccess: user.resetSuccess,
 	resetFailure: user.resetFailure,
-	shortlistPros: user.shortlistPros
+	shortlistPros: user.shortlistPros,
+	sendCodeSuccess: user.sendCodeSuccess,
+	sendCodeFailureMessage: user.sendCodeFailureMessage,
+	verifyCodeSuccess: user.verifyCodeSuccess,
+	verifyCodeFailureMessage: user.verifyCodeFailureMessage
+
 
 });
 

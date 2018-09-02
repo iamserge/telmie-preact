@@ -92,22 +92,26 @@ export function verify(token){
 }
 
 
+
 export function register(data){
 
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 
 	return fetch(apiUrls.REGISTER, { method: 'POST', headers: headers, body: JSON.stringify( data )}).then(response => {
-    if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
-			return {};
-		}
-		return response.text().then(text => {
-			return {registration: 'success'}
-			//return {authData: window.btoa(data.email + ':' + data.password)};
+		return response.json().then(json => {
+			if (json.error) {
+				return {
+					error: true,
+					message: json.message
+				}
+			} else {
+				return {authData: window.btoa(data.email + ':' + data.password)};
+			}
+			
 		}, error => {
 			throw new Error(error.message);
 		});
-
 	}, error => {
 		throw new Error(error.message);
 	});
@@ -147,6 +151,46 @@ export function uploadPhoto(authData, photo){
 				success: true
 			};
 		}
+
+	}, error => {
+		throw new Error(error.message);
+	});
+}
+
+
+export function sendCode(email, reason){
+	let data = {
+		email,
+		requestReason: reason
+	}
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+
+	return fetch(apiUrls.SEND_CODE, { method: 'POST', headers: headers, body: JSON.stringify( data )}).then(response => {
+    if (response.status === 401){
+			return {};
+		}
+		return response.json().then(json => {
+			return json;
+		});
+
+	}, error => {
+		throw new Error(error.message);
+	});
+}
+
+export function verifyCode(email, code){
+	let data = {
+		email,
+		code
+	}
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json");
+
+	return fetch(apiUrls.SEND_CODE, { method: 'PUT', headers: headers, body: JSON.stringify( data )}).then(response => {
+		return response.json().then(json => {
+			return json;
+		});
 
 	}, error => {
 		throw new Error(error.message);

@@ -50,14 +50,14 @@ export const registerSuccess = (state = {}, action) => {
 			return false;
 	}
 };
-export const registerFailure = (state = {}, action) => {
+export const registerFailureMessage = (state = "", action) => {
 	switch (action.type) {
 
 		case actionTypes.REGISTER_FAILURE:
-			return true;
+			return action.message != null ? action.message : "";
 
 		default:
-			return false;
+			return "";
 	}
 };
 
@@ -206,3 +206,49 @@ export const verifyFailure = (state = {}, action) => {
 			return false;
 	}
 };
+
+
+export const sendCodeSuccess = (state = "", action) => {
+	switch (action.type) {
+
+		case actionTypes.SEND_CODE_SUCCESS:
+			return action.expired;
+
+
+		default:
+			return "";
+	}
+};
+export const sendCodeFailureMessage = (state = "", action) => {
+	switch (action.type) {
+
+		case actionTypes.SEND_CODE_FAILURE:
+			return action.message;
+
+		default:
+			return "";
+	}
+};
+
+export const verifyCodeSuccess = (state = false, action) => {
+	switch (action.type) {
+
+		case actionTypes.VERIFY_CODE_SUCCESS:
+			return true;
+
+
+		default:
+			return false;
+	}
+};
+export const verifyCodeFailureMessage = (state = "", action) => {
+	switch (action.type) {
+
+		case actionTypes.VERIFY_CODE_FAILURE:
+			return action.message;
+
+		default:
+			return "";
+	}
+};
+

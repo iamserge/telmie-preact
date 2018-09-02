@@ -151,6 +151,22 @@ button {
 		height: 50px;
 	}
 }
+.code-input-container {
+	margin-bottom: 15px;
+	> div {
+		display: flex;
+		justify-content: space-between;
+		> input {
+			flex-basis: 23%;
+			height: 60px;
+			text-align: center;
+			font-size: 30px;
+		}
+		
+		
+	}
+	
+}
 .subTitle {
 	color: #444;
 	text-align: center;

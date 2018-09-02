@@ -14,23 +14,6 @@
 	position: relative;
 
 }
-.codeMessage {
-	font-size: 20px;
-	text-align: center;
-	strong {
-		display: block;
-	}
-	a {
-		color: $red;
-		text-decoration: underline;
-		font-size: 16px;
-	}
-}
-.userDetails {
-	.codeMessage {
-		margin: 20px 0;
-	}
-}
 #eyeContainer {
 	cursor: pointer;
 	color: $grey;
@@ -135,23 +118,14 @@
 	color: $red;
 	font-size: 20px;
 }
-.timer {
-	text-align: center;
-	margin-bottom: 10px;
-    font-size: 20px;
-	> div {
-		font-weight: bold;
-    	margin-left: 5px;
-		display: inline-block;
-	}
-}
 .success {
-	background-color: #b3eb9e;
-    font-size: 20px;
-	padding: 20px 0;
+	font-size: 26px;
+	margin: 40px 0;
 	text-align: center;
-	margin-bottom: 20px;
-
+	span {
+		color: $red;
+		font-weight: bold;
+	}
 }
 .failure {
 	color: $red;

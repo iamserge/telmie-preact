@@ -52,11 +52,15 @@ const editFailure = () => ({
 const fetchingRegistration = () => ({
 	type: actionTypes.FETCHING_REGISTRATION,
 });
+const fetchingSendCode = () => ({
+	type: actionTypes.FETCHING_SEND_CODE,
+});
 const registerSuccess = () => ({
 	type: actionTypes.REGISTER_SUCCESS,
 });
-const registerFailure = () => ({
+const registerFailure = (message) => ({
 	type: actionTypes.REGISTER_FAILURE,
+	message
 });
 
 const resetSuccess = () => ({
@@ -64,6 +68,25 @@ const resetSuccess = () => ({
 });
 const resetFailure = () => ({
 	type: actionTypes.RESET_FAILURE,
+});
+
+
+const sendCodeSuccess = (expired) => ({
+	type: actionTypes.SEND_CODE_SUCCESS,
+	expired
+});
+const sendCodeFailure = (message) => ({
+	type: actionTypes.SEND_CODE_FAILURE,
+	message
+});
+
+
+const verifyCodeSuccess = () => ({
+	type: actionTypes.VERIFY_CODE_SUCCESS,
+});
+const verifyCodeFailure = (message) => ({
+	type: actionTypes.VERIFY_CODE_FAILURE,
+	message
 });
 
 const authFailure = (response) => ({
@@ -117,11 +140,10 @@ export const logOff = () => (dispatch) => {
 export const register = (data) => async (dispatch) => {
 
 	const response = await user.register(data);
-	if (Object.keys(response).length === 0) {
-		dispatch(registerFailure());
+	if (response.error) {
+		dispatch(registerFailure(response.message));
 	} else {
-		dispatch(registerSuccess(response));
-		//dispatch(logIn(response.authData));
+		dispatch(logIn(response.authData));
 	}
 };
 
@@ -192,3 +214,33 @@ export const uploadPhoto = (authData, photo) => async (dispatch) => {
 
 };
 
+
+export const sendCode = (email, reason) => async (dispatch) => {
+
+	const response = await user.sendCode(email, reason);
+	if (response.error) {
+		dispatch(sendCodeFailure(response.message));
+		if (response.status == 36) {
+			dispatch(sendCodeSuccess(response.expired));
+		}
+	} else {
+		dispatch(sendCodeSuccess(response.expired));
+	
+		//dispatch(logIn(response.authData));
+	}
+};
+
+
+export const verifyCode = (email, code) => async (dispatch) => {
+
+	const response = await user.verifyCode(email, code);
+	if (response.error && response.status != 31) {
+		dispatch(verifyCodeFailure(response.message));
+	} else {
+		dispatch(verifyCodeSuccess(response));
+	}
+};
+
+export const fetchSendCode = () => (dispatch) => {
+	dispatch(fetchingSendCode());
+};

@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import style from './style.scss';
-import { register, fetchRegistration, sendCode, fetchSendCode, verifyCode } from '../../actions/user';
+import { register, fetchRegistration } from '../../actions/user';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import { route } from 'preact-router';
 import Redirect from '../../components/global/redirect';
 
-class SignUp extends Component {
+class RegisterPro extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -53,20 +53,7 @@ class SignUp extends Component {
 							) : (
 								<h1>Success!</h1>
 							) }
-							<SignUpForm 
-								sendCode = { this.props.sendCode } 
-								fetchRegistration = { this.props.fetchRegistration } 
-								register = { this.props.register } 
-								registerSuccess = { this.props.registerSuccess } 
-								registerFailureMessage = { this.props.registerFailureMessage } 
-								sendCodeSuccess = { this.props.sendCodeSuccess } 
-								sendCodeFailureMessage = { this.props.sendCodeFailureMessage } 
-								verifyCodeSuccess = { this.props.verifyCodeSuccess }
-								verifyCodeFailureMessage = { this.props.verifyCodeFailureMessage }
-								fetchSendCode = { this.props.fetchSendCode }
-								verifyCode = { this.props.verifyCode }
-								regData = { this.state.regData }
-							/>
+							<SignUpForm  fetchRegistration = { this.props.fetchRegistration } register = { this.props.register } registerSuccess = { this.props.registerSuccess } registerFailure = { this.props.registerFailure } regData = { this.state.regData }/>
 						</div>
 				</div>
 
@@ -80,22 +67,15 @@ class SignUp extends Component {
 
 const mapStateToProps = (state) => ({
 	registerSuccess: state.registerSuccess,
-	registerFailureMessage: state.registerFailureMessage,
-	sendCodeSuccess: state.sendCodeSuccess,
-	sendCodeFailureMessage: state.sendCodeFailureMessage,
-	verifyCodeSuccess: state.verifyCodeSuccess,
-	verifyCodeFailureMessage: state.verifyCodeFailureMessage
+	registerFailure: state.registerFailure
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	register,
-	fetchRegistration,
-	sendCode,
-	fetchSendCode,
-	verifyCode
+	fetchRegistration
 }, dispatch);
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(SignUp);
+)(RegisterPro);

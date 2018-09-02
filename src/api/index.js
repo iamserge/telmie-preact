@@ -1,4 +1,4 @@
-export const apiRoot = 'https://telmie.com/api/';
+export const apiRoot = 'http://sr461.2dayhost.com/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
@@ -11,5 +11,6 @@ export const apiUrls = {
   VERIFY_USER: apiRoot + 'users/signup',
   ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist',
   RESET_PASSWORD: apiRoot  + 'security/reset',
-  UPLOAD_PHOTO: apiRoot + 'image'
+  UPLOAD_PHOTO: apiRoot + 'image',
+  SEND_CODE: apiRoot + 'code'
 }
