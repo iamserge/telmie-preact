@@ -63,7 +63,7 @@ export const registerFailureMessage = (state = "", action) => {
 
 
 
-export const resetSuccess = (state = {}, action) => {
+export const resetSuccess = (state = false, action) => {
 	switch (action.type) {
 
 		case actionTypes.RESET_SUCCESS:
@@ -74,14 +74,14 @@ export const resetSuccess = (state = {}, action) => {
 			return false;
 	}
 };
-export const resetFailure = (state = {}, action) => {
+export const resetFailure = (state = "", action) => {
 	switch (action.type) {
 
 		case actionTypes.RESET_FAILURE:
-			return true;
+			return action.message;
 
 		default:
-			return false;
+			return "";
 	}
 };
 

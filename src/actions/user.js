@@ -66,8 +66,9 @@ const registerFailure = (message) => ({
 const resetSuccess = () => ({
 	type: actionTypes.RESET_SUCCESS,
 });
-const resetFailure = () => ({
+const resetFailure = (message) => ({
 	type: actionTypes.RESET_FAILURE,
+	message
 });
 
 
@@ -114,10 +115,10 @@ const transactionsReceived = (response) => ({
 	transactions: response
 });
 
-export const resetPassword = (email) => async (dispatch) => {
-	const response = await user.resetPassword(email);
-	if (Object.keys(response).length === 0) {
-		dispatch(resetFailure());
+export const resetPassword = (email, password, code) => async (dispatch) => {
+	const response = await user.resetPassword({email, password, code});
+	if (response.error) {
+		dispatch(resetFailure(response.message));
 	} else {
 		dispatch(resetSuccess());
 	}
@@ -234,7 +235,7 @@ export const sendCode = (email, reason) => async (dispatch) => {
 export const verifyCode = (email, code) => async (dispatch) => {
 
 	const response = await user.verifyCode(email, code);
-	if (response.error && response.status != 31) {
+	if (response.error) {
 		dispatch(verifyCodeFailure(response.message));
 	} else {
 		dispatch(verifyCodeSuccess(response));

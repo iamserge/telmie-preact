@@ -10,7 +10,7 @@ import { generateProfessionsArray } from '../../../utils';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import  Timer from "react-time-counter";
-
+import Redirect from '../../global/redirect';
 export default class SignUpForm extends Component {
 	constructor(props){
 		super(props);
@@ -49,7 +49,7 @@ export default class SignUpForm extends Component {
 	verifyCode(){
 		let code = `${this.state.code1}${this.state.code2}${this.state.code3}${this.state.code4}`;
 		if (code.length == 4) {
-			this.props.verifyCode(code, this.state.email);
+			this.props.verifyCode(this.state.email, code);
 		}
 	}
 	signUp(){
@@ -108,14 +108,17 @@ export default class SignUpForm extends Component {
 
 	onChange(e){
 		let name = e.target.name,
-				value = e.target.value,
-				newState = {};
+			value = e.target.value,
+			newState = {};
 		newState[name] = value;
 		if (name == 'email' && this.state.codeSent) {
 			newState.codeSent = false;
 			this.props.fetchSendCode();
 		}
 		this.setState(newState)
+	}
+	getMinutes(){
+
 	}
 
 	render({}) {
@@ -234,12 +237,7 @@ export default class SignUpForm extends Component {
 				)
 			} else {
 				return (
-					<div className={style.signUpForm}>
-						<div className={style.success}>
-							<h3>Thank you for Telmie registration!</h3>
-							<p>Check your e-mail and click a link in Telmie letter to verify your account. After verification you'll be free to use Telmie App and web-page.</p>
-						</div>
-					</div>
+					<Redirect to="/" />
 				)
 			}
 

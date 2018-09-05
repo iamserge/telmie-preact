@@ -118,18 +118,24 @@ export function register(data){
 }
 
 
-export function resetPassword(email){
+export function resetPassword(data){
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 
-	return fetch(apiUrls.RESET_PASSWORD, { method: 'POST',  headers: headers, body: JSON.stringify( { email } )}).then(response => {
-    if (response.status === 401){
-			return {};
-		} else {
-			return {
-				success: true
-			};
-		}
+	return fetch(apiUrls.RESET_PASSWORD, { method: 'POST',  headers: headers, body: JSON.stringify( data )}).then(response => {
+		return response.json().then(json => {
+			if (json.error) {
+				return {
+					error: true,
+					message: json.message
+				}
+			} else {
+				return {error: false};
+			}
+			
+		}, error => {
+			throw new Error(error.message);
+		});
 
 	}, error => {
 		throw new Error(error.message);

@@ -1,36 +1,175 @@
-
 @import './src/style/variables';
-:global {
-	#forgotPassword {
-		margin-top: 40px;
-		text-align: center;
-		p {
-			margin: 40px 0;
+.forgotPassword {
+	width: 450px;
+	margin: 60px auto;
+	text-align: center;
+	button {
+		height: 60px;
+		font-size: 18px;
+		margin-top: 20px;
+		width: 100%;
+		font-weight: bold;
+	
+	}
+	:global {
+		.input-container {
+			text-align: left;
 		}
-		.inputContainer {
-			width: 40%;
-			margin: 0 auto;
-			display: flex;
-			input {
-				flex-grow: 1;
-				width: auto;
-				display: inline-block;
+	}
+}
+#passwordContainer {
+	position: relative;
+
+}
+.codeMessage {
+	font-size: 20px;
+	text-align: center;
+	strong {
+		display: block;
+	}
+	a {
+		color: $red;
+		text-decoration: underline;
+		font-size: 16px;
+	}
+}
+.userDetails {
+	.codeMessage {
+		margin: 20px 0;
+	}
+}
+#eyeContainer {
+	cursor: pointer;
+	color: $grey;
+	position: absolute;
+	bottom: 4px;
+	right: 17px;
+	font-size: 27px;
+}
+.terms {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  width: 86%;
+  margin: 30px auto -10px auto;
+  opacity: 0.6;
+  a {
+		text-decoration: underline;
+	}
+}
+#proSwitch {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 20px;
+  > div {
+  	position: relative;
+    top: 2px;
+
+	}
+}
+#proFormContainer {
+	margin-top: 20px;
+	padding: 20px;
+	background-color: #f5f5f5;
+}
+#selectContainer {
+	select {
+		height: 50px;
+	}
+}
+#descriptionContainer {
+	div[class="validation-tooltip"] {
+		bottom: 35px;
+	}
+}
+#services {
+	position: relative;
+	> label {
+		display: block;
+    margin-bottom: 5px;
+	}
+	> div {
+		display: flex;
+	  background-color: #fff;
+	  border: 1px solid $lightGrey;
+	  font-size: 14px;
+		margin-bottom: 20px;
+
+		> div {
+			flex-grow: 1;
+			box-sizing: border-box;
+			padding: 15px 0;
+			border-right: 1px solid $lightGrey;
+			text-align: center;
+			cursor: pointer;
+			&:hover, &.selected  {
+				background-color: $red;
+				color: white;
+
+			}
+			&:last-child {
+				border-right: none;
 			}
 		}
 	}
-	.message {
 
-	  padding: 20px;
+	div[class="validation-tooltip"] {
+	  color: white;
+	  position: absolute;
+		left: -230px;
+	  display: block;
+	  width: 215px;
+	  background: $red;
+	  padding: 10px;
+	  font-size: 12px;
 	  text-align: center;
-	  margin: 0 auto 20px auto;
-		width: 40%;
-		&.failure {
-			color: $red;
-			background: $lightRed;
-		}
-		&.success {
-			color: green;
-			background-color: rgba(0, 128, 0, 0.07);
-		}
+	  border-radius: 10px;
+	  bottom: -8px;
+	}
+}
+.rate {
+	text-align: center;
+	font-size: 14px;
+	> span {
+		color: $red;
+		font-size: 30px;
+	}
+}
+#professionDescription {
+	height: 100px;
+}
+.free {
+	color: $red;
+	font-size: 20px;
+}
+.timer {
+	text-align: center;
+	margin-bottom: 10px;
+    font-size: 20px;
+	> div {
+		font-weight: bold;
+    	margin-left: 5px;
+		display: inline-block;
+	}
+}
+.success {
+	background-color: #b3eb9e;
+    font-size: 20px;
+	padding: 20px 0;
+	text-align: center;
+	margin-bottom: 20px;
+
+}
+.failure {
+	color: $red;
+  background: $lightRed;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 880px) {
+	.signUpForm {
+		width: 100%;
 	}
 }
