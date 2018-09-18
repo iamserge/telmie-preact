@@ -55,7 +55,11 @@ monetaryUnitArr = [
 class RegisterPro extends Component {
 	constructor(props){
 		super(props);
-		this.state = {
+
+		const data = localStorage.getItem('register_pro_data');
+		this.state = data ? 
+			JSON.parse(data)
+		 : {
 			//regData: null,
 			iam: iamArr[0].value,
 			serviceCategory: '',
@@ -80,6 +84,11 @@ class RegisterPro extends Component {
 			compCountry: '',
 		}
 	}
+
+	componentWillUnmount(){
+		localStorage.setItem('register_pro_data', JSON.stringify(this.state));
+	}
+
 	/*componentDidMount(){
 		this.fetchPage(this.props);
 	}
@@ -172,7 +181,8 @@ class RegisterPro extends Component {
 			rate,
 			minMax,
 			mobile,
-			youtubeId
+			youtubeId,
+			dateOfBirth
 		} = this.state;
 
 		return (
@@ -213,8 +223,8 @@ class RegisterPro extends Component {
 							<label>Date of birth</label>
 							<input type="date" 
 								name="dateOfBirth" 
-								value={this.state.dateOfBirth} 
-								onChange={this.onChange}/>
+								value={dateOfBirth} 
+								onChange={this.onChangeHandler}/>
 						</div>
 
 						<Input name='serviceName' 
