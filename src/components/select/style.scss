@@ -1,0 +1,49 @@
+@import './src/style/variables';
+
+$font-size: 18px;
+
+.formSelect {
+    display: flex;
+    position: relative;
+    font-size: $font-size;
+
+    &:after {
+        content:"";
+        width: 0;
+        height: 0;
+        border: 6px solid transparent;
+        border-color: #d5d5d5 transparent transparent transparent;
+        position: absolute;
+        top: 16px;
+        right: 8px;
+    }
+
+    label {
+        padding: 3px 0;
+        margin-right: 20px;
+        font-size: $font-size;
+        white-space: nowrap;
+        width: auto;
+    }
+    
+    select {
+        position: relative;
+        background: transparent;
+        width: 100%;
+        outline: none;
+        color: $blue;
+        font-size: $font-size;
+        cursor: pointer;
+        z-index: 2;
+        border: none;
+        border-bottom: 1px solid $lightGrey;
+        text-indent: 10px;
+    
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 3px 0;
+    }    
+}
+
+

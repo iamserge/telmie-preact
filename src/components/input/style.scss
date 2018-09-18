@@ -1,0 +1,42 @@
+
+@import './src/style/variables';
+
+$font-size: 18px;
+
+.formInput {
+    font-size: $font-size;
+    display: flex;
+    position: relative;
+    color: $blue;
+
+    label {
+        padding: 3px 0;
+        margin-right: 20px;
+        white-space: nowrap;
+        width: auto;
+    }
+
+    input {
+        background: transparent;
+        width: 100%;
+        outline: none;
+        color: $blue;
+        font-size: $font-size;
+        border: none;
+        border-bottom: 1px solid $lightGrey;
+        padding: 3px 0;
+    }
+
+    .postTab{
+        position: absolute;
+        width: 100px;
+        top: 0;
+        right: 0;
+        padding: 3px 0 3px 10px;
+    }
+}
+
+
+
+
+

@@ -17,6 +17,7 @@ import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
 import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
+import RegisterPro from '../routes/register-pro'
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -39,7 +40,8 @@ export const routes = {
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
-	FORGOT_PASSWORD: '/forgot-password'
+	FORGOT_PASSWORD: '/forgot-password',
+	REGISTER_PRO: '/register-pro'
 };
 
 
@@ -103,6 +105,7 @@ export default class App extends Component {
 						<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
 						<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />
 						<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+						<RegisterPro path = { routes.REGISTER_PRO } />
 					</Router>
 				</div>
 				<Footer />

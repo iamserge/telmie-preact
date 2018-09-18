@@ -128,6 +128,7 @@ class Header extends Component {
                       <li><Link href="/my-shortlist">My Shortlist</Link></li>
 											<li><Link href="/transactions">Money</Link></li>
 											<li><Link href="/edit-profile">Edit Profile</Link></li>
+                      <li><Link href="/register-pro">Register as Pro</Link></li>
 							        <li className="uk-nav-divider"></li>
 							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
 							    </ul>
@@ -157,6 +158,7 @@ class Header extends Component {
               <Link href="/my-shortlist">My Shortlist</Link>
 							<Link href="/transactions">Money</Link>
 							<Link href="/edit-profile">Edit Profile</Link>
+              <Link href="/register-pro">Register as Pro</Link>
               <a onClick={()=>this.logOff()}>Log out</a>
             </div>
 					)}
