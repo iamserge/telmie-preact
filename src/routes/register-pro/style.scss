@@ -16,6 +16,36 @@ $font-size: 18px;
 			margin-top: 40px;
 		}
 
+		.applyArea{
+			margin-top: 30px;
+
+			.codeMsg, .timer {
+				font-size: 20px;
+				text-align: center;
+			}
+
+			.inputContainer{
+				width: 50%;
+				margin: 0 auto;
+			}
+
+			.verifyInput {
+				outline: none;
+				border: none;
+				border-bottom: 2px solid $lightGrey;
+				width: 50px;
+			}
+
+			.success {
+				font-size: 20px;
+				padding: 20px 0;
+				text-align: center;
+				margin-bottom: 20px;
+			
+			}
+		}
+		
+
 		.generalInfo{
 			margin-bottom: 50px;
 

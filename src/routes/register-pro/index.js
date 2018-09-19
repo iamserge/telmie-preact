@@ -12,6 +12,8 @@ import Redirect from '../../components/global/redirect';
 import Select from '../../components/select'
 import Input from '../../components/input'
 import Radio from '../../components/radio'
+import  Timer from "react-time-counter";
+
 
 
 const testArr = [
@@ -89,6 +91,24 @@ class RegisterPro extends Component {
 		localStorage.setItem('register_pro_data', JSON.stringify(this.state));
 	}
 
+	codeOnChange = (e) => {
+		let { name, value } = e.target,
+			number = name.slice(4,5);
+
+		const nextEl = document.getElementById(`code${parseInt(number) + 1}`);
+		(nextEl != null) && nextEl.focus();
+		this.setState({[name]:value.slice(0,1)});
+	}
+
+	verifyCode = () => {
+		let code = `${this.state.code1}${this.state.code2}${this.state.code3}${this.state.code4}`,
+			{email} = this.props.userData;
+		if (code.length == 4) {
+			console.log('verifyCode', email, code);
+			//this.props.verifyCode(email, code);
+		}
+	}
+
 	/*componentDidMount(){
 		this.fetchPage(this.props);
 	}
@@ -117,6 +137,44 @@ class RegisterPro extends Component {
 	onChangeHandler = (e) => {
 		const {name, value} = e.target;
 		this.setState({[name]: value});
+	}
+
+	renderApplyArea = () => {
+		
+		return (
+			<div class={ style.applyArea }>
+				
+				{ /*!this.state.codeVerified &&*/ (
+					<div class={style.codeMsg}>
+						We've sent you a verification code via email. <br/>
+						Please enter the code below to continue.
+					</div>
+				)}
+							
+				{/*(!this.state.codeVerified)*/ true ? (
+					<div class={style.timer}>
+						Code expires in: 
+						<Timer minutes={5} backward={true}  />
+					</div>					
+				): (
+					<div className={style.success}>Code verified</div>
+				)}
+
+				<div class="code-input-container">
+					<div class={style.inputContainer}>
+						<input type="text" /*disabled={this.state.codeVerified}*/ name="code1" value={this.state.code1} onKeyUp={this.codeOnChange} className={ style.verifyInput } id="code1"/>
+						<input type="text" /*disabled={this.state.codeVerified}*/ name="code2" value={this.state.code2} onKeyUp={this.codeOnChange} className={ style.verifyInput } id="code2"/>
+						<input type="text" /*disabled={this.state.codeVerified}*/ name="code3" value={this.state.code3} onKeyUp={this.codeOnChange} className={ style.verifyInput } id="code3"/>
+						<input type="text" /*disabled={this.state.codeVerified}*/ name="code4" value={this.state.code4} onKeyUp={this.codeOnChange} className={ style.verifyInput } id="code4"/>
+					</div>
+				</div>
+
+				<button className={"uk-button " + style.verifyCode} onClick={this.verifyCode}>
+					Apply as {this.state.iam}
+				</button>
+
+			</div>
+		)
 	}
 
 	renderCompanyFields = () => {
@@ -295,34 +353,41 @@ class RegisterPro extends Component {
 		)
 	}
 
+	renderGeneralInfo = () => {
+		const {name, lastName, email} = this.props.userData;
+		return (
+			<div class = {style.generalInfo}>
+				<div>
+					<div class = { style.generalField }>Name:</div>
+					<div class = { style.generalField }>{ name } { lastName }</div>
+				</div>
+
+				<div>
+					<div class = { style.generalField }>Email:</div>
+					<div class = { style.generalField }>{email}</div>
+				</div>
+
+				<Radio name='iam'
+					value={this.state.iam} 
+					label='I am:' 
+					onChange = {this.onChangeHandler}
+					labelClass = {style.radioLabel}
+					data = {iamArr}/>
+			</div>
+		)
+	}
+
 	render(props, state) {
-		const {name, lastName, email} = props.userData;
 		return  (
 			<div class = {style.registerPro}>
 				<div class={ style.content }>
 				<h2>Register as a Pro</h2>
 					
-					<div class = {style.generalInfo}>
-						<div>
-							<div class = { style.generalField }>Name:</div>
-							<div class = { style.generalField }>{ name } { lastName }</div>
-						</div>
-
-						<div>
-							<div class = { style.generalField }>Email:</div>
-							<div class = { style.generalField }>{email}</div>
-						</div>
-
-						<Radio name='iam'
-							value={state.iam} 
-							label='I am:' 
-							onChange = {this.onChangeHandler}
-							labelClass = {style.radioLabel}
-							data = {iamArr}/>
-					</div>
+						{this.renderGeneralInfo()}
 
 						{this.renderIndividualFields()}
 
+						{this.renderApplyArea()}
 				</div>
 			</div>)
 
