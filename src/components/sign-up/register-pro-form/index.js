@@ -114,7 +114,7 @@ export default class RegisterProForm extends Component{
 				</div>
 
 				<button className={"uk-button " + style.applyBtn} onClick={this.verifyCode}>
-					Apply as {this.state.iam}
+					Apply as {this.state.regInfo.iam}
 				</button>
 
 			</div>
@@ -190,7 +190,7 @@ export default class RegisterProForm extends Component{
 		return (
 			<div class={style.content}>
 					{
-						this.state.iam === 'company' && this.renderCompanyFields()
+						this.state.regInfo.iam === 'company' && this.renderCompanyFields()
 					}
 
 						<div class={style.fieldContainer}>
@@ -322,7 +322,6 @@ export default class RegisterProForm extends Component{
     }
     
     render() {
-        console.log(this.state);
         return  (
 			<div class = {style.registerPro}>
 				<div class={ style.content }>
