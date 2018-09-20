@@ -29,6 +29,7 @@ class RegisterPro extends Component {
 			(this.props.userData.userAuth || getCookie('USER_AUTH')) ? (
 				<RegisterProForm userData={this.props.userData}
 							registerPro = {this.props.registerPro}
+							registerFailureMessage = {this.props.registerFailureMessage}
 							sendCode={() => {}}
 							verifyCode={() => {}}/>
 			) : (
@@ -40,6 +41,7 @@ class RegisterPro extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
+	registerFailureMessage: state.registerFailureMessage,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

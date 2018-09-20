@@ -141,6 +141,7 @@ export const logOff = () => (dispatch) => {
 export const register = (data) => async (dispatch) => {
 
 	const response = await user.register(data);
+	
 	if (response.error) {
 		dispatch(registerFailure(response.message));
 	} else {
@@ -148,11 +149,13 @@ export const register = (data) => async (dispatch) => {
 	}
 };
 
-export const registerPro = (data, authData) => async (dispatch) => {
-	const response = await user.registerPro(data, authData);
+export const registerPro = (data, authData, isForUpdate = false) => async (dispatch) => {
+	let response = isForUpdate ? 
+		await user.updatePro(data, authData)
+		: await user.registerPro(data, authData);
 
 	if (response.error) {
-		//dispatch(registerFailure(response.message));
+		dispatch(registerFailure(response.message));
 	} else {
 		dispatch(logInSuccess(response, authData));
 	}

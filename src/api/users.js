@@ -123,13 +123,63 @@ export function registerPro(data, authData){
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers: headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
 				message: json.message
 			} : json;
 		})
+		.catch(err => {
+			return response.status === 400 ? (
+				{ 
+					error: true,
+					message: 'User already registered as pro'
+				}
+			) : (
+				response.status === 401 && 
+					{
+						error: true, 
+						message: 'Full authentication is required to access this resource'
+					} 
+			)
+		})
+		
+		
+	})
+}
+
+export function updatePro(data, authData){
+
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+		console.log('updatePro',response);
+		return response.json().then(json => {
+			console.log('updatePro json',json);
+			return json.status === 400 ? {
+				error: true,
+				message: json.message
+			} : json;
+		})
+		.catch(err => {
+			return response.status === 403 ? (
+				{ 
+					error: true,
+					message: 'User is not registered as pro'
+				}
+			) : (
+				response.status === 401 && 
+					{
+						error: true, 
+						message: 'Full authentication is required to access this resource'
+					} 
+			)
+		})
+		
+		
 	})
 }
 

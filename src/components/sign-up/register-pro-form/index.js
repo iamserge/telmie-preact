@@ -40,70 +40,103 @@ const getCookie = (name) => {
     return null;
 }
 
+const getDefaultState = () => {
+	return {
+		accountType: accountTypeArr[0].value,
+		address: {
+			country: "GB",
+			city: '',
+			line1: '',
+			postCode: '',
+		},
+		dob: {
+			day: '',
+			month: '',
+			year: '',
+		},
+		profession: '',
+		professionDescription: '',
+		category: '',
+		subCategory: '',
+		costPerMinute: '',
+		mobile: '',
+		video: '',
+		time: timeArr[0].value,
+		currency: currencyArr[0].value,
+						
+		businessName: '',
+		compHouseNumber: '',
+		compAddress: '',
+		compCity: '',
+		compPostCode: '',
+		compCountry: '',
+	}
+}
+
+const getPreparedProState = (userData) => { // in future find field for individual or company toggle
+	const {dateOfBirth,location, pro, mobile} = userData;
+
+	const d = new Date(dateOfBirth);
+	const address = location ? 
+		JSON.parse(location) : {
+			country: "GB",
+			city: '',
+			line1: '',
+			postCode: '',
+		};
+
+	return {
+		accountType: accountTypeArr[0].value,
+		time: timeArr[0].value,
+		currency: currencyArr[0].value,
+		dob: {
+			day: d.getDate(),
+			month: d.getMonth() + 1,
+			year: d.getFullYear(),
+		},
+		address,
+		mobile,
+		...pro,
+	}
+}
+
 export default class RegisterProForm extends Component{
     constructor(props){
 		super(props);
 
-		const data = localStorage.getItem('register_pro_data');
-		this.state = data ? {
-            regInfo: JSON.parse(data)
-        }
-		 : {
-			regInfo: {
-				accountType: accountTypeArr[0].value,
-				address: {
-					country: "GB",
-					city: '',
-					line1: '',
-					postCode: '',
-				},
-				dob: {
-					day: '',
-					month: '',
-					year: '',
-				},
-				profession: '',
-				professionDescription: '',
-				category: '',
-				subCategory: '',
-				costPerMinute: '',
-				mobile: '',
-				video: '',
-				
-				time: timeArr[0].value,
-				currency: currencyArr[0].value,
+		const data = props.userData.pro === null ? 
+			localStorage.getItem('register_pro_data') ?
+				JSON.parse(localStorage.getItem('register_pro_data')) 
+				: getDefaultState()
+			: getPreparedProState(props.userData);
 
-
-                                
-                businessName: '',
-                compHouseNumber: '',
-                compAddress: '',
-                compCity: '',
-                compPostCode: '',
-                compCountry: '',
-            },
+		this.state = {
+            regInfo: data
 		}
-
+		
 		this.validator = new SimpleReactValidator({
 			decimal: {
 			  message: 'The :attribute must be decimal.',
-			  rule: function(val, options){ 
-				// check that it is a valid IP address and is not blacklisted
-				console.log(!isNaN(val));
-				return !isNaN(val)
-			  }
+			  rule: val => !isNaN(val),
 			}
 		  });
     }
     
     componentWillUnmount(){
-		this.props.userData.pro === null && (
-			localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo)),
-			console.log('noted to localStorage')
-		) 
+		this.props.userData.pro === null && 
+			localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo));
+	}
+
+	componentWillReceiveProps(nextProps){
+		( nextProps.userData.pro !== null && this.props.userData.pro == null ) 
+			&& this.setState({ regInfo: getPreparedProState(nextProps.userData) });
+	}
+
+	updateHandler = () => {
+		this.registerHandler(true);
 	}
 	
-	registerHandler = () => {
+	registerHandler = (isForUpdate = false) => {
 		if (this.validator.allValid()) {
 			let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
 
@@ -121,7 +154,7 @@ export default class RegisterProForm extends Component{
 					costPerMinute: Number.parseFloat(costPerMinute),
 				}
 
-				//this.props.registerPro(data, userAuth);
+				this.props.registerPro(data, userAuth, isForUpdate);
 			}
 		} else {
 			this.validator.showMessages();
@@ -202,6 +235,22 @@ export default class RegisterProForm extends Component{
     }
     
     renderApplyArea = () => {
+		let regControl;
+
+		switch (this.state.regInfo.active) {
+			case true:
+				regControl = (<button className={"uk-button " + style.applyBtn} onClick={this.updateHandler}>
+					Edit pro details
+				</button>);
+			  	break;
+			case false:
+				regControl = (<div class={style.approvalWaiting}>Your application is waiting for approval.</div>);
+			  break;
+			default:
+				regControl = (<button className={"uk-button " + style.applyBtn} onClick={this.registerHandler}>
+					Apply as {this.state.regInfo.accountType && this.state.regInfo.accountType.toLowerCase()}
+				</button>)
+		  }
 		
 		return (
 			<div class={ style.applyArea }>
@@ -231,15 +280,17 @@ export default class RegisterProForm extends Component{
 					</div>
 			</div>*/}
 
-				<button className={"uk-button " + style.applyBtn} onClick={this.registerHandler}>
-					Apply as {this.state.regInfo.accountType && this.state.regInfo.accountType.toLowerCase()}
-				</button>
+				{(this.props.registerFailureMessage.length > 0) && (
+					<div className={style.failure}>Error: {this.props.registerFailureMessage}</div>
+				)}
+
+				{regControl}
 
 			</div>
 		)
     }
     
-    renderCompanyFields = () => {
+    renderCompanyFields = (fieldsDisabled) => {
 		const {
 			businessName,
 			compHouseNumber,
@@ -256,40 +307,46 @@ export default class RegisterProForm extends Component{
 				<Input name='businessName' 
 						label='Business name' 
 						value={businessName} 
+						disabled={fieldsDisabled}
 						onChange = {this.onChangeHandler}/>
 
 				<Input name='compHouseNumber' 
 						label='Companies House registration number' 
 						value={compHouseNumber} 
+						disabled={fieldsDisabled}
 						onChange = {this.onChangeHandler}/>
 
 				<Input name='compAddress' 
 						label='Company address' 
 						value={compAddress} 
+						disabled={fieldsDisabled}
 						onChange = {this.onChangeHandler}/>
 
 				<div style={{width: '50%', display: 'inline-block'}}>
 					<Input name='compCity' 
 						label='City' 
 						value={compCity} 
+						disabled={fieldsDisabled}
 						onChange = {this.onChangeHandler}/>
 				</div>
 				<div style={{display: 'inline-block',width: '47%', marginLeft: '3%'}}>
 					<Input name='compPostCode' 
 						label='Post Code' 
 						value={compPostCode} 
+						disabled={fieldsDisabled}
 						onChange = {this.onChangeHandler}/>
 				</div>
 
 				<Input name='compCountry' 
 							label='Country' 
 							value={compCountry} 
+							disabled={fieldsDisabled}
 							onChange = {this.onChangeHandler}/>
 			</div>
 		)
     }
     
-    renderIndividualFields = () => {
+    renderIndividualFields = (fieldsDisabled) => {
 		const {
 			address,
 			profession,
@@ -323,7 +380,7 @@ export default class RegisterProForm extends Component{
 			<div class={style.content}>
 					{
 						this.state.regInfo.accountType !== accountTypeArr[0].value 
-							&& this.renderCompanyFields()
+							&& this.renderCompanyFields(fieldsDisabled)
 					}
 
 						<div class={style.fieldContainer}>
@@ -332,6 +389,7 @@ export default class RegisterProForm extends Component{
 								<textarea rows="2" 
 										name='line1' 
 										value={line1} 
+										disabled={fieldsDisabled}
 										onChange = {this.onChangeHandler}/>
 							</div>
 							{this.validator.message('line1', line1, 'required', 'validation-tooltip',  {required: 'Please enter personal address.'})}
@@ -341,6 +399,7 @@ export default class RegisterProForm extends Component{
 							<Input name='city' 
 								label='City' 
 								value={city} 
+								disabled={fieldsDisabled}
 								onChange = {this.onChangeHandler}/>
 							{this.validator.message('city', city, 'required', 'validation-tooltip',  {required: 'Please enter city.'})}
 						</div>
@@ -348,6 +407,7 @@ export default class RegisterProForm extends Component{
 							<Input name='postCode' 
 								label='Post Code' 
 								value={postCode} 
+								disabled={fieldsDisabled}
 								onChange = {this.onChangeHandler}/>
 							{this.validator.message('postCode', postCode, 'required', 'validation-tooltip',  {required: 'Please enter post code.'})}
 						</div>
@@ -356,7 +416,7 @@ export default class RegisterProForm extends Component{
 							<Input name='country' 
 									label='Country' 
 									value={country} 
-									disabled={true}
+									disabled={true || fieldsDisabled}
 									onChange = {this.onChangeHandler}/>
 							{this.validator.message('country', country, 'required', 'validation-tooltip',  {required: 'Please enter country.'})}
 						</div>
@@ -366,6 +426,7 @@ export default class RegisterProForm extends Component{
 							<input type="date" 
 								name="dob" 
 								value={dateOfBirth} 
+								disabled={fieldsDisabled}
 								onChange={this.onChangeHandler}/>
 							{this.validator.message('dob', dateOfBirth, 'required', 'validation-tooltip',  {required: 'Please enter date.'})}
 						</div>
@@ -375,6 +436,7 @@ export default class RegisterProForm extends Component{
 							<Input name='profession' 
 									label='Service Name' 
 									value={profession}
+									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}/>
 							{this.validator.message('profession', profession, 'required|max:20', 'validation-tooltip',  {required: 'Please enter profession.', min: 'Must have less than 20 characters.'})}
 						</div>
@@ -382,6 +444,7 @@ export default class RegisterProForm extends Component{
 							<Select name='category' 
 									label='Service category'
 									value={category}
+									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
 									data = {testArr}/>
 							{this.validator.message('category', category, 'required', 'validation-tooltip',  {required: 'Please enter service category.'})}
@@ -390,6 +453,7 @@ export default class RegisterProForm extends Component{
 							<Select name='subCategory' 
 									label='Service sub-category'
 									value={subCategory} 
+									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
 									data = {testArr}/>
 							{this.validator.message('subCategory', subCategory, 'required', 'validation-tooltip',  {required: 'Please enter service sub-category.'})}
@@ -400,6 +464,7 @@ export default class RegisterProForm extends Component{
 								<textarea rows="2" 
 										name='professionDescription' 
 										value={professionDescription} 
+										disabled={fieldsDisabled}
 										onChange = {this.onChangeHandler}/>
 							</div>
 							{this.validator.message('professionDescription', professionDescription, 'required', 'validation-tooltip',  {required: 'Please enter profession description.'})}
@@ -408,7 +473,7 @@ export default class RegisterProForm extends Component{
 						<div style={{display: 'inline-block',width: '20%'}}>
 							<Select name='currency' 
 									value={currency} 
-									disabled={true}
+									disabled={true || fieldsDisabled}
 									onChange = {this.onChangeHandler}
 									data = {currencyArr}/>
 						</div>
@@ -416,13 +481,14 @@ export default class RegisterProForm extends Component{
 							<Input name='costPerMinute' 
 								value={costPerMinute}
 								placeholder = "Rate"
+								disabled={fieldsDisabled}
 								onChange = {this.onChangeHandler}/>
 							{this.validator.message('costPerMinute', costPerMinute, 'required|decimal', 'validation-tooltip',  {required: 'Please enter cost.', decimal: 'Please enter correct cost.'})}
 						</div>
 						<div style={{display: 'inline-block',width: '27%', marginLeft: '3%'}}>
 							<Select name='time' 
 										value={time} 
-										disabled={true}
+										disabled={true || fieldsDisabled}
 										onChange = {this.onChangeHandler}
 										data = {timeArr}/>
 						</div>
@@ -432,6 +498,7 @@ export default class RegisterProForm extends Component{
 							<Input name='mobile' 
 								value={mobile}
 								label="Mobile"
+								disabled={fieldsDisabled}
 								onChange = {this.onChangeHandler}/>
 							{this.validator.message('mobile', mobile, 'required|phone', 'validation-tooltip',  {required: 'Please enter mobile.', phone: 'Please enter correct mobile.'})}
 						</div>
@@ -447,6 +514,7 @@ export default class RegisterProForm extends Component{
 									value={video}
 									label="YouTube ID"
 									postTab="optional"
+									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}/>
 							{this.validator.message('video', video, 'required', 'validation-tooltip',  {required: 'Please enter video.'})}
 						</div>
@@ -481,14 +549,20 @@ export default class RegisterProForm extends Component{
     }
     
     render() {
+
+		const fieldsDisabled = this.state.regInfo.active === false;
+
         return  (
 			<div class = {style.registerPro}>
 				<div class={ style.content }>
-				<h2>Register as a Pro</h2>
+				{
+					this.state.regInfo.active === true ?
+						(<h2>Edit pro details</h2>) : (<h2>Register as a Pro</h2>)
+				}
 					
 				{this.renderGeneralInfo()}
 
-				{this.renderIndividualFields()}
+				{this.renderIndividualFields(fieldsDisabled)}
 
 				{this.renderApplyArea()}
 				

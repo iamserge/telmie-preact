@@ -16,6 +16,23 @@ $font-size: 18px;
 			margin-top: 40px;
 		}
 
+		.failure {
+			color: $red;
+		  background: $lightRed;
+		  padding: 20px;
+		  text-align: center;
+		  margin-bottom: 20px;
+		}
+
+		.approvalWaiting{
+			color: $blue;
+		  background: $lightBackgroundGrey;
+		  padding: 20px;
+		  font-size: 18px;
+		  text-align: center;
+		  margin-bottom: 20px;
+		}
+
 		.validationDiv{
 			position: relative;
 		}
