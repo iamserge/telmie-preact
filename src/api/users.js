@@ -117,6 +117,22 @@ export function register(data){
 	});
 }
 
+export function registerPro(data, authData){
+
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers: headers, body: JSON.stringify(data)}).then(response => {
+		return response.json().then(json => {
+			return json.status === 400 ? {
+				error: true,
+				message: json.message
+			} : json;
+		})
+	})
+}
+
 
 export function resetPassword(data){
 	let headers = new Headers();

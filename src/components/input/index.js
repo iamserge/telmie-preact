@@ -8,6 +8,7 @@ const Input = props => {
             {props.label && <label>{props.label}</label>}
             <input
                 type="text"
+                disabled={props.disabled}
                 style = {props.postTab ? {paddingRight: '100px'} : {}}
                 placeholder = {props.placeholder}
                 name={props.name}

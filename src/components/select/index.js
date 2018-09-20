@@ -7,6 +7,7 @@ const Select = (props) => {
         <div class={style.formSelect}>
             {props.label && <label>{props.label}</label>}
             <select name={props.name}
+                disabled={props.disabled}
                 onChange={props.onChange}
                 value = {props.value}>
                 {

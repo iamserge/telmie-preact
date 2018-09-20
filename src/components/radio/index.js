@@ -18,6 +18,7 @@ const Radio = (props) => {
                                 {el.name}
                                 <input type="radio" 
                                     name= {props.name} 
+                                    disabled={props.disabled}
                                     value={el.value}
                                     checked={el.value === props.value}
                                     onChange={props.onChange}/>

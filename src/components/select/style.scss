@@ -43,6 +43,10 @@ $font-size: 18px;
         -moz-appearance: none;
         appearance: none;
         padding: 3px 0;
+
+        &:disabled {
+            cursor: default;
+        }
     }    
 }
 

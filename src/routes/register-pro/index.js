@@ -4,6 +4,8 @@ import { connect } from 'preact-redux';
 import style from './style.scss';
 import {  } from '../../actions/user';
 import { route } from 'preact-router';
+import { registerPro } from '../../actions/user';
+
 import Redirect from '../../components/global/redirect';
 
 
@@ -26,6 +28,7 @@ class RegisterPro extends Component {
 		return  (
 			(this.props.userData.userAuth || getCookie('USER_AUTH')) ? (
 				<RegisterProForm userData={this.props.userData}
+							registerPro = {this.props.registerPro}
 							sendCode={() => {}}
 							verifyCode={() => {}}/>
 			) : (
@@ -39,7 +42,9 @@ const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	registerPro
+}, dispatch);
 
 export default connect(
 	mapStateToProps,
