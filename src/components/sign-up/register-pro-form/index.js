@@ -5,6 +5,7 @@ import Input from '../../input'
 import Radio from '../../radio'
 import  Timer from "react-time-counter";
 import SimpleReactValidator from 'simple-react-validator';
+import Modal from '../../modal'
 
 
 import {testArr} from './mock-data'
@@ -114,6 +115,8 @@ export default class RegisterProForm extends Component{
 		this.state = {
 			regInfo: data,
 			isFieldCorrect: {},
+			isSaveVisible: false,
+			isInfoRegisterVisible: false,
 		}
 		
 		this.validator = new SimpleReactValidator({
@@ -125,8 +128,19 @@ export default class RegisterProForm extends Component{
     }
     
     componentWillUnmount(){
-		this.props.userData.pro === null && 
-			localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo));
+		(this.props.userData.pro === null 
+			&& window.confirm('Do you want to save your application before you leave?')) 
+				&& localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo));
+	}
+
+	componentDidMount(){
+		const that = this;
+
+		window.onbeforeunload = window.onunload = () => {
+			that.setState({isSaveVisible: true});
+			if (that.props.userData.pro === null) 
+				return 'You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.';
+		};
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -160,8 +174,8 @@ export default class RegisterProForm extends Component{
 					costPerMinute: Number.parseFloat(costPerMinute),
 				}
 
-				//this.props.registerPro(data, userAuth, isForUpdate);
-				alert("OK")
+				this.props.registerPro(data, userAuth, isForUpdate);
+				this.setState({isInfoRegisterVisible: true});
 			}
 		} else {
 			/*this.validator.showMessages();
@@ -570,28 +584,50 @@ export default class RegisterProForm extends Component{
 					data = {accountTypeArr}/>
 			</div>
 		)
-    }
+	}
+	
+	closeInfoRegisterModal = () => {
+		this.setState({isInfoRegisterVisible: false})
+	}
+
+	closeSaveModal = () => {
+		this.setState({isSaveVisible: false})
+	}
+	saveData = () => {
+		this.props.userData.pro === null 
+			&& localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo));
+		this.closeSaveModal();
+	}
     
     render() {
-
 		const fieldsDisabled = this.state.regInfo.active === false;
 
         return  (
 			<div class = {style.registerPro}>
 				<div class={ style.content }>
-				{
-					this.state.regInfo.active === true ?
-						(<h2>Edit pro details</h2>) : (<h2>Register as a Pro</h2>)
-				}
-					
-				{this.renderGeneralInfo()}
+					{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit pro details</h2>) }
+						
+					{this.renderGeneralInfo()}
 
-				{this.renderIndividualFields(fieldsDisabled)}
+					{this.renderIndividualFields(fieldsDisabled)}
 
-				{this.renderApplyArea()}
-				
-                
+					{this.renderApplyArea()}
 				</div>
+
+				<Modal isVisible = {this.state.isInfoRegisterVisible}
+					title='Your changes will be sent for review'
+					okText="OK"
+					onOk = {this.closeInfoRegisterModal}
+					onCancel={this.closeInfoRegisterModal}>
+					Please note that every new profile change has to go trough verification process
+				</Modal>
+
+				<Modal isVisible = {this.state.isSaveVisible}
+					title='Do you want to save your application before you leave?'
+					okText="Yes, save."
+					cancelText = "Don’t save my details."
+					onOk = {this.saveData}
+					onCancel={this.closeSaveModal}/>
 			</div>)
     }
 }

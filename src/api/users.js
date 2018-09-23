@@ -156,9 +156,7 @@ export function updatePro(data, authData){
 	headers.append("Authorization", "Basic " + authData);
 
 	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
-		console.log('updatePro',response);
 		return response.json().then(json => {
-			console.log('updatePro json',json);
 			return json.status === 400 ? {
 				error: true,
 				message: json.message
