@@ -168,6 +168,7 @@ export default class RegisterProForm extends Component{
 			this.forceUpdate();*/
 			this.setState({
 				isFieldCorrect: {
+					error: true,
 					...this.validator.fields
 				}
 			})
@@ -291,6 +292,10 @@ export default class RegisterProForm extends Component{
 						<input type="text" /*disabled={this.state.codeVerified} name="code4" value={this.state.code4} onKeyUp={this.codeOnChange} className={ style.verifyInput } id="code4"/>
 					</div>
 			</div>*/}
+
+				{(this.state.isFieldCorrect.error) && (
+					<div className={style.error} style={{padding: 10, fontSize: 20}}>Please fill in all missing fields in the form to proceed.</div>
+				)}
 
 				{(this.props.registerFailureMessage.length > 0) && (
 					<div className={style.failure}>Error: {this.props.registerFailureMessage}</div>
