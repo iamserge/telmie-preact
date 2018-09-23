@@ -127,7 +127,6 @@ class EditProfile extends Component {
 				
 				{ this.state.codeSent && (
 					
-					
 					<div className={style.userDetails}>
 						{ !this.state.codeVerified && (
 							<div className={style.codeMessage}>

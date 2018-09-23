@@ -6,7 +6,15 @@ import FontAwesome from 'react-fontawesome';
 
 export default class Details extends Component {
 
+	changeDateISOFormat = (date) => {
+		const d = new Date(date);
+		console.log(d);
+		return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+	}
+
 	render({user}) {
+		const dateOfBirth = (user.dateOfBirth != null) ? this.changeDateISOFormat(user.dateOfBirth) : 'TBC';
+
 		return (
 			<div className={style.details}>
 				<h2>
@@ -28,7 +36,7 @@ export default class Details extends Component {
 					</div>
 					<div>
 						<span className={style.key}>Date of birth:</span>
-						<span className={style.value}>{(user.dateOfBirth != null) ? user.dateOfBirth : 'TBC'}</span>
+						<span className={style.value}>{ dateOfBirth }</span>
 					</div>
 					<div>
 						<span className={style.key}>Location:</span>
