@@ -6,8 +6,7 @@ import {  } from '../../actions/user';
 import { route } from 'preact-router';
 import { registerPro, getCategories } from '../../actions/user';
 
-import Redirect from '../../components/global/redirect';
-
+import Spinner from '../../components/global/spinner';
 
 import RegisterProForm from '../../components/sign-up/register-pro-form'
 
@@ -23,20 +22,22 @@ const getCookie = (name) => {
 }
 
 class RegisterPro extends Component {
+	componentDidMount(){
+		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+		this.props.getCategories(userAuth);
+	}
 
 	render() {
-		return  (
-			(this.props.userData.userAuth || getCookie('USER_AUTH')) ? (
+		return ((Object.keys(this.props.userData).length != 0) && (Object.keys(this.props.dataFromServer).length != 0)) ? (
 				<RegisterProForm userData={this.props.userData}
-							registerPro = {this.props.registerPro}
-							registerFailureMessage = {this.props.registerFailureMessage}
-							getCategories = {this.props.getCategories}
-							dataFromServer = {this.props.dataFromServer}
-							sendCode={() => {}}
-							verifyCode={() => {}}/>
+					registerPro = {this.props.registerPro}
+					registerFailureMessage = {this.props.registerFailureMessage}
+					getCategories = {this.props.getCategories}
+					dataFromServer = {this.props.dataFromServer}
+					sendCode={() => {}}
+					verifyCode={() => {}}/>
 			) : (
-				<Redirect to='/log-in' />
-			)
+				<Spinner />
 			)
 	}
 }

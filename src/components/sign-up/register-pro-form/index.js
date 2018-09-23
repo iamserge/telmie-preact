@@ -7,6 +7,8 @@ import Timer from "react-time-counter";
 import SimpleReactValidator from 'simple-react-validator';
 import Modal from '../../modal'
 
+const STORAGE_ITEM_NAME = 'register_pro_data';
+
 const accountTypeArr = [{
 	name: 'Individual',
 	value: 'INDIVIDUAL'
@@ -104,8 +106,8 @@ export default class RegisterProForm extends Component{
 		super(props);
 
 		const data = props.userData.pro === null ? 
-			localStorage.getItem('register_pro_data') ?
-				JSON.parse(localStorage.getItem('register_pro_data')) 
+			localStorage.getItem(STORAGE_ITEM_NAME) ?
+				JSON.parse(localStorage.getItem(STORAGE_ITEM_NAME)) 
 				: getDefaultState()
 			: getPreparedProState(props.userData);
 
@@ -127,25 +129,26 @@ export default class RegisterProForm extends Component{
     componentWillUnmount(){
 		(this.props.userData.pro === null 
 			&& window.confirm('Do you want to save your application before you leave?')) 
-				&& localStorage.setItem('register_pro_data', JSON.stringify(this.state.regInfo));
+				&& localStorage.setItem(STORAGE_ITEM_NAME, JSON.stringify(this.state.regInfo));
 	}
 
 	componentDidMount(){
 		const that = this;
 
 		window.onbeforeunload = window.onunload = () => {
-			that.setState({isSaveVisible: true});
-			if (that.props.userData.pro === null) 
+			if (that.props.userData.pro === null) {
+				that.setState({isSaveVisible: true});
 				return 'You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.';
+			}
 		};
-
-		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
-		this.props.getCategories(userAuth);
 	}
 
 	componentWillReceiveProps(nextProps){
 		( nextProps.userData.pro !== null && this.props.userData.pro == null ) 
-			&& this.setState({ regInfo: getPreparedProState(nextProps.userData) });
+			&& (
+				this.setState({ regInfo: getPreparedProState(nextProps.userData) }),
+				localStorage.removeItem(STORAGE_ITEM_NAME)
+		);
 	}
 
 	updateHandler = () => {
