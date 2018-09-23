@@ -10,6 +10,15 @@ $font-size: 18px;
 		width: 700px;
 		margin: 0 auto;
 
+		.validation-message{
+			color: $red;
+		}
+
+		.error {
+			color: $red;
+			border-color: $red !important;
+		}
+
 		h2 {
 			text-align: center;
 			color: $red;
@@ -31,10 +40,6 @@ $font-size: 18px;
 		  font-size: 18px;
 		  text-align: center;
 		  margin-bottom: 20px;
-		}
-
-		.validationDiv{
-			position: relative;
 		}
 
 		.applyArea{
@@ -140,15 +145,15 @@ $font-size: 18px;
 				position: relative;
 				overflow: hidden;
 
-				textarea {
-					font-size: $font-size;
-					color: $blue;
-					resize: none;
-				  }
+				
 				  textarea {
 					width: 100%;
 					box-sizing: border-box;
 					background-color: transparent;
+
+					font-size: $font-size;
+					color: $blue;
+					resize: none;
 					
 					outline: none;
 					display: block;

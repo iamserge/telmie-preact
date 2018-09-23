@@ -7,6 +7,11 @@ $font-size: 18px;
     position: relative;
     font-size: $font-size;
 
+    .error {
+        color: $red;
+        border-color: $red;
+    }
+
     &:after {
         content:"";
         width: 0;

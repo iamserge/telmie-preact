@@ -111,7 +111,8 @@ export default class RegisterProForm extends Component{
 			: getPreparedProState(props.userData);
 
 		this.state = {
-            regInfo: data
+			regInfo: data,
+			isFieldCorrect: {},
 		}
 		
 		this.validator = new SimpleReactValidator({
@@ -140,6 +141,10 @@ export default class RegisterProForm extends Component{
 		if (this.validator.allValid()) {
 			let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
 
+			this.setState({
+				isFieldCorrect: {}
+			})
+
 			if(userAuth) {
 				const {dob,costPerMinute} = this.state.regInfo;
 				const {day,month,year} = dob;
@@ -154,11 +159,17 @@ export default class RegisterProForm extends Component{
 					costPerMinute: Number.parseFloat(costPerMinute),
 				}
 
-				this.props.registerPro(data, userAuth, isForUpdate);
+				//this.props.registerPro(data, userAuth, isForUpdate);
+				alert("OK")
 			}
 		} else {
-			this.validator.showMessages();
-			this.forceUpdate();
+			/*this.validator.showMessages();
+			this.forceUpdate();*/
+			this.setState({
+				isFieldCorrect: {
+					...this.validator.fields
+				}
+			})
 		}
 	}
     
@@ -374,6 +385,10 @@ export default class RegisterProForm extends Component{
 			year,
 		} = dob;
 
+		const {isFieldCorrect} = this.state;
+
+		const isErrorInField = val =>  val === false;
+
 		const dateOfBirth = year ? `${year}-${month}-${day}` : '';
 
 		return (
@@ -384,90 +399,94 @@ export default class RegisterProForm extends Component{
 					}
 
 						<div class={style.fieldContainer}>
-							<label>Personal address</label>
+							<label class = {isErrorInField(isFieldCorrect.line1)? style.error : ''}>Personal address</label>
 							<div class={style.taElement}>
 								<textarea rows="2" 
 										name='line1' 
 										value={line1} 
 										disabled={fieldsDisabled}
+										class = {isErrorInField(isFieldCorrect.line1)? style.error : ''}
 										onChange = {this.onChangeHandler}/>
 							</div>
-							{this.validator.message('line1', line1, 'required', 'validation-tooltip',  {required: 'Please enter personal address.'})}
+							{this.validator.message('line1', line1, 'required')}
 						</div>
 
 						<div style={{width: '50%', display: 'inline-block',position: 'relative'}}>
-							<Input name='city' 
+							<Input name='city'
 								label='City' 
 								value={city} 
 								disabled={fieldsDisabled}
+								error={isErrorInField(isFieldCorrect.city)}
 								onChange = {this.onChangeHandler}/>
-							{this.validator.message('city', city, 'required', 'validation-tooltip',  {required: 'Please enter city.'})}
+							{this.validator.message('city', city, 'required')}
 						</div>
 						<div style={{display: 'inline-block',width: '47%', marginLeft: '3%',position: 'relative'}}>
 							<Input name='postCode' 
 								label='Post Code' 
 								value={postCode} 
 								disabled={fieldsDisabled}
+								error={isErrorInField(isFieldCorrect.postCode)}
 								onChange = {this.onChangeHandler}/>
-							{this.validator.message('postCode', postCode, 'required', 'validation-tooltip',  {required: 'Please enter post code.'})}
+							{this.validator.message('postCode', postCode, 'required')}
 						</div>
 
-						<div class={style.validationDiv}>
 							<Input name='country' 
 									label='Country' 
 									value={country} 
 									disabled={true || fieldsDisabled}
+									error={isErrorInField(isFieldCorrect.country)}
 									onChange = {this.onChangeHandler}/>
-							{this.validator.message('country', country, 'required', 'validation-tooltip',  {required: 'Please enter country.'})}
-						</div>
+							{this.validator.message('country', country, 'required')}
 						
 						<div class = {style.fieldContainer}>
-							<label>Date of birth</label>
+							<label class = {isErrorInField(isFieldCorrect.dob)? style.error : ''}>Date of birth</label>
 							<input type="date" 
 								name="dob" 
 								value={dateOfBirth} 
 								disabled={fieldsDisabled}
+								class = {isErrorInField(isFieldCorrect.dob)? style.error : ''}
 								onChange={this.onChangeHandler}/>
-							{this.validator.message('dob', dateOfBirth, 'required', 'validation-tooltip',  {required: 'Please enter date.'})}
+							{this.validator.message('dob', dateOfBirth, 'required')}
 						</div>
 
 
-						<div class={style.validationDiv}>
 							<Input name='profession' 
 									label='Service Name' 
 									value={profession}
 									disabled={fieldsDisabled}
+									error={isErrorInField(isFieldCorrect.profession)}
 									onChange = {this.onChangeHandler}/>
-							{this.validator.message('profession', profession, 'required|max:20', 'validation-tooltip',  {required: 'Please enter profession.', min: 'Must have less than 20 characters.'})}
-						</div>
-						<div class={style.validationDiv}>
+							{this.validator.message('profession', profession, 'required|max:20')}
+
 							<Select name='category' 
 									label='Service category'
 									value={category}
 									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
+									error={isErrorInField(isFieldCorrect.category)}
 									data = {testArr}/>
-							{this.validator.message('category', category, 'required', 'validation-tooltip',  {required: 'Please enter service category.'})}
-						</div>
-						<div class={style.validationDiv}>
+							{this.validator.message('category', category, 'required')}
+
 							<Select name='subCategory' 
 									label='Service sub-category'
 									value={subCategory} 
 									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
+									error={isErrorInField(isFieldCorrect.subCategory)}
 									data = {testArr}/>
-							{this.validator.message('subCategory', subCategory, 'required', 'validation-tooltip',  {required: 'Please enter service sub-category.'})}
-						</div>
+							{this.validator.message('subCategory', subCategory, 'required')}
+
 						<div class={style.fieldContainer}>
-							<label>Service description </label>
+							<label class = {isErrorInField(isFieldCorrect.professionDescription)? style.error : ''}>Service description </label>
 							<div class={style.taElement}>
 								<textarea rows="2" 
 										name='professionDescription' 
 										value={professionDescription} 
 										disabled={fieldsDisabled}
+										class = {isErrorInField(isFieldCorrect.professionDescription)? style.error : ''}
 										onChange = {this.onChangeHandler}/>
 							</div>
-							{this.validator.message('professionDescription', professionDescription, 'required', 'validation-tooltip',  {required: 'Please enter profession description.'})}
+							{this.validator.message('professionDescription', professionDescription, 'required')}
 						</div>
 
 						<div style={{display: 'inline-block',width: '20%'}}>
@@ -482,8 +501,9 @@ export default class RegisterProForm extends Component{
 								value={costPerMinute}
 								placeholder = "Rate"
 								disabled={fieldsDisabled}
+								error={isErrorInField(isFieldCorrect.costPerMinute)}
 								onChange = {this.onChangeHandler}/>
-							{this.validator.message('costPerMinute', costPerMinute, 'required|decimal', 'validation-tooltip',  {required: 'Please enter cost.', decimal: 'Please enter correct cost.'})}
+							{this.validator.message('costPerMinute', costPerMinute, 'required|decimal')}
 						</div>
 						<div style={{display: 'inline-block',width: '27%', marginLeft: '3%'}}>
 							<Select name='time' 
@@ -494,14 +514,13 @@ export default class RegisterProForm extends Component{
 						</div>
 
 						{/*<div style={{display: 'inline-block',width: '60%'}}>*/}
-						<div class={style.validationDiv}>
 							<Input name='mobile' 
 								value={mobile}
 								label="Mobile"
 								disabled={fieldsDisabled}
+								error={isErrorInField(isFieldCorrect.mobile)}
 								onChange = {this.onChangeHandler}/>
-							{this.validator.message('mobile', mobile, 'required|phone', 'validation-tooltip',  {required: 'Please enter mobile.', phone: 'Please enter correct mobile.'})}
-						</div>
+							{this.validator.message('mobile', mobile, 'required|phone')}
 						{/*</div>
 						<div style={{display: 'inline-block',width: '30%', marginLeft: '10%'}}>
 							<button onClick={this.sendCode}>
@@ -509,15 +528,14 @@ export default class RegisterProForm extends Component{
 							</button>
 						</div>*/}
 
-						<div class={style.validationDiv}>
 							<Input name='video' 
 									value={video}
 									label="YouTube ID"
 									postTab="optional"
 									disabled={fieldsDisabled}
+									error={isErrorInField(isFieldCorrect.video)}
 									onChange = {this.onChangeHandler}/>
-							{this.validator.message('video', video, 'required', 'validation-tooltip',  {required: 'Please enter video.'})}
-						</div>
+							{this.validator.message('video', video, 'required')}
 			</div>
 		)
     }

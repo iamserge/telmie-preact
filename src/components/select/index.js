@@ -2,12 +2,14 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 
 const Select = (props) => {
+    const errorClass = props.error === true ? style.error : '';
     
     return (
         <div class={style.formSelect}>
-            {props.label && <label>{props.label}</label>}
+            {props.label && <label class={errorClass}>{props.label}</label>}
             <select name={props.name}
                 disabled={props.disabled}
+                class={errorClass}
                 onChange={props.onChange}
                 value = {props.value}>
                 {
