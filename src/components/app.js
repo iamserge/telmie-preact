@@ -17,9 +17,12 @@ import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
 import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
+import ErrorRoute from '../routes/errorRoute'
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
+import { bindActionCreators } from 'redux';
+import { connect } from 'preact-redux';
 
 export const routes = {
 	HOME: '/',
@@ -39,11 +42,11 @@ export const routes = {
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
-	FORGOT_PASSWORD: '/forgot-password'
+	FORGOT_PASSWORD: '/forgot-password',
 };
 
 
-export default class App extends Component {
+class App extends Component {
 
 	constructor(props){
 		super(props);
@@ -67,42 +70,70 @@ export default class App extends Component {
 	};
 
 	buildContext() {
-    const accessToken = PrismicConfig.accessToken;
-    return Prismic.api(PrismicConfig.apiEndpoint, { accessToken }).then(api => ({
-      api,
-      endpoint: PrismicConfig.apiEndpoint,
-      accessToken,
-      linkResolver: PrismicConfig.linkResolver
-    }));
-  }
+		const accessToken = PrismicConfig.accessToken;
+		return Prismic.api(PrismicConfig.apiEndpoint, { accessToken }).then(api => ({
+		api,
+		endpoint: PrismicConfig.apiEndpoint,
+		accessToken,
+		linkResolver: PrismicConfig.linkResolver
+		}));
+	}
+
+	renderProRoutes = () => {
+
+		return [
+			<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
+		]
+	}
+
+	renderUserRoutes = (user) => {
+
+		return (Object.keys(user.pro).length === 0) ? [
+			...this.renderDefaultRoutes(),
+			<Search path={routes.SEARCH} />, 
+			<Activity path={routes.MY_PROS} isProCalls = { false } />,
+			<AllTransactions path={routes.TRANSACTIONS} />,
+		] : [
+			...this.renderDefaultRoutes(),
+			...this.renderProRoutes(),
+			<Search path={routes.SEARCH} />, 
+			<Activity path={routes.MY_PROS} isProCalls = { false } />,
+			<AllTransactions path={routes.TRANSACTIONS} />,
+		]
+	}
+
+	renderDefaultRoutes = () => {
+		return [
+			//<Pro path={routes.PRO} />,
+			//<Shortlist path={routes.MY_SHORTLIST} />,
+			//<Shortlist path={routes.MY_SHORTLIST} />,
+			//<Profile path = { routes.PROFILE } />,
+			//<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+
+			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
+			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
+			<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,
+			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
+			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>,
+			<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>,
+
+			<LogIn path = { routes.LOG_IN } />,
+			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+		]
+	}
 
 	render() {
+		const user = this.props.userData;
+
 		return (
 			<div id="app">
 				<Header />
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
-						<Search path={routes.SEARCH} />
-						<Pro path={routes.PRO} />
-						<Activity path={routes.MY_PROS} isProCalls = { false } />
-						<Activity path={routes.MY_CLIENTS} isProCalls = { true } />
-						<Shortlist path={routes.MY_SHORTLIST} />
-						<Shortlist path={routes.MY_SHORTLIST} />
-
-						<AllTransactions path={routes.TRANSACTIONS} />
-						<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
-						<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
-						<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
-						<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>
-						<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
-						<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
-
-						<LogIn path = { routes.LOG_IN } />
-						<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
-						<Profile path = { routes.PROFILE } />
-						<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
-						<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />
-						<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+						{(Object.keys(user).length !== 0) ? this.renderUserRoutes(user) : this.renderDefaultRoutes()}
+						<ErrorRoute default />
 					</Router>
 				</div>
 				<Footer />
@@ -110,3 +141,14 @@ export default class App extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	userData: state.loggedInUser,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);
