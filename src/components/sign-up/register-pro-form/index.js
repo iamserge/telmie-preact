@@ -77,6 +77,7 @@ const getPreparedProState = (userData) => { // in future find field for individu
 	const {dateOfBirth,location, pro, mobile} = userData;
 
 	const d = new Date(dateOfBirth);
+	
 	const address = location ? 
 		JSON.parse(location) : {
 			country: "GB",
@@ -90,9 +91,9 @@ const getPreparedProState = (userData) => { // in future find field for individu
 		time: timeArr[0].value,
 		currency: currencyArr[0].value,
 		dob: {
-			day: d.getDate(),
-			month: d.getMonth() + 1,
-			year: d.getFullYear(),
+			day: `${d.getDate()}`.padStart(2,0),
+			month: `${d.getMonth() + 1}`.padStart(2,0),
+			year: `${d.getFullYear()}`.padStart(2,0),
 		},
 		address,
 		mobile,
