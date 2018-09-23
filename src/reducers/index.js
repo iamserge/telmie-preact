@@ -34,8 +34,8 @@ const rootReducer = combineReducers({
 	sendCodeSuccess: user.sendCodeSuccess,
 	sendCodeFailureMessage: user.sendCodeFailureMessage,
 	verifyCodeSuccess: user.verifyCodeSuccess,
-	verifyCodeFailureMessage: user.verifyCodeFailureMessage
-
+	verifyCodeFailureMessage: user.verifyCodeFailureMessage,
+	dataFromServer: user.dataFromServer,
 
 });
 

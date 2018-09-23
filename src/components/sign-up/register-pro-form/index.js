@@ -3,12 +3,9 @@ import style from './style.scss';
 import Select from '../../select'
 import Input from '../../input'
 import Radio from '../../radio'
-import  Timer from "react-time-counter";
+import Timer from "react-time-counter";
 import SimpleReactValidator from 'simple-react-validator';
 import Modal from '../../modal'
-
-
-import {testArr} from './mock-data'
 
 const accountTypeArr = [{
 	name: 'Individual',
@@ -141,6 +138,9 @@ export default class RegisterProForm extends Component{
 			if (that.props.userData.pro === null) 
 				return 'You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.';
 		};
+
+		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+		this.props.getCategories(userAuth);
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -235,29 +235,31 @@ export default class RegisterProForm extends Component{
 
 		this.setState(prev => {
             return (['country','city','line1','postCode'].indexOf(name) === -1) ? (
-				name === 'dob' ? (
-					{
+				name === 'dob' ? ({
+					regInfo: {	
+						...prev.regInfo,
+						[name]: that.dobFormat(value),
+					}
+				}) : (
+					name === 'category' ? ({
 						regInfo: {	
 							...prev.regInfo,
-							[name]: that.dobFormat(value),
+							[name]: value,
+							subCategory: '',
 						}
-					}
-				) : (
-					{
+					}) : ({
 						regInfo: {	
 							...prev.regInfo,
 							[name]: value,
 						}
-					}
+					})
 				)
-			) : (
-				{
-					regInfo: {	
-						...prev.regInfo,
-						address: that.addressFormat(prev.regInfo.address, name, value),
-					}
+			) : ({
+				regInfo: {	
+					...prev.regInfo,
+					address: that.addressFormat(prev.regInfo.address, name, value),
 				}
-			)
+			})
 		});
     }
     
@@ -407,6 +409,8 @@ export default class RegisterProForm extends Component{
 
 		const {isFieldCorrect} = this.state;
 
+		const { categories = [], subCategories = [] } = this.props.dataFromServer;
+
 		const isErrorInField = val =>  val === false;
 
 		const dateOfBirth = year ? `${year}-${month}-${day}` : '';
@@ -484,7 +488,8 @@ export default class RegisterProForm extends Component{
 									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
 									error={isErrorInField(isFieldCorrect.category)}
-									data = {testArr}/>
+									isArrayData={true}
+									data = {categories}/>
 							{this.validator.message('category', category, 'required')}
 
 							<Select name='subCategory' 
@@ -493,7 +498,8 @@ export default class RegisterProForm extends Component{
 									disabled={fieldsDisabled}
 									onChange = {this.onChangeHandler}
 									error={isErrorInField(isFieldCorrect.subCategory)}
-									data = {testArr}/>
+									isArrayData={true}
+									data = {subCategories[category]}/>
 							{this.validator.message('subCategory', subCategory, 'required')}
 
 						<div class={style.fieldContainer}>

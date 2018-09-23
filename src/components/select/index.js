@@ -14,7 +14,9 @@ const Select = (props) => {
                 value = {props.value}>
                 {
                     props.data && props.data.length !== 0 && ( props.data.map(el => {
-                        return (<option value={el.value} key={el.value}>{el.name}</option>)
+                        return props.isArrayData ? 
+                            (<option value={el} key={el}>{el}</option>) 
+                            : (<option value={el.value} key={el.value}>{el.name}</option>)
                     }))
                 }
             </select>

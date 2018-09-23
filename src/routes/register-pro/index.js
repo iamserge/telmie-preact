@@ -4,7 +4,7 @@ import { connect } from 'preact-redux';
 import style from './style.scss';
 import {  } from '../../actions/user';
 import { route } from 'preact-router';
-import { registerPro } from '../../actions/user';
+import { registerPro, getCategories } from '../../actions/user';
 
 import Redirect from '../../components/global/redirect';
 
@@ -30,6 +30,8 @@ class RegisterPro extends Component {
 				<RegisterProForm userData={this.props.userData}
 							registerPro = {this.props.registerPro}
 							registerFailureMessage = {this.props.registerFailureMessage}
+							getCategories = {this.props.getCategories}
+							dataFromServer = {this.props.dataFromServer}
 							sendCode={() => {}}
 							verifyCode={() => {}}/>
 			) : (
@@ -42,10 +44,12 @@ class RegisterPro extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	registerFailureMessage: state.registerFailureMessage,
+	dataFromServer: state.dataFromServer,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	registerPro
+	registerPro,
+	getCategories,
 }, dispatch);
 
 export default connect(
