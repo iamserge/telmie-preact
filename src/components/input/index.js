@@ -5,7 +5,7 @@ const Input = props => {
     const errorClass = props.error === true ? style.error : '';
 
     return (
-        <div class={style.formInput}>
+        <div className="input-container">
             {props.label && <label class={errorClass}>{props.label}</label>}
             <input
                 type="text"

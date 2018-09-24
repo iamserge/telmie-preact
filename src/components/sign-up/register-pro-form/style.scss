@@ -5,18 +5,107 @@ $font-size: 18px;
 
 
 .registerPro{
+	margin-bottom: 100px;
 
 	.content{
 		width: 700px;
 		margin: 0 auto;
+		
+		textarea{
+			height: 100px;
+		}
+		
+		.services {
+			position: relative;
+			
+			label {
+				display: block;
+				margin-bottom: 5px;
+			}
 
-		.validation-message{
-			color: $red;
+			> div {
+				display: flex;
+			  	background-color: #fff;
+			  	border: 1px solid $lightGrey;
+			  	font-size: 14px;
+				margin-bottom: 20px;
+		
+				> div {
+					flex-grow: 1;
+					box-sizing: border-box;
+					padding: 15px 0;
+					border-right: 1px solid $lightGrey;
+					text-align: center;					
+					
+					&:last-child {
+						border-right: none;
+					}
+					
+				}
+				&.enabled > div{
+					cursor: pointer;
+
+					&:hover, &.selected  {
+						background-color: $red;
+						color: white;
+					}
+				}
+
+				&.disabled > div{
+					cursor: default;
+
+					&.selected  {
+						background-color: $red;
+						color: white;
+					}
+				}			
+			}
+		
+			div[class="validation-tooltip"] {
+			  color: white;
+			  position: absolute;
+				left: -230px;
+			  display: block;
+			  width: 215px;
+			  background: $red;
+			  padding: 10px;
+			  font-size: 12px;
+			  text-align: center;
+			  border-radius: 10px;
+			  bottom: -8px;
+			}
 		}
 
+		.selectContainer {
+			select {
+				height: 50px;
+			}
+		}
+		
+		.rate {
+			text-align: center;
+			font-size: 14px;
+			> span {
+				color: $red;
+				font-size: 30px;
+			}
+		}
+
+		.free {
+			color: $red;
+			font-size: 20px;
+		}
+		
+		.disabledSlider{
+			div {
+				cursor: default !important;
+			}
+		}
+		
 		.error {
 			color: $red;
-			border-color: $red !important;
+			text-align: center;
+		  	margin-bottom: 10px;
 		}
 
 		h2 {
@@ -25,21 +114,13 @@ $font-size: 18px;
 			margin-top: 40px;
 		}
 
-		.failure {
-			color: $red;
-		  background: $lightRed;
-		  padding: 20px;
-		  text-align: center;
-		  margin-bottom: 20px;
-		}
-
 		.approvalWaiting{
 			color: $blue;
-		  background: $lightBackgroundGrey;
-		  padding: 20px;
-		  font-size: 18px;
-		  text-align: center;
-		  margin-bottom: 20px;
+		  	background: $lightBackgroundGrey;
+		  	padding: 20px;
+		  	font-size: 18px;
+		  	text-align: center;
+		  	margin-bottom: 10px;
 		}
 
 		.applyArea{
@@ -49,132 +130,47 @@ $font-size: 18px;
 			.codeMsg, .timer {
 				font-size: 20px;
 			}
-
 			.inputContainer{
 				width: 50%;
 				margin: 0 auto;
 			}
-
 			.verifyInput {
 				outline: none;
 				border: none;
 				border-bottom: 2px solid $lightGrey;
 				width: 50px;
 			}
-
 			.success {
 				font-size: 20px;
 				padding: 20px 0;
 				text-align: center;
 				margin-bottom: 20px;
             }
-            
             .applyBtn {
                 width: auto;
             }
 		}
 		
-
 		.generalInfo{
 			margin-bottom: 50px;
 
 			& > div {
 				margin-bottom: 10px;
-			}
-		}
 
-		.generalField{
-			font-size: $font-size;
-			display: inline-block;
-
-			&:first-child{
-				width: 80px;
-			}
-		}
-
-		.radioLabel {
-			display: inline-block;
-			padding: 3px 0;
-			font-size: $font-size;
-			white-space: nowrap;
-			width: 80px;
-		}
-		
-		& > div {
-			margin-bottom: 15px;
-		}
-
-		button {
-			height: 35px;
-			width: 100%;
-			font-size: 18px;
-			background-color: $red;
-			border: none;
-			border-radius: 10px;
-			font-weight: bold;
-			cursor: pointer;
-		}
-	
-		.fieldContainer{
-			display: flex;
-			position: relative;
-			font-size: $font-size;
-			
-			label {
-				padding: 3px 0;
-				margin-right: 20px;
-				font-size: $font-size;
-				white-space: nowrap;
-				width: auto;
-			}
-
-			input[type=date] {
-				background: transparent;
-				width: 100%;
-				height: 100%;
-				outline: none;
-				color: $blue;
-				font-size: $font-size;
-				border: none;
-				border-bottom: 1px solid $lightGrey;
-				padding: 3px 0;
-			}
-	
-			.taElement {
-				width: 100%;
-				position: relative;
-				overflow: hidden;
-
-				
-				  textarea {
-					width: 100%;
-					box-sizing: border-box;
-					background-color: transparent;
-
-					font-size: $font-size;
+				.key {
+					width: 50px;
+					display: inline-block;
 					color: $blue;
-					resize: none;
-					
-					outline: none;
-					display: block;
-					line-height: 1.2;
-					border: none;
-					border-bottom: 2px solid $lightGrey;
-				  }
-				
-				  &:before {
-					position: absolute;
-					content: "_____________________________________________________________________________________________";
-					z-index: -1;
-					left: 0;
-					top: 0;
-					width: 100%;
-					color: $lightGrey;
-					line-height: 2;  
-				  }
-			  }
-			  
+					margin-right: 10px;
+				}
+				.value {
+					font-size: 18px;
+					border-bottom: solid 1px $lightGrey;
+					display: inline-block;
+					min-width: 70%;
+				}
 			}
+		}
 	}
 	
 }
