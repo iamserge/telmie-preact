@@ -585,7 +585,7 @@ export default class RegisterProForm extends Component{
 		const fieldsDisabled = this.state.regInfo.active === false;
 
         return  (
-			<div class = {style.registerPro}>
+			<div class = {`uk-container-small ${style.registerPro}`}>
 				<div class={ style.content }>
 					{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit pro details</h2>) }
 						
