@@ -2,7 +2,7 @@ export const apiRoot = 'http://sr461.2dayhost.com/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
-  SEARCH_USERS: apiRoot + 'users/search?q=',
+  SEARCH_USERS: apiRoot + 'users/pro?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'calls?isConsultant=true&size=9999&page=',
