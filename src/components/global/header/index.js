@@ -11,6 +11,7 @@ import { logIn, logOff } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
 import { getCurrentUrl } from 'preact-router';
+import { routes } from '../../app'
 
 
 const getCookie = (name) => {
@@ -83,20 +84,20 @@ class Header extends Component {
           { this.state.loggedOff && (
             <Redirect to='/' />
           )}
-					<Link href="/" id={style.logo}>
+					<Link href={routes.HOME} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
               isLogin ? ([
-                (user.pro != null) && (<li><Link activeClassName={style.activeLink} href="/my-clients">My Clients</Link></li>),
-                <li><Link activeClassName={style.activeLink} href="/my-pros">My Pros</Link></li>,
-                <li><Link activeClassName={style.activeLink} href="/transactions">Money</Link></li>,
+                (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
+                <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href="/">Become a Pro</Link></li>)
               ]) : ([
-                <li><Link activeClassName={style.activeLink} href="/">Home</Link></li>,
-                <li><Link activeClassName={style.activeLink} href="/about-us">About us</Link></li>,
-                <li><Link activeClassName={style.activeLink} href="/help">FAQ</Link></li>
+                <li><Link activeClassName={style.activeLink} href={routes.HOME}>Home</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.ABOUT_US}>About us</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.FAQ}>FAQ</Link></li>
               ])
             }
 						
@@ -111,8 +112,8 @@ class Header extends Component {
 					 { !isLogin  ? (
 						<nav>
 							<ul className="uk-navbar-nav">
-								<li><Link href="/sign-up" id={style.signUp}>Sign up</Link></li>
-								<li><Link href="/log-in">Login</Link></li>
+								<li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
+								<li><Link href={routes.LOG_IN}>Login</Link></li>
 							</ul>
 						</nav>
 					) : (
@@ -157,8 +158,8 @@ class Header extends Component {
           { !isLogin  ? (
 					  <div>
               <h3>My account</h3>
-              <Link href="/sign-up" id={style.signUp}>Sign up</Link>
-              <Link href="/log-in">Login</Link>
+              <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
+              <Link href={routes.LOG_IN}>Login</Link>
             </div>
 					) : (
             <div>
@@ -170,9 +171,9 @@ class Header extends Component {
               <Link href="/my-shortlist">My Shortlist</Link>
 							<Link href="/transactions">Money</Link>
               <Link href="/edit-profile">Edit Profile</Link>*/}
-              {(user.pro != null) && <Link activeClassName={style.activeLink} href="/my-clients">My Clients</Link>}
-              <Link activeClassName={style.activeLink} href="/my-pros">My Pros</Link>
-              <Link activeClassName={style.activeLink} href="/transactions">Money</Link>
+              {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+              <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
+              <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
               {(user.pro == null) && <Link activeClassName={style.activeLink} href="/register-pro">Become a Pro</Link>}
               <a onClick={()=>this.logOff()}>Log out</a>
             </div>

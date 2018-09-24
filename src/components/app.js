@@ -27,7 +27,9 @@ import { connect } from 'preact-redux';
 export const routes = {
 	HOME: '/',
 	SEARCH: '/search/:searchTerm',
+	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
+	PRO_FOR_COMP: '/pro/',
 	ABOUT_US: '/about-us',
 	FAQ: '/help',
 	TERMS: '/terms',
