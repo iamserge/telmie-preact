@@ -90,28 +90,25 @@ class App extends Component {
 
 	renderUserRoutes = (user) => {
 
-		return (Object.keys(user.pro).length === 0) ? [
+		const  proRoutes = (Object.keys(user.pro).length === 0) ? [] : this.renderProRoutes();
+
+		return [
 			...this.renderDefaultRoutes(),
 			<Search path={routes.SEARCH} />, 
 			<Activity path={routes.MY_PROS} isProCalls = { false } />,
 			<AllTransactions path={routes.TRANSACTIONS} />,
-		] : [
-			...this.renderDefaultRoutes(),
-			...this.renderProRoutes(),
-			<Search path={routes.SEARCH} />, 
-			<Activity path={routes.MY_PROS} isProCalls = { false } />,
-			<AllTransactions path={routes.TRANSACTIONS} />,
+			<Pro path={routes.PRO} />,
+			<Shortlist path={routes.MY_SHORTLIST} />,
+			//<Shortlist path={routes.MY_SHORTLIST} />,
+			<Profile path = { routes.PROFILE } />,
+			<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+			...proRoutes,
+			
 		]
 	}
 
 	renderDefaultRoutes = () => {
 		return [
-			//<Pro path={routes.PRO} />,
-			//<Shortlist path={routes.MY_SHORTLIST} />,
-			//<Shortlist path={routes.MY_SHORTLIST} />,
-			//<Profile path = { routes.PROFILE } />,
-			//<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,
