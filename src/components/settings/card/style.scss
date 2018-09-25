@@ -1,0 +1,19 @@
+@import './src/style/variables';
+
+.cardContainder{
+    width: 100%;
+    padding: 30px 25px;
+    box-shadow: 0 0 5pt 2pt rgba(0,0,0,0.3);
+    border: 0.25pt solid rgb(0,0,0);
+    border-radius: 3pt;
+    margin-bottom: 35px;
+    color: $grey;
+
+    .cardHeader{
+        font-size: 18px;
+        color: $blue;
+        border-bottom: 2px solid $lightGrey;
+        text-indent: 10px;
+        margin-bottom: 10px;
+    }
+}

@@ -52,6 +52,11 @@ export function convertDate(date) {
 	return newDate;
 }
 
+export function changeDateISOFormat(date) {
+  const d = new Date(date);
+  return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2, '0')}`;
+}
+
 export function convertDuration(totalSeconds){
 	let minutes = parseInt(totalSeconds / 60),
 			seconds = totalSeconds - (minutes * 60);

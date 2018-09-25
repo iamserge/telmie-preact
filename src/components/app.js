@@ -17,6 +17,7 @@ import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
 import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
+import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro'
 import ErrorRoute from '../routes/errorRoute'
 import PrismicConfig from '../prismic/prismic-configuration';
@@ -46,7 +47,8 @@ export const routes = {
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
 	FORGOT_PASSWORD: '/forgot-password',
-	REGISTER_PRO: '/register-pro'
+	SETTINGS: '/settings',
+	REGISTER_PRO: '/register-pro',
 };
 
 
@@ -103,8 +105,8 @@ class App extends Component {
 			//<Shortlist path={routes.MY_SHORTLIST} />,
 			<Profile path = { routes.PROFILE } />,
 			<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-			<RegisterPro path = { routes.REGISTER_PRO } />
-			
+			<RegisterPro path = { routes.REGISTER_PRO } />,
+			<SettingsPage path = { routes.SETTINGS }/>			
 		]
 	}
 
@@ -126,11 +128,6 @@ class App extends Component {
 
 	render() {
 		const {userData : user  = {}} = this.props;
-		console.log(user)
-		let arr = (Object.keys(user).length !== 0) ? 
-			(user.pro != null) ? this.renderProRoutes() : this.renderUserRoutes()
-			: this.renderDefaultRoutes()
-		console.log('!!!!!!!!', arr.length);
 
 		return (
 			<div id="app">
