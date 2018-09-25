@@ -1,9 +1,11 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import Card from "./card"
+import ToggleItem from "./toggle-item"
 import ImageUploader from 'react-images-upload';
 import FontAwesome from 'react-fontawesome';
 import SimpleReactValidator from 'simple-react-validator';
+import Switch from 'react-toggle-switch'
 
 import { apiRoot } from '../../api';
 import { changeDateISOFormat } from '../../utils/index'
@@ -26,6 +28,7 @@ export default class Settings extends Component {
         this.state = {
             activeLink: links[0].name,
             isInEdit: false,
+            switched: true,
         }
 
         this.validator = new SimpleReactValidator();
@@ -75,8 +78,6 @@ export default class Settings extends Component {
                 let data = {...this.state.userData};
                 data.location = JSON.stringify(this.state.userData.location);
                 
-                console.log(data);
-                console.log(JSON.stringify( data ));
                 this.props.editDetails(data);
 			}
 		} else {
@@ -164,11 +165,13 @@ export default class Settings extends Component {
         );
     }
 
+    toggleSwitch = () => {
+        //this.setState(prevState => {return {switched: !prevState.switched}});
+    };
+
     render(){
         const {userData = {}} = this.props;
         const {name, lastName,pro, avatar } = userData;
-
-        console.log(this.state);
 
         return (
             <div class= {style.settingsPage}>
@@ -223,6 +226,10 @@ export default class Settings extends Component {
                         {this.state.isInEdit ? 
                             this.renderEditGeneralInfo() : this.renderGeneralInfo()}
                         
+                    </Card>
+
+                    <Card headerText = 'Choose how you want to be informed'>
+                        <ToggleItem onToggle={this.toggleSwitch} isSwitched={this.state.switched}>Important via email</ToggleItem>
                     </Card>
                 </div>
             </div>
