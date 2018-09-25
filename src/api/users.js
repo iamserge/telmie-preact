@@ -22,7 +22,7 @@ export function getCalls(authData, isProCalls){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers: headers}).then(response => {
+	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}

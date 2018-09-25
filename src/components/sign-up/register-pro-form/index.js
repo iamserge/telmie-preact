@@ -488,7 +488,7 @@ export default class RegisterProForm extends Component{
 						<label for="subCategory">Service sub-category</label>
 						<select className="uk-select" name="subCategory" value={subCategory} disabled={fieldsDisabled} onChange={this.onChangeHandler}>
 							<option value="">Please select category</option>
-							{ subCategories[category].map(_category => (
+							{ subCategories[category] && subCategories[category].map(_category => (
 								<option value={_category}>{_category}</option>))}
 						</select>
 
