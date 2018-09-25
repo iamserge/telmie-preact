@@ -93,7 +93,7 @@ class Header extends Component {
                 (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
                 <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
-                (user.pro == null) && (<li><Link activeClassName={style.activeLink} href="/">Become a Pro</Link></li>)
+                (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
                 <li><Link activeClassName={style.activeLink} href={routes.HOME}>Home</Link></li>,
                 <li><Link activeClassName={style.activeLink} href={routes.ABOUT_US}>About us</Link></li>,
@@ -140,6 +140,9 @@ class Header extends Component {
                       )}
                       <li><Link href="/my-shortlist">My Shortlist</Link></li>
 											<li><Link href="/transactions">Money</Link></li>
+											<li><Link href="/edit-profile">Edit Profile</Link></li>
+                      <li><Link href="/register-pro">Register as Pro</Link></li>
+							        <li className="uk-nav-divider"></li>
                       <li><Link href="/edit-profile">Edit Profile</Link></li>
                       <li className="uk-nav-divider"></li>*/}
                       <li><Link href="/settings">Settings</Link></li>
@@ -170,11 +173,13 @@ class Header extends Component {
               )}
               <Link href="/my-shortlist">My Shortlist</Link>
 							<Link href="/transactions">Money</Link>
+							<Link href="/edit-profile">Edit Profile</Link>
+              <Link href="/register-pro">Register as Pro</Link>
               <Link href="/edit-profile">Edit Profile</Link>*/}
               {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
               <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
               <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
-              {(user.pro == null) && <Link activeClassName={style.activeLink} href="/register-pro">Become a Pro</Link>}
+              {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
               <a onClick={()=>this.logOff()}>Log out</a>
             </div>
 					)}

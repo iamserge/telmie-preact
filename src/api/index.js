@@ -1,3 +1,5 @@
+import { api } from "prismic-javascript";
+
 export const apiRoot = 'http://sr461.2dayhost.com/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
@@ -12,5 +14,7 @@ export const apiUrls = {
   ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist',
   RESET_PASSWORD: apiRoot  + 'security/reset',
   UPLOAD_PHOTO: apiRoot + 'image',
-  SEND_CODE: apiRoot + 'code'
+  SEND_CODE: apiRoot + 'code',
+  REGISTER_PRO: apiRoot + 'users/pro',
+  GET_CATEGORIES: apiRoot + 'categories',
 }

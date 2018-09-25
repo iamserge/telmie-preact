@@ -17,6 +17,7 @@ import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
 import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
+import RegisterPro from '../routes/register-pro'
 import ErrorRoute from '../routes/errorRoute'
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
@@ -45,6 +46,7 @@ export const routes = {
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
 	FORGOT_PASSWORD: '/forgot-password',
+	REGISTER_PRO: '/register-pro'
 };
 
 
@@ -84,13 +86,12 @@ class App extends Component {
 	renderProRoutes = () => {
 
 		return [
+			...this.renderUserRoutes(),
 			<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
 		]
 	}
 
-	renderUserRoutes = (user) => {
-
-		const  proRoutes = (Object.keys(user.pro).length === 0) ? [] : this.renderProRoutes();
+	renderUserRoutes = () => {
 
 		return [
 			...this.renderDefaultRoutes(),
@@ -102,7 +103,7 @@ class App extends Component {
 			//<Shortlist path={routes.MY_SHORTLIST} />,
 			<Profile path = { routes.PROFILE } />,
 			<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-			...proRoutes,
+			<RegisterPro path = { routes.REGISTER_PRO } />
 			
 		]
 	}
@@ -124,14 +125,21 @@ class App extends Component {
 	}
 
 	render() {
-		const user = this.props.userData;
+		const {userData : user  = {}} = this.props;
+		console.log(user)
+		let arr = (Object.keys(user).length !== 0) ? 
+			(user.pro != null) ? this.renderProRoutes() : this.renderUserRoutes()
+			: this.renderDefaultRoutes()
+		console.log('!!!!!!!!', arr.length);
 
 		return (
 			<div id="app">
 				<Header />
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
-						{(Object.keys(user).length !== 0) ? this.renderUserRoutes(user) : this.renderDefaultRoutes()}
+						{(Object.keys(user).length !== 0) ? 
+							(user.pro != null) ? this.renderProRoutes() : this.renderUserRoutes()
+							: this.renderDefaultRoutes()}
 						<ErrorRoute default />
 					</Router>
 				</div>

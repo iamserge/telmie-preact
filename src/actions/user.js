@@ -115,6 +115,11 @@ const transactionsReceived = (response) => ({
 	transactions: response
 });
 
+const setCategories = (response) => ({
+	type: actionTypes.SET_CATEGORIES,
+	categories: response
+})
+
 export const resetPassword = (email, password, code) => async (dispatch) => {
 	const response = await user.resetPassword({email, password, code});
 	if (response.error) {
@@ -141,12 +146,31 @@ export const logOff = () => (dispatch) => {
 export const register = (data) => async (dispatch) => {
 
 	const response = await user.register(data);
+	
 	if (response.error) {
 		dispatch(registerFailure(response.message));
 	} else {
 		dispatch(logIn(response.authData));
 	}
 };
+
+export const registerPro = (data, authData, isForUpdate = false) => async (dispatch) => {
+	let response = isForUpdate ? 
+		await user.updatePro(data, authData)
+		: await user.registerPro(data, authData);
+
+	if (response.error) {
+		dispatch(registerFailure(response.message));
+	} else {
+		dispatch(logInSuccess(response, authData));
+	}
+}
+
+export const getCategories = (authData) => async (dispatch) => {
+	let response = await user.getCategories(authData);
+
+	!response.error && dispatch(setCategories(response));
+}
 
 
 export const verify = (token) => async (dispatch) => {
