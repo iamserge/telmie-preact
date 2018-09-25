@@ -165,13 +165,81 @@ export default class Settings extends Component {
         );
     }
 
+    renderGeneralTab = () => {
+        const {userData = {}} = this.props;
+        const {name, lastName, pro, avatar } = userData;
+
+        return (
+            <div class={style.contentContainer}>
+                <Card class= {style.userInfoCard}>
+                    {!this.state.isInEdit 
+                        && <div class={style.editBtn} onClick={this.onStartEdit}>Edit <FontAwesome name="pencil" /></div>}
+                    <div className={style.userAvatar}>
+                        <div className={style.image}>
+                            { (avatar != null) ? (
+                                <img src={apiRoot + 'image/' + avatar.id} alt={name + ' ' + lastName} />
+                            ) : (
+                                <img src="/assets/nouserimage.jpg" alt={name + ' ' + lastName} />
+                            )}
+                        </div>
+                        {this.state.isInEdit 
+                            && <div className={style.upload}>
+                            <ImageUploader
+                                withIcon={false}
+                                buttonText='Upload new'
+                                fileContainerStyle = {{padding: 0, margin: 0, boxShadow: 'none'}}
+                                onChange={this.onDrop}
+                                buttonClassName={style.uploadButton}
+                                imgExtension={['.jpg', '.png', '.gif']}
+                                maxFileSize={5242880}
+                            />
+                        </div>}
+                    </div>
+
+                    {this.state.isInEdit ? 
+                        this.renderEditGeneralInfo() : this.renderGeneralInfo()}
+                    
+                </Card>
+
+                <Card headerText = 'Choose how you want to be informed'>
+                    <ToggleItem onToggle={this.toggleSwitch} isSwitched={this.state.switched}>Important via email</ToggleItem>
+                </Card>
+            </div>
+        )
+    }
+
+    renderProTab = () => {
+        return (
+            null
+        )
+    }
+
+    renderPreviewTab = () => {
+        return (
+            null
+        )
+    }
+
     toggleSwitch = () => {
         //this.setState(prevState => {return {switched: !prevState.switched}});
     };
 
-    render(){
-        const {userData = {}} = this.props;
-        const {name, lastName,pro, avatar } = userData;
+    render({userData = {}}){
+        
+
+        let tabContent = null;
+
+        switch (this.state.activeLink) {
+            case 'general':
+                tabContent = this.renderGeneralTab();
+                break;
+            case 'pro':
+                tabContent = this.renderProTab();
+                break;
+            case 'preview':
+                tabContent = this.renderPreviewTab();
+                break;
+          }
 
         return (
             <div class= {style.settingsPage}>
@@ -181,7 +249,7 @@ export default class Settings extends Component {
                             {
                                 links.map(el => {
                                     return el.name == 'pro' ? (
-                                        pro != null && (<li onClick = {this.onNavigateHandler} 
+                                        userData.pro != null && (<li onClick = {this.onNavigateHandler} 
                                                             key={el.name} 
                                                             name={el.name} 
                                                             class={this.state.activeLink === el.name ? style.activeLink : ''}>{el.content}</li>)
@@ -197,41 +265,8 @@ export default class Settings extends Component {
                     </Card>
                 </div>
 
-                <div class={style.contentContainer}>
-                    <Card class= {style.userInfoCard}>
-                        {!this.state.isInEdit 
-                            && <div class={style.editBtn} onClick={this.onStartEdit}>Edit <FontAwesome name="pencil" /></div>}
-                        <div className={style.userAvatar}>
-                            <div className={style.image}>
-                                { (avatar != null) ? (
-                                    <img src={apiRoot + 'image/' + avatar.id} alt={name + ' ' + lastName} />
-                                ) : (
-                                    <img src="/assets/nouserimage.jpg" alt={name + ' ' + lastName} />
-                                )}
-                            </div>
-                            {this.state.isInEdit 
-                                && <div className={style.upload}>
-                                <ImageUploader
-                                    withIcon={false}
-                                    buttonText='Upload new'
-                                    fileContainerStyle = {{padding: 0, margin: 0, boxShadow: 'none'}}
-                                    onChange={this.onDrop}
-                                    buttonClassName={style.uploadButton}
-                                    imgExtension={['.jpg', '.png', '.gif']}
-                                    maxFileSize={5242880}
-                                />
-                            </div>}
-                        </div>
+                {tabContent}
 
-                        {this.state.isInEdit ? 
-                            this.renderEditGeneralInfo() : this.renderGeneralInfo()}
-                        
-                    </Card>
-
-                    <Card headerText = 'Choose how you want to be informed'>
-                        <ToggleItem onToggle={this.toggleSwitch} isSwitched={this.state.switched}>Important via email</ToggleItem>
-                    </Card>
-                </div>
             </div>
         )
     }
