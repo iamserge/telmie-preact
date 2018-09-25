@@ -28,6 +28,7 @@
         li {
             margin-bottom: 20px;
             font-size: 18px;
+            cursor: pointer;
 
             &:last-child{
                 margin-bottom: 0;
@@ -97,6 +98,10 @@
         }
     }
     
+}
+
+.activeLink{
+    color: $red;
 }
 
 @media (max-width: 880px) {

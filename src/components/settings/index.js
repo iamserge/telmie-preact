@@ -6,15 +6,37 @@ import ImageUploader from 'react-images-upload';
 import { apiRoot } from '../../api';
 import { changeDateISOFormat } from '../../utils/index'
 
+const links = [{
+    name: 'general',
+    content: 'General',
+},{
+    name: 'pro',
+    content: 'Pro details',
+},{
+    name: 'preview',
+    content: 'Preview profile',
+}]
+
 export default class Settings extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            activeLink: links[0].name,
+        }
+    }
 
     onDrop = (picture) => {
 		this.props.uploadPhoto(this.props.userData.userAuth, picture[0]);
-	}
+    }
+    
+    onNavigateHandler = (e) => {
+        this.setState({activeLink: e.target.getAttribute('name')})
+    }
 
     render(){
         const {userData = {}} = this.props;
-        const {name, lastName, email, dateOfBirth, location, avatar } = userData;
+        const {name, lastName, email, dateOfBirth, location, avatar, pro } = userData;
         const {city} = JSON.parse(location);
 
         return (
@@ -22,9 +44,21 @@ export default class Settings extends Component {
                 <div class={style.sectionsContainer}>
                     <Card class={style.sectionsCard}>
                         <ul class={style.sectionsList}>
-                            <li>General</li>
-                            <li>Pro details</li>
-                            <li>Preview profile</li>
+                            {
+                                links.map(el => {
+                                    return el.name == 'pro' ? (
+                                        pro != null && (<li onClick = {this.onNavigateHandler} 
+                                                            key={el.name} 
+                                                            name={el.name} 
+                                                            class={this.state.activeLink === el.name ? style.activeLink : ''}>{el.content}</li>)
+                                    ) : (
+                                        <li onClick = {this.onNavigateHandler} 
+                                            key={el.name} 
+                                            name={el.name}
+                                            class={this.state.activeLink === el.name ? style.activeLink : ''}>{el.content}</li>
+                                    )
+                                })
+                            }
                         </ul>
                     </Card>
                 </div>
@@ -52,7 +86,7 @@ export default class Settings extends Component {
                                 />
                             </div>
                         </div>
-                        
+
                         <div class = {style.userInfo}>
                             <div>
                                 <span className={style.key}>Name:</span>
