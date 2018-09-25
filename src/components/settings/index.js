@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import Card from "./card"
 import ImageUploader from 'react-images-upload';
+import FontAwesome from 'react-fontawesome';
+import SimpleReactValidator from 'simple-react-validator';
 
 import { apiRoot } from '../../api';
 import { changeDateISOFormat } from '../../utils/index'
@@ -23,21 +25,150 @@ export default class Settings extends Component {
 
         this.state = {
             activeLink: links[0].name,
+            isInEdit: false,
         }
+
+        this.validator = new SimpleReactValidator();
     }
 
     onDrop = (picture) => {
 		this.props.uploadPhoto(this.props.userData.userAuth, picture[0]);
+    }
+
+    onStartEdit = () => {
+        const {userData = {}} = this.props;
+        let data = {...userData};
+        data.location = JSON.parse(userData.location);
+        this.setState({isInEdit: true, userData: data});
+    }
+
+    onChangeHandler = (e) => {
+        const {name, value} = e.target;
+
+        this.setState(prev => {
+            return name === 'dob' ? {
+                userData: {
+                    ...prev.userData,
+                    dateOfBirth: value ? new Date(value).toISOString() : '',
+                }
+            } : (
+                name === 'city' ? {
+                    userData: {
+                        ...prev.userData,
+                        location: {
+                            ...prev.userData.location,
+                            city: value
+                        }
+                    }
+                } : {
+                    userData:{ ...prev.userData, [name]: value, }
+                }
+            )
+        })
+
+    }
+
+    updateProfileHandler = () => {
+        if (this.validator.allValid()) {
+			let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+ 			if(userAuth) {
+                let data = {...this.state.userData};
+                data.location = JSON.stringify(this.state.userData.location);
+                
+                console.log(data);
+                console.log(JSON.stringify( data ));
+                this.props.editDetails(data);
+			}
+		} else {
+			this.validator.showMessages();
+			this.forceUpdate();
+		}
     }
     
     onNavigateHandler = (e) => {
         this.setState({activeLink: e.target.getAttribute('name')})
     }
 
+    renderGeneralInfo = () => {
+        const {userData = {}} = this.props;
+        const {name, lastName, email, dateOfBirth, location } = userData;
+        const {city} = JSON.parse(location);
+
+        return (
+            <div class = {style.userInfo}>
+                <div>
+                    <span className={style.key}>Name:</span>
+                    <span className={style.value}>{name}</span>
+                </div>
+                <div>
+                    <span className={style.key}>Last name:</span>
+                    <span className={style.value}>{lastName}</span>
+                </div>
+                <div>
+                    <span className={style.key}>Email:</span>
+                    <span className={style.value}>{email}</span>
+                </div>
+                <div>
+                    <span className={style.key}>Date of birth:</span>
+                    <span className={style.value}>{ dateOfBirth ? changeDateISOFormat(dateOfBirth) : 'TBC' }</span>
+                </div>
+                <div>
+                    <span className={style.key}>Location:</span>
+                    <span className={style.value}>{(city != null) ? city : 'TBC'}</span>
+                </div>
+            </div>
+        )
+    }
+
+    renderEditGeneralInfo = () => {
+        const {name, lastName, email, dateOfBirth, location } = this.state.userData;
+        const {city} = location;
+
+        const dob = dateOfBirth ? changeDateISOFormat(dateOfBirth) : '';
+
+        return (
+            <div>
+                <div className="input-container">
+					<label for="name">Name</label>
+					<input type="text" name="name" value={name} onChange={this.onChangeHandler} className="uk-input"/>
+ 					{this.validator.message('name', name, 'required', 'validation-tooltip right',  {required: 'Please enter name'})}
+				</div>
+
+                <div className="input-container">
+					<label for="lastName">Last name</label>
+					<input type="text" name="lastName" value={lastName} onChange={this.onChangeHandler} className="uk-input"/>
+ 					{this.validator.message('lastName', lastName, 'required', 'validation-tooltip right',  {required: 'Please enter last name'})}
+				</div>
+
+                <div className="input-container">
+					<label for="email">Email</label>
+					<input type="text" name="email" value={email} onChange={this.onChangeHandler} className="uk-input"/>
+ 					{this.validator.message('email', email, 'required|email', 'validation-tooltip right',  {required: 'Please enter email', email: 'Please enter a valid email'})}
+				</div>
+
+                <div className="input-container">
+					<label for="dob">Date of birth</label>
+					<input type="date" name="dob" value={dob} onChange={this.onChangeHandler} className="uk-input"/>
+				</div>
+
+                <div className="input-container">
+					<label for="city">Location</label>
+					<input type="text" name="city" value={city} onChange={this.onChangeHandler} className="uk-input"/>
+				</div>
+                <div style={{textAlign: 'center'}}>
+                    <button className='uk-button' onClick={this.updateProfileHandler}>
+                        Save
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     render(){
         const {userData = {}} = this.props;
-        const {name, lastName, email, dateOfBirth, location, avatar, pro } = userData;
-        const {city} = JSON.parse(location);
+        const {name, lastName,pro, avatar } = userData;
+
+        console.log(this.state);
 
         return (
             <div class= {style.settingsPage}>
@@ -65,7 +196,8 @@ export default class Settings extends Component {
 
                 <div class={style.contentContainer}>
                     <Card class= {style.userInfoCard}>
-
+                        {!this.state.isInEdit 
+                            && <div class={style.editBtn} onClick={this.onStartEdit}>Edit <FontAwesome name="pencil" /></div>}
                         <div className={style.userAvatar}>
                             <div className={style.image}>
                                 { (avatar != null) ? (
@@ -74,7 +206,8 @@ export default class Settings extends Component {
                                     <img src="/assets/nouserimage.jpg" alt={name + ' ' + lastName} />
                                 )}
                             </div>
-                            <div className={style.upload}>
+                            {this.state.isInEdit 
+                                && <div className={style.upload}>
                                 <ImageUploader
                                     withIcon={false}
                                     buttonText='Upload new'
@@ -84,31 +217,12 @@ export default class Settings extends Component {
                                     imgExtension={['.jpg', '.png', '.gif']}
                                     maxFileSize={5242880}
                                 />
-                            </div>
+                            </div>}
                         </div>
 
-                        <div class = {style.userInfo}>
-                            <div>
-                                <span className={style.key}>Name:</span>
-                                <span className={style.value}>{name}</span>
-                            </div>
-                            <div>
-                                <span className={style.key}>Last name:</span>
-                                <span className={style.value}>{lastName}</span>
-                            </div>
-                            <div>
-                                <span className={style.key}>Email:</span>
-                                <span className={style.value}>{email}</span>
-                            </div>
-                            <div>
-                                <span className={style.key}>Date of birth:</span>
-                                <span className={style.value}>{ dateOfBirth ? changeDateISOFormat(dateOfBirth) : 'TBC' }</span>
-                            </div>
-                            <div>
-                                <span className={style.key}>Location:</span>
-                                <span className={style.value}>{(city != null) ? city : 'TBC'}</span>
-                            </div>
-                        </div>
+                        {this.state.isInEdit ? 
+                            this.renderEditGeneralInfo() : this.renderGeneralInfo()}
+                        
                     </Card>
                 </div>
             </div>
