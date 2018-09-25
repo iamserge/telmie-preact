@@ -7,6 +7,7 @@ import style from './style.scss';
 import { logIn, getProCalls, getPersonalCalls, getTransactions } from '../../actions/user';
 import { route, Link } from 'preact-router';
 import Redirect from '../../components/global/redirect';
+import { routes } from '../../components/app'
 
 class LogInOrSignup extends Component {
 
@@ -15,9 +16,9 @@ class LogInOrSignup extends Component {
 			<div id="loginOrSignup" className="uk-container uk-container-small" >
 				<h1>Sorry</h1>
 				<h2>In order to search or view pros you have to be logged in</h2>
-				<Link href="/log-in" className="uk-button">Log in</Link>
+				<Link href={routes.LOG_IN} className="uk-button">Log in</Link>
 				<span>or</span>
-				<Link href="/sign-up" className="uk-button">Sign up</Link>
+				<Link href={routes.SIGN_UP} className="uk-button">Sign up</Link>
 				<span className="note">It only takes 10 seconds</span>
 			</div>
 

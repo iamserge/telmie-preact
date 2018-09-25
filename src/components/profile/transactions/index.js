@@ -3,6 +3,7 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
 import Transaction from '../transaction'
+import { routes } from '../../app'
 
 export default class Transactions extends Component {
 
@@ -17,7 +18,7 @@ export default class Transactions extends Component {
 					{ (typeof this.props.limit != 'undefined') && (
 						<h2>
 							{ this.props.title }
-							<Link href='/transations'>View all</Link>
+							<Link href={routes.TRANSACTIONS}>View all</Link>
 						</h2>
 					)}
 

@@ -6,6 +6,7 @@ import { apiRoot } from '../../../api'
 import { route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import YouTube from 'react-youtube';
+import {routes} from '../../app'
 
 export default class Pro extends Component {
   constructor(props){
@@ -58,9 +59,9 @@ export default class Pro extends Component {
 						<h3>{person.pro.profession}</h3>
 					</div>
 					<div className={style.prof}>
-						<Link href={"/search/" + person.pro.category} >{person.pro.category}</Link>
+						<Link href={routes.SEARCH_FOR_COMP + person.pro.category} >{person.pro.category}</Link>
 						<FontAwesome name="angle-right"/>
-						<Link href={"/search/" + person.pro.subCategory} >{person.pro.subCategory}</Link>
+						<Link href={routes.SEARCH_FOR_COMP + person.pro.subCategory} >{person.pro.subCategory}</Link>
 					</div>
 					<p className="description">
 						{person.pro.professionDescription}

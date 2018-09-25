@@ -3,6 +3,8 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
 import Activity from '../activity'
+import { routes } from '../../app'
+
 
 export default class ActivityList extends Component {
 
@@ -12,6 +14,7 @@ export default class ActivityList extends Component {
 				<h2>
 					{ this.props.title }
 					<Link href='/activity'>View all</Link>
+					{/*NO SUCH ROUTE*/}
 				</h2>
 				<div className={style.inner}>
 					<div className={style.header}>
