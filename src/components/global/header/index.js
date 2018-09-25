@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { Link } from 'preact-router/match';
 import * as router from 'preact-router';
 import style from './style.scss';
 import Search from '../search';
@@ -11,6 +11,7 @@ import { logIn, logOff } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
 import { getCurrentUrl } from 'preact-router';
+import { routes } from '../../app'
 
 
 const getCookie = (name) => {
@@ -69,6 +70,8 @@ class Header extends Component {
 	render() {
 		const user = this.props.userData;
     const currentUrl = getCurrentUrl();
+    const isLogin = Object.keys(user).length !== 0;
+
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
         <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { ()=>{this.setState({mobileMenuOpened: !this.state.mobileMenuOpened})}}>
@@ -81,13 +84,23 @@ class Header extends Component {
           { this.state.loggedOff && (
             <Redirect to='/' />
           )}
-					<Link href="/" id={style.logo}>
+					<Link href={routes.HOME} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<ul className="uk-navbar-nav" id={style.leftNav}>
-						<li><Link href="/">Home</Link></li>
-						<li><Link href="/about-us">About us</Link></li>
-						<li><Link href="/help">FAQ</Link></li>
+            {
+              isLogin ? ([
+                (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
+                <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
+                (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
+              ]) : ([
+                <li><Link activeClassName={style.activeLink} href={routes.HOME}>Home</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.ABOUT_US}>About us</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.FAQ}>FAQ</Link></li>
+              ])
+            }
+						
 					</ul>
 				</div>
 
@@ -96,11 +109,11 @@ class Header extends Component {
               <Search hiddenSearchBox = {this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } home= { false }/>
           )}
 
-					 { (Object.keys(user).length === 0)  ? (
+					 { !isLogin  ? (
 						<nav>
 							<ul className="uk-navbar-nav">
-								<li><Link href="/sign-up" id={style.signUp}>Sign up</Link></li>
-								<li><Link href="/log-in">Login</Link></li>
+								<li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
+								<li><Link href={routes.LOG_IN}>Login</Link></li>
 							</ul>
 						</nav>
 					) : (
@@ -120,7 +133,7 @@ class Header extends Component {
 							</div>
 							<div className={style.dropdown + ' uk-dropdown'}>
 							    <ul className="uk-nav uk-dropdown-nav">
-							        <li><Link href="/profile">My Account</Link></li>
+							        {/*<li><Link href="/profile">My Account</Link></li>
 											<li><Link href="/my-pros">My Pros</Link></li>
                       {(user.pro != null) && (
                           <li><Link href="/my-clients">My Clients</Link></li>
@@ -128,7 +141,11 @@ class Header extends Component {
                       <li><Link href="/my-shortlist">My Shortlist</Link></li>
 											<li><Link href="/transactions">Money</Link></li>
 											<li><Link href="/edit-profile">Edit Profile</Link></li>
+                      <li><Link href="/register-pro">Register as Pro</Link></li>
 							        <li className="uk-nav-divider"></li>
+                      <li><Link href="/edit-profile">Edit Profile</Link></li>
+                      <li className="uk-nav-divider"></li>*/}
+                      <li><Link href={routes.SETTINGS}>Settings</Link></li>
 							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
 							    </ul>
 							</div>
@@ -138,18 +155,18 @@ class Header extends Component {
 				</div>
 
         <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
-          <Link href="/">Home</Link>
+          {/*<Link href="/">Home</Link>
           <Link href="/about-us">About us</Link>
-          <Link href="/help">FAQ</Link>
-          { (Object.keys(user).length === 0)  ? (
+          <Link href="/help">FAQ</Link>*/}
+          { !isLogin  ? (
 					  <div>
               <h3>My account</h3>
-              <Link href="/sign-up" id={style.signUp}>Sign up</Link>
-              <Link href="/log-in">Login</Link>
+              <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
+              <Link href={routes.LOG_IN}>Login</Link>
             </div>
 					) : (
             <div>
-              <Link href="/profile">My Account</Link>
+              {/*<Link href="/profile">My Account</Link>
               <Link href="/my-pros">My Pros</Link>
               {(user.pro != null) && (
                   <Link href="/my-clients">My Clients</Link>
@@ -157,6 +174,13 @@ class Header extends Component {
               <Link href="/my-shortlist">My Shortlist</Link>
 							<Link href="/transactions">Money</Link>
 							<Link href="/edit-profile">Edit Profile</Link>
+              <Link href="/register-pro">Register as Pro</Link>
+              <Link href="/edit-profile">Edit Profile</Link>*/}
+              {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+              <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
+              <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
+              {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
+              <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
               <a onClick={()=>this.logOff()}>Log out</a>
             </div>
 					)}

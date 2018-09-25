@@ -4,6 +4,8 @@ import Spinner from '../../global/spinner';
 import { Link } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import { changeDateISOFormat } from '../../../utils/index'
+import { routes } from '../../app'
+
 
 export default class Details extends Component {
 
@@ -14,7 +16,7 @@ export default class Details extends Component {
 			<div className={style.details}>
 				<h2>
 					Your details
-					<Link href='/edit-profile'>Edit <FontAwesome name="pencil" /></Link>
+					<Link href={routes.EDIT_PROFILE}>Edit <FontAwesome name="pencil" /></Link>
 				</h2>
 				<div className={style.inner}>
 					<div>

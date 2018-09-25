@@ -93,7 +93,7 @@ export default class Settings extends Component {
     renderGeneralInfo = () => {
         const {userData = {}} = this.props;
         const {name, lastName, email, dateOfBirth, location } = userData;
-        const {city} = JSON.parse(location);
+        const {city} = location ? JSON.parse(location) : {};
 
         return (
             <div class = {style.userInfo}>
@@ -123,7 +123,7 @@ export default class Settings extends Component {
 
     renderEditGeneralInfo = () => {
         const {name, lastName, email, dateOfBirth, location } = this.state.userData;
-        const {city} = location;
+        const {city} = location ? location : {};
 
         const dob = dateOfBirth ? changeDateISOFormat(dateOfBirth) : '';
 

@@ -22,7 +22,7 @@ export function getCalls(authData, isProCalls){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers: headers}).then(response => {
+	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}
@@ -114,6 +114,85 @@ export function register(data){
 		});
 	}, error => {
 		throw new Error(error.message);
+	});
+}
+
+export function registerPro(data, authData){
+
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
+		return response.json().then(json => {
+			return json.status === 400 ? {
+				error: true,
+				message: json.message
+			} : json;
+		})
+		.catch(err => {
+			return response.status === 400 ? (
+				{ 
+					error: true,
+					message: 'User already registered as pro'
+				}
+			) : (
+				response.status === 401 && 
+					{
+						error: true, 
+						message: 'Full authentication is required to access this resource'
+					} 
+			)
+		})
+		
+		
+	})
+}
+
+export function updatePro(data, authData){
+
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+		return response.json().then(json => {
+			return json.status === 400 ? {
+				error: true,
+				message: json.message
+			} : json;
+		})
+		.catch(err => {
+			return response.status === 403 ? (
+				{ 
+					error: true,
+					message: 'User is not registered as pro'
+				}
+			) : (
+				response.status === 401 && 
+					{
+						error: true, 
+						message: 'Full authentication is required to access this resource'
+					} 
+			)
+		})
+		
+		
+	})
+}
+
+export function getCategories(authData) {
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.GET_CATEGORIES, {method: 'GET', headers}).then(response => {
+		return response.json().then(json => {
+			return json;
+		})
+		.catch(err => {
+			console.log(err);
+			return { error: true }
+		})
 	});
 }
 

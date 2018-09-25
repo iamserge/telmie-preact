@@ -1,14 +1,25 @@
 import { h, Component } from 'preact';
-import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import SignUpForm from '../../components/sign-up/sign-up-form';
 import style from './style.scss';
-import { register, fetchRegistration } from '../../actions/user';
-import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
+import {  } from '../../actions/user';
 import { route } from 'preact-router';
-import Redirect from '../../components/global/redirect';
+import { registerPro, getCategories } from '../../actions/user';
+
+import Spinner from '../../components/global/spinner';
+
+import RegisterProForm from '../../components/sign-up/register-pro-form'
+
+const getCookie = (name) => {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
 
 class RegisterPro extends Component {
 	constructor(props){
@@ -17,62 +28,62 @@ class RegisterPro extends Component {
 			regData: null
 		}
 	}
+
 	componentDidMount(){
+		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+		this.props.getCategories(userAuth);
 		this.fetchPage(this.props);
 	}
+
 	fetchPage(props) {
-    if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-          // We put the retrieved content in the state as a doc variable
-          this.setState({ regData: doc.data });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-        }
-      });
-			/*
-			return props.prismicCtx.api.query('').then(function(response) {
-			   console.log(response);
-			});*/
-    }
-    return null;
-  }
+		if (props.prismicCtx) {
+		// We are using the function to get a document by its uid
+		return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
+			if (doc) {
+			// We put the retrieved content in the state as a doc variable
+			this.setState({ regData: doc.data });
+			} else {
+			// We changed the state to display error not found if no matched doc
+			this.setState({ notFound: !doc });
+			}
+		});
+				/*
+				return props.prismicCtx.api.query('').then(function(response) {
+				console.log(response);
+				});*/
+		}
+		return null;
+	}
+
 	componentWillReceiveProps(nextProps){
 		this.fetchPage(nextProps);
 	}
+
 	render() {
-
-		if (!this.state.loggedIn) {
-			return (
-				<div className="uk-container uk-container-small" id="signUp" >
-					<div>
-							{!this.props.registerSuccess ? (
-								<h1>Sign up</h1>
-							) : (
-								<h1>Success!</h1>
-							) }
-							<SignUpForm  fetchRegistration = { this.props.fetchRegistration } register = { this.props.register } registerSuccess = { this.props.registerSuccess } registerFailure = { this.props.registerFailure } regData = { this.state.regData }/>
-						</div>
-				</div>
-
-			);
-		} else {
-			return (<Redirect to='/profile' />)
-		}
-
+		return ((Object.keys(this.props.userData).length != 0) && (Object.keys(this.props.dataFromServer).length != 0)) ? (
+				<RegisterProForm userData={this.props.userData}
+					regData = { this.state.regData }
+					registerPro = {this.props.registerPro}
+					registerFailureMessage = {this.props.registerFailureMessage}
+					getCategories = {this.props.getCategories}
+					dataFromServer = {this.props.dataFromServer}
+					sendCode={() => {}}
+					verifyCode={() => {}}/>
+			) : (
+				<Spinner />
+			)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	registerSuccess: state.registerSuccess,
-	registerFailure: state.registerFailure
+	userData: state.loggedInUser,
+	registerFailureMessage: state.registerFailureMessage,
+	dataFromServer: state.dataFromServer,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	register,
-	fetchRegistration
+	registerPro,
+	getCategories,
 }, dispatch);
 
 export default connect(

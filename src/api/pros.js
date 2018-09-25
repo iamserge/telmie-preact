@@ -3,9 +3,11 @@ import { consts } from '../utils/consts';
 
 
 
-export  function getPros(searchTerm, sortBy, page){
+export  function getPros(searchTerm, sortBy, page, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
 	page = page - 1;
-	return fetch(apiUrls.SEARCH_USERS + searchTerm + '&size=' + consts.PAGE_SIZE + '&sort=' + sortBy + '&page=' + page, { method: 'GET'}).then(response => {
+	return fetch(apiUrls.SEARCH_USERS + searchTerm + '&size=' + consts.PAGE_SIZE + '&page=' + page + '&sort=' + sortBy , { method: 'GET', headers}).then(response => {
     if (response.status === 404){
 			return {};
 		}

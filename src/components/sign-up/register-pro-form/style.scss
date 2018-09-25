@@ -1,0 +1,176 @@
+
+@import './src/style/variables';
+
+$font-size: 18px;
+
+
+.registerPro{
+	margin: 0 auto 100px auto;
+
+	.content{
+		width: 100%;
+		padding: 15px;
+		
+		textarea{
+			height: 100px;
+		}
+		
+		.services {
+			position: relative;
+			
+			label {
+				display: block;
+				margin-bottom: 5px;
+			}
+
+			> div {
+				display: flex;
+			  	background-color: #fff;
+			  	border: 1px solid $lightGrey;
+			  	font-size: 14px;
+				margin-bottom: 20px;
+		
+				> div {
+					flex-grow: 1;
+					box-sizing: border-box;
+					padding: 15px 0;
+					border-right: 1px solid $lightGrey;
+					text-align: center;					
+					
+					&:last-child {
+						border-right: none;
+					}
+					
+				}
+				&.enabled > div{
+					cursor: pointer;
+
+					&:hover, &.selected  {
+						background-color: $red;
+						color: white;
+					}
+				}
+
+				&.disabled > div{
+					cursor: default;
+
+					&.selected  {
+						background-color: $red;
+						color: white;
+					}
+				}			
+			}
+		
+			div[class="validation-tooltip"] {
+			  color: white;
+			  position: absolute;
+				left: -230px;
+			  display: block;
+			  width: 215px;
+			  background: $red;
+			  padding: 10px;
+			  font-size: 12px;
+			  text-align: center;
+			  border-radius: 10px;
+			  bottom: -8px;
+			}
+		}
+
+		.selectContainer {
+			select {
+				height: 50px;
+			}
+		}
+		
+		.rate {
+			text-align: center;
+			font-size: 14px;
+			> span {
+				color: $red;
+				font-size: 30px;
+			}
+		}
+
+		.free {
+			color: $red;
+			font-size: 20px;
+		}
+		
+		.disabledSlider{
+			div {
+				cursor: default !important;
+			}
+		}
+		
+		.error {
+			color: $red;
+			text-align: center;
+		  	margin-bottom: 10px;
+		}
+
+		h2 {
+			text-align: center;
+			color: $red;
+			margin-top: 40px;
+		}
+
+		.approvalWaiting{
+			color: $blue;
+		  	background: $lightBackgroundGrey;
+		  	padding: 20px;
+		  	font-size: 18px;
+		  	text-align: center;
+		  	margin-bottom: 10px;
+		}
+
+		.applyArea{
+            margin-top: 30px;
+            text-align: center;
+
+			.codeMsg, .timer {
+				font-size: 20px;
+			}
+			.inputContainer{
+				width: 50%;
+				margin: 0 auto;
+			}
+			.verifyInput {
+				outline: none;
+				border: none;
+				border-bottom: 2px solid $lightGrey;
+				width: 50px;
+			}
+			.success {
+				font-size: 20px;
+				padding: 20px 0;
+				text-align: center;
+				margin-bottom: 20px;
+            }
+            .applyBtn {
+                width: auto;
+            }
+		}
+		
+		.generalInfo{
+			margin-bottom: 50px;
+
+			& > div {
+				margin-bottom: 10px;
+
+				.key {
+					width: 50px;
+					display: inline-block;
+					color: $blue;
+					margin-right: 10px;
+				}
+				.value {
+					font-size: 18px;
+					border-bottom: solid 1px $lightGrey;
+					display: inline-block;
+					min-width: 70%;
+				}
+			}
+		}
+	}
+	
+}

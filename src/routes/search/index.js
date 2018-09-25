@@ -37,9 +37,9 @@ class Search extends Component {
 
 	fetchPros(searchTerm, sortBy, page){
 		let that = this;
-		getPros(searchTerm, sortBy, page).then(function(data) {
+		getPros(searchTerm, sortBy, page,this.props.userData.userAuth).then(function(data) {
 	    that.setState({
-				pros: data,
+				pros: data.results ? data.results : [],
 				searchTerm: that.props.searchTerm,
 				loading: false
 			});

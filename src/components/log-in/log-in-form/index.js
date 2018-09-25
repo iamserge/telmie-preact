@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
+import { routes } from '../../app'
 
 
 export default class LogInForm extends Component {
@@ -48,7 +49,7 @@ export default class LogInForm extends Component {
 						<label for="password">Password</label>
 						<input type="text" name="password" type="password"onKeyPress={e => {if (e.key === 'Enter') {this.logIn()}}} value={this.state.password} onChange={this.onChange} className="uk-input"	id="password" />
 					</div>
-					<Link href="/forgot-password" className={style.forgotPassword}>Forgot password?</Link>
+					<Link href={routes.FORGOT_PASSWORD} className={style.forgotPassword}>Forgot password?</Link>
 					<button className="uk-button" onClick={this.logIn}>Log in</button>
 				</div>
 			)

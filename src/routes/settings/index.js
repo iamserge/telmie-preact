@@ -15,10 +15,11 @@ class SettingsPage extends Component {
 	}
 
 	render() {
+		const {userData = {}} = this.props;
 		return (
 			<div className="uk-container uk-container-small">
 				<h1>Settings</h1>
-				{(Object.keys(this.props.userData).length != 0) ? (
+				{(Object.keys(userData).length != 0) ? (
                     <Settings userData = { this.props.userData } 
                         uploadPhoto = { this.props.uploadPhoto }
                         editDetails = { this.props.editDetails } 
