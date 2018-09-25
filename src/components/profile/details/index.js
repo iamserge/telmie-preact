@@ -3,17 +3,12 @@ import style from './style.scss';
 import Spinner from '../../global/spinner';
 import { Link } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
+import { changeDateISOFormat } from '../../../utils/index'
 
 export default class Details extends Component {
 
-	changeDateISOFormat = (date) => {
-		const d = new Date(date);
-		console.log(d);
-		return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-	}
-
 	render({user}) {
-		const dateOfBirth = (user.dateOfBirth != null) ? this.changeDateISOFormat(user.dateOfBirth) : 'TBC';
+		const dateOfBirth = (user.dateOfBirth != null) ? changeDateISOFormat(user.dateOfBirth) : 'TBC';
 
 		return (
 			<div className={style.details}>
