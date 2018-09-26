@@ -10,10 +10,23 @@
     color: $grey;
 
     .cardHeader{
+        position: relative;
         font-size: 18px;
         color: $blue;
         border-bottom: 2px solid $lightGrey;
         text-indent: 10px;
         margin-bottom: 10px;
+
+        .headerBtn{
+            position: absolute;
+            top: 0;
+            right: 10px;
+            color: $grey;
+
+            &:hover{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
     }
 }

@@ -114,6 +114,28 @@
     
 }
 
+.proDetailsContent{
+    .doubleItems{
+        & > div{
+            width: 50%;
+            display: inline-block;
+        }
+    }
+    .singleItem{
+        margin-bottom: 20px;
+
+        .key{
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .value{
+            display: inline-block;
+            color: $blue;
+        }
+    }
+}
+
+
 .activeLink{
     color: $red;
 }

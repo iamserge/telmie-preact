@@ -6,7 +6,9 @@ import ImageUploader from 'react-images-upload';
 import FontAwesome from 'react-fontawesome';
 import SimpleReactValidator from 'simple-react-validator';
 import Switch from 'react-toggle-switch'
+import { route } from 'preact-router';
 
+import {routes} from '../app'
 import { apiRoot } from '../../api';
 import { changeDateISOFormat } from '../../utils/index'
 
@@ -26,7 +28,7 @@ export default class Settings extends Component {
         super(props);
 
         this.state = {
-            activeLink: links[0].name,
+            activeLink: links[1].name,
             isInEdit: false,
             switched: true,
         }
@@ -208,9 +210,136 @@ export default class Settings extends Component {
         )
     }
 
+    onEditPro = () => {
+        route(routes.REGISTER_PRO);
+    }
+
     renderProTab = () => {
+        const {userData = {}} = this.props;
+        const { pro = {}, mobile, dateOfBirth, location } = userData;
+        const {subCategory, costPerMinute, professionDescription, category, profession} = pro;
+
+        const {country, city, line1, postCode} = location ? JSON.parse(location) : {};
+
+        const {businessName,
+			compHouseNumber,
+			compAddress,
+			compCity,
+			compPostCode,
+			compCountry} = userData;
+
+        console.log(userData);
+
         return (
-            null
+            <div class={style.contentContainer}>
+                <Card headerText = 'Pro details' headerBtnText = 'Edit' onHeadetBtnClick = {this.onEditPro}>
+                    {(businessName || compHouseNumber || compAddress || compCity || compPostCode || compCountry)
+                        && [
+                            (<div class = {style.proDetailsContent}>
+                                <div class={style.singleItem}>
+                                    <div class={style.key}>Business name:</div>
+                                    <div class={style.value}>{businessName}</div>
+                                </div>
+                            </div>),
+                            (<div class = {style.proDetailsContent}>
+                                <div class={style.singleItem}>
+                                    <div class={style.key}>Companies House registration number:</div>
+                                    <div class={style.value}>{compHouseNumber}</div>
+                                </div>
+                            </div>),
+                            (<div class = {style.proDetailsContent}>
+                                <div class={style.singleItem}>
+                                    <div class={style.key}>Company address:</div>
+                                    <div class={style.value}>{compAddress}</div>
+                                </div>
+                            </div>),
+                            (<div class = {style.proDetailsContent}>
+                                <div class={style.doubleItems}>
+                                    <div class={style.singleItem}>
+                                        <div class={style.key}>City:</div>
+                                        <div class={style.value}>{compCity}</div>
+                                    </div>
+                                    <div class={style.singleItem}>
+                                        <div class={style.key}>Post Code:</div>
+                                        <div class={style.value}>{compPostCode}</div>
+                                    </div>
+                                </div>
+                            </div>),
+                            (<div class = {style.proDetailsContent}>
+                                <div class={style.singleItem}>
+                                    <div class={style.key}>Country:</div>
+                                    <div class={style.value}>{compCountry}</div>
+                                </div>
+                            </div>),
+                        ]}
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Personal address:</div>
+                            <div class={style.value}>{line1}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.doubleItems}>
+                            <div class={style.singleItem}>
+                                <div class={style.key}>City:</div>
+                                <div class={style.value}>{city}</div>
+                            </div>
+                            <div class={style.singleItem}>
+                                <div class={style.key}>Post Code:</div>
+                                <div class={style.value}>{postCode}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Country:</div>
+                            <div class={style.value}>{country}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Date of birth:</div>
+                            <div class={style.value}>{changeDateISOFormat(dateOfBirth)}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Service name:</div>
+                            <div class={style.value}>{profession}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Service category:</div>
+                            <div class={style.value}>{category}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Service sub-category:</div>
+                            <div class={style.value}>{subCategory}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Service description:</div>
+                            <div class={style.value}>{professionDescription}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Rate:</div>
+                            <div class={style.value}>£ {costPerMinute} / min</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Mobile:</div>
+                            <div class={style.value}>{mobile}</div>
+                        </div>
+                    </div>
+                </Card>
+            </div>
         )
     }
 

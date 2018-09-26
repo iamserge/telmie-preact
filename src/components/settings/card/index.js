@@ -8,6 +8,10 @@ const Card = props =>  {
 
             {props.headerText && <div class = {style.cardHeader}>
                 {props.headerText}
+                {props.headerBtnText 
+                    && <div class={style.headerBtn} onClick={props.onHeadetBtnClick}>
+                        {props.headerBtnText}
+                    </div>}
             </div>}
 
             <div class={`${props.class ? props.class : ''}`}>
