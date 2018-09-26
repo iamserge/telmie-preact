@@ -359,7 +359,7 @@ export default class Settings extends Component {
                             <div class={style.value}>{line1}, {city}, {postCode}, {country}</div>
                         </div>
                     </div>
-                    <div style={{fontSize: 16, marginBottom: 20}}>
+                    <div class={style.cardInfoText}>
                         Your name, entity and address should match the details of your bank account. To change any of the info above, please submit new Pro application.
                     </div>
 
@@ -385,6 +385,15 @@ export default class Settings extends Component {
                             Submit
                         </button>
                     </div>
+                </Card>
+
+                <Card headerText="ID Verification">
+                    <div class={style.cardInfoText}>
+                        Please upload your ID to lift the £2,000 limit of your payouts. The ID should be either a UK passport or a UK driving licence in the name of Mykola Adeyev. 
+                    </div>
+                    <button className='uk-button' onClick={() => {}}>
+                        Upload
+                    </button>
                 </Card>
             </div>
         )
