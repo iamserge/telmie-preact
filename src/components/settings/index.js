@@ -216,7 +216,7 @@ export default class Settings extends Component {
 
     renderProTab = () => {
         const {userData = {}} = this.props;
-        const { pro = {}, mobile, dateOfBirth, location } = userData;
+        const { pro = {}, mobile, dateOfBirth, location, name, lastName } = userData;
         const {subCategory, costPerMinute, professionDescription, category, profession} = pro;
 
         const {country, city, line1, postCode} = location ? JSON.parse(location) : {};
@@ -337,6 +337,53 @@ export default class Settings extends Component {
                             <div class={style.key}>Mobile:</div>
                             <div class={style.value}>{mobile}</div>
                         </div>
+                    </div>
+                </Card>
+
+                <Card headerText="Bank account">
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Name:</div>
+                            <div class={style.value}>{name} {lastName}</div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Entity:</div>
+                            <div class={style.value}></div>
+                        </div>
+                    </div>
+                    <div class = {style.proDetailsContent}>
+                        <div class={style.singleItem}>
+                            <div class={style.key}>Address:</div>
+                            <div class={style.value}>{line1}, {city}, {postCode}, {country}</div>
+                        </div>
+                    </div>
+                    <div style={{fontSize: 16, marginBottom: 20}}>
+                        Your name, entity and address should match the details of your bank account. To change any of the info above, please submit new Pro application.
+                    </div>
+
+                    <div className="double-input-container" style={{dosplay: 'flex', justifyContent: 'space-between'}}>
+                        <div className="input-container">
+                            <label for="sortCode">Sort code</label>
+                            <input type="text" name="sortCode" className="uk-input"/>
+
+                            {/*this.validator.message('city', city, 'required', 'validation-tooltip', {required: 'Please enter city'})*/}
+                        </div>
+                        <div className="input-container">
+                            <label for="accountNumber">Account number</label>
+                            <input type="text" name="accountNumber" className="uk-input" />
+
+                            {/*this.validator.message('postCode', postCode, 'required', 'validation-tooltip right', {required: 'Please enter post code'})*/}
+                        </div>
+
+                        
+                    </div>
+
+                    <div style={{textAlign: 'center'}}>
+                        <button className='uk-button' onClick={() => {}}>
+                            Submit
+                        </button>
                     </div>
                 </Card>
             </div>
