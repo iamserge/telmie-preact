@@ -48,10 +48,18 @@ class GeneralTab extends Component{
         if (this.validator.allValid()) {
 			let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
  			if(userAuth) {
-                let data = {...this.state.userData};
-                data.location = JSON.stringify(this.state.userData.location);
+                const {id, email, name, lastName, location, mobile, dateOfBirth, userAuth} = this.state.userData;
+                let date = new Date(dateOfBirth);
+                let data = {id, email, name, lastName, mobile, userAuth};
+                data.location = JSON.stringify(location);
                 
+                data.dob = {
+                    day: date.getDate(),
+                    month: date.getMonth() + 1,
+                    year: date.getFullYear(),
+                }
                 this.props.editDetails(data);
+                this.setState({isInEdit: false});
 			}
 		} else {
 			this.validator.showMessages();
@@ -67,31 +75,32 @@ class GeneralTab extends Component{
         const {name, value} = e.target;
 
         this.setState(prev => {
-            return name === 'dob' ? {
-                userData: {
-                    ...prev.userData,
-                    dateOfBirth: value ? new Date(value).toISOString() : '',
-                }
-            } : (
-                name === 'city' ? {
+            return (['country','city','line1','postCode'].indexOf(name) === -1) ? (
+                name === 'dob' ? {
                     userData: {
                         ...prev.userData,
-                        location: {
-                            ...prev.userData.location,
-                            city: value
-                        }
+                        dateOfBirth: value ? new Date(value).toISOString() : '',
                     }
-                } : {
+                } : ({
                     userData:{ ...prev.userData, [name]: value, }
+                })
+            ) : ({
+                userData: {
+                    ...prev.userData,
+                    location: {
+                        ...prev.userData.location,
+                        [name]: value,
+                    }
                 }
-            )
+            })
+            
         })
     }
 
     renderGeneralInfo = () => {
         const {userData = {}} = this.props;
         const {name, lastName, email, dateOfBirth, location } = userData;
-        const {city} = location ? JSON.parse(location) : {};
+        const {city, line1, postCode, country} = location ? JSON.parse(location) : {};
 
         return (
             <div class = {style.userInfo}>
@@ -111,17 +120,28 @@ class GeneralTab extends Component{
                     <span className={style.key}>Date of birth:</span>
                     <span className={style.value}>{ dateOfBirth ? changeDateISOFormat(dateOfBirth) : 'TBC' }</span>
                 </div>
+
                 <div>
-                    <span className={style.key}>Location:</span>
-                    <span className={style.value}>{(city != null) ? city : 'TBC'}</span>
-                </div>
+                    <span className={style.key}>Address</span>
+					<span className={style.value}>{(line1 != null) ? line1 : 'TBC'}</span>
+				</div>
+
+				<div>
+                    <span className={style.key}>City</span>
+					<span className={style.value}>{(city != null) ? city : 'TBC'}</span>
+				</div>
+				<div>
+                    <span className={style.key}>Post Code</span>
+					<span className={style.value}>{(postCode != null) ? postCode : 'TBC'}</span>
+				</div>
+
             </div>
         )
     }
 
     renderEditGeneralInfo = () => {
         const {name, lastName, email, dateOfBirth, location } = this.state.userData;
-        const {city} = location ? location : {};
+        const {city, line1, postCode, country} = location ? location : {};
 
         const dob = dateOfBirth ? changeDateISOFormat(dateOfBirth) : '';
 
@@ -154,6 +174,23 @@ class GeneralTab extends Component{
 					<label for="city">Location</label>
 					<input type="text" name="city" value={city} onChange={this.onChangeHandler} className="uk-input"/>
 				</div>
+
+                <div className="input-container">
+					<label for="line1">Address</label>
+					<textarea name="line1" value={line1} onChange={this.onChangeHandler} className="uk-textarea"/>
+				</div>
+
+				<div className="double-input-container">
+					<div className="input-container">
+						<label for="city">City</label>
+						<input type="text" name="city" value={city} onChange={this.onChangeHandler} className="uk-input"/>
+					</div>
+					<div className="input-container">
+						<label for="postCode">Post Code</label>
+						<input type="text" name="postCode" value={postCode} onChange={this.onChangeHandler} className="uk-input" />
+					</div>
+				</div>
+
                 <div style={{textAlign: 'center'}}>
                     <button className='uk-button' onClick={this.updateProfileHandler}>
                         Save
