@@ -111,7 +111,7 @@ export const activity = (state = [], action) => {
 	let activity;
 	switch (action.type) {
 		case actionTypes.PERSONAL_CALLS_RECEIVED:
-			let personalCalls = action.calls.map((activity)=>{
+			let personalCalls = action.calls.results.map((activity)=>{
 				let newActivity = activity;
 				newActivity.type = "PERSONAL"
 				return newActivity;
@@ -127,11 +127,10 @@ export const activity = (state = [], action) => {
 
 
 		case actionTypes.PRO_CALLS_RECEIVED:
-			let proCalls = action.calls.map((activity)=>{
+			let proCalls = action.calls.results.map((activity)=>{
 				let newActivity = activity;
 				newActivity.type = "PRO"
 				return newActivity;
-
 			});
 
 			activity = state.concat(proCalls);

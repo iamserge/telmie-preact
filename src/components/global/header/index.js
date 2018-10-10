@@ -68,7 +68,7 @@ class Header extends Component {
     this.props.logOff();
   }
 	render() {
-		const user = this.props.userData;
+    const {userData : user  = {}} = this.props;
     const currentUrl = getCurrentUrl();
     const isLogin = Object.keys(user).length !== 0;
 
@@ -106,7 +106,10 @@ class Header extends Component {
 
 				<div className="uk-navbar-right">
           { currentUrl != '/' && (
-              <Search hiddenSearchBox = {this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } home= { false }/>
+              <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
+                hideSearchBox = { this.props.hideSearchBox } 
+                isLogin = {isLogin} 
+                home= { false }/>
           )}
 
 					 { !isLogin  ? (

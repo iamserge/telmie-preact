@@ -74,6 +74,8 @@ class HomePage extends Component {
 		console.log(this.props);
 		if (this.state.doc) {
 			const pageData = this.state.doc.data;
+			const {userData : user  = {}} = this.props;
+    	const isLogin = Object.keys(user).length !== 0;
 			return (
 				<div id="homepage">
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
@@ -82,7 +84,7 @@ class HomePage extends Component {
 								main_sub-title = { pageData["main_sub-title"][0].text }
 								/>
 						) }
-					  <Search hiddenSearchBox = {this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } home= { true }/>
+					  <Search hiddenSearchBox = {this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin={isLogin} home= { true }/>
 						<Counters counters = {pageData.counters} />
 						<Video videoId = { pageData.main_video.video_id } />
 						<FeaturedServices services = { pageData.featured_services } servicesIcons = { pageData.services_icons} />
@@ -119,7 +121,8 @@ class HomePage extends Component {
 const mapStateToProps = (state) => ({
 	hiddenSearchBox: state.hiddenSearchBox,
 	verifySuccess: state.verifySuccess,
-	verifyFailure: state.verifyFailure
+	verifyFailure: state.verifyFailure,
+	userData: state.loggedInUser
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
