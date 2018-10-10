@@ -54,10 +54,10 @@ class Search extends Component {
 
 
 	componentWillReceiveProps(nextProps){
-		if (nextProps.searchTerm != this.state.searchTerm) {
-			const that = this;
+		const that = this;
+		if (nextProps.searchTerm != that.state.searchTerm) {
 			that.setState({pros: []});
-			this.fetchPros(nextProps.searchTerm, this.state.sortBy, this.state.page);
+			that.fetchPros(nextProps.searchTerm, that.state.sortBy, that.state.page);
 		}
 	}
 

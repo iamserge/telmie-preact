@@ -8,6 +8,7 @@ import Autosuggest from 'react-autosuggest';
 import $ from 'jquery';
 import { route } from 'preact-router';
 
+import { routes } from '../../app'
 
 
 const professions = [
@@ -136,7 +137,7 @@ const renderSuggestion = suggestion => (
 
 
 
-export default class Header extends Component {
+export default class SearchComponent extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -198,7 +199,7 @@ export default class Header extends Component {
       e.preventDefault();
       this.closeModal();
       let searchTerm = (this.state.searchValue.length > 0) ? this.state.searchValue : " ";
-      route('/search/' + searchTerm);
+      this.routeHandler(searchTerm);
     }
   }
   performSearch(e){
@@ -210,9 +211,17 @@ export default class Header extends Component {
       })
     } else {
       this.closeModal();
-      route('/search/' + this.state.searchValue);
+      this.routeHandler(this.state.searchValue);
     }
+  }
 
+  routeHandler = (searchTerm) => {
+    this.props.isLogin ? (
+      route(routes.SEARCH_FOR_COMP + searchTerm)
+    ) : (
+      this.setState({searchValue: ''}),
+      route(routes.LOGIN_OR_SIGNUP)
+    );
   }
 
   onFocus(){
