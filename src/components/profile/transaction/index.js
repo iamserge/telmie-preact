@@ -5,12 +5,15 @@ import { Link, route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import { apiRoot } from '../../../api';
 import { convertDate, convertDuration } from '../../../utils';
-export default class transaction extends Component {
+export default class Transaction extends Component {
 	goToPro(id){
 		route('/pro/' + id);
 	}
 	render({transaction}) {
-		const contact = transaction.contact;
+		console.log('transaction: ',transaction);
+		const { contact = {} }  = transaction;
+		const { pro ={} } = contact;
+		const { profession, category } = pro;
 		return (
 			<div className={style.transaction + ' ' + ( transaction.moneyCame > 0 && style.profit )}>
 				<div className={style.contact}  onClick={()=>{this.goToPro(contact.id)}} >
@@ -30,7 +33,7 @@ export default class transaction extends Component {
 								</div>
 							): (
 								<div>
-									{contact.pro.profession} <span className={style.profession}>{contact.pro.category}</span>
+									{profession} <span className={style.profession}>{category}</span>
 								</div>
 							)}
 					</div>
@@ -56,14 +59,14 @@ export default class transaction extends Component {
 									</span>
 								) : (
 									<span>
-								 		+&pound;{transaction.moneyCame.toFixed(2)}
+								 		+&pound;{transaction.moneyCame ? transaction.moneyCame.toFixed(2) : 0.00}
 									</span>
 								)
 
 
 						) : (
 							<span>
-							 -&pound;{transaction.moneyGone.toFixed(2)}
+							 -&pound;{transaction.moneyGone ? transaction.moneyGone.toFixed(2) : 0.00}
 							</span>
 						)}
 

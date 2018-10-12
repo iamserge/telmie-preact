@@ -38,10 +38,12 @@ class Activity extends Component {
 				loading: true
 			})
 			getCalls(this.props.userData.userAuth, this.state.isProCalls).then(function(data) {
-				let processed = processActivities(data);
+				//let processed = processActivities(data.results);
 		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
+					//activity: processed,
+					activity: data.results,
+					cutActivity: data.results.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS),
+					loading: false
 				});
 			}).catch(function(error) {
 					that.setState({
@@ -90,10 +92,12 @@ class Activity extends Component {
 			let that = this;
 
 			getCalls(nextProps.userData.userAuth, nextProps.isProCalls).then(function(data) {
-				let processed = processActivities(data);
+				//let processed = processActivities(data.results);
 		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
+					//activity: processed,
+					activity: data.results,
+					cutActivity: data.results.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS),
+					loading: false
 				});
 			}).catch(function(error) {
 					that.setState({

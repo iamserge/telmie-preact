@@ -37,11 +37,14 @@ export function getCalls(authData, isProCalls){
 
 
 
-export function getTransactions(authData, pageNumber){
+export function getTransactions(authData, size, page){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.GET_TRANSACTIONS, { method: 'GET', headers: headers}).then(response => {
+	let data = { page };
+	size ? ( data.size = size ) : null;
+
+	return fetch(apiUrls.GET_TRANSACTIONS, { method: 'POST', headers, body: JSON.stringify( data )}).then(response => {
     if (response.status === 401){
 			return {};
 		}

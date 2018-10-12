@@ -154,7 +154,10 @@ export const transactions = (state = [], action) => {
 	switch (action.type) {
 
 		case actionTypes.TRANSACTIONS_RECEIVED:
-			let transactions = orderBy(action.transactions, 'date', 'desc');
+			let transactions = {
+				...action.transactions,
+				results: orderBy(action.transactions.results, 'date', 'desc')
+			}
 			return transactions;
 
 		default:
