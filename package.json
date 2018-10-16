@@ -80,6 +80,7 @@
     "prismic-reactjs": "^0.2.4",
     "promise-polyfill": "^6.0.2",
     "proptypes": "^1.0.0",
+    "rc-collapse": "^1.10.0",
     "react-autosuggest": "^9.3.3",
     "react-cookie": "^2.1.4",
     "react-cookies": "^0.1.0",

@@ -15,6 +15,7 @@ import Video from '../../components/homepage/video';
 import MoreInfo from '../../components/homepage/more-info';*/
 
 import PhotoCards from '../../components/homepage/photo-cards'
+import LandingFAQ from '../../components/homepage/landing-faq'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
@@ -90,11 +91,15 @@ class HomePage extends Component {
 							<div class={style.title}>Video-calls with photography experts</div>
 							<div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
 
-							<button>Download app</button>
+							<button class='red-btn'>Download app</button>
 							<button class='white-btn'>Sign up free</button>
 						</div>
 
 						<PhotoCards cards = {photoCards}/>
+						
+						<LandingFAQ />
+
+
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
 							<HomeTitle

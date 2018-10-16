@@ -106,9 +106,7 @@ a {
 	}
 }
 
-button {
-	background-color: $red;
-	color: white !important;
+%custom-btn {
 	font-size: 18px;
 	height: 60px;
     border: none;
@@ -117,7 +115,14 @@ button {
 	cursor: pointer;
 }
 
+button.red-btn {
+	@extend %custom-btn;
+	background-color: $red;
+	color: white !important;
+}
+
 button.white-btn {
+	@extend %custom-btn;
 	border: 1px solid $backgroundGrey;
 	color: $black !important;
 	background-color: white;

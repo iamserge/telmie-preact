@@ -1,0 +1,37 @@
+@import './src/style/variables';
+
+.landingFAQ{
+    display: flex;
+    align-items: flex-start;
+
+    .menuContainer{
+        width: 20%;
+        flex: 0 0 250px;
+    }
+
+    .content{
+        width: 100%;
+    }
+}
+
+.faqMenu{
+    padding: 0;
+
+    .active{
+        color: $red;
+    }
+
+    & > li {
+        list-style: none;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    & > li:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.collapseHeader{
+    background-color: white;
+}
