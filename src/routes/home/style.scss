@@ -4,17 +4,17 @@
 	#home {
 		min-height: 1000px;
 	}
-	#mainTitle {
+	/*#mainTitle {
 		text-align: center;
 		margin: 40px 0;
 		span {
 			color: $red;
 		}
-	}
+	}*/
 }
 :global {
 	#homepage {
-			.slider-list {
+			/*.slider-list {
 				height: 240px !important
 			}
 			.slider-control-bottomcenter {
@@ -51,6 +51,6 @@
 						background-image: url(/assets/plus.svg);
 					}
 				}
-			}
+			}*/
 	}
 }

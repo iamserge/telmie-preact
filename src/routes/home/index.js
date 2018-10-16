@@ -1,18 +1,18 @@
 import { h, Component } from 'preact';
-import Helmet from 'preact-helmet';
+//import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { hideSearchBox } from '../../actions';
-import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
+/*import Prismic from 'prismic-javascript';
+import PrismicReact from 'prismic-reactjs';*/
 import Spinner from '../../components/global/spinner';
-import Search from '../../components/global/search';
+/*import Search from '../../components/global/search';
 import HomeTitle from '../../components/homepage/home-title';
 import Counters from '../../components/homepage/counters';
 import FeaturedPros from '../../components/homepage/featured-pros';
 import FeaturedServices from '../../components/homepage/featured-services';
 import Video from '../../components/homepage/video';
-import MoreInfo from '../../components/homepage/more-info';
+import MoreInfo from '../../components/homepage/more-info';*/
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
@@ -55,7 +55,7 @@ class HomePage extends Component {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
         if (doc) {
-					console.log(doc);
+					console.log('doc',doc);
           // We put the retrieved content in the state as a doc variable
           this.setState({ doc });
         } else {
@@ -71,13 +71,23 @@ class HomePage extends Component {
     return null;
   }
 	render() {
-		console.log(this.props);
+		console.log('props',this.props);
+		console.log('state', this.state);
 		if (this.state.doc) {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}} = this.props;
     	const isLogin = Object.keys(user).length !== 0;
 			return (
 				<div id="homepage">
+
+						<div>
+							<div class='uk-h2'>Video-calls with photography experts</div>
+							<div class='uk-h4'>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
+
+							<button>Download app</button>
+							<button>Sign up free</button>
+						</div>
+						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
 							<HomeTitle
 								main_title = { pageData.main_title[0].text }
@@ -92,6 +102,8 @@ class HomePage extends Component {
 
 
 						<MoreInfo />
+
+					*/}
 						{this.state.verifyFailure && (
 							<div>
 
