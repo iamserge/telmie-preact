@@ -109,6 +109,18 @@ a {
 button {
 	background-color: $red;
 	color: white !important;
+	font-size: 18px;
+	height: 60px;
+    border: none;
+    border-radius: 30px;
+	padding: 0 40px;
+	cursor: pointer;
+}
+
+button.white-btn {
+	border: 1px solid $backgroundGrey;
+	color: $black !important;
+	background-color: white;
 }
 
 .switchContainer {

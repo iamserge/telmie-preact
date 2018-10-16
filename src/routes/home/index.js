@@ -80,12 +80,12 @@ class HomePage extends Component {
 			return (
 				<div id="homepage">
 
-						<div>
-							<div class='uk-h2'>Video-calls with photography experts</div>
-							<div class='uk-h4'>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
+						<div class={`${style.infoContainer} uk-container uk-container-small`}>
+							<div class={style.title}>Video-calls with photography experts</div>
+							<div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
 
 							<button>Download app</button>
-							<button>Sign up free</button>
+							<button class='white-btn'>Sign up free</button>
 						</div>
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
