@@ -29,17 +29,6 @@ const timeArr = [{
 	value: 'min',
 }];
 
-const getCookie = (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
 // in future ebit getDefaultState() & getPreparedProState() fields for individual or company validations
 
 const getDefaultState = () => {
@@ -161,9 +150,9 @@ export default class RegisterProForm extends Component{
 	
 	registerHandler = (isForUpdate = false) => {
 		if (this.validator.allValid()) {
-			let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+			let { userAuth, id }  = this.props.userData; 
 
-			if(userAuth) {
+			if(userAuth && id) {
 				const {dob,costPerMinute} = this.state.regInfo;
 				const {day,month,year} = dob;
 
@@ -176,7 +165,7 @@ export default class RegisterProForm extends Component{
 					},
 				}
 
-				this.props.registerPro(data, userAuth, isForUpdate);
+				this.props.registerPro(data, id, userAuth, isForUpdate);
 				this.setState({isInfoRegisterVisible: true, isFieldCorrect: true});
 			}
 		} else {

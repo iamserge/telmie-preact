@@ -154,10 +154,10 @@ export const register = (data) => async (dispatch) => {
 	}
 };
 
-export const registerPro = (data, authData, isForUpdate = false) => async (dispatch) => {
+export const registerPro = (data, id, authData, isForUpdate = false) => async (dispatch) => {
 	let response = isForUpdate ? 
-		await user.updatePro(data, authData)
-		: await user.registerPro(data, authData);
+		await user.updatePro(data, id, authData)
+		: await user.registerPro(data, id, authData);
 
 	if (response.error) {
 		dispatch(registerFailure(response.message));
