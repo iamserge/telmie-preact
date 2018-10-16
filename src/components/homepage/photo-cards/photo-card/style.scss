@@ -1,0 +1,44 @@
+.photoCard {
+    position: relative;
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 260px;
+    height: auto;
+    min-height: 260px;
+    text-align: center;
+    color: white;
+
+    .proDetails{
+        position: absolute;
+        width: 100%;
+        bottom: 30px;
+    }
+    .proName{
+        margin-bottom: 20px;
+    }
+    .proService{
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+    .charge{
+        display: inline-block;
+        width: auto;
+        max-width: 110px;
+        height: 25px;
+        padding: 0 10px;
+        border-radius: 12px;
+        background-color: rgba($color: white, $alpha: 0.3);
+    }
+}
+
+.statCard{
+    background-color: #565fcf;
+
+    .minutes{
+        font-size: 20px;
+    }
+    .signature{
+        text-transform: uppercase;
+    }
+}

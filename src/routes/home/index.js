@@ -13,9 +13,15 @@ import FeaturedPros from '../../components/homepage/featured-pros';
 import FeaturedServices from '../../components/homepage/featured-services';
 import Video from '../../components/homepage/video';
 import MoreInfo from '../../components/homepage/more-info';*/
+
+import PhotoCards from '../../components/homepage/photo-cards'
+
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
+
+// mock-data
+import { photoCards } from './mock-data.js'
 
 class HomePage extends Component {
 	constructor(props){
@@ -87,6 +93,8 @@ class HomePage extends Component {
 							<button>Download app</button>
 							<button class='white-btn'>Sign up free</button>
 						</div>
+
+						<PhotoCards cards = {photoCards}/>
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
 							<HomeTitle
