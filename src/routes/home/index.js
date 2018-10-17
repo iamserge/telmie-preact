@@ -17,13 +17,14 @@ import Video from '../../components/homepage/video';
 import PhotoCards from '../../components/homepage/photo-cards'
 import LandingFAQ from '../../components/homepage/landing-faq'
 import ServiceCard from '../../components/service-card'
+import BlogArticles from '../../components/blog-articles'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards, serviceCards, landingFAQ } from './mock-data.js'
+import { photoCards, serviceCards, landingFAQ, blogArtilces } from './mock-data.js'
 
 class HomePage extends Component {
 	constructor(props){
@@ -120,7 +121,7 @@ class HomePage extends Component {
 
 						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
 
-						<div style={{backgroundColor: 'rgb(245,246,248)', paddingTop: 100}}>
+						<div style={{backgroundColor: 'rgb(245,246,248)', paddingTop: 100, marginBottom: 125}}>
 							<div class={`uk-container ${style.proContainer}`}>
 								<div class={style.textContent}>
 									<div class={style.header}>Earn more money from your expert knowledge. 10% fees, no hidden charges.</div>
@@ -135,6 +136,11 @@ class HomePage extends Component {
 									<img class={style.combinedShape} src='/assets/new-landing-page/combinedShape.png' alt=''/>
 								</div>
 							</div>
+						</div>
+
+						<div class={`${style.blogContainer} uk-container`}>
+							<div class={style.header}>Blog</div>
+							<BlogArticles articles = {blogArtilces}/>
 						</div>
 
 						{/*

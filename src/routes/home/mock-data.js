@@ -109,3 +109,27 @@ export const landingFAQ = {
         answer: 'Telmie rounds up all seconds to the nearest number of minutes. So, if your session lasts 5 minutes 30 seconds, it all be rounded up and you will be charged for 6 minutes of the expert’s time.',
     }],
 };
+
+export const blogArtilces = [{
+    title: 'Immigration law as a service',
+    isBig: true,
+    date: 1539291650000,
+    link: '',
+    img: 'https://cdn.zeplin.io/5b602aa6f06df96c67c397bd/assets/C5737136-69EA-4A3A-A55C-9C5952A3B9C1.png',
+},{
+    title: 'Expensive professional services don’t need to be expensive',
+    date: 1539291640000,
+    link: '',
+},{
+    title: 'Different ways of building your online business',
+    date: 1539291630000,
+    link: '',
+},{
+    title: 'How to become independent Pro advisor',
+    date: 1539291620000,
+    link: '',
+},{
+    title: 'Steps towards being a successful freelancer',
+    date: 1539291601000,
+    link: '',
+}];

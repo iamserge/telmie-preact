@@ -106,6 +106,16 @@
 	}
 }
 
+.blogContainer{
+	margin-bottom: 160px !important;
+
+	.header {
+		color: $hBlack;
+		font-size: 48px;
+		margin-bottom: 60px;
+	}
+}
+
 :global {
 	#home {
 		min-height: 1000px;
