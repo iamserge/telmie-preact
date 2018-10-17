@@ -16,13 +16,14 @@ import Video from '../../components/homepage/video';
 
 import PhotoCards from '../../components/homepage/photo-cards'
 import LandingFAQ from '../../components/homepage/landing-faq'
+import ServiceCard from '../../components/service-card'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards } from './mock-data.js'
+import { photoCards, serviceCards } from './mock-data.js'
 
 class HomePage extends Component {
 	constructor(props){
@@ -105,6 +106,15 @@ class HomePage extends Component {
 							</div>
 							<div>
 								<Video videoId = { pageData.main_video.video_id } />
+							</div>
+						</div>
+
+						<div class={`${style.featuredServices} uk-container`}>
+							<div class={style.header}>Featured Services</div>
+							<div style={{display: 'flex', justifyContent: 'space-around'}}>
+								{serviceCards.map(card => (
+									<ServiceCard key={card.serviceName} {...card}/>
+								))}
 							</div>
 						</div>
 

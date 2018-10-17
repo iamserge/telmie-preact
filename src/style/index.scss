@@ -46,7 +46,7 @@ a {
 	transition: none;
 }
 .uk-container {
-	min-height: calc(100% - 155px);
+	min-height: calc(100% - 174px);
     @media (max-width: 880px) {
         width: calc(100% - 10px);
         box-sizing: border-box;
@@ -80,6 +80,12 @@ a {
     }
     
 }
+
+#homepage .uk-container{
+	margin: 0 120px 0 140px;
+	padding: 0;
+}
+
 .uk-close {
   position: absolute;
   right: 0px;

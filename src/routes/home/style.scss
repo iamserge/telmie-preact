@@ -33,6 +33,14 @@
 		}
 	}
 }
+.featuredServices{
+	.header {
+		color: $hBlack;
+		font-size: 22px;
+		margin-bottom: 40px;
+		line-height: 60px;
+	}
+}
 
 :global {
 	#home {

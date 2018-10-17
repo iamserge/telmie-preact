@@ -15,4 +15,12 @@ export const photoCards = [{
 },{
     isStat: true,
     minutes: 325041,
+}];
+
+export const serviceCards = [{
+    background: 'https://cdn.zeplin.io/5b602aa6f06df96c67c397bd/assets/1840FF49-87F5-4A37-9DCC-57350461B9DD.png',
+    serviceName: 'Language practice',
+},{
+    background: 'https://cdn.zeplin.io/5b602aa6f06df96c67c397bd/assets/EE1C630E-1099-40FD-B398-CBEF087A5D31.png',
+    serviceName: 'Immigration advice',
 }]
