@@ -20,57 +20,81 @@
 
 .howWorksContainer{
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 	margin-bottom: 160px !important;
 
 	.howWorksText{
 		font-size: 18px;
 		letter-spacing: -0.3px;
-		margin-right: 75px;
+		//margin-right: 75px;
 		padding: 15px 0;
+		width: calc(100% - 620px - 75px);
+		min-width: 500px;
 		.header{
 			color: $hBlack;
 			font-size: 48px;
 			margin-bottom: 25px;
 		}
 	}
+	.howWorksVideo{
+		width: 620px;
+	}
 }
 .featuredServices{
 	margin-bottom: 160px !important;
-
+	
 	.header {
 		color: $hBlack;
 		font-size: 22px;
 		margin-bottom: 40px;
 		line-height: 60px;
 	}
+	.services{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
 }
 
+.proWrapper{
+	background-color: rgb(245,246,248);
+	padding-top: 100px;
+	margin-bottom: 125px;
+}
 .proContainer{
 	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
 
 	.textContent{
 		display: inline-block;
 		width: 50%;
+
+		.header{
+			font-size: 40px;
+			color: $hBlack;
+			margin-bottom: 24px;
+		}
+		.content{
+			font-size: 18px;
+			line-height: 32px;
+			margin-bottom: 40px;
+		}
+		button{
+			margin-bottom: 107px;
+		}
 	}
 
-	.header{
-		font-size: 40px;
-		color: $hBlack;
-		margin-bottom: 24px;
-	}
-	.content{
-		font-size: 18px;
-		line-height: 32px;
-		margin-bottom: 40px;
-	}
-	button{
-		margin-bottom: 107px;
-	}
+	
 	.imgContent{
 		display: inline-block;
-		position: absolute;
+		position: relative;
 		bottom: 0;
 		height: 100%;
+		min-height: 500px;
 		width: 50%;
 
 		.girl_pro{
@@ -104,6 +128,16 @@
 			right: 0;
 		}
 	}
+
+	@media (max-width: 880px) {
+		.imgContent, .textContent{
+			width: 100%;
+		}
+
+		.textContent button{
+			margin-bottom: 15px;
+		}
+    }
 }
 
 .blogContainer{

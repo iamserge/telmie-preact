@@ -82,7 +82,11 @@ a {
 }
 
 #homepage .uk-container{
-	padding: 0;
+	padding: 0 10px;
+}
+#homepage .uk-container::before, 
+#homepage .uk-container::after{
+	display: none;
 }
 
 .uk-close {

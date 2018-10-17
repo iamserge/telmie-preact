@@ -103,23 +103,25 @@ class HomePage extends Component {
 								<div style={{marginBottom: 40}}>Telmie is a social app that connects experts with advice-seekers quickly and easily over video. It's the fastest, easiest and most trusted way of finding whatever advice you require.</div>
 								<button class='red-btn'>Download app</button>
 							</div>
-							<div>
+							<div class={style.howWorksVideo}>
 								<Video videoId = { pageData.main_video.video_id } />
 							</div>
 						</div>
 
 						<div class={`${style.featuredServices} uk-container`}>
 							<div class={style.header}>Featured Services</div>
+							<div class={style.services}>
 							{serviceCards.map(card => (
 								<ServiceCard key={card.serviceName} {...card}/>
 							))}
+							</div>
 						</div>
 
 						<div class='uk-container' style={{marginBottom: 55}}>Easy to use iOS app</div>
 
 						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
 
-						<div style={{backgroundColor: 'rgb(245,246,248)', paddingTop: 100, marginBottom: 125}}>
+						<div class={style.proWrapper}>
 							<div class={`uk-container ${style.proContainer}`}>
 								<div class={style.textContent}>
 									<div class={style.header}>Earn more money from your expert knowledge. 10% fees, no hidden charges.</div>
