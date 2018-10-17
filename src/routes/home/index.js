@@ -111,11 +111,11 @@ class HomePage extends Component {
 
 						<div class={`${style.featuredServices} uk-container`}>
 							<div class={style.header}>Featured Services</div>
-							<div style={{display: 'flex', justifyContent: 'space-between'}}>
+							
 								{serviceCards.map(card => (
 									<ServiceCard key={card.serviceName} {...card}/>
 								))}
-							</div>
+							
 						</div>
 
 						<div class='uk-container' style={{marginBottom: 55}}>Easy to use iOS app</div>
