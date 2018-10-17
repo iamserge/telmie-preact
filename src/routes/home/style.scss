@@ -20,6 +20,7 @@
 
 .howWorksContainer{
 	display: flex;
+	margin-bottom: 160px !important;
 
 	.howWorksText{
 		font-size: 18px;
@@ -34,6 +35,8 @@
 	}
 }
 .featuredServices{
+	margin-bottom: 160px !important;
+
 	.header {
 		color: $hBlack;
 		font-size: 22px;

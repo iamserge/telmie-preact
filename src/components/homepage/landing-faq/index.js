@@ -40,50 +40,43 @@ class LandingFAQ extends Component {
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
-    generalTab = () => (
-        <Collapse accordion={true} activeKey={this.state.activeQuest} onChange={this.setActiveQuest}>
-            <Collapse.Panel key='1' header="hello" {...headerProps}>this is panel content</Collapse.Panel>
-            <Collapse.Panel key='2' header="title2" {...headerProps}>this is panel content2 or other</Collapse.Panel>
-            <Collapse.Panel key='3' header="title3" {...headerProps}>this is panel content2 or other</Collapse.Panel>
-        </Collapse>
-    );
+    renderHeder = (text) => ([<img src='/assets/group28.png' alt='' class={style.hIcon}/>, text])
 
-    customersTab = () => {
-        return <div>Customers Tab</div>
-    }
-
-    expertsTab = () => {
-        return <div>Experts Tab</div>
-    }
-
-    paymentsTab = () => {
-        return <div>Payments Tab</div>
+    renderQuestions = (arr = []) => {
+        const {activeQuest} = this.state;
+        return (
+            <Collapse accordion={true} activeKey={activeQuest} onChange={this.setActiveQuest}>
+                {arr.map(({question, answer}, index) => (
+                    <Collapse.Panel key={index} header={this.renderHeder(question)} {...headerProps}>
+                        {answer}
+                    </Collapse.Panel>
+                ))}
+            </Collapse>
+        )
     }
 
     render(){
         const { activeTab } = this.state;
-        const methodName = `${activeTab}Tab`
-        return (
-            <div class={`uk-container uk-container-small uk-container-inner ${style.landingFAQ}`}>
-                <div class={style.menuContainer}>
-                    <ul class={style.faqMenu}>
-                        {tabs.map(({text,value}) => (
-                            <li key={value} 
-                                class={activeTab===value ? style.active : '' } 
-                                onClick={this.setActiveTab(value)}> {text} </li>
-                        ))}
-                    </ul>
-                </div>
+        const currentQuestions = this.props[`${activeTab}Questions`];
 
-                <div class={style.content}>
-                    {this[methodName]()}
-                    {/*<Collapse accordion={true}>
-                        <Collapse.Panel showArrow={false} header="hello" headerClass="my-header-class">this is panel content</Collapse.Panel>
-                        <Collapse.Panel header="title2">this is panel content2 or other</Collapse.Panel>
-                    </Collapse>*/}
+        return (
+            <div class={`uk-container`} style={this.props.styles}>
+                <div class={style.headerFAQ}>FAQ</div>
+                <div class={style.landingFAQ}>
+                    <div class={style.menuContainer}>
+                        <ul class={style.faqMenu}>
+                            {tabs.map(({text,value}) => (
+                                <li key={value} 
+                                    class={activeTab===value ? style.active : '' } 
+                                    onClick={this.setActiveTab(value)}> {text} </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div class={style.content}>
+                        {this.renderQuestions(currentQuestions)}
+                    </div>
                 </div>
-                
-                
             </div>
         )
     }

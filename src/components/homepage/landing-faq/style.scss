@@ -1,5 +1,11 @@
 @import './src/style/variables';
 
+.headerFAQ{
+    color: $hBlack;
+    font-size: 48px;
+    margin-bottom: 50px;
+}
+
 .landingFAQ{
     display: flex;
     align-items: flex-start;
@@ -22,9 +28,14 @@
     }
 
     & > li {
+        height: 50px;
+        line-height: 50px;
         list-style: none;
+        color: #000000;
+        font-size: 14px;
+        letter-spacing: 0.6px;
         text-transform: uppercase;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
         cursor: pointer;
     }
     & > li:last-child{
@@ -33,5 +44,20 @@
 }
 
 .collapseHeader{
+    position: relative;
+    text-indent: 0 !important;
     background-color: white;
+    color: $hBlack !important;
+    font-size: 20px;
+    border: none !important;
+    padding: 20px 0 20px 50px;
+    height: auto !important;
+    border-bottom: 1px solid $lightGrey !important;
+    outline: none;
+
+    .hIcon{
+        position: absolute;
+        top: calc(50% - 14px);
+        left: 0;
+    }
 }

@@ -23,7 +23,7 @@ import { verify } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards, serviceCards } from './mock-data.js'
+import { photoCards, serviceCards, landingFAQ } from './mock-data.js'
 
 class HomePage extends Component {
 	constructor(props){
@@ -111,14 +111,16 @@ class HomePage extends Component {
 
 						<div class={`${style.featuredServices} uk-container`}>
 							<div class={style.header}>Featured Services</div>
-							<div style={{display: 'flex', justifyContent: 'space-around'}}>
+							<div style={{display: 'flex', justifyContent: 'space-between'}}>
 								{serviceCards.map(card => (
 									<ServiceCard key={card.serviceName} {...card}/>
 								))}
 							</div>
 						</div>
 
-						<LandingFAQ />
+						<div class='uk-container' style={{marginBottom: 55}}>Easy to use iOS app</div>
+
+						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
 
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
