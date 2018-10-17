@@ -3,11 +3,12 @@
     display: inline-block;
     border-radius: 10px;
     overflow: hidden;
-    width: 260px;
+    width: 208px;
     height: auto;
-    min-height: 260px;
+    min-height: 208px;
     text-align: center;
     color: white;
+    margin-bottom: 20px;
 
     .proDetails{
         font-size: 12px;
@@ -30,7 +31,8 @@
         display: inline-block;
         width: auto;
         max-width: 110px;
-        height: 25px;
+        height: 21px;
+        line-height: 21px;
         padding: 0 10px;
         border-radius: 12px;
         background-color: rgba($color: white, $alpha: 0.3);
@@ -40,7 +42,8 @@
 .statCard{
     background-color: #565fcf;
     font-size: 18px;
-    padding: 40px 20px 30px 20px;
+    padding: 30px 20px 30px 20px;
+    margin-bottom: 20px;
 
     .minutes{
         font-size: 32px;
@@ -51,4 +54,8 @@
         text-transform: uppercase;
         letter-spacing: 0.2px;
     }
+}
+
+.photoCardCol{
+    display: inline-block;
 }

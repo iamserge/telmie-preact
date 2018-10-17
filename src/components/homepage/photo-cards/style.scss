@@ -1,5 +1,19 @@
+@import './src/style/variables';
+
 .photoCardsContainer{
-    
+    padding: 0 90px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    .video{
+        display: inline-block;
+        background-color: $lightBackgroundGrey;
+        width: 306px;
+        height: 530px;
+    }
+
     & > div:not(:last-child){
         margin-right: 20px;
     }
