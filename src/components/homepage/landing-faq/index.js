@@ -40,7 +40,7 @@ class LandingFAQ extends Component {
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
-    renderHeder = (text) => ([<img src='/assets/group28.png' alt='' class={style.hIcon}/>, text])
+    renderHeder = (text) => ([<img src='/assets/new-landing-page/group28.png' alt='' class={style.hIcon}/>, text])
 
     renderQuestions = (arr = []) => {
         const {activeQuest} = this.state;

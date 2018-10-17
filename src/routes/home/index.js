@@ -111,16 +111,31 @@ class HomePage extends Component {
 
 						<div class={`${style.featuredServices} uk-container`}>
 							<div class={style.header}>Featured Services</div>
-							
-								{serviceCards.map(card => (
-									<ServiceCard key={card.serviceName} {...card}/>
-								))}
-							
+							{serviceCards.map(card => (
+								<ServiceCard key={card.serviceName} {...card}/>
+							))}
 						</div>
 
 						<div class='uk-container' style={{marginBottom: 55}}>Easy to use iOS app</div>
 
 						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
+
+						<div style={{backgroundColor: 'rgb(245,246,248)', paddingTop: 100}}>
+							<div class={`uk-container ${style.proContainer}`}>
+								<div class={style.textContent}>
+									<div class={style.header}>Earn more money from your expert knowledge. 10% fees, no hidden charges.</div>
+									<div class={style.content}>Become an expert and share your knowledge with others. Expand your client base, streamline bookings and payments. Save time and cut overheads by providing services online.</div>
+									<button class='red-btn'>Sign up & Become Pro</button>
+								</div>
+								<div class={style.imgContent}>
+									<img class={style.girl_pro} src='/assets/new-landing-page/girl_pro.png' alt=''/>
+									<img class={style.polygon_small} src='/assets/new-landing-page/polygon.png' alt='' height="33" width="33"/>
+									<img class={style.polygon_medium} src='/assets/new-landing-page/polygon.png' alt=''/>
+									<img class={style.polygon_large} src='/assets/new-landing-page/polygon_red.png' alt=''/>
+									<img class={style.combinedShape} src='/assets/new-landing-page/combinedShape.png' alt=''/>
+								</div>
+							</div>
+						</div>
 
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
