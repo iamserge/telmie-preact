@@ -10,16 +10,21 @@
     color: white;
 
     .proDetails{
+        font-size: 12px;
         position: absolute;
         width: 100%;
-        bottom: 30px;
+        bottom: 25px;
     }
     .proName{
-        margin-bottom: 20px;
+        font-size: 20px;
+        letter-spacing: -0.4px;
+        margin-bottom: 5px;
     }
     .proService{
+        letter-spacing: 0.2px;
         text-transform: uppercase;
-        margin-bottom: 25px;
+        margin-bottom: 15px;
+        color: rgba($color: #ffffff, $alpha: .9);
     }
     .charge{
         display: inline-block;
@@ -34,11 +39,16 @@
 
 .statCard{
     background-color: #565fcf;
+    font-size: 18px;
+    padding: 40px 20px 30px 20px;
 
     .minutes{
-        font-size: 20px;
+        font-size: 32px;
     }
     .signature{
+        font-size: 12px;
+        line-height: 16px;
         text-transform: uppercase;
+        letter-spacing: 0.2px;
     }
 }

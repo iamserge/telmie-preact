@@ -10,9 +10,9 @@ import Spinner from '../../components/global/spinner';
 import HomeTitle from '../../components/homepage/home-title';
 import Counters from '../../components/homepage/counters';
 import FeaturedPros from '../../components/homepage/featured-pros';
-import FeaturedServices from '../../components/homepage/featured-services';
+import FeaturedServices from '../../components/homepage/featured-services';*/
 import Video from '../../components/homepage/video';
-import MoreInfo from '../../components/homepage/more-info';*/
+/*import MoreInfo from '../../components/homepage/more-info';*/
 
 import PhotoCards from '../../components/homepage/photo-cards'
 import LandingFAQ from '../../components/homepage/landing-faq'
@@ -87,18 +87,28 @@ class HomePage extends Component {
 			return (
 				<div id="homepage">
 
-						<div class={`${style.infoContainer} uk-container uk-container-small`}>
+						<div class={`${style.infoContainer} uk-container`}>
 							<div class={style.title}>Video-calls with photography experts</div>
 							<div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
 
 							<button class='red-btn'>Download app</button>
-							<button class='white-btn'>Sign up free</button>
+							{/*<button class='white-btn'>Sign up free</button>*/}
 						</div>
 
-						<PhotoCards cards = {photoCards}/>
-						
-						<LandingFAQ />
+						<PhotoCards cards = {photoCards} styles={{marginBottom:160}}/>
 
+						<div class={`${style.howWorksContainer} uk-container`}>
+							<div class={style.howWorksText}>
+								<div class={style.header}>How it works</div>
+								<div style={{marginBottom: 40}}>Telmie is a social app that connects experts with advice-seekers quickly and easily over video. It's the fastest, easiest and most trusted way of finding whatever advice you require.</div>
+								<button class='red-btn'>Download app</button>
+							</div>
+							<div>
+								<Video videoId = { pageData.main_video.video_id } />
+							</div>
+						</div>
+
+						<LandingFAQ />
 
 						{/*
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (

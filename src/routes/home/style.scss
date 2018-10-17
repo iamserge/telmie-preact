@@ -3,17 +3,34 @@
 
 .infoContainer {
 	text-align: center;
+	margin-bottom: 140px;
 
 	.title{
-		font-size: 28px;
+		font-size: 56px;
 		margin-bottom: 20px;
 	}
 	.subTitle {
-		font-size: 20px;
-		margin-bottom: 10px;
+		font-size: 23px;
+		margin-bottom: 50px;
 	}
 	& > button {
 		margin-right: 20px;
+	}
+}
+
+.howWorksContainer{
+	display: flex;
+
+	.howWorksText{
+		font-size: 18px;
+		letter-spacing: -0.3px;
+		margin-right: 75px;
+		padding: 15px 0;
+		.header{
+			color: $hBlack;
+			font-size: 48px;
+			margin-bottom: 25px;
+		}
 	}
 }
 

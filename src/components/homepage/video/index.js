@@ -18,10 +18,7 @@ export default class Video extends Component {
 	}
 	render() {
 		return (
-
-			<div className={style.videoContainer} >
-				<Vimeo videoId={ this.props.videoId } playButton={PlayButton} onLoaded = { this.onLoaded}/>
-			</div>
+			<Vimeo videoId={ this.props.videoId } playButton={PlayButton} onLoaded = { this.onLoaded}/>
 		)
 	}
 }

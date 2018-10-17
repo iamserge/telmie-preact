@@ -11,7 +11,8 @@ html, body {
 	margin: 0;
 	font-family: 'Roboto', arial, sans-serif;
 	font-weight: 400;
-	color: #5C636E;
+	//color: #5C636E;
+	color: #3e4854;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -45,9 +46,9 @@ a {
 	transition: none;
 }
 .uk-container {
-	min-height: calc(100% - 174px);
+	min-height: calc(100% - 155px);
     @media (max-width: 880px) {
-        width: 100%;
+        width: calc(100% - 10px);
         box-sizing: border-box;
     }
 }
@@ -107,8 +108,8 @@ a {
 }
 
 %custom-btn {
-	font-size: 18px;
-	height: 60px;
+	font-size: 16px;
+	height: 50px;
     border: none;
     border-radius: 30px;
 	padding: 0 40px;
@@ -269,9 +270,11 @@ button.white-btn {
 
 .vimeo {
 	position: relative;
-	height: 515px;
+	height: 350px;
 	margin: 0 auto;
-	width: 980px;
+	width: 620px;
+	border-radius: 10px;
+    overflow: hidden;
 
 	iframe, object, embed {
 		 position: absolute;
