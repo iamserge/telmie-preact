@@ -346,6 +346,27 @@ button.white-btn {
 .mainContainer {
 	height: calc(100% - 80px);
 }
+
+.new-input{
+	border: 0;
+	border-bottom: 2px solid $lightGrey;
+	width: 100%;
+	font-size: 20px;
+	line-height: 32px;
+	height: 70px;
+	text-align: center;
+	padding: 10px;
+	background: transparent;
+	color: black;
+}
+.new-input:focus {
+	outline: 0;
+	border-color: $red;
+}
+.new-input::placeholder {
+	color: rgb(182, 185, 190);
+}
+
 @media (max-width: 880px) {
     .uk-container-small {
         width: auto;

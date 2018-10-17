@@ -116,6 +116,33 @@
 	}
 }
 
+.contuctContainer{
+	background-color: rgb(245,246,248);
+	padding: 115px 32px 130px 32px;
+	text-align: center;
+
+	.header{
+		font-size: 48px;
+		line-height: 64px;
+		color: $hBlack;
+		margin-bottom: 16px;
+	}
+	.subHeader{
+		font-size: 18px;
+		line-height: 32px;
+		margin-bottom: 65px;
+	}
+	.contactForm{
+		max-width: 600px;
+		min-width: 310px;
+		margin: 0 auto;
+
+		button{
+			margin-top: 65px;
+		}
+	}
+}
+
 :global {
 	#home {
 		min-height: 1000px;

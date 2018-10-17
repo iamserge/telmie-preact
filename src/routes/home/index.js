@@ -80,14 +80,12 @@ class HomePage extends Component {
     return null;
   }
 	render() {
-		console.log('props',this.props);
-		console.log('state', this.state);
 		if (this.state.doc) {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}} = this.props;
-    	const isLogin = Object.keys(user).length !== 0;
+    		const isLogin = Object.keys(user).length !== 0;
 			return (
-				<div id="homepage">
+				<div id="homepage" style={{paddingTop: 100}}>
 
 						<div class={`${style.infoContainer} uk-container`}>
 							<div class={style.title}>Video-calls with photography experts</div>
@@ -141,6 +139,20 @@ class HomePage extends Component {
 						<div class={`${style.blogContainer} uk-container`}>
 							<div class={style.header}>Blog</div>
 							<BlogArticles articles = {blogArtilces}/>
+						</div>
+
+						<div class={style.contuctContainer}>
+							<div class={style.header}>Contact us</div>
+							<div class={style.subHeader}>Any questions? Drop us a line.</div>
+							
+							<div class={style.contactForm}>
+								<input class='new-input' placeholder='Your name'/>
+								<input class='new-input' placeholder='Your email'/>
+								<input class='new-input' placeholder='Company'/>
+								<input class='new-input' placeholder='Subject'/>
+								<input class='new-input' placeholder='Your message'/>
+								<button class='red-btn'>Submit</button>
+							</div>
 						</div>
 
 						{/*
