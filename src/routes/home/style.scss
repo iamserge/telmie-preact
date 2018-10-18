@@ -1,198 +1,23 @@
 
 @import './src/style/variables';
 
-.infoContainer {
-	text-align: center;
-	margin-bottom: 140px !important;
-
-	.title{
-		font-size: 56px;
-		margin-bottom: 20px;
-	}
-	.subTitle {
-		font-size: 23px;
-		margin-bottom: 50px;
-	}
-	& > button {
-		margin-right: 20px;
-	}
-}
-
-.howWorksContainer{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	margin-bottom: 160px !important;
-
-	.howWorksText{
-		font-size: 18px;
-		letter-spacing: -0.3px;
-		//margin-right: 75px;
-		padding: 15px 0;
-		width: calc(100% - 620px - 75px);
-		min-width: 500px;
-		.header{
-			color: $hBlack;
-			font-size: 48px;
-			margin-bottom: 25px;
-		}
-	}
-	.howWorksVideo{
-		width: 620px;
-	}
-}
-.featuredServices{
-	margin-bottom: 160px !important;
-	
-	.header {
-		color: $hBlack;
-		font-size: 22px;
-		margin-bottom: 40px;
-		line-height: 60px;
-	}
-	.services{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-around;
-	}
-}
-
-.proWrapper{
-	background-color: rgb(245,246,248);
-	padding-top: 100px;
-	margin-bottom: 125px;
-}
-.proContainer{
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	align-items: stretch;
-
-	.textContent{
-		display: inline-block;
-		width: 50%;
-
-		.header{
-			font-size: 40px;
-			color: $hBlack;
-			margin-bottom: 24px;
-		}
-		.content{
-			font-size: 18px;
-			line-height: 32px;
-			margin-bottom: 40px;
-		}
-		button{
-			margin-bottom: 107px;
-		}
-	}
-
-	
-	.imgContent{
-		display: inline-block;
-		position: relative;
-		bottom: 0;
-		height: 100%;
-		min-height: 500px;
-		width: 50%;
-
-		.girl_pro{
-			position: absolute;
-			z-index: 10;
-			bottom: 0;
-			right: calc(50% - 180px);
-		}
-		.polygon_small{
-			position: absolute;
-			z-index: 9;
-			top: 63px;
-			left: 92px;
-		}
-		.polygon_medium{
-			position: absolute;
-			z-index: 8;
-			top: 167px;
-			right: 115px;
-		}
-		.polygon_large{
-			position: absolute;
-			z-index: 7;
-			bottom: 106px;
-			left: 24px;
-		}
-		.combinedShape{
-			position: absolute;
-			z-index: 7;
-			top: 192px;
-			right: 0;
-		}
-	}
-
-	@media (max-width: 880px) {
-		.imgContent, .textContent{
-			width: 100%;
-		}
-
-		.textContent button{
-			margin-bottom: 15px;
-		}
-    }
-}
-
-.blogContainer{
-	margin-bottom: 160px !important;
-
-	.header {
-		color: $hBlack;
-		font-size: 48px;
-		margin-bottom: 60px;
-	}
-}
-
-.contuctContainer{
-	background-color: rgb(245,246,248);
-	padding: 115px 32px 130px 32px;
-	text-align: center;
-
-	.header{
-		font-size: 48px;
-		line-height: 64px;
-		color: $hBlack;
-		margin-bottom: 16px;
-	}
-	.subHeader{
-		font-size: 18px;
-		line-height: 32px;
-		margin-bottom: 65px;
-	}
-	.contactForm{
-		max-width: 600px;
-		min-width: 310px;
-		margin: 0 auto;
-
-		button{
-			margin-top: 65px;
-		}
-	}
-}
 
 :global {
 	#home {
 		min-height: 1000px;
 	}
-	/*#mainTitle {
+	#mainTitle {
 		text-align: center;
 		margin: 40px 0;
 		span {
 			color: $red;
 		}
-	}*/
+	}
 }
 :global {
 	#homepage {
 		
-			/*.slider-list {
+			.slider-list {
 				height: 240px !important
 			}
 			.slider-control-bottomcenter {
@@ -229,6 +54,6 @@
 						background-image: url(/assets/plus.svg);
 					}
 				}
-			}*/
+			}
 	}
 }

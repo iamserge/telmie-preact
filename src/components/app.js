@@ -20,6 +20,7 @@ import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro'
 import ErrorRoute from '../routes/errorRoute'
+import NewLanding from '../routes/new-landing'
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -49,6 +50,8 @@ export const routes = {
 	FORGOT_PASSWORD: '/forgot-password',
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
+
+	NEW_LANDING: '/new-landing'
 };
 
 
@@ -122,7 +125,10 @@ class App extends Component {
 			<LogIn path = { routes.LOG_IN } />,
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-			<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
+
+
+			<NewLanding path={routes.NEW_LANDING} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE }/>
 		]
 	}
 
