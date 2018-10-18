@@ -80,12 +80,12 @@ class Header extends Component {
             <span></span>
         </span>
         <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''}></div>
-				<div className="uk-navbar-left">
+				<div class={`${style.navbarLeft} uk-navbar-left`} >
           { this.state.loggedOff && (
             <Redirect to='/' />
           )}
 					<Link href={routes.HOME} id={style.logo}>
-						<img src="/assets/logo.png" alt="Telmie App" />
+						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
@@ -95,8 +95,7 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
-                <li><Link activeClassName={style.activeLink} href={routes.HOME}>Home</Link></li>,
-                <li><Link activeClassName={style.activeLink} href={routes.ABOUT_US}>About us</Link></li>,
+                <li><Link activeClassName={style.activeLink} href={routes.HOME}>How it works</Link></li>,
                 <li><Link activeClassName={style.activeLink} href={routes.FAQ}>FAQ</Link></li>
               ])
             }
@@ -104,17 +103,17 @@ class Header extends Component {
 					</ul>
 				</div>
 
-				<div className="uk-navbar-right">
-          { currentUrl != '/' && (
+				<div class={`${style.navbarRight} uk-navbar-right`}>
+          { /*currentUrl != '/' && (
               <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                 hideSearchBox = { this.props.hideSearchBox } 
                 isLogin = {isLogin} 
                 home= { false }/>
-          )}
+          )*/}
 
 					 { !isLogin  ? (
 						<nav>
-							<ul className="uk-navbar-nav">
+							<ul className="uk-navbar-nav" >
 								<li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
 								<li><Link href={routes.LOG_IN}>Login</Link></li>
 							</ul>
