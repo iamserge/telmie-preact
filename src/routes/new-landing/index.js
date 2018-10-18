@@ -12,13 +12,14 @@ import PhotoCards from '../../components/new-landing/photo-cards'
 import LandingFAQ from '../../components/new-landing/landing-faq'
 import ServiceCard from '../../components/new-landing/service-card'
 import BlogArticles from '../../components/new-landing/blog-articles'
+import AutoPrintText from '../../components/new-landing/auto-print-text'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards, serviceCards, landingFAQ, blogArtilces } from './mock-data.js'
+import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data.js'
 
 class NewLanding extends Component {
 	constructor(props){
@@ -80,7 +81,9 @@ class NewLanding extends Component {
 				<div id="homepage" style={{paddingTop: 100}}>
 
 						<div class={`${style.infoContainer} uk-container`}>
-							<div class={style.title}>Video-calls with photography experts</div>
+							<div class={style.title}>
+                                Video-calls with <AutoPrintText words={autoprintWords}/> experts
+                            </div>
 							<div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
 
 							<button class='red-btn'>Download app</button>

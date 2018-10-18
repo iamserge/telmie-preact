@@ -163,3 +163,5 @@ export const blogArtilces = [{
     date: 1539291601000,
     link: '',
 }];
+
+export const autoprintWords = ["Sports", "Immigration", "Dietary", "Fashion", "Career", "GDPR", "Wedding", "Business", "Language", "Startup", "Design", "Scaleup", "SEO", "Pets", "Marketing"]
