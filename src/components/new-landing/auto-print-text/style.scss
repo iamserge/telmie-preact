@@ -2,11 +2,11 @@
 
 .word{
     color: $red;
-    padding-right: 3px;
+    padding-right: 4px;
     border-right: 2px solid $red;
 
-    -webkit-animation: blink 1.5s linear infinite;
-    animation: blink 1.5s linear infinite;
+    -webkit-animation: blink 1.3s linear infinite;
+    animation: blink 1.3s linear infinite;
 }
 
 
