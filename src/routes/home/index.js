@@ -79,7 +79,12 @@ class HomePage extends Component {
     		const isLogin = Object.keys(user).length !== 0;
 			return (
 				<div id="homepage" style={{paddingTop: 100}}>
-
+						<div onClick={() => route('/new-landing')} style={{
+							textAlign: 'center',
+							fontSize: 28,
+							cursor: 'pointer'
+						}}
+						>New Landing Page</div>
 					
 						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
 							<HomeTitle
