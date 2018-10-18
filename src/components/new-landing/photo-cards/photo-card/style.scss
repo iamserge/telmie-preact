@@ -40,6 +40,10 @@
         font-family: 'Krub', sans-serif;
         font-weight: 600;
     }
+
+    @media (max-width: 880px) {
+        display: none;
+    }
 }
 
 .statCard{
@@ -57,8 +61,20 @@
         text-transform: uppercase;
         letter-spacing: 0.2px;
     }
+
+    @media (max-width: 880px) {
+        display: block;
+        width: 306px;
+        height: 306px;
+    }
 }
 
 .photoCardCol{
     display: inline-block;
+
+    @media (max-width: 880px) {
+        & br {
+            display: none;
+        }
+    }
 }

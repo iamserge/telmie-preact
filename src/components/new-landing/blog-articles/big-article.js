@@ -5,7 +5,7 @@ const BigArticle = ({title, date, img}) => {
     const gotoHandler = () => console.log('goto link: ', link);
     
 
-    const articleStyle =  {background: `url('${img}') no-repeat center`, backgroundSize: "100% 100%"}
+    const articleStyle =  {background: `url('${img}') no-repeat center`, backgroundSize: "auto 100%"}
 
     return (
         <div class={style.bigArticle} style={articleStyle}>

@@ -90,7 +90,9 @@ class NewLanding extends Component {
 							{/*<button class='white-btn'>Sign up free</button>*/}
 						</div>
 
-						<PhotoCards cards = {photoCards} styles={{marginBottom:160}}/>
+						<div class={style.photoContainer}>
+						<PhotoCards cards = {photoCards}/>
+						</div>
 
 						<div class={`${style.howWorksContainer} uk-container`}>
 							<div class={style.howWorksText}>
@@ -132,7 +134,9 @@ class NewLanding extends Component {
                             
                         </div>
 
-						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
+						<div class={style.faqContainer}>
+							<LandingFAQ {...landingFAQ}/>
+						</div>
 
 						<div class={style.proWrapper}>
 							<div class={`uk-container ${style.proContainer}`}>

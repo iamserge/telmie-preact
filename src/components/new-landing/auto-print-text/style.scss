@@ -1,10 +1,14 @@
 @import './src/style/variables';
 
+.wordContainer{
+    display: inline-block;
+    min-width: 280px;
+}
 .word{
     color: $red;
     padding-right: 4px;
     border-right: 2px solid $red;
-
+    
     -webkit-animation: blink 1.3s linear infinite;
     animation: blink 1.3s linear infinite;
 }

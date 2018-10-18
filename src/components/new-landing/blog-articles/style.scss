@@ -19,7 +19,11 @@
     max-width: 290px;
     margin-right: 2%;
     margin-bottom: 20px;
-    
+
+    @media (max-width: 880px) { 
+        max-width: 350px;
+        width: 100%;
+    }
 }
 .article{
     color: $hBlack;
@@ -79,6 +83,11 @@
     button{
         flex: calc(40%-5px);
         height: 40px !important;
+    }
+
+    @media (max-width: 880px) { 
+        width: 100%;
+        min-width: 305px;
     }
 
 }

@@ -56,9 +56,11 @@ class AutoPrintText extends Component {
         const { wordIndex, currentWord } = this.state;
 
         return (
-            <span class={style.word}>
-                {currentWord}
-            </span>
+            <div class={style.wordContainer}>
+                <span class={style.word}>
+                    {currentWord}
+                </span>
+            </div>
         )
     }
 }
