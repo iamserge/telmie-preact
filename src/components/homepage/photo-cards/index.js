@@ -29,7 +29,14 @@ class PhotoCards extends Component{
 			<div class={style.photoCardsContainer}
 				style={styles}>
 				{ this.renderCards(side1) }
-				<div class={style.video}>video</div>
+				<div class={style.videoWrapper}>
+					<div class={style.videoContainer}>
+						<video class={style.video} autoPlay loop muted>
+							
+							Your browser does not support the video tag.
+						</video>
+					</div>
+				</div>
 				{ this.renderCards(side2) }
 			</div>
 		)

@@ -7,11 +7,27 @@
     justify-content: space-around;
     align-items: center;
 
-    .video{
-        display: inline-block;
-        background-color: $lightBackgroundGrey;
+    .videoWrapper{
+        position: relative;
         width: 306px;
         height: 530px;
+        overflow: hidden;
+    }
+    .videoContainer{
+        display: inline-block;
+        position: absolute;
+        background-color: $lightBackgroundGrey;
+        width: 800px;
+        height: 450px;
+
+        left: 50%;
+        margin: 0 auto;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        .video{
+            text-align: center;
+        }
     }
 
     & > div:not(:last-child){
