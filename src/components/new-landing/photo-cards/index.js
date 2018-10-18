@@ -32,7 +32,7 @@ class PhotoCards extends Component{
 				<div class={style.videoWrapper}>
 					<div class={style.videoContainer}>
 						<video class={style.video} autoPlay loop muted>
-							
+							<source src="http://sr461.2dayhost.com/video/IMG_3531.TRIM.MOV" type="video/mp4"/>
 							Your browser does not support the video tag.
 						</video>
 					</div>
