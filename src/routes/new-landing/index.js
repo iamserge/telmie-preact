@@ -6,18 +6,12 @@ import { hideSearchBox } from '../../actions';
 /*import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';*/
 import Spinner from '../../components/global/spinner';
-/*import Search from '../../components/global/search';
-import HomeTitle from '../../components/homepage/home-title';
-import Counters from '../../components/homepage/counters';
-import FeaturedPros from '../../components/homepage/featured-pros';
-import FeaturedServices from '../../components/homepage/featured-services';*/
 import Video from '../../components/homepage/video';
-/*import MoreInfo from '../../components/homepage/more-info';*/
 
-import PhotoCards from '../../components/homepage/photo-cards'
-import LandingFAQ from '../../components/homepage/landing-faq'
-import ServiceCard from '../../components/service-card'
-import BlogArticles from '../../components/blog-articles'
+import PhotoCards from '../../components/new-landing/photo-cards'
+import LandingFAQ from '../../components/new-landing/landing-faq'
+import ServiceCard from '../../components/new-landing/service-card'
+import BlogArticles from '../../components/new-landing/blog-articles'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
@@ -115,7 +109,25 @@ class NewLanding extends Component {
 							</div>
 						</div>
 
-						<div class='uk-container' style={{marginBottom: 55}}>Easy to use iOS app</div>
+						<div class={style.iosAppSection}>
+                            <div class={`uk-container ${style.iosAppContainer}`}>
+                                <div class={style.textContent}>
+                                    <div class={style.header}>Easy to use iOS app</div>
+                                    <div class={style.subHeader}>With the Telmie iOS app you can browse experts, arrange video calls and get real-time advice wherever, whenever.</div>
+                                    <div class={style.btn}>
+                                        <img src='/assets/new-landing-page/appStoreCoupon.png' alt=''/>
+                                    </div>
+                                </div>
+                                <div class={style.imgContent}>
+                                    <img class={style.appScreen} src='/assets/new-landing-page/appScreen.png' alt="App Screen"/>
+                                    <img class={style.combinedShapeLeft} src='/assets/new-landing-page/combinedShape_sq.png' alt=''/>
+                                    <img class={style.combinedShapeRight} src='/assets/new-landing-page/combinedShape_sq.png' alt=''/>
+                                    <img class={style.polygon_large} src='/assets/new-landing-page/polygon_violet.png' alt=''/>
+                                    <img class={style.polygon_small} src='/assets/new-landing-page/polygon_lightBlue.png' alt=''/>
+                                </div>
+                            </div>
+                            
+                        </div>
 
 						<LandingFAQ styles={{marginBottom:160}} {...landingFAQ}/>
 

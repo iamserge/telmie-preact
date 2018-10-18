@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import Article from './article.js'
-import Hr from '../hr'
+import Hr from '../../hr'
 import style from './style.scss';
 
 const ArticleColumn = ({articles = []}) => {
