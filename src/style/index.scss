@@ -2,6 +2,9 @@
 @import './variables';
 @import './spinner';
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Krub:300,400,500,600,700&subset=cyrillic');
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -9,7 +12,8 @@ html, body {
     box-sizing: border-box;
 	overflow: visible !important;
 	margin: 0;
-	font-family: 'Roboto', arial, sans-serif;
+	//font-family: 'Roboto', arial, sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 400;
 	//color: #5C636E;
 	color: #3e4854;
@@ -123,6 +127,8 @@ a {
     border-radius: 30px;
 	padding: 0 40px;
 	cursor: pointer;
+	font-family: 'Krub', sans-serif;
+    font-weight: 600;
 }
 
 button.red-btn {
@@ -362,6 +368,8 @@ button.white-btn {
 	padding: 10px;
 	background: transparent;
 	color: black;
+	font-family: 'Krub', sans-serif;
+    font-weight: 500;
 }
 .new-input:focus {
 	outline: 0;

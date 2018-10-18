@@ -9,7 +9,8 @@
     text-align: center;
     color: white;
     margin-bottom: 20px;
-
+    font-family: 'Krub', sans-serif;
+    font-weight: 400;
     .proDetails{
         font-size: 12px;
         position: absolute;
@@ -36,6 +37,8 @@
         padding: 0 10px;
         border-radius: 12px;
         background-color: rgba($color: white, $alpha: 0.3);
+        font-family: 'Krub', sans-serif;
+        font-weight: 600;
     }
 }
 
