@@ -38,6 +38,7 @@ export const routes = {
 	TERMS: '/terms',
 	PRIVACY: '/privacy',
 	CONTACT_US: '/contact-us',
+	CONTACT_US_LINK: '/new-landing#contact-us',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',

@@ -17,9 +17,9 @@ export default class Footer extends Component {
 					<nav id={style.footerLinks}>
 						<ul className="uk-navbar-nav" >
 							<li><Link href={routes.HOME}>Home</Link></li>
-							<li><Link href={routes.ABOUT_US}>Company</Link></li>
+							{/*<li><Link href={routes.ABOUT_US}>Company</Link></li>*/}
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
-							<li><Link href={routes.CONTACT_US}>Contact</Link></li>
+							<li><Link href={routes.CONTACT_US_LINK}>Contact</Link></li>
 							{/*<li><Link href={''}>Blog</Link></li>*/}
 							<li><Link href={routes.TERMS}>Terms</Link></li>
 							{/*<li><Link href={''}>Help</Link></li>*/}

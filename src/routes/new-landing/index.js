@@ -30,10 +30,15 @@ class NewLanding extends Component {
 	constructor(props){
 		super(props);
 		this.state =  {
-	    doc: null,
-	    notFound: false,
+	    	doc: null,
+	    	notFound: false,
 			verifyFailure: false
 	  }
+	}
+	scrollToContact = () => {
+		/*console.log(document.location.hash);
+		console.log(document.location.hash.indexOf('contact-us'));*/
+			  
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
@@ -41,6 +46,7 @@ class NewLanding extends Component {
 		if (typeof this.props.token != 'undefined') {
 			this.props.verify(this.props.token)
 		}
+		this.scrollToContact();
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
@@ -56,6 +62,7 @@ class NewLanding extends Component {
 				verifyFailure: true
 			})
 		}
+		this.scrollToContact();
 
 	}
 
@@ -66,7 +73,7 @@ class NewLanding extends Component {
         if (doc) {
 					console.log('doc',doc);
           // We put the retrieved content in the state as a doc variable
-          this.setState({ doc });
+		  this.setState({ doc });
         } else {
           // We changed the state to display error not found if no matched doc
           this.setState({ notFound: !doc });
@@ -111,7 +118,7 @@ class NewLanding extends Component {
 							<div class={style.header}>Blog</div>
 							<BlogArticles articles = {blogArtilces}/>
 			</div>*/}
-
+					
 						<ContactForm />
 
 				</div>
