@@ -10,7 +10,7 @@ const InfoComponent = ({wordsToPrint = [], appLink = ''}) => {
             <div class={style.title}>
                 Video-calls with <AutoPrintText words={wordsToPrint}/> experts
             </div>
-            <div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
+            <div class={style.subTitle}>Telmie is the easiest way to talk to an expert that you can trust.</div>
 
             <button class='red-btn' onClick={downloadApp}>Download app</button>
             {/*<button class='white-btn'>Sign up free</button>*/}
