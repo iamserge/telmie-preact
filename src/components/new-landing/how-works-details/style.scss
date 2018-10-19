@@ -1,0 +1,35 @@
+@import './src/style/variables';
+
+.howWorksContainer{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+    margin-bottom: 160px !important;
+    
+
+	.howWorksText{
+		font-size: 18px;
+		letter-spacing: -0.3px;
+		//margin-right: 75px;
+		padding: 15px 0;
+		width: calc(100% - 620px - 75px);
+		min-width: 500px;
+		.header{
+			color: $hBlack;
+			font-size: 48px;
+            margin-bottom: 25px;
+            font-family: 'Krub', sans-serif;
+            font-weight: 300;
+        }
+        @media (max-width: 880px) {
+            margin-bottom: 60px;
+        }
+	}
+	.howWorksVideo{
+		width: 620px;
+    }
+    @media (max-width: 880px) {
+        margin-bottom: 55px !important;
+        text-align: center;
+    }
+}

@@ -6,13 +6,17 @@ import { hideSearchBox } from '../../actions';
 /*import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';*/
 import Spinner from '../../components/global/spinner';
-import Video from '../../components/homepage/video';
 
+import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
+import FeaturedServices from '../../components/new-landing/featured-services'
+import HowWorksDetails from '../../components/new-landing/how-works-details'
 import LandingFAQ from '../../components/new-landing/landing-faq'
-import ServiceCard from '../../components/new-landing/service-card'
+import AppDetails from '../../components/new-landing/app-details'
+import ProDetails from '../../components/new-landing/pro-details'
 import BlogArticles from '../../components/new-landing/blog-articles'
-import AutoPrintText from '../../components/new-landing/auto-print-text'
+import ContactForm from '../../components/new-landing/contact-form'
+
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
@@ -80,58 +84,18 @@ class NewLanding extends Component {
 			return (
 				<div id="homepage" style={{paddingTop: 100}}>
 
-						<div class={`${style.infoContainer} uk-container`}>
-							<div class={style.title}>
-                                Video-calls with <AutoPrintText words={autoprintWords}/> experts
-                            </div>
-							<div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
-
-							<button class='red-btn'>Download app</button>
-							{/*<button class='white-btn'>Sign up free</button>*/}
-						</div>
+						<InfoComponent wordsToPrint={autoprintWords}/>
 
 						<div class={style.photoContainer}>
-						<PhotoCards cards = {photoCards}/>
+							<PhotoCards cards = {photoCards}/>
 						</div>
 
-						<div class={`${style.howWorksContainer} uk-container`}>
-							<div class={style.howWorksText}>
-								<div class={style.header}>How it works</div>
-								<div style={{marginBottom: 40}}>Telmie is a social app that connects experts with advice-seekers quickly and easily over video. It's the fastest, easiest and most trusted way of finding whatever advice you require.</div>
-								<button class='red-btn'>Download app</button>
-							</div>
-							<div class={style.howWorksVideo}>
-								<Video videoId = { pageData.main_video.video_id } />
-							</div>
-						</div>
+						<HowWorksDetails videoId={pageData.main_video.video_id} />
 
-						<div class={`${style.featuredServices} uk-container`}>
-							<div class={style.header}>Featured Services</div>
-							<div class={style.services}>
-							{serviceCards.map(card => (
-								<ServiceCard key={card.serviceName} {...card}/>
-							))}
-							</div>
-						</div>
+						<FeaturedServices serviceCards={serviceCards} />
 
 						<div class={style.iosAppSection}>
-                            <div class={`uk-container ${style.iosAppContainer}`}>
-                                <div class={style.textContent}>
-                                    <div class={style.header}>Easy to use iOS app</div>
-                                    <div class={style.subHeader}>With the Telmie iOS app you can browse experts, arrange video calls and get real-time advice wherever, whenever.</div>
-                                    <div class={style.btn}>
-                                        <img src='/assets/new-landing-page/appStoreCoupon.png' alt=''/>
-                                    </div>
-                                </div>
-                                <div class={style.imgContent}>
-                                    <img class={style.appScreen} src='/assets/new-landing-page/appScreen.png' alt="App Screen"/>
-                                    <img class={style.combinedShapeLeft} src='/assets/new-landing-page/combinedShape_sq.png' alt=''/>
-                                    <img class={style.combinedShapeRight} src='/assets/new-landing-page/combinedShape_sq.png' alt=''/>
-                                    <img class={style.polygon_large} src='/assets/new-landing-page/polygon_violet.png' alt=''/>
-                                    <img class={style.polygon_small} src='/assets/new-landing-page/polygon_lightBlue.png' alt=''/>
-                                </div>
-                            </div>
-                            
+                            <AppDetails />
                         </div>
 
 						<div class={style.faqContainer}>
@@ -139,20 +103,7 @@ class NewLanding extends Component {
 						</div>
 
 						<div class={style.proWrapper}>
-							<div class={`uk-container ${style.proContainer}`}>
-								<div class={style.textContent}>
-									<div class={style.header}>Earn more money from your expert knowledge. 10% fees, no hidden charges.</div>
-									<div class={style.content}>Become an expert and share your knowledge with others. Expand your client base, streamline bookings and payments. Save time and cut overheads by providing services online.</div>
-									<button class='red-btn'>Sign up & Become Pro</button>
-								</div>
-								<div class={style.imgContent}>
-									<img class={style.girl_pro} src='/assets/new-landing-page/girl_pro.png' alt=''/>
-									<img class={style.polygon_small} src='/assets/new-landing-page/polygon.png' alt='' height="33" width="33"/>
-									<img class={style.polygon_medium} src='/assets/new-landing-page/polygon.png' alt=''/>
-									<img class={style.polygon_large} src='/assets/new-landing-page/polygon_red.png' alt=''/>
-									<img class={style.combinedShape} src='/assets/new-landing-page/combinedShape.png' alt=''/>
-								</div>
-							</div>
+							<ProDetails />
 						</div>
 
 						<div class={`${style.blogContainer} uk-container`}>
@@ -160,19 +111,7 @@ class NewLanding extends Component {
 							<BlogArticles articles = {blogArtilces}/>
 						</div>
 
-						<div class={style.contuctContainer}>
-							<div class={style.header}>Contact us</div>
-							<div class={style.subHeader}>Any questions? Drop us a line.</div>
-							
-							<div class={style.contactForm}>
-								<input class='new-input' placeholder='Your name'/>
-								<input class='new-input' placeholder='Your email'/>
-								<input class='new-input' placeholder='Company'/>
-								<input class='new-input' placeholder='Subject'/>
-								<input class='new-input' placeholder='Your message'/>
-								<button class='red-btn'>Submit</button>
-							</div>
-						</div>
+						<ContactForm />
 
 				</div>
 
