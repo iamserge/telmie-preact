@@ -10,6 +10,7 @@
     .videoWrapper{
         position: relative;
         width: 306px;
+        min-width: 306px;
         height: 530px;
         overflow: hidden;
     }
@@ -28,6 +29,7 @@
 
         .video{
             text-align: center;
+            height: 100%;
         }
     }
 
