@@ -24,6 +24,7 @@ import style from './style.scss';
 
 // mock-data
 import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data.js'
+const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class NewLanding extends Component {
 	constructor(props){
@@ -84,18 +85,18 @@ class NewLanding extends Component {
 			return (
 				<div id="homepage" style={{paddingTop: 100}}>
 
-						<InfoComponent wordsToPrint={autoprintWords}/>
+						<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
 
 						<div class={style.photoContainer}>
 							<PhotoCards cards = {photoCards}/>
 						</div>
 
-						<HowWorksDetails videoId={pageData.main_video.video_id} />
+						<HowWorksDetails videoId={pageData.main_video.video_id} appLink={appLink}/>
 
 						<FeaturedServices serviceCards={serviceCards} />
 
 						<div class={style.iosAppSection}>
-                            <AppDetails />
+                            <AppDetails appLink={appLink}/>
                         </div>
 
 						<div class={style.faqContainer}>
@@ -103,13 +104,13 @@ class NewLanding extends Component {
 						</div>
 
 						<div class={style.proWrapper}>
-							<ProDetails />
+							<ProDetails appLink={appLink} />
 						</div>
 
-						<div class={`${style.blogContainer} uk-container`}>
+						{/*<div class={`${style.blogContainer} uk-container`}>
 							<div class={style.header}>Blog</div>
 							<BlogArticles articles = {blogArtilces}/>
-						</div>
+			</div>*/}
 
 						<ContactForm />
 

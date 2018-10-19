@@ -2,7 +2,8 @@ import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
 import style from './style.scss';
 
-const InfoComponent = ({wordsToPrint = []}) => {
+const InfoComponent = ({wordsToPrint = [], appLink = ''}) => {
+    const downloadApp = () => appLink && window.open(appLink);
 
     return (
         <div class={`${style.infoContainer} uk-container`}>
@@ -11,7 +12,7 @@ const InfoComponent = ({wordsToPrint = []}) => {
             </div>
             <div class={style.subTitle}>Telmie is the best way to find an expert that you can trust. <br/> Find. Contact. Engage. As simple as that.</div>
 
-            <button class='red-btn'>Download app</button>
+            <button class='red-btn' onClick={downloadApp}>Download app</button>
             {/*<button class='white-btn'>Sign up free</button>*/}
         </div>
 	)

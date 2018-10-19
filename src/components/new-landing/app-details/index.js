@@ -1,7 +1,8 @@
 import { h } from 'preact';
 import style from './style.scss';
 
-const AppDetails = () => {
+const AppDetails = ({appLink=''}) => {
+    const downloadApp = () => appLink && window.open(appLink);
 
     return (
         <div class={`uk-container ${style.iosAppContainer}`}>
@@ -9,7 +10,7 @@ const AppDetails = () => {
                 <div class={style.header}>Easy to use iOS app</div>
                 <div class={style.subHeader}>With the Telmie iOS app you can browse experts, arrange video calls and get real-time advice wherever, whenever.</div>
                 <div class={style.btn}>
-                    <img src='/assets/new-landing-page/appStoreCoupon.png' alt=''/>
+                    <img onClick={downloadApp} src='/assets/new-landing-page/appStoreCoupon.png' alt=''/>
                 </div>
             </div>
             <div class={style.imgContent}>

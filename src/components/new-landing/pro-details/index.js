@@ -1,14 +1,16 @@
 import { h } from 'preact';
 import style from './style.scss';
 
-const ProDetails = () => {
+const ProDetails = ({appLink={appLink}=''}) => {
+    const downloadApp = () => appLink && window.open(appLink);
 
     return (
         <div class={`uk-container ${style.proContainer}`}>
             <div class={style.textContent}>
                 <div class={style.header}>Earn more money from your expert knowledge. 10% fees, no hidden charges.</div>
                 <div class={style.content}>Become an expert and share your knowledge with others. Expand your client base, streamline bookings and payments. Save time and cut overheads by providing services online.</div>
-                <button class='red-btn'>Sign up & Become Pro</button>
+                {/*<button class='red-btn'>Sign up & Become Pro</button>*/}
+                <button class='red-btn' onClick={downloadApp}>Download app</button>
             </div>
             <div class={style.imgContent}>
                 <img class={style.girl_pro} src='/assets/new-landing-page/girl_pro.png' alt='human'/>
