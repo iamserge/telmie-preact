@@ -1,0 +1,15 @@
+.serviceCard{
+    display: inline-flex;
+    width: 580px;
+    height: 285px;
+    margin: 0 20px 10px 0 !important;
+    align-items: center;
+
+    .serviceName{
+        color: white;
+        font-size: 32px;
+        margin: 0 auto;
+        font-family: 'Krub', sans-serif;
+        font-weight: 300;
+    }
+}

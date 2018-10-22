@@ -1,4 +1,4 @@
-import { h, Component, Fragment } from 'preact';
+import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
 import Header from './global/header';
@@ -37,6 +37,7 @@ export const routes = {
 	TERMS: '/terms',
 	PRIVACY: '/privacy',
 	CONTACT_US: '/contact-us',
+	CONTACT_US_LINK: '/#contact-us',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
@@ -57,7 +58,8 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			prismicCtx: null
+			prismicCtx: null,
+			currentUrl: "",
 		}
 	}
 
@@ -73,6 +75,7 @@ class App extends Component {
 
 	handleRoute = e => {
 		this.currentUrl = e.url;
+		this.setState({currentUrl: e.url});
 	};
 
 	buildContext() {
@@ -122,7 +125,7 @@ class App extends Component {
 			<LogIn path = { routes.LOG_IN } />,
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-			<ForgotPassword path = { routes.FORGOT_PASSWORD } />
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
 		]
 	}
 
@@ -140,7 +143,7 @@ class App extends Component {
 						<ErrorRoute default />
 					</Router>
 				</div>
-				<Footer />
+				<Footer currentUrl = {this.state.currentUrl}/>
 			</div>
 		);
 	}

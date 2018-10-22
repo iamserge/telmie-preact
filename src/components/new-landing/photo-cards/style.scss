@@ -1,0 +1,44 @@
+@import './src/style/variables';
+
+.photoCardsContainer{
+    padding: 0 90px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    .videoWrapper{
+        position: relative;
+        width: 306px;
+        min-width: 306px;
+        height: 530px;
+        overflow: hidden;
+    }
+    .videoContainer{
+        display: inline-block;
+        position: absolute;
+        background-color: $lightBackgroundGrey;
+        width: 800px;
+        height: 450px;
+
+        left: 50%;
+        margin: 0 auto;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        .video{
+            text-align: center;
+            height: 100%;
+        }
+    }
+
+    & > div:not(:last-child){
+        margin-right: 20px;
+    }
+
+    @media (max-width: 880px) {
+        justify-content: center;
+    }
+    
+}

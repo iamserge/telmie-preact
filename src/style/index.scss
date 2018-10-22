@@ -2,6 +2,9 @@
 @import './variables';
 @import './spinner';
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Krub:300,400,500,600,700&subset=cyrillic');
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -9,9 +12,11 @@ html, body {
     box-sizing: border-box;
 	overflow: visible !important;
 	margin: 0;
-	font-family: 'Roboto', arial, sans-serif;
+	//font-family: 'Roboto', arial, sans-serif;
+	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 400;
-	color: #5C636E;
+	//color: #5C636E;
+	color: #3e4854;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -47,7 +52,7 @@ a {
 .uk-container {
 	min-height: calc(100% - 174px);
     @media (max-width: 880px) {
-        width: 100%;
+        width: calc(100% - 10px);
         box-sizing: border-box;
     }
 }
@@ -79,6 +84,15 @@ a {
     }
     
 }
+
+#homepage .uk-container{
+	padding: 0 10px;
+}
+#homepage .uk-container::before, 
+#homepage .uk-container::after{
+	display: none;
+}
+
 .uk-close {
   position: absolute;
   right: 0px;
@@ -106,9 +120,28 @@ a {
 	}
 }
 
-button {
+%custom-btn {
+	font-size: 16px;
+	height: 50px;
+    border: none;
+    border-radius: 30px;
+	padding: 0 40px;
+	cursor: pointer;
+	font-family: 'Krub', sans-serif;
+    font-weight: 600;
+}
+
+button.red-btn {
+	@extend %custom-btn;
 	background-color: $red;
 	color: white !important;
+}
+
+button.white-btn {
+	@extend %custom-btn;
+	border: 1px solid $backgroundGrey;
+	color: $black !important;
+	background-color: white;
 }
 
 .switchContainer {
@@ -252,9 +285,11 @@ button {
 
 .vimeo {
 	position: relative;
-	height: 515px;
+	height: 350px;
 	margin: 0 auto;
-	width: 980px;
+	width: 620px;
+	border-radius: 10px;
+    overflow: hidden;
 
 	iframe, object, embed {
 		 position: absolute;
@@ -310,12 +345,40 @@ button {
 	}
 }
 
+.rc-collapse {
+	border: none !important;
+}
+
+
 #app {
 	min-height: 500px;
 }
 .mainContainer {
 	height: calc(100% - 80px);
 }
+
+.new-input{
+	border: 0;
+	border-bottom: 2px solid $lightGrey;
+	width: 100%;
+	font-size: 20px;
+	line-height: 32px;
+	height: 70px;
+	text-align: center;
+	padding: 10px;
+	background: transparent;
+	color: black;
+	font-family: 'Krub', sans-serif;
+    font-weight: 500;
+}
+.new-input:focus {
+	outline: 0;
+	border-color: $red;
+}
+.new-input::placeholder {
+	color: rgb(182, 185, 190);
+}
+
 @media (max-width: 880px) {
     .uk-container-small {
         width: auto;
