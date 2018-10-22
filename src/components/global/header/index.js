@@ -97,18 +97,18 @@ class Header extends Component {
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
                 <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-                  <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="howWorksElement">How it works</ScrollLink> 
+                  <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                 </li>,
                 <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-                  <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="FAQElement">FAQ</ScrollLink> 
+                  <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
                   : <Link href={routes.FAQ_LINK}>FAQ</Link>}
                 </li>,<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-                  <ScrollLink spy={true} smooth={true} offset={-200} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+                  <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
                   : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
                 </li>,
                 <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-                  <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="contactUsElement">Contact us</ScrollLink> 
+                  <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
                   : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
                 </li>
               ])

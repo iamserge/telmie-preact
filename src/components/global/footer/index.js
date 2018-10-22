@@ -54,7 +54,7 @@ export default class Footer extends Component {
 							{/*<li><Link href={routes.ABOUT_US}>Company</Link></li>*/}
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
 							<li>{this.props.currentUrl === routes.HOME ? 
-								<ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="contactUsElement">Contact</ScrollLink> 
+								<ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact</ScrollLink> 
 								: <Link href={routes.CONTACT_US_LINK}>Contact</Link>}
 							</li>
 							
@@ -63,7 +63,7 @@ export default class Footer extends Component {
 							{/*<li><Link href={''}>Help</Link></li>*/}
 							<li><Link href={routes.PRIVACY}>Privacy Policy</Link></li>
 							<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-								<ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="FAQElement">FAQ</ScrollLink> 
+								<ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
 								: <Link href={routes.FAQ_LINK}>FAQ</Link>}
 							</li>
 						</ul>
