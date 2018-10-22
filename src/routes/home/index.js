@@ -7,6 +7,9 @@ import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import { Element, scroller, Link as ScrollLink } from 'react-scroll'
+import ScrollToTop from'react-scroll-up'
+import FontAwesome from 'react-fontawesome';
+
 
 import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
@@ -183,6 +186,10 @@ class HomePage extends Component {
 					</div>*/}
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} />
+
+					<ScrollToTop showUnder={150}>
+						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
+					</ScrollToTop>
 				</div>
 
 			);

@@ -388,6 +388,24 @@ button.white-btn {
 .new-input::placeholder {
 	color: rgb(182, 185, 190);
 }
+.top-btn{
+	height: 32px;
+	width: 32px;
+	position: relative;
+	background-color: rgba($color: $red, $alpha: .7);
+	color: white;
+	overflow: hidden;
+	cursor: pointer;
+
+	&:hover{
+		background-color: $red;
+	}
+	& > span {
+		position: absolute;
+		top: 0;
+		left: calc(100% - 25px);
+	}
+}
 
 @media (max-width: 880px) {
     .uk-container-small {
