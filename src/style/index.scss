@@ -93,6 +93,16 @@ a {
 	display: none;
 }
 
+#homepage .uk-container {
+	margin: 0 115px 0 145px;
+	//margin: 0 115px 0 87px;
+	//margin: 0 0 0 58px;
+	max-width: none;
+}
+#homepage .uk-container-big {
+	margin: 0 115px 0 87px;
+}
+
 .uk-close {
   position: absolute;
   right: 0px;
@@ -392,5 +402,14 @@ button.white-btn {
 	}
 		.modalInner {
 		width: 90%;
+	}
+	#homepage {
+		margin: 0 32px 0 24px;
+	}
+	#homepage .uk-container {
+		margin: 0;
+	}
+	#homepage .uk-container-big {
+		margin: 0;
 	}
 }

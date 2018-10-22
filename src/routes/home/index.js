@@ -149,8 +149,10 @@ class HomePage extends Component {
 			const {userData : user  = {}} = this.props;
 			return (
 				<div id="homepage" style={{paddingTop: 100}}>
-						
-					<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
+
+					<div class={style.infoContainer}>	
+						<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
+					</div>
 
 					<div class={style.photoContainer}>
 						<PhotoCards cards = {photoCards}/>

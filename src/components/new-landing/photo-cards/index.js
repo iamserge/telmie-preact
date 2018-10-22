@@ -26,7 +26,7 @@ class PhotoCards extends Component{
 		const {side1 = [], side2 =[]} = cards;
 
 		return (
-			<div class={style.photoCardsContainer}
+			<div class={`${style.photoCardsContainer} uk-container-big`}
 				style={styles}>
 				{ this.renderCards(side1) }
 				<div class={style.videoWrapper}>

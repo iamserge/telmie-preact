@@ -3,7 +3,7 @@
 .howWorksContainer{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: space-between;
     margin-bottom: 160px !important;
     
 
@@ -12,8 +12,8 @@
 		letter-spacing: -0.3px;
 		//margin-right: 75px;
 		padding: 15px 0;
-		width: calc(100% - 620px - 75px);
-		min-width: 500px;
+		width: 50%;
+		padding-right: 10px;		
 		.header{
 			color: $hBlack;
 			font-size: 48px;
@@ -26,10 +26,26 @@
         }
 	}
 	.howWorksVideo{
-		width: 620px;
+		width: 50%;
+		& > div {
+			width: 100%;
+		}
+	}
+	@media (max-width: 1200px) {
+        margin-bottom: 55px !important;
+		text-align: center;
+		justify-content: center;
+		
+		.howWorksText, .howWorksVideo{
+			width: 80%;
+		}
     }
     @media (max-width: 880px) {
         margin-bottom: 55px !important;
-        text-align: center;
+		text-align: center;
+		
+		.howWorksText, .howWorksVideo{
+			width: 100%;
+		}
     }
 }
