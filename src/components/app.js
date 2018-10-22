@@ -34,10 +34,12 @@ export const routes = {
 	PRO_FOR_COMP: '/pro/',
 	ABOUT_US: '/about-us',
 	FAQ: '/help',
+	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
 	PRIVACY: '/privacy',
 	CONTACT_US: '/contact-us',
 	CONTACT_US_LINK: '/#contact-us',
+	HOW_WORKS_LINK: '/#how-it-works',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
@@ -134,7 +136,7 @@ class App extends Component {
 
 		return (
 			<div id="app">
-				<Header />
+				<Header currentUrl = {this.state.currentUrl}/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 

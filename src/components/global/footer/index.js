@@ -62,7 +62,10 @@ export default class Footer extends Component {
 							<li><Link href={routes.TERMS}>Terms</Link></li>
 							{/*<li><Link href={''}>Help</Link></li>*/}
 							<li><Link href={routes.PRIVACY}>Privacy Policy</Link></li>
-							<li><Link href={routes.FAQ}>FAQ</Link></li>
+							<li>{this.props.currentUrl === routes.HOME ? 
+								<ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="FAQElement">FAQ1</ScrollLink> 
+								: <Link href={routes.FAQ_LINK}>FAQ</Link>}
+							</li>
 						</ul>
 					</nav>
 					<div class={style.socialIcons}>

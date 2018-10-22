@@ -37,19 +37,49 @@ class HomePage extends Component {
 	  this.contactUs = null;
 	}
 	scrollToContact = () => {
-		(window.location.hash.indexOf('contact-us') + 1) &&
-			(this.scrollInterval = setInterval(() => {
-				this.contactUs !== null && (
-					scroller.scrollTo('contactUsElement', {
-						spy: true,
-						smooth: true,
-						duration: 500,
-						offset: -50,
-					}),
-					clearInterval(this.scrollInterval),
-					this.scrollInterval = null
-				)
-			}, 100));
+		const {hash} = window.location;
+
+		hash && (
+			((hash.indexOf('contact-us') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('contactUsElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -50,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))),
+			(hash.indexOf('faq') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('FAQElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -130,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100)),
+			(hash.indexOf('how-it-works') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('howWorksElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -130,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))
+		)
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
@@ -113,6 +143,7 @@ class HomePage extends Component {
 						<PhotoCards cards = {photoCards}/>
 					</div>
 
+					<Element name='howWorksElement' />
 					<HowWorksDetails videoId={pageData.main_video.video_id} appLink={appLink}/>
 
 					<FeaturedServices serviceCards={serviceCards} />
@@ -122,6 +153,7 @@ class HomePage extends Component {
 					</div>
 
 					<div class={style.faqContainer}>
+						<Element name="FAQElement"></Element>
 						<LandingFAQ {...landingFAQ}/>
 					</div>
 
