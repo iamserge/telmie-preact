@@ -70,8 +70,10 @@ class Header extends Component {
   }
 	render() {
     const {userData : user  = {}} = this.props;
-    const currentUrl = getCurrentUrl();
+    //const currentUrl = getCurrentUrl();
     const isLogin = Object.keys(user).length !== 0;
+
+    console.log(this.props.currentUrl);
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
@@ -96,11 +98,11 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
-                <li>{this.props.currentUrl === routes.HOME ? 
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
                   <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                 </li>,
-                <li>{this.props.currentUrl === routes.HOME ? 
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
                   <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="FAQElement">FAQ</ScrollLink> 
                   : <Link href={routes.FAQ_LINK}>FAQ</Link>}
                 </li>
