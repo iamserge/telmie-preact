@@ -6,17 +6,17 @@ import PhotoCardsCol from './photo-card/photo-cards-col'
 class PhotoCards extends Component{
 
 	componentWillMount(){
-		this.randomArr = [];
+		this.randomArr = [0, 129, 78, 0];
 
-		for (let i = 0; i < 4; i++){
+		/*for (let i = 0; i < 4; i++){
 			this.randomArr = [...this.randomArr, Math.floor(Math.random() * 440 - 220)]
-		}
+		}*/
 	}
 
 	renderCards = (cards) => (
 		cards.map((card, index) => (
 			Array.isArray(card) ? 
-				<PhotoCardsCol cards={card}/> 
+				<PhotoCardsCol cards={card} cardStyle={{marginTop: this.randomArr[index]}}/> 
 				: <PhotoCard key={card.id} {...card} cardStyle={{marginTop: this.randomArr[index]}}/>
 		))
 	)
