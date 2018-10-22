@@ -10,6 +10,7 @@ import { apiRoot } from '../../../api';
 import { logIn, logOff } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
+import { Link as ScrollLink } from 'react-scroll'
 import { getCurrentUrl } from 'preact-router';
 import { routes } from '../../app'
 
@@ -69,7 +70,7 @@ class Header extends Component {
   }
 	render() {
     const {userData : user  = {}} = this.props;
-    const currentUrl = getCurrentUrl();
+    //const currentUrl = getCurrentUrl();
     const isLogin = Object.keys(user).length !== 0;
 
 		return (
@@ -95,8 +96,21 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
-                <li><Link activeClassName={style.activeLink} href={routes.HOME}>How it works</Link></li>,
-                <li><Link activeClassName={style.activeLink} href={routes.FAQ}>FAQ</Link></li>
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
+                  : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+                </li>,
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
+                  : <Link href={routes.FAQ_LINK}>FAQ</Link>}
+                </li>,<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+                  : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+                </li>,
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
+                  : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
+                </li>
               ])
             }
 						

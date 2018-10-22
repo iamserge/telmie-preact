@@ -13,11 +13,11 @@ class PhotoCards extends Component{
 		}*/
 	}
 
-	renderCards = (cards) => (
+	renderCards = (cards, startIndex = 0) => (
 		cards.map((card, index) => (
 			Array.isArray(card) ? 
-				<PhotoCardsCol cards={card} cardStyle={{marginTop: this.randomArr[index]}}/> 
-				: <PhotoCard key={card.id} {...card} cardStyle={{marginTop: this.randomArr[index]}}/>
+				<PhotoCardsCol cards={card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/> 
+				: <PhotoCard key={card.id} {...card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/>
 		))
 	)
 
@@ -26,7 +26,7 @@ class PhotoCards extends Component{
 		const {side1 = [], side2 =[]} = cards;
 
 		return (
-			<div class={style.photoCardsContainer}
+			<div class={`${style.photoCardsContainer} uk-container-big`}
 				style={styles}>
 				{ this.renderCards(side1) }
 				<div class={style.videoWrapper}>
@@ -38,7 +38,7 @@ class PhotoCards extends Component{
 						</video>
 					</div>
 				</div>
-				{ this.renderCards(side2) }
+				{ this.renderCards(side2, 2) }
 			</div>
 		)
 	}

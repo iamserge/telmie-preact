@@ -8,7 +8,7 @@
 html, body {
 	height: 100%;
 	width: 100%;
-	padding: 40px 0 0 !important;
+	//padding: 40px 0 0 !important;
     box-sizing: border-box;
 	overflow: visible !important;
 	margin: 0;
@@ -77,6 +77,11 @@ a {
         box-sizing: border-box;
     }
 }
+#homepage {
+	padding-top: 100px;
+	max-width: 1470px;
+	margin: auto;
+}
 #homepage .uk-container-small {
     h1,
     h2 {
@@ -91,6 +96,16 @@ a {
 #homepage .uk-container::before, 
 #homepage .uk-container::after{
 	display: none;
+}
+
+#homepage .uk-container {
+	margin: 0 115px 0 145px;
+	//margin: 0 115px 0 87px;
+	//margin: 0 0 0 58px;
+	max-width: none;
+}
+#homepage .uk-container-big {
+	margin: 0 115px 0 87px;
 }
 
 .uk-close {
@@ -378,6 +393,24 @@ button.white-btn {
 .new-input::placeholder {
 	color: rgb(182, 185, 190);
 }
+.top-btn{
+	height: 32px;
+	width: 32px;
+	position: relative;
+	background-color: rgba($color: $red, $alpha: .7);
+	color: white;
+	overflow: hidden;
+	cursor: pointer;
+
+	&:hover{
+		background-color: $red;
+	}
+	& > span {
+		position: absolute;
+		top: 0;
+		left: calc(100% - 25px);
+	}
+}
 
 @media (max-width: 880px) {
     .uk-container-small {
@@ -392,5 +425,14 @@ button.white-btn {
 	}
 		.modalInner {
 		width: 90%;
+	}
+	#homepage {
+		margin: 0 32px 0 24px;
+	}
+	#homepage .uk-container {
+		margin: 0;
+	}
+	#homepage .uk-container-big {
+		margin: 0;
 	}
 }

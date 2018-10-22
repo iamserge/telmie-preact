@@ -7,6 +7,9 @@ import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import { Element, scroller, Link as ScrollLink } from 'react-scroll'
+import ScrollToTop from'react-scroll-up'
+import FontAwesome from 'react-fontawesome';
+
 
 import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
@@ -37,19 +40,60 @@ class HomePage extends Component {
 	  this.contactUs = null;
 	}
 	scrollToContact = () => {
-		(window.location.hash.indexOf('contact-us') + 1) &&
-			(this.scrollInterval = setInterval(() => {
-				this.contactUs !== null && (
-					scroller.scrollTo('contactUsElement', {
-						spy: true,
-						smooth: true,
-						duration: 500,
-						offset: -50,
-					}),
-					clearInterval(this.scrollInterval),
-					this.scrollInterval = null
-				)
-			}, 100));
+		const {hash} = window.location;
+
+		hash && (
+			((hash.indexOf('contact-us') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('contactUsElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))),
+			(hash.indexOf('faq') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('FAQElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100)),
+			(hash.indexOf('how-it-works') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('howWorksElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -30,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100)),
+			(hash.indexOf('become-pro') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('becomeProElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -70,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))
+		)
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
@@ -105,14 +149,17 @@ class HomePage extends Component {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}} = this.props;
 			return (
-				<div id="homepage" style={{paddingTop: 100}}>
-						
-					<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
+				<div id="homepage">
+
+					<div class={style.infoContainer}>	
+						<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
+					</div>
 
 					<div class={style.photoContainer}>
 						<PhotoCards cards = {photoCards}/>
 					</div>
 
+					<Element name='howWorksElement' />
 					<HowWorksDetails videoId={pageData.main_video.video_id} appLink={appLink}/>
 
 					<FeaturedServices serviceCards={serviceCards} />
@@ -122,10 +169,12 @@ class HomePage extends Component {
 					</div>
 
 					<div class={style.faqContainer}>
+						<Element name="FAQElement"></Element>
 						<LandingFAQ {...landingFAQ}/>
 					</div>
 
 					<div class={style.proWrapper}>
+						<Element name='becomeProElement' />
 						<ProDetails appLink={appLink} />
 					</div>
 
@@ -135,6 +184,10 @@ class HomePage extends Component {
 					</div>*/}
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} />
+
+					<ScrollToTop showUnder={150}>
+						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
+					</ScrollToTop>
 				</div>
 
 			);

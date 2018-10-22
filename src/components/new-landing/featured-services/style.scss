@@ -14,9 +14,22 @@
 	.services{
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-around;
+        justify-content: space-between;
+        
+        & > div{
+            width: 49%;
+        }
     }
-    
+    @media (max-width: 1200px) {
+        .services{
+            justify-content: center;
+            
+            & > div{
+                width: 100%;
+            }
+        }
+    }
+
     @media (max-width: 880px) {
         margin-bottom: 50px !important;
         .header {

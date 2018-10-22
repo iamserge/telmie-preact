@@ -2,11 +2,12 @@
 #footer {
 	width: 100%;
 	background-color: white;
-    padding: 50px 80px;
+	padding: 50px 115px 55px 150px;
 	z-index: 1000;
-	box-shadow: 0 0 5px rgba(0,0,0,.05);
 	display: flex;
 	flex-wrap: wrap;
+	max-width: 1470px;
+	margin: auto;
 
 	.copyright{
 		font-size: 12px;
@@ -36,7 +37,6 @@
 	margin-bottom: 10px;
 	width: 100%;
 	img {
-		width: 104px;
 		height: 32px;;
 	}
 }

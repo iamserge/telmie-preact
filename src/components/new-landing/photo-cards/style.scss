@@ -1,11 +1,11 @@
 @import './src/style/variables';
 
 .photoCardsContainer{
-    margin: 0 90px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 !important;
 
     .videoWrapper{
         position: relative;
@@ -18,8 +18,9 @@
         display: inline-block;
         position: absolute;
         background-color: $lightBackgroundGrey;
-        width: 800px;
-        height: 450px;
+        width: auto;
+        height: 100%;
+        min-width: 306px;
 
         left: 50%;
         margin: 0 auto;
@@ -37,10 +38,15 @@
         margin-right: 10px;
     }
 
-    @media (max-width: 1400px) {
-        margin: 0 50px;
+    @media (max-width: 1410px) {
+        & > div:last-child, & > div:first-child{
+            display: none;
+        }
     }
-    @media (max-width: 880px) {
+    @media (max-width: 990px) {
+        & > div{
+            width: 100%;
+        }
         justify-content: center;
     }
     

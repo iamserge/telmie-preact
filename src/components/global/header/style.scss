@@ -1,13 +1,13 @@
 @import './src/style/variables';
 #header {
-	position: fixed;
-	top: 0;
+	
 	width: 100%;
 	background-color: white;
 	background-color: #fff;
-  	padding: 40px 80px 0 80px;
-	box-shadow: 0 0 5px rgba(0,0,0,.05);
+  	padding: 50px 115px 0 87px;
 	z-index: 1000;
+	max-width: 1470px;
+	margin: auto;
 	ul {
 		> li {
 			> a {
@@ -27,7 +27,6 @@
 #logo {
 	img {
 		height: 40px;
-		width: 130px;
 	}
 }
 #leftNav {
@@ -205,8 +204,9 @@
 
 	
 	#header{
-		padding: 24px 24px 0 24px;
+		padding: 24px 32px 0 24px;
 		height: auto;
+		
 		.navbarLeft, .navbarRight{
 			height: 40px !important;
 		}
@@ -230,7 +230,6 @@
 		position: absolute;*/
 		padding-left: 0;
 		img {
-			width: 100px;
 			height: 30px;
 		}
 	}
