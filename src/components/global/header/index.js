@@ -73,8 +73,6 @@ class Header extends Component {
     //const currentUrl = getCurrentUrl();
     const isLogin = Object.keys(user).length !== 0;
 
-    console.log(this.props.currentUrl);
-
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
         <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { ()=>{this.setState({mobileMenuOpened: !this.state.mobileMenuOpened})}}>
@@ -105,6 +103,13 @@ class Header extends Component {
                 <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
                   <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="FAQElement">FAQ</ScrollLink> 
                   : <Link href={routes.FAQ_LINK}>FAQ</Link>}
+                </li>,<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} offset={-200} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+                  : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+                </li>,
+                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                  <ScrollLink spy={true} smooth={true} offset={-130} duration={500} to="contactUsElement">Contact us</ScrollLink> 
+                  : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
                 </li>
               ])
             }

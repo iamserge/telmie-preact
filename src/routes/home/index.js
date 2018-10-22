@@ -78,6 +78,19 @@ class HomePage extends Component {
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
 					)
+				}, 100)),
+			(hash.indexOf('become-pro') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.contactUs !== null && (
+						scroller.scrollTo('becomeProElement', {
+							spy: true,
+							smooth: true,
+							duration: 500,
+							offset: -200,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
 				}, 100))
 		)
 	}
@@ -158,6 +171,7 @@ class HomePage extends Component {
 					</div>
 
 					<div class={style.proWrapper}>
+						<Element name='becomeProElement' />
 						<ProDetails appLink={appLink} />
 					</div>
 

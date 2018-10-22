@@ -40,6 +40,7 @@ export const routes = {
 	CONTACT_US: '/contact-us',
 	CONTACT_US_LINK: '/#contact-us',
 	HOW_WORKS_LINK: '/#how-it-works',
+	BECOME_PRO_LINK: '/#become-pro',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
