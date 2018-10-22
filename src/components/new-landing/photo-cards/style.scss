@@ -4,7 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 0 !important;
 
     .videoWrapper{
@@ -18,8 +18,9 @@
         display: inline-block;
         position: absolute;
         background-color: $lightBackgroundGrey;
-        width: 800px;
-        height: 450px;
+        width: auto;
+        height: 100%;
+        min-width: 306px;
 
         left: 50%;
         margin: 0 auto;

@@ -151,7 +151,7 @@ class HomePage extends Component {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}} = this.props;
 			return (
-				<div id="homepage" style={{paddingTop: 100}}>
+				<div id="homepage">
 
 					<div class={style.infoContainer}>	
 						<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
