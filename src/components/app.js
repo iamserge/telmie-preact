@@ -1,4 +1,4 @@
-import { h, Component, Fragment } from 'preact';
+import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
 import Header from './global/header';
@@ -20,7 +20,6 @@ import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro'
 import ErrorRoute from '../routes/errorRoute'
-import NewLanding from '../routes/new-landing'
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -38,7 +37,7 @@ export const routes = {
 	TERMS: '/terms',
 	PRIVACY: '/privacy',
 	CONTACT_US: '/contact-us',
-	CONTACT_US_LINK: '/new-landing#contact-us',
+	CONTACT_US_LINK: '/#contact-us',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
@@ -51,8 +50,6 @@ export const routes = {
 	FORGOT_PASSWORD: '/forgot-password',
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
-
-	NEW_LANDING: '/new-landing'
 };
 
 
@@ -129,9 +126,6 @@ class App extends Component {
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
 			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
-
-
-			<NewLanding path={routes.NEW_LANDING} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE }/>
 		]
 	}
 

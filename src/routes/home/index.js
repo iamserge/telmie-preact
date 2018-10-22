@@ -6,27 +6,50 @@ import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
-import Search from '../../components/global/search';
-import HomeTitle from '../../components/homepage/home-title';
-import Counters from '../../components/homepage/counters';
-import FeaturedPros from '../../components/homepage/featured-pros';
-import FeaturedServices from '../../components/homepage/featured-services';
-import Video from '../../components/homepage/video';
-import MoreInfo from '../../components/homepage/more-info';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 
+import InfoComponent from '../../components/new-landing/info-component'
+import PhotoCards from '../../components/new-landing/photo-cards'
+import FeaturedServices from '../../components/new-landing/featured-services'
+import HowWorksDetails from '../../components/new-landing/how-works-details'
+import LandingFAQ from '../../components/new-landing/landing-faq'
+import AppDetails from '../../components/new-landing/app-details'
+import ProDetails from '../../components/new-landing/pro-details'
+import BlogArticles from '../../components/new-landing/blog-articles'
+import ContactForm from '../../components/new-landing/contact-form'
 
 import { route } from 'preact-router';
 import { verify } from '../../actions/user';
 import style from './style.scss';
 
+// mock-data
+import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data'
+const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
+
 class HomePage extends Component {
 	constructor(props){
 		super(props);
 		this.state =  {
-	    doc: null,
-	    notFound: false,
+			doc: null,
+			notFound: false,
 			verifyFailure: false
 	  }
+	  this.contactUs = null;
+	}
+	scrollToContact = () => {
+		(window.location.hash.indexOf('contact-us') + 1) &&
+			(this.scrollInterval = setInterval(() => {
+				this.contactUs !== null && (
+					scroller.scrollTo('contactUsElement', {
+						spy: true,
+						smooth: true,
+						duration: 500,
+						offset: -50,
+					}),
+					clearInterval(this.scrollInterval),
+					this.scrollInterval = null
+				)
+			}, 100));
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
@@ -34,6 +57,7 @@ class HomePage extends Component {
 		if (typeof this.props.token != 'undefined') {
 			this.props.verify(this.props.token)
 		}
+		this.scrollToContact();
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
@@ -50,6 +74,10 @@ class HomePage extends Component {
 			})
 		}
 
+	}
+	componentWillUnmount(){
+		clearInterval(this.scrollInterval);
+		this.scrollInterval = null;
 	}
 
 	fetchPage(props) {
@@ -76,43 +104,37 @@ class HomePage extends Component {
 		if (this.state.doc) {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}} = this.props;
-    		const isLogin = Object.keys(user).length !== 0;
 			return (
 				<div id="homepage" style={{paddingTop: 100}}>
-						<div onClick={() => route('/new-landing')} style={{
-							textAlign: 'center',
-							fontSize: 28,
-							cursor: 'pointer'
-						}}
-						>New Landing Page</div>
-					
-						{ typeof pageData.main_title != 'undefined' && pageData.main_title.length > 0 && typeof pageData['main_sub-title'] != 'undefined' && pageData['main_sub-title'].length > 0 && (
-							<HomeTitle
-								main_title = { pageData.main_title[0].text }
-								main_sub-title = { pageData["main_sub-title"][0].text }
-								/>
-						) }
-					  <Search hiddenSearchBox = {this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin={isLogin} home= { true }/>
-						<Counters counters = {pageData.counters} />
-						<Video videoId = { pageData.main_video.video_id } />
-						<FeaturedServices services = { pageData.featured_services } servicesIcons = { pageData.services_icons} />
-						<FeaturedPros pros = { pageData.featured_pros } />
+						
+					<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
 
+					<div class={style.photoContainer}>
+						<PhotoCards cards = {photoCards}/>
+					</div>
 
-						<MoreInfo />
+					<HowWorksDetails videoId={pageData.main_video.video_id} appLink={appLink}/>
 
-						{this.state.verifyFailure && (
-							<div>
+					<FeaturedServices serviceCards={serviceCards} />
 
-								<div className="modal" onClick={()=>{this.setState({verifyFailure: false})}}>
-									<a class="uk-modal-close uk-close"></a>
-								</div>
-								<div className="modalInner">
-									<h2>Account activation</h2>
-									<span>Unfortunately, we could not activate your account. Please, try again or contact us at <a href="mailto:support@telmie.com">support@telmie.com</a></span>
-								</div>
-							</div>
-						)}
+					<div class={style.iosAppSection}>
+						<AppDetails appLink={appLink}/>
+					</div>
+
+					<div class={style.faqContainer}>
+						<LandingFAQ {...landingFAQ}/>
+					</div>
+
+					<div class={style.proWrapper}>
+						<ProDetails appLink={appLink} />
+					</div>
+
+					{/*<div class={`${style.blogContainer} uk-container`}>
+						<div class={style.header}>Blog</div>
+						<BlogArticles articles = {blogArtilces}/>
+					</div>*/}
+					<Element name="contactUsElement"></Element>					
+					<ContactForm ref={ref=> this.contactUs = ref} />
 				</div>
 
 			);

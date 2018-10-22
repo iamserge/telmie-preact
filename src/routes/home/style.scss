@@ -2,58 +2,59 @@
 @import './src/style/variables';
 
 
+.photoContainer{
+    margin-bottom:160px !important;
+
+    @media (max-width: 880px) {
+        margin-bottom: 40px !important;
+    }
+}
+
+.iosAppSection{
+    background-color: rgb(86,95,207);
+    margin-bottom: 130px;
+}
+
+.faqContainer{
+    margin-bottom:160px !important;
+
+    @media (max-width: 880px) {
+        margin-bottom: 80px !important;
+    }
+}
+
+.proWrapper{
+	background-color: rgb(245,246,248);
+	padding-top: 100px;
+    margin-bottom: 125px;
+    @media (max-width: 880px) {
+        margin-bottom: 65px !important;
+    }
+}
+
+.blogContainer{
+	margin-bottom: 160px !important;
+
+	.header {
+		color: $hBlack;
+		font-size: 48px;
+        margin-bottom: 60px;
+        font-family: 'Krub', sans-serif;
+        font-weight: 300;
+    }
+    
+    @media (max-width: 880px) {
+        margin-bottom: 60px !important;
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+    }
+}
+
 :global {
 	#home {
 		min-height: 1000px;
-	}
-	#mainTitle {
-		text-align: center;
-		margin: 40px 0;
-		span {
-			color: $red;
-		}
-	}
-}
-:global {
-	#homepage {
-		
-			.slider-list {
-				height: 240px !important
-			}
-			.slider-control-bottomcenter {
-				display: none;
-			}
-			.slider-control-centerleft, .slider-control-centerright {
-				background-color: $lightRed2;
-				border-radius: 100%;
-		    width: 50px;
-		    height: 50px;
-		    left: -65px !important;
-                top: 30% !important;
-				button {
-			    font-size: 0;
-				  background: transparent!important;
-				  position: relative;
-				  top: -1px;
-				  left: 17px;
-					&:before {
-						content: "";
-						background-image: url(/assets/plus.svg);
-                        background-position: center center;
-                        background-size: 80px 80px;
-					}
-				}
-			}
-			.slider-control-centerright {
-				left: auto !important;
-				right: -65px !important;
-				button {
-					left: 0px;
-					&:before {
-						content: "";
-						background-image: url(/assets/plus.svg);
-					}
-				}
-			}
 	}
 }

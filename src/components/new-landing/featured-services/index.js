@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import ServiceCard from '..//service-card'
+import ServiceCard from '../service-card'
 import style from './style.scss';
 
 const FeaturedServices = ({serviceCards = []}) => {

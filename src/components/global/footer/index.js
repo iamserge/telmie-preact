@@ -53,7 +53,7 @@ export default class Footer extends Component {
 							<li><Link href={routes.HOME}>Home</Link></li>
 							{/*<li><Link href={routes.ABOUT_US}>Company</Link></li>*/}
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
-							<li>{this.props.currentUrl.indexOf(routes.NEW_LANDING+1) ? 
+							<li>{this.props.currentUrl === routes.HOME ? 
 								<ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="contactUsElement">Contact</ScrollLink> 
 								: <Link href={routes.CONTACT_US_LINK}>Contact</Link>}
 							</li>

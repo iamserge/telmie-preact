@@ -103,7 +103,7 @@ class Header extends Component {
 					</ul>
 				</div>
 
-				<div class={`${style.navbarRight} uk-navbar-right`}>
+				{/*<div class={`${style.navbarRight} uk-navbar-right`}>
           { /*currentUrl != '/' && (
               <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                 hideSearchBox = { this.props.hideSearchBox } 
@@ -111,7 +111,7 @@ class Header extends Component {
                 home= { false }/>
           )*/}
 
-					 { !isLogin  ? (
+					 {/* !isLogin  ? (
 						<nav>
 							<ul className="uk-navbar-nav" >
 								<li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
@@ -147,7 +147,7 @@ class Header extends Component {
 							        <li className="uk-nav-divider"></li>
                       <li><Link href="/edit-profile">Edit Profile</Link></li>
                       <li className="uk-nav-divider"></li>*/}
-                      <li><Link href={routes.SETTINGS}>Settings</Link></li>
+                      {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>
 							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
 							    </ul>
 							</div>
@@ -160,7 +160,7 @@ class Header extends Component {
           {/*<Link href="/">Home</Link>
           <Link href="/about-us">About us</Link>
           <Link href="/help">FAQ</Link>*/}
-          { !isLogin  ? (
+          {/* !isLogin  ? (
 					  <div>
               <h3>My account</h3>
               <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
@@ -178,7 +178,7 @@ class Header extends Component {
 							<Link href="/edit-profile">Edit Profile</Link>
               <Link href="/register-pro">Register as Pro</Link>
               <Link href="/edit-profile">Edit Profile</Link>*/}
-              {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+              {/*{(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
               <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
               <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
               {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
@@ -187,7 +187,7 @@ class Header extends Component {
             </div>
 					)}
 
-        </div>
+        </div>*/}
 
 
 			</header>

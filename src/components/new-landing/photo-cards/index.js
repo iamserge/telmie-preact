@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import PhotoCard from './photo-card';
-import PhotoCardsCol from './photo-card/photo-cards-col.js'
+import PhotoCardsCol from './photo-card/photo-cards-col'
 
 class PhotoCards extends Component{
 
