@@ -6,6 +6,7 @@ import { hideSearchBox } from '../../actions';
 /*import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';*/
 import Spinner from '../../components/global/spinner';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 
 import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
@@ -34,11 +35,22 @@ class NewLanding extends Component {
 	    	notFound: false,
 			verifyFailure: false
 	  }
+	  this.contactUs = null;
 	}
 	scrollToContact = () => {
-		/*console.log(document.location.hash);
-		console.log(document.location.hash.indexOf('contact-us'));*/
-			  
+		(window.location.hash.indexOf('contact-us') + 1) &&
+			(this.scrollInterval = setInterval(() => {
+				this.contactUs !== null && (
+					scroller.scrollTo('contactUsElement', {
+						spy: true,
+						smooth: true,
+						duration: 500,
+						offset: -50,
+					}),
+					clearInterval(this.scrollInterval),
+					this.scrollInterval = null
+				)
+			}, 100));
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
@@ -62,8 +74,10 @@ class NewLanding extends Component {
 				verifyFailure: true
 			})
 		}
-		this.scrollToContact();
-
+	}
+	componentWillUnmount(){
+		clearInterval(this.scrollInterval);
+		this.scrollInterval = null;
 	}
 
 	fetchPage(props) {
@@ -71,12 +85,12 @@ class NewLanding extends Component {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
         if (doc) {
-					console.log('doc',doc);
-          // We put the retrieved content in the state as a doc variable
-		  this.setState({ doc });
+			console.log('doc',doc);
+          	// We put the retrieved content in the state as a doc variable
+		  	this.setState({ doc });
         } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
+          	// We changed the state to display error not found if no matched doc
+        	this.setState({ notFound: !doc });
         }
       });
 			/*
@@ -118,8 +132,8 @@ class NewLanding extends Component {
 							<div class={style.header}>Blog</div>
 							<BlogArticles articles = {blogArtilces}/>
 			</div>*/}
-					
-						<ContactForm />
+						<Element name="contactUsElement"></Element>					
+						<ContactForm ref={ref=> this.contactUs = ref} />
 
 				</div>
 

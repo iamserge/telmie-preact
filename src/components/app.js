@@ -61,7 +61,8 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			prismicCtx: null
+			prismicCtx: null,
+			currentUrl: "",
 		}
 	}
 
@@ -77,6 +78,7 @@ class App extends Component {
 
 	handleRoute = e => {
 		this.currentUrl = e.url;
+		this.setState({currentUrl: e.url});
 	};
 
 	buildContext() {
@@ -147,7 +149,7 @@ class App extends Component {
 						<ErrorRoute default />
 					</Router>
 				</div>
-				<Footer />
+				<Footer currentUrl = {this.state.currentUrl}/>
 			</div>
 		);
 	}

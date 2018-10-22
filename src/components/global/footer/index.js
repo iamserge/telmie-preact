@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
+import { Link as ScrollLink } from 'react-scroll'
+
 import style from './style.scss';
 import { routes } from '../../app'
 
@@ -51,7 +53,11 @@ export default class Footer extends Component {
 							<li><Link href={routes.HOME}>Home</Link></li>
 							{/*<li><Link href={routes.ABOUT_US}>Company</Link></li>*/}
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
-							<li><Link href={routes.CONTACT_US_LINK}>Contact</Link></li>
+							<li>{this.props.currentUrl.indexOf(routes.NEW_LANDING+1) ? 
+								<ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="contactUsElement">Contact</ScrollLink> 
+								: <Link href={routes.CONTACT_US_LINK}>Contact</Link>}
+							</li>
+							
 							{/*<li><Link href={''}>Blog</Link></li>*/}
 							<li><Link href={routes.TERMS}>Terms</Link></li>
 							{/*<li><Link href={''}>Help</Link></li>*/}
