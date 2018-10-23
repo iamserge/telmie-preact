@@ -25,6 +25,7 @@ import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
+import ReactGA from 'react-ga';
 
 export const routes = {
 	HOME: '/',
@@ -67,17 +68,17 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-
-    this.buildContext().then((prismicCtx) => {
-      this.setState({ prismicCtx });
-    }).catch((e) => {
-      console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
-    });
-  }
+		ReactGA.initialize('UA-000000-01');
+		this.buildContext().then((prismicCtx) => {
+			this.setState({ prismicCtx });
+		}).catch((e) => {
+			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
+		});
+  	}
 
 
 	handleRoute = e => {
-		this.currentUrl = e.url;
+		ReactGA.pageview(e.url);
 		this.setState({currentUrl: e.url});
 	};
 
