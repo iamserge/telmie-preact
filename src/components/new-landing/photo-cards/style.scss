@@ -42,12 +42,15 @@
         & > div:last-child, & > div:first-child{
             display: none;
         }
+        & > div:not(:last-child){
+            margin-right: 15px;
+        }
+        justify-content: center;
     }
     @media (max-width: 990px) {
         & > div{
             width: 100%;
         }
-        justify-content: center;
     }
     
 }
