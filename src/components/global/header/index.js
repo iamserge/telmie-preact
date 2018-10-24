@@ -70,8 +70,8 @@ class Header extends Component {
   }
 	render() {
     const {userData : user  = {}} = this.props;
-    //const currentUrl = getCurrentUrl();
     const isLogin = Object.keys(user).length !== 0;
+    const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
@@ -96,18 +96,18 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : ([
-                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                 </li>,
-                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
                   : <Link href={routes.FAQ_LINK}>FAQ</Link>}
-                </li>,<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                </li>,<li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
                   : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
                 </li>,
-                <li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
+                <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
                   : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
                 </li>
@@ -169,11 +169,23 @@ class Header extends Component {
 						</div>
 					)}
 				</div>
-
-        <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
-          {/*<Link href="/">Home</Link>
-          <Link href="/about-us">About us</Link>
-          <Link href="/help">FAQ</Link>*/}
+        */}
+        {/*<div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
+        
+          {isAtHome ? 
+              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
+              : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+          {isAtHome ? 
+              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
+              : <Link href={routes.FAQ_LINK}>FAQ</Link>}
+          {isAtHome ? 
+              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+              : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+          {isAtHome ? 
+              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
+              : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
+                
+              
           {/* !isLogin  ? (
 					  <div>
               <h3>My account</h3>

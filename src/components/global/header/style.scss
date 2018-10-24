@@ -97,7 +97,7 @@
 	right: 0%;
 	top: 62px;
 	transition: transform .2s;
-  transform: translate(100%);
+	transform: translate(100%);
 	&.opened {
 		transform: translate(0, 0);
 	}
@@ -169,7 +169,7 @@
 	}*/
 	#mobileShadow {
 		display: block;
-    z-index: 1000;
+    	z-index: 1000;
 	}
 	#mobileNav {
 		display: block;

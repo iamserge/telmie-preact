@@ -35,7 +35,7 @@ class PhotoCards extends Component{
 						<img src='assets/new-landing-page/group2.png' class={style.settingsBtns}/>
 						<img src='assets/new-landing-page/callButton.png' class={style.callBtn}/>
 						<div class={style.videoContainer}>
-							<video class={style.video} playsinline autoPlay loop muted poster='https://pp.userapi.com/c849532/v849532268/a3275/GE6hKClD72o.jpg'>
+							<video class={style.video} playsinline autoPlay loop muted poster='https://pp.userapi.com/c847121/v847121092/10d341/XfReogvSWv4.jpg'>
 								{/*<source src="http://sr461.2dayhost.com/IMG_3531.TRIM.MOV" type="video/mp4"/>*/}
 								<source src='http://appdoc.by/media/IMG_3531.TRIM.MOV' type="video/mp4"/>
 								Your browser does not support the video tag.
