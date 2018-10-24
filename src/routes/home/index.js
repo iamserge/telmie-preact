@@ -185,7 +185,7 @@ class HomePage extends Component {
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} />
 
-					<ScrollToTop showUnder={150}>
+					<ScrollToTop showUnder={150} style={{zIndex: 1002}}>
 						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
 					</ScrollToTop>
 				</div>

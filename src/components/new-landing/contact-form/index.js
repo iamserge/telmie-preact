@@ -47,8 +47,12 @@ export default class ContactForm extends Component {
                         <input class='new-input' value={email} name="email" placeholder='Your email' onChange={this.onChangeHandler} />
                         {this.validator.message('email', email, 'required|email', 'validation-tooltip', {required: 'Please enter email', email: 'Please enter correct email'})}
                     </div>
-                    <input class='new-input' value={company} name="company" placeholder='Company' onChange={this.onChangeHandler} />
-                    <input class='new-input' value={subject} name="subject" placeholder='Subject' onChange={this.onChangeHandler} />
+                    <div className="input-container">
+                        <input class='new-input' value={company} name="company" placeholder='Company' onChange={this.onChangeHandler} />
+                    </div>
+                    <div className="input-container">
+                        <input class='new-input' value={subject} name="subject" placeholder='Subject' onChange={this.onChangeHandler} />
+                    </div>
                     <div className="input-container">
                         <input class='new-input' value={message} name="message" placeholder='Your message' onChange={this.onChangeHandler} />
                         {this.validator.message('message', message, 'required', 'validation-tooltip', {required: 'Please enter message'})}

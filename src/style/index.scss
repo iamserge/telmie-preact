@@ -384,7 +384,12 @@ button.white-btn {
 	background: transparent;
 	color: black;
 	font-family: 'Krub', sans-serif;
-    font-weight: 500;
+	font-weight: 500;
+	@media (max-width: 480px) {
+		font-size: 18px;
+		line-height: 28px;
+		height: 60px;
+	}
 }
 .new-input:focus {
 	outline: 0;
@@ -427,10 +432,9 @@ button.white-btn {
 		.modalInner {
 		width: 90%;
 	}
-	#homepage {
-		margin: 0 32px 0 24px;
-	}
+	
 	#homepage .uk-container {
+		padding: 0 15px !important;
 		margin: 0;
 	}
 	#homepage .uk-container-big {

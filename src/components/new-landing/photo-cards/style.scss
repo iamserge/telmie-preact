@@ -1,11 +1,20 @@
 @import './src/style/variables';
 
+.photoCardsWrapper{
+    margin: 0 20px;
+    @media (max-width: 880px) {
+        margin: 0;
+    }
+}
 .photoCardsContainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 0 !important;
+    padding: 0 28px 0 0 !important;
+    width: 100%;
+    max-width: 1270px;
+    margin: 0 auto !important;
 
     .videoWrapper{
         position: relative;
@@ -13,6 +22,19 @@
         min-width: 306px;
         height: 530px;
         overflow: hidden;
+
+        .callBtn{
+            position: absolute;
+            z-index: 2;
+            left: 24px;
+            bottom: 24px;
+        }
+        .settingsBtns{
+            position: absolute;
+            z-index: 2;
+            right: 24px;
+            bottom: 24px;
+        }
     }
     .videoContainer{
         display: inline-block;
@@ -36,7 +58,7 @@
         margin-right: 10px;
     }
 
-    @media (max-width: 1410px) {
+    @media (max-width: 1270px) {
         & > div:last-child, & > div:first-child{
             display: none;
         }
@@ -45,7 +67,8 @@
         }
         justify-content: center;
     }
-    @media (max-width: 990px) {
+    @media (max-width: 880px) {
+        padding: 0 !important;
         & > div{
             width: 100%;
         }

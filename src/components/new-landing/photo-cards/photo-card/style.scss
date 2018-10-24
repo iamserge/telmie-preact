@@ -56,12 +56,9 @@
         content: '';
     }
 
-    @media (max-width: 990px) {
+    @media (max-width: 880px) {
         display: none;
     }
-    /*@media (max-width: 880px) {
-        display: none;
-    }*/
 }
 
 .statCard{
@@ -80,8 +77,9 @@
         letter-spacing: 0.2px;
     }
 
-    @media (max-width: 990px) {
+    @media (max-width: 880px) {
         display: block;
+        //width: 100%;
         width: 306px;
         height: auto;
         margin: 0 auto 20px auto;
@@ -91,7 +89,8 @@
 .photoCardCol{
     display: inline-block;
 
-    @media (max-width: 990px) {
+    @media (max-width: 880px) {
+        margin-top: 24px !important;
         & br {
             display: none;
         }
