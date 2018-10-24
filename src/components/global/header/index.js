@@ -68,6 +68,7 @@ class Header extends Component {
     });
     this.props.logOff();
   }
+  toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
 	render() {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
@@ -75,12 +76,8 @@ class Header extends Component {
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
-        <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { ()=>{this.setState({mobileMenuOpened: !this.state.mobileMenuOpened})}}>
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
-        <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''}></div>
+        
+        <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
 				<div class={`${style.navbarLeft} uk-navbar-left`} >
           { this.state.loggedOff && (
             <Redirect to='/' />
@@ -88,6 +85,12 @@ class Header extends Component {
 					<Link href={routes.HOME} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
+          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
               isLogin ? ([
@@ -170,21 +173,31 @@ class Header extends Component {
 					)}
 				</div>
         */}
-        {/*<div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
-        
+        <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
+          <div class={style.mobileNavHeader}>
+          <Link href={routes.HOME} id={style.logo}>
+						<img src="/assets/logo.png" alt="Telmie App"/>
+					</Link>
+          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          </div>
+          
           {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
-              : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink> 
+              : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>}
           {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
-              : <Link href={routes.FAQ_LINK}>FAQ</Link>}
+              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink> 
+              : <Link href={routes.FAQ_LINK} onClick={this.toggleMobileMenu}>FAQ</Link>}
           {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
-              : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink> 
+              : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>}
           {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
-              : <Link href={routes.CONTACT_US_LINK}>Contact us</Link>}
-                
+              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink> 
+              : <Link href={routes.CONTACT_US_LINK} onClick={this.toggleMobileMenu}>Contact us</Link>}
+          
               
           {/* !isLogin  ? (
 					  <div>
@@ -211,9 +224,9 @@ class Header extends Component {
               <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
               <a onClick={()=>this.logOff()}>Log out</a>
             </div>
-					)}
+					)}*/}
 
-        </div>*/}
+        </div>
 
 
 			</header>
