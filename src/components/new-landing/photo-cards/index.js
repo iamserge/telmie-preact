@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import PhotoCard from './photo-card';
 import PhotoCardsCol from './photo-card/photo-cards-col'
+import FontAwesome from 'react-fontawesome';
 
 class PhotoCards extends Component{
 
@@ -26,19 +27,23 @@ class PhotoCards extends Component{
 		const {side1 = [], side2 =[]} = cards;
 
 		return (
-			<div class={`${style.photoCardsContainer} uk-container-big`}
-				style={styles}>
-				{ this.renderCards(side1) }
-				<div class={style.videoWrapper}>
-					<div class={style.videoContainer}>
-						<video class={style.video} autoPlay loop muted>
-							{/*<source src="http://sr461.2dayhost.com/IMG_3531.TRIM.MOV" type="video/mp4"/>*/}
-							<source src='http://appdoc.by/media/IMG_3531.TRIM.MOV' type="video/mp4"/>
-							Your browser does not support the video tag.
-						</video>
+			<div class={`${style.photoCardsWrapper}`}>
+				<div class={`${style.photoCardsContainer}`}
+					style={styles}>
+					{ this.renderCards(side1) }
+					<div class={style.videoWrapper}>
+						<img src='assets/new-landing-page/group2.png' class={style.settingsBtns}/>
+						<img src='assets/new-landing-page/callButton.png' class={style.callBtn}/>
+						<div class={style.videoContainer}>
+							<video class={style.video} playsinline autoPlay loop muted poster='https://pp.userapi.com/c849532/v849532268/a3275/GE6hKClD72o.jpg'>
+								{/*<source src="http://sr461.2dayhost.com/IMG_3531.TRIM.MOV" type="video/mp4"/>*/}
+								<source src='http://appdoc.by/media/IMG_3531.TRIM.MOV' type="video/mp4"/>
+								Your browser does not support the video tag.
+							</video>
+						</div>
 					</div>
+					{ this.renderCards(side2, 2) }
 				</div>
-				{ this.renderCards(side2, 2) }
 			</div>
 		)
 	}
