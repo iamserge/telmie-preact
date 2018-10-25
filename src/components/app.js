@@ -20,6 +20,7 @@ import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro'
 import ErrorRoute from '../routes/errorRoute'
+import FAQ from '../routes/faq';
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -118,10 +119,12 @@ class App extends Component {
 	}
 
 	renderDefaultRoutes = () => {
+		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
+
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
-			<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,
+			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
 			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>,
 			<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>,
