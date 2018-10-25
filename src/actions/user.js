@@ -124,6 +124,12 @@ const sendContactMessageFailure = (message) => ({
 	type: actionTypes.SEND_CONTACT_MESS_FAILURE,
 	message
 });
+const sendContactMessageSuccess = () => ({
+	type: actionTypes.SEND_CONTACT_MESS_SUCCESS
+});
+const sendContactMessage = () => ({
+	type: actionTypes.SEND_CONTACT_MESS
+});
 
 export const resetPassword = (email, password, code) => async (dispatch) => {
 	const response = await user.resetPassword({email, password, code});
@@ -276,12 +282,11 @@ export const fetchSendCode = () => (dispatch) => {
 };
 
 export const sendContactData = (data) => async (dispatch) => {
+	sendContactMessage();
+
 	let response = await user.sendContactData(data);
 
-	if (response.error) {
-		dispatch(sendContactMessageFailure(response.message));
-	} else {
-		//dispatch(logInSuccess(response, authData));
-		console.log('sendContactData - OK (no failure)')
-	}
+	(response.error) ? 
+		dispatch(sendContactMessageFailure(response.message)) 
+		: dispatch(sendContactMessageSuccess());
 }

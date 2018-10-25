@@ -281,14 +281,15 @@ export function verifyCode(email, code){
 }
 
 export function sendContactData(data){
-
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
-	console.log('data', data);
 
 	return fetch(apiUrls.SEND_CONTACT_DATA, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
-		console.log('[sendContactData] response', response);
-		return response.json().then(json => {
+		return response.status !== 200 ? {
+			error: true,
+			message: json.message
+		} : {};
+		/*return response.json().then(json => {
 			console.log('[sendContactData] json', json);
 			return json.status === 400 ? {
 				error: true,
@@ -297,6 +298,6 @@ export function sendContactData(data){
 		})
 		.catch(err => {
 			throw new Error(err.message);
-		})
+		})*/
 	})
 }

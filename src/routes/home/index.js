@@ -147,7 +147,7 @@ class HomePage extends Component {
 	render() {
 		if (this.state.doc) {
 			const pageData = this.state.doc.data;
-			const {userData : user  = {}} = this.props;
+			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
 			return (
 				<div id="homepage">
 
@@ -183,7 +183,7 @@ class HomePage extends Component {
 						<BlogArticles articles = {blogArtilces}/>
 					</div>*/}
 					<Element name="contactUsElement"></Element>					
-					<ContactForm ref={ref=> this.contactUs = ref} sendData={this.props.sendContactData}/>
+					<ContactForm ref={ref=> this.contactUs = ref} sendData={this.props.sendContactData} info={sendContactMessageInfo}/>
 
 					<ScrollToTop showUnder={150} style={{zIndex: 1002}}>
 						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
@@ -202,12 +202,13 @@ class HomePage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {console.log('state',...state); return{
+const mapStateToProps = (state) => ({
 	hiddenSearchBox: state.hiddenSearchBox,
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
-}};
+	sendContactMessageInfo: state.sendContactMessage
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	hideSearchBox,
