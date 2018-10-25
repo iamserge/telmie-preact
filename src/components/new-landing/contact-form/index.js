@@ -48,15 +48,15 @@ export default class ContactForm extends Component {
 
     render(){
         const {name,email,company,subject,body, load} = this.state;
+        const {info = {}} = this.props;
+        const {errorMsg = '', isSent = false} = info;
         
         return (
             <div class={style.contuctContainer}>
                 <div class={style.header}>Contact us</div>
                 <div class={style.subHeader}>Any questions? Drop us a line.</div>
                 
-                    {load ? 
-                        <Spinner/> 
-                        : (
+                    {!load || errorMsg ? (
                         <div class={style.contactForm}>
                             <div className="input-container">
                                 <input type="text" class='new-input' value={name} name="name" placeholder='Your name' onChange={this.onChangeHandler}/>
@@ -78,11 +78,14 @@ export default class ContactForm extends Component {
                                 {this.validator.message('body', body, 'required', 'validation-tooltip', {required: 'Please enter message'})}
                             </div>
 
-                            <button class='red-btn' onClick={this.sendHandler}>
-                                Submit
-                            </button>
+                            <div class={style.formControl}>
+                                {errorMsg && <div class={style.errorMsg}>{errorMsg}</div>}
+                                <button class='red-btn' onClick={this.sendHandler}>
+                                    Submit
+                                </button>
+                            </div>
                         </div>
-                        ) }
+                        ) : <Spinner/> }
             </div>
         )
     }

@@ -287,17 +287,7 @@ export function sendContactData(data){
 	return fetch(apiUrls.SEND_CONTACT_DATA, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
 		return response.status !== 200 ? {
 			error: true,
-			message: json.message
+			message: "Fields can't be empty or Invalid email",
 		} : {};
-		/*return response.json().then(json => {
-			console.log('[sendContactData] json', json);
-			return json.status === 400 ? {
-				error: true,
-				message: json.message
-			} : json;
-		})
-		.catch(err => {
-			throw new Error(err.message);
-		})*/
 	})
 }

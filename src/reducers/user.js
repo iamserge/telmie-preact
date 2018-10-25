@@ -283,6 +283,7 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 			return {
 				...state,
 				isSent: false,
+				errorMsg: '',
 			}
 		case actionTypes.SEND_CONTACT_MESS_FAILURE:
 			return {
@@ -293,6 +294,7 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 			return {
 				...state,
 				isSent: true,
+				errorMsg: '',
 			}
 
 		default:

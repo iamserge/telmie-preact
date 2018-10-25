@@ -282,7 +282,7 @@ export const fetchSendCode = () => (dispatch) => {
 };
 
 export const sendContactData = (data) => async (dispatch) => {
-	sendContactMessage();
+	dispatch(sendContactMessage());
 
 	let response = await user.sendContactData(data);
 
