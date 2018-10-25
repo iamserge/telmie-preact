@@ -36,8 +36,7 @@ class AllTransactions extends Component {
 			})
 			this.props.getTransactions(this.props.userData.userAuth);
 		}
-
-}
+	}
 
 	nextPage(){
 		this.setState({
@@ -58,8 +57,12 @@ class AllTransactions extends Component {
 		this.changeTransactionsPage(page);
 	}
 	changeTransactionsPage(page){
+		const { results = [] } = this.props.transactions;
 		this.setState({
-			cutTransactions: this.props.transactions.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			cutTransactions: {
+				...this.props.transactions,
+				results: results.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS),
+			}
 		})
 	}
 
@@ -75,12 +78,15 @@ class AllTransactions extends Component {
 			})
 		}
 
-		if (nextProps.transactions.length  > 0) {
+		const { results = [] } = nextProps.transactions;
+
+		if (results.length  > 0) {
 			this.setState({
-				loading: false
-			})
-			this.setState({
-				cutTransactions: nextProps.transactions.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
+				loading: false,
+				cutTransactions: {
+					...nextProps.transactions,
+					results: results.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS),
+				}
 			})
 		}
 
@@ -105,9 +111,9 @@ class AllTransactions extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	userData: state.loggedInUser,
-	transactions: state.loggedInUserTransactions
+const mapStateToProps = ({loggedInUser, loggedInUserTransactions = {}}) => ({
+	userData: loggedInUser,
+	transactions: loggedInUserTransactions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

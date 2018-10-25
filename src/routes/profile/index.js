@@ -11,13 +11,6 @@ import Details from '../../components/profile/details';
 import ActivityList from '../../components/profile/activity-list';
 import Transactions from '../../components/profile/transactions';
 
-
-const getActivity = (proCalls, personalCalls) => {
-
-
-}
-
-
 class Profile extends Component {
 
 	constructor(props) {
@@ -25,14 +18,22 @@ class Profile extends Component {
 
 	}
 	componentDidMount(){
-
+		const { userAuth, pro } = this.props.userData;
+		userAuth && (
+			pro != null ? 
+				this.props.getProCalls(userAuth) :  this.props.getPersonalCalls(userAuth),
+			this.props.getTransactions(userAuth, 10)
+			//this.props.getShortlist(userAuth)
+		)
+		
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
-			this.props.getProCalls(nextProps.userData.userAuth);
-			this.props.getPersonalCalls(nextProps.userData.userAuth);
-			this.props.getTransactions(nextProps.userData.userAuth);
-			this.props.getShortlist(nextProps.userData.userAuth)
+		const { userAuth, pro } = nextProps.userData;
+		if (userAuth != this.props.userData.userAuth) {
+			pro != null ? 
+				this.props.getProCalls(userAuth) :  this.props.getPersonalCalls(userAuth);
+			this.props.getTransactions(userAuth, 10);
+			//this.props.getShortlist(userAuth);
 		}
 
 	}

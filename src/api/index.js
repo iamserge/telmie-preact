@@ -9,7 +9,7 @@ export const apiUrls = {
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'users/activity?isConsultant=true&size=9999&page=',
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isConsultant=false&size=9999&page=',
-  GET_TRANSACTIONS: apiRoot + 'cards/history',
+  GET_TRANSACTIONS: apiRoot + 'wallet',
   VERIFY_USER: apiRoot + 'users/signup',
   ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist',
   RESET_PASSWORD: apiRoot  + 'security/reset',

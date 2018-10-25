@@ -7,7 +7,7 @@ import Pagination from '../pagination'
 
 export default class AllActivity extends Component {
 
-	render({activity}) {
+	render({activity, loading}) {
 		return (
 			<div className={style.activityList}>
 				<div className={style.inner}>
@@ -21,11 +21,11 @@ export default class AllActivity extends Component {
 					{ activity.length > 0 && activity.map(activity => (
 						<Activity key={ activity.id } activity={ activity } client = {this.props.client}/>
 					))}
-					{ activity.length == 0 && !this.props.loading && (
+					{ activity.length == 0 && !loading && (
 						<div className={style.empty}>No recent activity</div>
 					)}
 
-					{ activity.length == 0 && this.props.loading && (
+					{ activity.length == 0 && loading && (
 						<div className={style.spinnerContainer}>
 							<Spinner />
 						</div>

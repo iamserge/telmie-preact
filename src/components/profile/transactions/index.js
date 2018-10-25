@@ -7,9 +7,10 @@ import { routes } from '../../app'
 
 export default class Transactions extends Component {
 
-	render({transactions}) {
+	render({transactions, loading}) {
+		let { results = [] } = transactions;
 		if (typeof this.props.limit != 'undefined') {
-			transactions = transactions.slice(0, this.props.limit);
+			results = results.slice(0, this.props.limit);
 		}
 
 		return (
@@ -31,13 +32,13 @@ export default class Transactions extends Component {
 						<div>Money In</div>
 						<div>Money Out</div>
 					</div>
-					{ this.props.loading && (
+					{ loading && (
 						<div className={style.spinnerContainer}><Spinner /></div>
 					)}
-					{ transactions.length > 0 && !this.props.loading  && transactions.map(transaction => (
+					{ results.length > 0 && !loading  && results.map(transaction => (
 						<Transaction key={ transaction.id } transaction={ transaction }/>
 					))}
-					{ transactions.length == 0 && !this.props.loading && (
+					{ results.length == 0 && !loading && (
 						<div className={style.empty}>No recent transactions</div>
 					)}
 

@@ -15,33 +15,34 @@ export default class Activity extends Component {
 		route('/pro/' + id);
 	}
 	render({activity}) {
-		const contact = activity.contact;
+		const {id, avatar, name, lastName, pro} = activity;
+		console.log('activity: ',activity);
 		return (
 			<div className={style.activity}>
 
-				<div className={style.contact}  onClick={()=>{this.goToPro(contact.id)}} >
+				<div className={style.contact}  onClick={()=>{this.goToPro(id)}} >
 					<div className={style.avatar}>
-						{(contact.avatar != null) ? (
-							<img src={apiRoot + 'image/' + contact.avatar.id} alt={contact.name + ' ' + contact.lastName} />
+						{(avatar != null) ? (
+							<img src={apiRoot + 'image/' + avatar.id} alt={name + ' ' + lastName} />
 						) : (
-							<img src="/assets/nouserimage.jpg" alt={contact.name + ' ' + contact.lastName} />
+							<img src="/assets/nouserimage.jpg" alt={name + ' ' + lastName} />
 						)}
 					</div>
 					<div className={style.info}>
-						<h3>{contact.name + ' ' + contact.lastName}</h3>
+						<h3>{name + ' ' + lastName}</h3>
 							{this.props.client && (
 								<div>
 									CLIENT
 								</div>
 							)}
-							{!this.props.client && contact.pro != null && (
+							{!this.props.client && pro != null && (
 								<div>
-									{contact.pro.profession}
+									{pro.profession}
 								</div>
 							)}
 					</div>
 				</div>
-				<div className={style.date}> { convertDate(activity.date) }</div>
+				<div className={style.date}> { convertDate(activity.activityDate) }</div>
 				<div className={style.duration}>
 					{activity.duration != null ? (
 						<span>
@@ -62,7 +63,7 @@ export default class Activity extends Component {
 						</span>
 					)}
 				</div>
-				<div>{activity.status}</div>
+				<div>{activity.activity}</div>
 				{ typeof activity.related != 'undefined' && (
 					<div className={this.state.expanded ? style.relatedActivities + ' ' + style.expanded : style.relatedActivities }>
 						<span className={style.relatedTitle} onClick={()=>{this.setState({expanded: !this.state.expanded})}}>
