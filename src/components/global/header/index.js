@@ -93,12 +93,12 @@ class Header extends Component {
           
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
-              isLogin ? ([
+              /*isLogin ? ([
                 (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
                 <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
-              ]) : ([
+              ]) : */([
                 <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
