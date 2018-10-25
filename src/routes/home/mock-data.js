@@ -29,7 +29,7 @@ export const photoCards = {
             id: 4,
             isSmall: true,
             isStat: true,
-            minutes: 325041,
+            minutes: 32541,
         }],
         [{
             id: 5,

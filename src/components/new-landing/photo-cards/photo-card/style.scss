@@ -67,8 +67,23 @@
     padding: 30px 20px 30px 20px;
     margin-bottom: 20px;
 
+    .minWrapper{
+        position: relative;
+        width: 100%;
+        height: 48px;
+        overflow:hidden;
+    }
     .minutes{
+        position: absolute;
+        left: 0; 
+        right: 0; 
+        margin: 0 auto; 
         font-size: 32px;
+        width:auto;
+        white-space: nowrap;
+        -webkit-animation: countNumber 1s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-timing-function: steps(10);
     }
     .signature{
         font-size: 12px;
@@ -94,5 +109,14 @@
         & br {
             display: none;
         }
+    }
+}
+
+@-webkit-keyframes countNumber {
+    0% {
+        margin-top: 0px
+    }
+    100% {
+        margin-top:-480px
     }
 }
