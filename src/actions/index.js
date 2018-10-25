@@ -27,6 +27,7 @@ export const actionTypes = {
 	VERIFY_CODE_FAILURE: 'VERIFY_CODE_FAILURE',
 	VERIFY_CODE_SUCCESS: 'VERIFY_CODE_SUCCESS',
 	SET_CATEGORIES: 'SET_CATEGORIES',
+	SEND_CONTACT_MESS_FAILURE: 'SEND_CONTACT_MESS_FAILURE',
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

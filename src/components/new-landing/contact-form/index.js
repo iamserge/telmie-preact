@@ -12,14 +12,15 @@ export default class ContactForm extends Component {
             email: '',
             company: '',
             subject: '',
-            message: '',
+            body: '',
         }
         this.validator = new SimpleReactValidator();
     }
 
     sendHandler = () => {
         this.validator.allValid() ? (
-            console.log("OK", this.state)
+            console.log("OK", this.state),
+            this.props.sendData(this.state)
         ) : (
             this.validator.showMessages(),
 			this.forceUpdate()
@@ -32,7 +33,7 @@ export default class ContactForm extends Component {
     }
 
     render(){
-        const {name,email,company,subject,message} = this.state;
+        const {name,email,company,subject,body} = this.state;
         return (
             <div class={style.contuctContainer}>
                 <div class={style.header}>Contact us</div>
@@ -54,8 +55,8 @@ export default class ContactForm extends Component {
                         <input class='new-input' value={subject} name="subject" placeholder='Subject' onChange={this.onChangeHandler} />
                     </div>
                     <div className="input-container">
-                        <input class='new-input' value={message} name="message" placeholder='Your message' onChange={this.onChangeHandler} />
-                        {this.validator.message('message', message, 'required', 'validation-tooltip', {required: 'Please enter message'})}
+                        <input class='new-input' value={body} name="body" placeholder='Your message' onChange={this.onChangeHandler} />
+                        {this.validator.message('body', body, 'required', 'validation-tooltip', {required: 'Please enter message'})}
                     </div>
 
                     <button class='red-btn' onClick={this.sendHandler}>
