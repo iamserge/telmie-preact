@@ -275,3 +275,29 @@ export const dataFromServer = (state = {}, action) => {
 			return state;
 	}
 }
+
+export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action) => {
+	switch (action.type) {
+
+		case actionTypes.SEND_CONTACT_MESS:
+			return {
+				...state,
+				isSent: false,
+				errorMsg: '',
+			}
+		case actionTypes.SEND_CONTACT_MESS_FAILURE:
+			return {
+				...state,
+				errorMsg: action.message != null ? action.message : ""
+			}
+		case actionTypes.SEND_CONTACT_MESS_SUCCESS:
+			return {
+				...state,
+				isSent: true,
+				errorMsg: '',
+			}
+
+		default:
+			return state;
+	}
+};

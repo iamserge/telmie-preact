@@ -118,7 +118,18 @@ const transactionsReceived = (response) => ({
 const setCategories = (response) => ({
 	type: actionTypes.SET_CATEGORIES,
 	categories: response
-})
+});
+
+const sendContactMessageFailure = (message) => ({
+	type: actionTypes.SEND_CONTACT_MESS_FAILURE,
+	message
+});
+const sendContactMessageSuccess = () => ({
+	type: actionTypes.SEND_CONTACT_MESS_SUCCESS
+});
+const sendContactMessage = () => ({
+	type: actionTypes.SEND_CONTACT_MESS
+});
 
 export const resetPassword = (email, password, code) => async (dispatch) => {
 	const response = await user.resetPassword({email, password, code});
@@ -269,3 +280,13 @@ export const verifyCode = (email, code) => async (dispatch) => {
 export const fetchSendCode = () => (dispatch) => {
 	dispatch(fetchingSendCode());
 };
+
+export const sendContactData = (data) => async (dispatch) => {
+	dispatch(sendContactMessage());
+
+	let response = await user.sendContactData(data);
+
+	(response.error) ? 
+		dispatch(sendContactMessageFailure(response.message)) 
+		: dispatch(sendContactMessageSuccess());
+}

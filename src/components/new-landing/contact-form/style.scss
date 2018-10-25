@@ -23,10 +23,19 @@
 		min-width: 310px;
 		margin: 0 auto;
 
-		button{
-			margin-top: 65px;
+		.formControl{
+			margin-top: 30px;
+
+			button{
+				margin-top: 35px;
+			}
+			.errorMsg{
+				text-align: center;
+				color: $red;
+			}
 		}
-    }
+		
+	}
     
     @media (max-width: 880px) {
         padding: 60px 32px 130px 32px;

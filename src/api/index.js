@@ -17,4 +17,5 @@ export const apiUrls = {
   SEND_CODE: apiRoot + 'code',
   REGISTER_PRO: apiRoot + 'users/pro',
   GET_CATEGORIES: apiRoot + 'categories',
+  SEND_CONTACT_DATA: apiRoot + 'help/contact',
 }

@@ -196,7 +196,6 @@ export function getCategories(authData) {
 	});
 }
 
-
 export function resetPassword(data){
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
@@ -242,7 +241,6 @@ export function uploadPhoto(authData, photo){
 	});
 }
 
-
 export function sendCode(email, reason){
 	let data = {
 		email,
@@ -282,3 +280,14 @@ export function verifyCode(email, code){
 	});
 }
 
+export function sendContactData(data){
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+
+	return fetch(apiUrls.SEND_CONTACT_DATA, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+		return response.status !== 200 ? {
+			error: true,
+			message: "Fields can't be empty or Invalid email",
+		} : {};
+	})
+}
