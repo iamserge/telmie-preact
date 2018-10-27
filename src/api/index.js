@@ -1,6 +1,7 @@
 import { api } from "prismic-javascript";
 
-export const apiRoot = 'http://sr461.2dayhost.com/api/';
+export const apiRoot = 'http://sr461.2dayhost.com/api/'; // for dev server
+//export const apiRoot = 'http://sr1075.2dayhost.com/api/'; // for prod server
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
