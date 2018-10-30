@@ -69,7 +69,7 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-		ReactGA.initialize('UA-000000-01');
+		ReactGA.initialize('UA-127710081-1');
 		this.buildContext().then((prismicCtx) => {
 			this.setState({ prismicCtx });
 		}).catch((e) => {
