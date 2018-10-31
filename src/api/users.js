@@ -290,4 +290,8 @@ export function sendContactData(data){
 			message: "Fields can't be empty or Invalid email",
 		} : {};
 	})
+	.catch(err => ({
+			error: true,
+			message: `Error! ${err.message && err.message}`,
+	}))
 }

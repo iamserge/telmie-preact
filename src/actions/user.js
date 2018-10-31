@@ -290,3 +290,5 @@ export const sendContactData = (data) => async (dispatch) => {
 		dispatch(sendContactMessageFailure(response.message)) 
 		: dispatch(sendContactMessageSuccess());
 }
+
+export const clearContactData = () => (dispatch) => dispatch(sendContactMessage());

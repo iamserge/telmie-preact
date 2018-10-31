@@ -22,7 +22,7 @@ import BlogArticles from '../../components/new-landing/blog-articles'
 import ContactForm from '../../components/new-landing/contact-form'
 
 import { route } from 'preact-router';
-import { verify, sendContactData } from '../../actions/user';
+import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
@@ -183,7 +183,10 @@ class HomePage extends Component {
 						<BlogArticles articles = {blogArtilces}/>
 					</div>*/}
 					<Element name="contactUsElement"></Element>					
-					<ContactForm ref={ref=> this.contactUs = ref} sendData={this.props.sendContactData} info={sendContactMessageInfo}/>
+					<ContactForm ref={ref=> this.contactUs = ref} 
+						sendData={this.props.sendContactData} 
+						clearContactData={this.props.clearContactData}
+						info={sendContactMessageInfo}/>
 
 					<ScrollToTop showUnder={150} style={{zIndex: 1002}}>
 						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
@@ -213,7 +216,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 	hideSearchBox,
 	verify,
-	sendContactData
+	sendContactData,
+	clearContactData,
 }, dispatch);
 
 export default connect(

@@ -19,6 +19,7 @@ import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro'
+import ContactRoute from '../routes/contact-us'
 import ErrorRoute from '../routes/errorRoute'
 import FAQ from '../routes/faq';
 import PrismicConfig from '../prismic/prismic-configuration';
@@ -127,7 +128,7 @@ class App extends Component {
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
 			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>,
-			<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>,
+			<ContactRoute path = { routes.CONTACT_US }/>,
 
 			<LogIn path = { routes.LOG_IN } />,
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
