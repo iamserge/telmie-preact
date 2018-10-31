@@ -45,6 +45,9 @@ export default class ContactForm extends Component {
             load: false,
         });
     }
+    componentWillUnmount(){
+        this.props.clearContactData && this.props.clearContactData();
+    }
 
     render(){
         const {name,email,company,subject,body, load} = this.state;
@@ -80,6 +83,7 @@ export default class ContactForm extends Component {
 
                             <div class={style.formControl}>
                                 {errorMsg && <div class={style.errorMsg}>{errorMsg}</div>}
+                                {isSent && <div class={style.errorMsg}>Your message has been sent. Thank you!</div>}
                                 <button class='red-btn' onClick={this.sendHandler}>
                                     Submit
                                 </button>
