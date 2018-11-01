@@ -18,10 +18,11 @@ import AllTransactions from '../routes/transactions';
 import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
-import RegisterPro from '../routes/register-pro'
-import ContactRoute from '../routes/contact-us'
-import ErrorRoute from '../routes/errorRoute'
+import RegisterPro from '../routes/register-pro';
+import ContactRoute from '../routes/contact-us';
+import ErrorRoute from '../routes/errorRoute';
 import FAQ from '../routes/faq';
+import BlogPage from '../routes/blog';
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -56,6 +57,7 @@ export const routes = {
 	FORGOT_PASSWORD: '/forgot-password',
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
+	BLOG: '/blog'
 };
 
 
@@ -124,6 +126,7 @@ class App extends Component {
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
+			<BlogPage path={routes.BLOG} prismicCtx = { this.state.prismicCtx } uid = { uids.BLOG } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
