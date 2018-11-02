@@ -72,6 +72,51 @@ export const blogImages = [{
   id: 2
 }];
 
+export const blogPosts = [
+    {
+    id: 1,
+    date: '12.10.2018',
+    title: 'Immigration law as a service',
+    img: '/assets/blog/article-01.png',
+    link: '/'
+  },
+  {
+    id: 2,
+    date: '16.10.2018',
+    title: 'Immigration law as a service',
+    img: '/assets/blog/article-02.png',
+    link: '/'
+  },
+  {
+    id: 3,
+    date: '20.10.2018',
+    title: 'Freelancers eat large consulting firms for breakfast',
+    img: '/assets/blog/article-02.png',
+    link: '/'
+  },
+  {
+    id: 4,
+    date: '12.10.2018',
+    title: 'Immigration law as a service',
+    img: '/assets/blog/article-01.png',
+    link: '/'
+  },
+  {
+    id: 5,
+    date: '16.10.2018',
+    title: 'Immigration law as a service',
+    img: '/assets/blog/article-02.png',
+    link: '/'
+  },
+  {
+    id: 6,
+    date: '20.10.2018',
+    title: 'Freelancers eat large consulting firms for breakfast',
+    img: '/assets/blog/article-02.png',
+    link: '/'
+  }
+];
+
 
 export const blogArtilces = [{
     title: 'Immigration law as a service',

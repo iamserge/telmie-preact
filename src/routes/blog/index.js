@@ -9,24 +9,21 @@ import Spinner from '../../components/global/spinner';
 import ScrollToTop from 'react-scroll-up';
 import FontAwesome from 'react-fontawesome';
 import {route} from 'preact-router';
-
-//import BlogImage from '../../components/blog/blog-image';
-//import BlogArticles from '../../components/new-landing/blog-articles';
+import BlogPosts from '../../components/blog/blog-posts';
 
 import {verify, sendContactData, clearContactData} from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import {blogImages, blogArtilces} from './mock-data';
-import {apiRoot} from "../../api";
+import {blogPosts} from './mock-data';
 
 class BlogPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       doc: null,
-      notFound: false,
-      verifyFailure: false
+     // notFound: false,
+    //  verifyFailure: false
     }
   }
 
@@ -57,8 +54,7 @@ class BlogPage extends Component {
       this.scrollInterval = null;
     }*/
 
-  /*
-    fetchPage(props) {
+/*    fetchPage(props) {
       if (props.prismicCtx) {
         // We are using the function to get a document by its uid
         return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
@@ -76,8 +72,7 @@ class BlogPage extends Component {
         });*!/
       }
       return null;
-    }
-  */
+    }*/
 
   render() {
     //	if (this.state.doc) {
@@ -176,71 +171,8 @@ class BlogPage extends Component {
           </div>
         </div>
 
-        <div class={style.blogPosts}>
 
-          <div class={`${style.blogAuthor} uk-container`}>
-            <h3>Other posts</h3>
-          </div>
-
-
-          <div class={style.blogPostsSlider}>
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-            <div class={style.blogPost}>
-              <img src="/assets/blog/article-02.png" alt="" />
-              <div class={style.blogPostDescription}>
-                <p class={style.date}>12.10.2018</p>
-                Immigration law as a service
-                <button class="red-btn">Full story</button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
+        <BlogPosts blogPosts={blogPosts}/>
 
         <div class={style.blogContainer}>
           <div class={`${style.blogComments} uk-container`}>
@@ -414,8 +346,8 @@ class BlogPage extends Component {
       </div>
 
     );
-    //}
-    /*		return (
+   // }
+/*    		return (
           <div  className="uk-container uk-container-small" id="staticPage" >
             <Spinner />
           </div>
