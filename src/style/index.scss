@@ -138,12 +138,13 @@ a {
 %custom-btn {
 	font-size: 16px;
 	height: 50px;
-    border: none;
-    border-radius: 30px;
+	border: none;
+	border-radius: 30px;
 	padding: 0 40px;
 	cursor: pointer;
+	outline: none;
 	font-family: 'Krub', sans-serif;
-    font-weight: 600;
+	font-weight: 600;
 }
 
 button.red-btn {

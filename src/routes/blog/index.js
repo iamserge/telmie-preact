@@ -18,6 +18,7 @@ import style from './style.scss';
 
 // mock-data
 import {blogImages, blogArtilces} from './mock-data';
+import {apiRoot} from "../../api";
 
 class BlogPage extends Component {
   constructor(props) {
@@ -112,7 +113,6 @@ class BlogPage extends Component {
             pulvinar neque lacinia. Duis a vulputate velit. In eu sodales augue. Etiam nec pellentesque nisi. Proin sed
             libero vitae est dapibus dictum sed nec libero. Nulla facilisi. Ut sed vehicula ex, quis lacinia metus. <b>Sed
               ullamcorper in velit ac mattis.</b></p>
-
           <p>Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
             sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
             Suspendisse congue diam nec ipsum sagittis rutrum. Sed in eros dolor. Mauris commodo rhoncus varius.
@@ -156,20 +156,256 @@ class BlogPage extends Component {
 
         <div class={`${style.blogAuthor} uk-container`}>
           <h3>About the Author</h3>
-          <div class={style.blogAuthorAbout}>
-            <p class={style.blogAuthorName}>JOHANNA DOE</p>
-            Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
-            sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
-            Suspendisse congue diam nec ipsum sagittis rutrum.
+          <div class={style.blogAuthorInner}>
+            <div class={style.blogAuthorAvatar}>
+              <img src="/assets/experts/expert2.png" alt="" />
+            </div>
+  {/*
+            {(contact.avatar != null) ? (
+            <img src={apiRoot + 'image/' + contact.avatar.id} alt={contact.name + ' ' + contact.lastName} />
+          ) : (
+            <img src="/assets/nouserimage.jpg" alt={contact.name + ' ' + contact.lastName} />
+          )}
+  */}
+            <div class={style.blogAuthorAbout}>
+              <p class={style.blogAuthorInfo}>JOHANNA DOE</p>
+              Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+              sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+              Suspendisse congue diam nec ipsum sagittis rutrum.
+            </div>
           </div>
+        </div>
+
+        <div class={style.blogPosts}>
+
+          <div class={`${style.blogAuthor} uk-container`}>
+            <h3>Other posts</h3>
+          </div>
+
+
+          <div class={style.blogPostsSlider}>
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+            <div class={style.blogPost}>
+              <img src="/assets/blog/article-02.png" alt="" />
+              <div class={style.blogPostDescription}>
+                <p class={style.date}>12.10.2018</p>
+                Immigration law as a service
+                <button class="red-btn">Full story</button>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         <div class={style.blogContainer}>
           <div class={`${style.blogComments} uk-container`}>
             <h3>25 Comments</h3>
+
+            <div class={style.blogComment}>
+              <div class={style.blogAuthorInner}>
+                <div class={style.blogAuthorAvatar}>
+                  <img src="/assets/experts/expert2.png" alt="" />
+                </div>
+                <div class={style.blogAuthorAbout}>
+                  <div class={style.blogAuthorInfo}>
+                    <div class={style.blogAuthorName}>
+                      <span class={style.name}>JOHANNA DOE</span>
+                      <span class={style.date}>21.05.2018</span>
+                    </div>
+                    <button class={style.blogCommentReply}>Reply</button>
+                  </div>
+                  Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                  sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                  Suspendisse congue diam nec ipsum sagittis rutrum.
+                </div>
+              </div>
+
+              <div class={style.blogComment}>
+                <div class={style.blogAuthorInner}>
+                  <div class={style.blogAuthorAvatar}>
+                    <img src="/assets/experts/expert1.png" alt="" />
+                  </div>
+                  <div class={style.blogAuthorAbout}>
+                    <div class={style.blogAuthorInfo}>
+                      <div class={style.blogAuthorName}>
+                        <span class={style.name}>JOHANNA DOE</span>
+                        <span class={style.date}>21.05.2018</span>
+                      </div>
+                      <button class={style.blogCommentReply}>Reply</button>
+                    </div>
+                    Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                    sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                    Suspendisse congue diam nec ipsum sagittis rutrum.
+                  </div>
+                </div>
+              </div>
+{/*
+              <div class={style.blogComment}>
+                <div class={style.blogAuthorInner}>
+                  <div class={style.blogAuthorAvatar}>
+                    <img src="/assets/experts/expert2.png" alt="" />
+                  </div>
+                  <div class={style.blogAuthorAbout}>
+                    <div class={style.blogAuthorInfo}>
+                      <div class={style.blogAuthorName}>
+                        <span class={style.name}>JOHANNA DOE</span>
+                        <span class={style.date}>21.05.2018</span>
+                      </div>
+                      <button class={style.blogCommentReply}>Reply</button>
+                    </div>
+                    Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                    sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                    Suspendisse congue diam nec ipsum sagittis rutrum.
+                  </div>
+                </div>
+
+                <div class={style.blogComment}>
+                  <div class={style.blogAuthorInner}>
+                    <div class={style.blogAuthorAvatar}>
+                      <img src="/assets/nouserimage.jpg" alt="" />
+                    </div>
+                    <div class={style.blogAuthorAbout}>
+                      <div class={style.blogAuthorInfo}>
+                        <div class={style.blogAuthorName}>
+                          <span class={style.name}>JOHANNA DOE</span>
+                          <span class={style.date}>21.05.2018</span>
+                        </div>
+                        <button class={style.blogCommentReply}>Reply</button>
+                      </div>
+                      Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                      sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                      Suspendisse congue diam nec ipsum sagittis rutrum.
+                    </div>
+                  </div>
+
+                  <div class={style.blogComment}>
+                    <div class={style.blogAuthorInner}>
+                      <div class={style.blogAuthorAvatar}>
+                        <img src="/assets/nouserimage.jpg" alt="" />
+                      </div>
+                      <div class={style.blogAuthorAbout}>
+                        <div class={style.blogAuthorInfo}>
+                          <div class={style.blogAuthorName}>
+                            <span class={style.name}>JOHANNA DOE</span>
+                            <span class={style.date}>21.05.2018</span>
+                          </div>
+                          <button class={style.blogCommentReply}>Reply</button>
+                        </div>
+                        Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                        sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                        Suspendisse congue diam nec ipsum sagittis rutrum.
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+*/}
+            </div>
+
+            <div class={style.blogComment}>
+              <div class={style.blogAuthorInner}>
+                <div class={style.blogAuthorAvatar}>
+                  <img src="/assets/nouserimage.jpg" alt="" />
+                </div>
+                <div class={style.blogAuthorAbout}>
+                  <div class={style.blogAuthorInfo}>
+                    <div class={style.blogAuthorName}>
+                      <span class={style.name}>JOHANNA DOE</span>
+                      <span class={style.date}>21.05.2018</span>
+                    </div>
+                    <button class={style.blogCommentReply}>Reply</button>
+                  </div>
+                  Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                  sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                  Suspendisse congue diam nec ipsum sagittis rutrum.
+                </div>
+              </div>
+            </div>
+
+            <div class={style.blogComment}>
+              <div class={style.blogAuthorInner}>
+                <div class={style.blogAuthorAvatar}>
+                  <img src="/assets/experts/expert2.png" alt="" />
+                </div>
+                <div class={style.blogAuthorAbout}>
+                  <div class={style.blogAuthorInfo}>
+                    <div class={style.blogAuthorName}>
+                      <span class={style.name}>JOHANNA DOE</span>
+                      <span class={style.date}>21.05.2018</span>
+                    </div>
+                    <button class={style.blogCommentReply}>Reply</button>
+                  </div>
+                  Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras
+                  sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
+                  Suspendisse congue diam nec ipsum sagittis rutrum.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class={style.blogCommentAdd}>
+            <h3>Add Comment</h3>
+            <form action="">
+              <div class={style.blogAuthorInner}>
+                <div class={style.blogAuthorAvatar}>
+                  <img src="/assets/experts/expert2.png" alt="" />
+                </div>
+                <div class={style.blogCommentType}>
+                  <textarea rows="12"></textarea>
+                </div>
+              </div>
+              <div class={style.blogCommentAddButton}>
+                <button class="red-btn">Post comment</button>
+              </div>
+            </form>
           </div>
         </div>
-
 
         <ScrollToTop showUnder={150} style={{zIndex: 1002}}>
           <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
