@@ -58,7 +58,7 @@ class AutoPrintText extends Component {
         return (
             <div class={style.wordContainer}>
                 <span class={style.word}>
-                    {currentWord}
+                    { this.props.mainSection.title.replace('{words}', currentWord) }
                 </span>
             </div>
         )
