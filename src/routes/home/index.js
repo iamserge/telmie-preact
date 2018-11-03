@@ -26,7 +26,10 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data'
+import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data';
+
+import { processHomepagePosts, processPostThumbnailData } from '../../utils/prismic-middleware';
+
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class HomePage extends Component {
@@ -35,9 +38,15 @@ class HomePage extends Component {
 		this.state =  {
 			doc: null,
 			notFound: false,
-			verifyFailure: false
+			verifyFailure: false,
+			fetchingPage: true,
+			fetchingFeaturedPost: true,
+			fetchingRecentPosts: true
 	  }
-	  this.contactUs = null;
+		this.contactUs = null;
+		this.fetchPage = this.fetchPage.bind(this);
+		this.fetchFeatuedPost = this.fetchFeatuedPost.bind(this);
+		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	scrollToContact = () => {
 		const {hash} = window.location;
@@ -97,7 +106,9 @@ class HomePage extends Component {
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
-		this.fetchPage(this.props);
+		this.fetchPage();
+		this.fetchRecentPosts();
+		this.fetchFeatuedPost();
 		if (typeof this.props.token != 'undefined') {
 			this.props.verify(this.props.token)
 		}
@@ -119,33 +130,51 @@ class HomePage extends Component {
 		}
 
 	}
+	fetchFeatuedPost(){
+		let that = this;
+		that.props.prismicCtx.api.query([
+			Prismic.Predicates.at('document.type', 'blog_post'),
+			Prismic.Predicates.at('document.tags', ['featured'])
+		],
+		{ orderings : '[document.first_publication_date desc]' }
+		).then(function(response) {
+			that.setState({
+					fetchingFeaturedPost: false,
+					featuredPost: processPostThumbnailData(response.results[0])
+				})
+		});
+	}
+	fetchRecentPosts(props){
+		let that = this;
+		that.props.prismicCtx.api.query([
+			Prismic.Predicates.at('document.type', 'blog_post'),
+			Prismic.Predicates.not('document.tags', ['featured'])
+		],
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]' }
+		).then(function(response) {
+			that.setState({
+					fetchingRecentPosts: false,
+					recentPosts: processHomepagePosts(response.results)
+				})
+		});
+	}
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);
 		this.scrollInterval = null;
 	}
 
-	fetchPage(props) {
-    if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-					console.log('doc',doc);
-          // We put the retrieved content in the state as a doc variable
-          this.setState({ doc });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-        }
-      });
-			/*
-			return props.prismicCtx.api.query('').then(function(response) {
-			   console.log(response);
-			});*/
-    }
-    return null;
+	fetchPage() {
+		let that = this;
+		this.props.prismicCtx.api.getByID(that.props.uid).then((doc, err) => {
+			if (doc) {
+				that.setState({fetchingPage: false, doc });
+			} else {
+				that.setState({ fetchingPage: false, notFound: !doc });
+			}
+		});
   }
 	render() {
-		if (this.state.doc) {
+		if (!this.state.fetchingPage) {
 			const pageData = this.state.doc.data;
 			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
 			return (
@@ -178,10 +207,14 @@ class HomePage extends Component {
 						<ProDetails appLink={appLink} />
 					</div>
 
-					{/*<div class={`${style.blogContainer} uk-container`}>
+					<div class={`${style.blogContainer} uk-container`}>
 						<div class={style.header}>Blog</div>
-						<BlogArticles articles = {blogArtilces}/>
-					</div>*/}
+						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
+							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
+						)}
+						
+						
+					</div>
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} 
 						sendData={this.props.sendContactData} 
