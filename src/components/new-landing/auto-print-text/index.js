@@ -8,6 +8,7 @@ class AutoPrintText extends Component {
         this.state = {
             wordIndex: 0,
             currentWord: '',
+            words: this.props.mainSection.typedWords.split(',')
         }
     }
 
@@ -25,7 +26,7 @@ class AutoPrintText extends Component {
     }
 
     autoPrint(speed){        
-        const { words = [] } = this.props;
+        const words = this.state.words;
         const { wordIndex } = this.state;
         
         const word = words[wordIndex];
@@ -41,7 +42,7 @@ class AutoPrintText extends Component {
       }
 
     changeWord = () => {
-        const { words = [] } = this.props;
+        const words = this.state.words;
         const len = words.length;
         len && (
             this.setState(prev => ({
@@ -52,13 +53,13 @@ class AutoPrintText extends Component {
     }
 
     render(){
-        const { words =[] } = this.props;
+        const words = this.state.words;
         const { wordIndex, currentWord } = this.state;
 
         return (
             <div class={style.wordContainer}>
                 <span class={style.word}>
-                    { this.props.mainSection.title.replace('{words}', currentWord) }
+                    { currentWord }
                 </span>
             </div>
         )

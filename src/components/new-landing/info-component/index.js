@@ -4,11 +4,11 @@ import style from './style.scss';
 
 const InfoComponent = ({mainSection}) => {
     const downloadApp = () => appLink && window.open(appLink);
-
+    const titleObj = mainSection.title.split('{words}');
     return (
         <div class={`${style.infoContainer} uk-container-big`}>
             <div class={style.title}>
-                <AutoPrintText mainSection={mainSection}/>
+              {titleObj[0]}<AutoPrintText mainSection={mainSection}/>{titleObj[1]}
             </div>
             <div class={style.subTitle}>{mainSection.subTitle}</div>
 

@@ -37,7 +37,7 @@ const getExperts = (data) => {
         
     data.featured_experts.forEach((expert, index)=>{
         let expertData = {
-            id: index + 1,
+            id: parseInt(expert.id[0].text),
             name: expert.name[0].text,
             img: expert.photo.url,
             serviceName: expert.proffesion[0].text,
@@ -53,7 +53,13 @@ const getExperts = (data) => {
             side2.push(expertData);
         }
     });
-
+    side2.splice(1, 0 , {
+        id: 4,
+        isSmall: true,
+        isStat: true,
+        minutes: data.amount_of_minutes,
+    })
+    side2 = [[side2[0], side2[1]],[side2[2], side2[3]]]
     return  {
         side1, side2
     }
@@ -83,7 +89,9 @@ const getFAQs = (faqData) => {
                     answer: faq.answer[0].text
                 })
             })
+            return faqs;
         }
+
         
     
 
@@ -91,6 +99,8 @@ const getFAQs = (faqData) => {
     allFaqs.customersQuestions = getFAQ('customer_faqs');
     allFaqs.expertsQuestions = getFAQ('experts_faqs');
     allFaqs.paymentsQuestions = getFAQ('payments_faqs');
+
+    return allFaqs;
 }
 
 export function processHomepageData(data){
@@ -107,15 +117,15 @@ export function processHomepageData(data){
     processedData.howItWorks = {
         title: data.how_it_works_title[0].text,
         text: data.how_it_works[0].text,
-        videoID: data.how_it_works_video[0].text
+        videoID: data.how_it_works_video.video_id
     }
 
 
     processedData.services = getServices(data);
 
     processedData.app = {
-        title: data.app_text[0].text,
-        text: data.app_title[0].text
+        title: data.app_title[0].text,
+        text: data.app_text[0].text
     }
 
     processedData.faqs = getFAQs(data);
