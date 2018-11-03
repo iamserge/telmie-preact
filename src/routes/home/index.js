@@ -26,18 +26,27 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data'
+import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data';
+
+import { processHomepagePosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class HomePage extends Component {
 	constructor(props){
 		super(props);
 		this.state =  {
-			doc: null,
+			page: null,
 			notFound: false,
-			verifyFailure: false
+			verifyFailure: false,
+			fetchingPage: true,
+			fetchingFeaturedPost: true,
+			fetchingRecentPosts: true
 	  }
-	  this.contactUs = null;
+		this.contactUs = null;
+		this.fetchPage = this.fetchPage.bind(this);
+		this.fetchFeatuedPost = this.fetchFeatuedPost.bind(this);
+		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	scrollToContact = () => {
 		const {hash} = window.location;
@@ -97,7 +106,9 @@ class HomePage extends Component {
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
-		this.fetchPage(this.props);
+		this.fetchPage();
+		this.fetchRecentPosts();
+		this.fetchFeatuedPost();
 		if (typeof this.props.token != 'undefined') {
 			this.props.verify(this.props.token)
 		}
@@ -119,69 +130,88 @@ class HomePage extends Component {
 		}
 
 	}
+	fetchFeatuedPost(){
+		let that = this;
+		that.props.prismicCtx.api.query([
+			Prismic.Predicates.at('document.type', 'blog_post'),
+			Prismic.Predicates.at('document.tags', ['featured'])
+		],
+		{ orderings : '[document.first_publication_date desc]' }
+		).then(function(response) {
+			that.setState({
+					fetchingFeaturedPost: false,
+					featuredPost: processPostThumbnailData(response.results[0])
+				})
+		});
+	}
+	fetchRecentPosts(props){
+		let that = this;
+		that.props.prismicCtx.api.query([
+			Prismic.Predicates.at('document.type', 'blog_post'),
+			Prismic.Predicates.not('document.tags', ['featured'])
+		],
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]' }
+		).then(function(response) {
+			that.setState({
+					fetchingRecentPosts: false,
+					recentPosts: processHomepagePosts(response.results)
+				})
+		});
+	}
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);
 		this.scrollInterval = null;
 	}
 
-	fetchPage(props) {
-    if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-					console.log('doc',doc);
-          // We put the retrieved content in the state as a doc variable
-          this.setState({ doc });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-        }
-      });
-			/*
-			return props.prismicCtx.api.query('').then(function(response) {
-			   console.log(response);
-			});*/
-    }
-    return null;
+	fetchPage() {
+		let that = this;
+		this.props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+			console.log(page.data);
+			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
+		});
   }
 	render() {
-		if (this.state.doc) {
-			const pageData = this.state.doc.data;
+		if (!this.state.fetchingPage) {
+			const pageData = this.state.page;
 			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
 			return (
 				<div id="homepage">
 
 					<div class={style.infoContainer}>	
-						<InfoComponent wordsToPrint={autoprintWords} appLink={appLink}/>
+						<InfoComponent mainSection={pageData.mainSection} appLink={appLink}/>
 					</div>
 
 					<div class={style.photoContainer}>
-						<PhotoCards cards = {photoCards}/>
+						<PhotoCards cards = {pageData.experts}/>
 					</div>
 
-					<Element name='howWorksElement' />
-					<HowWorksDetails videoId={pageData.main_video.video_id} appLink={appLink}/>
+					<Element name='howWorksElement'  />
+					<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
 
-					<FeaturedServices serviceCards={serviceCards} />
+					<FeaturedServices services={pageData.services} />
 
 					<div class={style.iosAppSection}>
-						<AppDetails appLink={appLink}/>
+						<AppDetails appLink={appLink} content={pageData.app}/>
 					</div>
 
 					<div class={style.faqContainer}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ {...landingFAQ}/>
+						<LandingFAQ faqs={pageData.faqs}/>
 					</div>
 
 					<div class={style.proWrapper}>
 						<Element name='becomeProElement' />
-						<ProDetails appLink={appLink} />
+						<ProDetails content={pageData.becomePro} appLink={appLink} />
 					</div>
 
-					{/*<div class={`${style.blogContainer} uk-container`}>
+					<div class={`${style.blogContainer} uk-container`}>
 						<div class={style.header}>Blog</div>
-						<BlogArticles articles = {blogArtilces}/>
-					</div>*/}
+						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
+							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
+						)}
+						
+						
+					</div>
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} 
 						sendData={this.props.sendContactData} 

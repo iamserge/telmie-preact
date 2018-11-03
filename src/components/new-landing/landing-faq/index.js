@@ -58,7 +58,7 @@ class LandingFAQ extends Component {
     render(){
         const { activeTab } = this.state;
         const { nodeBeforeQuestions = '' } = this.props;
-        const currentQuestions = this.props[`${activeTab}Questions`];
+        const currentQuestions = this.props.faqs[`${activeTab}Questions`];
 
         return (
             <div class={`uk-container`} style={this.props.styles}>

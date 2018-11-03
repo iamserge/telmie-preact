@@ -1,5 +1,5 @@
 export const uids = {
-	HOMEPAGE: 'Wq5SUigAAGdCjHww',
+	HOMEPAGE: 'W93_RBEAACsAXn5F',
 	ABOUT_US: 'WoBS0iYAAOw7o08v',
   FAQ: 'WoBNBCYAANo4ozWk',
 	TERMS: 'WoRP8igAACIAcojC',
