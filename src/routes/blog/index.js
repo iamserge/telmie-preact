@@ -34,16 +34,23 @@ class BlogPage extends Component {
 		}
 		this.fetchPost = this.fetchPost.bind(this);
 	}
-
-	componentDidMount() {
-		this.fetchPost();
+	componentWillReceiveProps(nextProps){
+		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
+			this.fetchPost(nextProps);
+		}
 	}
-	fetchPost() {
+	componentDidMount() {
+		window.scrollTo(0,0)
+		this.fetchPost(this.props);
+	}
+	fetchPost(props) {
 		let that = this;
-		this.props.prismicCtx.api.getByUID('blog_post', that.props.uid).then((post, err) => {
-			console.log(post);
-			that.setState({ fetchingPost: false, post: processPostData(post.data) })
-		});
+		if (props.prismicCtx) {
+			props.prismicCtx.api.getByUID('blog_post', that.props.uid).then((post, err) => {
+				that.setState({ fetchingPost: false, post: processPostData(post.data) })
+			});
+		}
+		
 	}
 	componentWillReceiveProps(nextProps) {
 

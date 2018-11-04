@@ -106,9 +106,12 @@ class HomePage extends Component {
 	}
 	componentDidMount(){
 	//	window.scrollTo(0, 0);
-		this.fetchPage();
-		this.fetchRecentPosts();
-		this.fetchFeatuedPost();
+		if (this.props.prismicCtx) {
+			this.fetchPage(this.props);
+			this.fetchRecentPosts(this.props);
+			this.fetchFeatuedPost(this.props);
+		}
+		
 		if (typeof this.props.token != 'undefined') {
 			this.props.verify(this.props.token)
 		}
@@ -117,6 +120,8 @@ class HomePage extends Component {
 	componentWillReceiveProps(nextProps){
 		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
 			this.fetchPage(nextProps);
+			this.fetchRecentPosts(nextProps);
+			this.fetchFeatuedPost(nextProps);
 		}
 
 		if (nextProps.verifySuccess) {
@@ -130,9 +135,9 @@ class HomePage extends Component {
 		}
 
 	}
-	fetchFeatuedPost(){
+	fetchFeatuedPost(props){
 		let that = this;
-		that.props.prismicCtx.api.query([
+		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.at('document.tags', ['featured'])
 		],
@@ -146,7 +151,7 @@ class HomePage extends Component {
 	}
 	fetchRecentPosts(props){
 		let that = this;
-		that.props.prismicCtx.api.query([
+		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.not('document.tags', ['featured'])
 		],
@@ -163,9 +168,9 @@ class HomePage extends Component {
 		this.scrollInterval = null;
 	}
 
-	fetchPage() {
+	fetchPage(props) {
 		let that = this;
-		this.props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
 			console.log(page.data);
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
