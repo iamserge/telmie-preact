@@ -1,0 +1,13 @@
+@import './src/style/variables';
+
+
+
+    
+.blogImage {
+	height: 512px;
+	max-width: 100%;
+  
+	@media (max-width: 880px) {
+	  height: 274px;
+	}
+  }

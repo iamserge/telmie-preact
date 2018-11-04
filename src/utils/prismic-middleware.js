@@ -17,20 +17,68 @@ export function processHomepagePosts(rawPosts){
     let newPosts = [];
     rawPosts.forEach((rawPost)=>{
         const data = rawPost.data;
-        let postData = {
-            title: data.title[0].text,
-            date: data.date,
-            link: `/blog/${rawPost.uid}`,
-            img: data.thumbnail.url,
-        }
-        if (data.featured == 'Featured') {
-            postData.isFeatured = true;
-        }
+        let postData = processPostThumbnailData(rawPost);
         newPosts.push(postData)
     })    
     return newPosts;
 }
 
+export function processPostText(postData){
+    let serialiseText = (type, content) => {
+            switch (type) {
+                case 'paragraph':
+                    return (<p>{content}</p>)
+                    break;
+
+                case 'heading2':
+                    return (<h2>{content}</h2>)
+                    break;
+                    
+            }
+        },
+        nodes = [];
+
+    postData.primary.text.forEach((text)=>{
+        nodes.push(serialiseText(text.type, text.text))
+    });
+    
+    return nodes;
+}
+
+export function processPostImage(postData){
+    let imageData = {
+        url: postData.primary.image.url
+    };
+    if (postData.primary.caption.length > 0) {
+        imageData.title = postData.primary.caption[0].text;
+    }
+    return imageData;
+}
+
+
+export function processPostQuote(postData){
+    let quoteData = {
+        text: postData.primary.quote[0].text,
+        author: postData.primary.author[0].text
+    };
+    
+    return quoteData;
+}
+const processDate = (date) => {
+    const locale = "en-us";
+    let dateObj = new Date(date);
+    
+    return dateObj.toLocaleString(locale, { month: "long", day: 'numeric', year: "numeric" });
+
+}
+export function processPostData(rawData){
+    let postData = {};
+    postData.title = rawData.title[0].text;
+    postData.date = processDate(rawData.date);
+    postData.body = rawData.body;
+
+    return postData;
+}
 const getExperts = (data) => {
     let side1 = [],
         side2 = [];

@@ -57,7 +57,7 @@ export const routes = {
 	FORGOT_PASSWORD: '/forgot-password',
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
-	BLOG: '/blog'
+	BLOG_POST: '/blog/:uid'
 };
 
 
@@ -126,7 +126,7 @@ class App extends Component {
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
-			<BlogPage path={routes.BLOG} prismicCtx = { this.state.prismicCtx } uid = { uids.BLOG } />,
+			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,

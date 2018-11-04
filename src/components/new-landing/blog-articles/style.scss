@@ -80,9 +80,10 @@
         line-height: 32px;
         color: white;
     }
-    button{
+    a{
         flex: calc(40%-5px);
         height: 40px !important;
+        line-height: 40px;
     }
 
     @media (max-width: 880px) { 

@@ -1,0 +1,59 @@
+@import './src/style/variables';
+
+
+@import './src/style/variables';
+
+
+
+.blogText {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  font-size: 18px;
+  line-height: 1.778;
+  color: $charcoalGrey;
+  letter-spacing: -0.3px;
+
+  p {
+    margin-bottom: 40px;
+  }
+
+  a {
+    color: $cherryRedTwo;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  &Main {
+    font-family: 'Krub', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 2;
+    color: $hBlack;
+    letter-spacing: -0.1px;
+  }
+}
+
+.blogDecoration {
+  position: relative;
+  margin-bottom: 6px;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 120px;
+    height: 6px;
+    background: url(/../../assets/decor@3x.png) 0 0 no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+  }
+}

@@ -27,7 +27,6 @@ html, body {
 	box-sizing: border-box;
 }
 a {
-	font-family: 'Roboto', arial, sans-serif !important;
 	color: #323232;
 	&:hover {
 		text-decoration: underline !important;
@@ -147,7 +146,7 @@ a {
 	font-weight: 600;
 }
 
-button.red-btn {
+button.red-btn, a.red-btn {
 	@extend %custom-btn;
 	background-color: $red;
 	color: white !important;
