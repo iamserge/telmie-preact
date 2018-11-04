@@ -13,7 +13,7 @@ export function processPostThumbnailData(rawPost){
     return newPostData;
 }
 
-export function processHomepagePosts(rawPosts){
+export function processRecentPosts(rawPosts){
     let newPosts = [];
     rawPosts.forEach((rawPost)=>{
         const data = rawPost.data;

@@ -23,25 +23,29 @@ import style from './style.scss';
 // mock-data
 import { blogPosts } from './mock-data';
 
-import { processPostData } from '../../utils/prismic-middleware';
+import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
 
 
 class BlogPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fetchingPost: true
+			fetchingPost: true,
+			fetchingRecentPosts: true
 		}
 		this.fetchPost = this.fetchPost.bind(this);
+		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
 			this.fetchPost(nextProps);
+			this.fetchRecentPosts(nextProps);
 		}
 	}
 	componentDidMount() {
 		window.scrollTo(0,0)
 		this.fetchPost(this.props);
+		this.fetchRecentPosts(this.props);
 	}
 	fetchPost(props) {
 		let that = this;
@@ -50,6 +54,20 @@ class BlogPage extends Component {
 				that.setState({ fetchingPost: false, post: processPostData(post.data) })
 			});
 		}
+		
+	}
+	fetchRecentPosts(props) {
+		let that = this;
+		props.prismicCtx.api.query([
+			Prismic.Predicates.at('document.type', 'blog_post')
+		],
+		{ pageSize: 10, orderings : '[document.first_publication_date desc]' }
+		).then(function(response) {
+			that.setState({
+				fetchingRecentPosts: false,
+				recentPosts: processRecentPosts(response.results)
+			})
+		});
 		
 	}
 	componentWillReceiveProps(nextProps) {
@@ -97,13 +115,7 @@ class BlogPage extends Component {
 							<div class={style.blogAuthorAvatar}>
 								<img src="/assets/experts/expert2.png" alt="" />
 							</div>
-							{/*
-            {(contact.avatar != null) ? (
-            <img src={apiRoot + 'image/' + contact.avatar.id} alt={contact.name + ' ' + contact.lastName} />
-          ) : (
-            <img src="/assets/nouserimage.jpg" alt={contact.name + ' ' + contact.lastName} />
-          )}
-  */}
+							
 							<div class={style.blogAuthorAbout}>
 								<p class={style.blogAuthorInfo}>JOHANNA DOE</p>
 								Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu
@@ -113,8 +125,10 @@ class BlogPage extends Component {
       						</div>
 						</div>
 					</div>
-
-					<BlogPosts blogPosts={blogPosts} />
+					{ !this.state.fetchingRecentPosts && this.state.recentPosts.length > 0 && (
+						<BlogPosts blogPosts={this.state.recentPosts} />
+					)}
+					
 
 					<div class={style.blogContainer}>
 						<div class={`${style.blogComments} uk-container`}>

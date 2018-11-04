@@ -28,7 +28,7 @@ import style from './style.scss';
 // mock-data
 import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data';
 
-import { processHomepagePosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -159,7 +159,7 @@ class HomePage extends Component {
 		).then(function(response) {
 			that.setState({
 					fetchingRecentPosts: false,
-					recentPosts: processHomepagePosts(response.results)
+					recentPosts: processRecentPosts(response.results)
 				})
 		});
 	}
