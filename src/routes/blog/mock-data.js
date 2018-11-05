@@ -60,18 +60,6 @@ export const serviceCards = [{
     serviceName: 'Immigration advice',
 }];*/
 
-export const blogText = [{
-
-}];
-
-export const blogImages = [{
-  img: '/assets/blog/article-01.png',
-  id: 1
-},{
-  img: '/assets/blog/article-02.png',
-  id: 2
-}];
-
 export const blogPosts = [
     {
     id: 1,

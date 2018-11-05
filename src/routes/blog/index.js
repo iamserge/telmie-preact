@@ -87,6 +87,8 @@ class BlogPage extends Component {
 						</div>
 						<div class={style.date}>{ post.date }</div>
 					</div>
+
+          <div class={style.blogArticle}>
 					{postBody.map((content)=>{
 						switch (content.slice_type) {
 							case 'text':
@@ -106,8 +108,7 @@ class BlogPage extends Component {
 								break;
 						}
 					})}
-
-
+					</div>
 
 					<div class={`${style.blogAuthor} uk-container`}>
 						<h3>About the Author</h3>
