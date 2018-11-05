@@ -72,8 +72,12 @@
 		padding: 20px 0 80px;
 		border-top: 2px solid $paleGrey;
 		overflow-x: auto;
+		@media (max-width: 880px) {
+			padding-bottom: 100px;
+		}
 
 		&Slider {
+			position: relative;
 
 			ul {
 				display: flex;
@@ -94,6 +98,13 @@
 			h3 {
 				margin: 0;
 				flex: 1;
+			}
+
+			@media (max-width: 880px) {
+				display: block;
+				text-align: center;
+				padding-top: 40px;
+				padding-bottom: 40px;
 			}
 		}
 
@@ -132,8 +143,13 @@
 				}
 			}
 
-			.carousel__next-button {
-
+			@media (max-width: 880px) {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				margin-top: 40px;
 			}
 		}
 	}
