@@ -49,6 +49,7 @@ class BlogPosts extends Component {
             totalSlides={allPosts.length}
             visibleSlides={this.state.visibleSlides}
             currentSlide={1}
+            dragEnabled={false}
           >
             <div class={`${style.blogPostsTitle} uk-container`}>
               <h3>Other posts</h3>

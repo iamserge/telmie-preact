@@ -60,48 +60,34 @@ export const serviceCards = [{
     serviceName: 'Immigration advice',
 }];*/
 
-export const blogPosts = [
-    {
+export const blogComments = [
+  {
     id: 1,
-    date: '12.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-01.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert2.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 2,
-    date: '16.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert1.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 3,
-    date: '20.10.2018',
-    title: 'Freelancers eat large consulting firms for breakfast',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/nouserimage.jpg',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 4,
-    date: '12.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-01.png',
-    link: '/'
-  },
-  {
-    id: 5,
-    date: '16.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-02.png',
-    link: '/'
-  },
-  {
-    id: 6,
-    date: '20.10.2018',
-    title: 'Freelancers eat large consulting firms for breakfast',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert2.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   }
 ];
 
