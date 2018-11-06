@@ -105,7 +105,7 @@ class BlogPage extends Component {
 								return (<PostQuote content={content} />)
 								break;
 
-							case 'text_with_decoration':
+							case 'text1':
 								return (<PostDecorationText content={content} />)
 								break;
 						}

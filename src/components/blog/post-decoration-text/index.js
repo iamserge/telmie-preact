@@ -7,7 +7,7 @@ const PostDecorationText = ({content = {}}) => {
   const postText = processPostText(content);
   return (
     <div class={`${style.blogText} ${style.blogTextMain} ${style.blogDecoration} uk-container`}>
-      {postText.map((Element)=> element )}
+      {postText.map((Element)=> Element )}
     </div>
   )
 }
