@@ -5,9 +5,12 @@
     
 .blogImage {
 	height: 512px;
-	max-width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	border-radius: 10px;
   
 	@media (max-width: 880px) {
 	  height: 274px;
+		border-radius: 0;
 	}
   }
