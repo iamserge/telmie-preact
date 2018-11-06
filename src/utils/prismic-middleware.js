@@ -24,7 +24,7 @@ export function processRecentPosts(rawPosts){
 }
 
 export function processPostText(postData){
-    let serialiseText = (type, content, tags) => {
+    let serialiseText = (type, content) => {
             switch (type) {
                 case 'list-item':
                     return (<li>{content}</li>);
@@ -46,6 +46,18 @@ export function processPostText(postData){
         nodes = [];
 
     postData.primary.text.forEach((text)=>{
+
+/*      if(text.spans.length>0){
+        text.spans.forEach((tag)=>{
+          let str = text.text;
+          if(tag.type === 'strong'){
+            console.log(`<b>${str.substring(tag.start, tag.end)}</b>`)
+          }else if(tag.type === 'hyperlink'){
+            console.log(`<a href="${tag.data.url}">${str.substring(tag.start, tag.end)}</a>`)
+          }
+        });
+      }*/
+
         nodes.push(serialiseText(text.type, text.text))
     });
     
