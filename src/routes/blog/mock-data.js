@@ -60,84 +60,34 @@ export const serviceCards = [{
     serviceName: 'Immigration advice',
 }];*/
 
-export const blogText = [{
-
-}];
-
-export const blogImages = [{
-  img: '/assets/blog/article-01.png',
-  id: 1
-},{
-  img: '/assets/blog/article-02.png',
-  id: 2
-}];
-
-export const blogPosts = [
-    {
+export const blogComments = [
+  {
     id: 1,
-    date: '12.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-01.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert2.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 2,
-    date: '16.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert1.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 3,
-    date: '20.10.2018',
-    title: 'Freelancers eat large consulting firms for breakfast',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/nouserimage.jpg',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   },
   {
     id: 4,
-    date: '12.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-01.png',
-    link: '/'
-  },
-  {
-    id: 5,
-    date: '16.10.2018',
-    title: 'Immigration law as a service',
-    img: '/assets/blog/article-02.png',
-    link: '/'
-  },
-  {
-    id: 6,
-    date: '20.10.2018',
-    title: 'Freelancers eat large consulting firms for breakfast',
-    img: '/assets/blog/article-02.png',
-    link: '/'
+    date: '21.05.2018',
+    name: 'JOHANNA DOE',
+    avatar: '/assets/experts/expert2.png',
+    message: 'Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam. Phasellus magna turpis, elementum at ligula non, blandit porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.'
   }
 ];
 
-
-export const blogArtilces = [{
-    title: 'Immigration law as a service',
-    isBig: true,
-    date: 1539291650000,
-    link: '',
-    img: 'https://cdn.zeplin.io/5b602aa6f06df96c67c397bd/assets/C5737136-69EA-4A3A-A55C-9C5952A3B9C1.png'
-},{
-    title: 'Expensive professional services don’t need to be expensive',
-    date: 1539291640000,
-    link: ''
-},{
-    title: 'Different ways of building your online business',
-    date: 1539291630000,
-    link: ''
-},{
-    title: 'How to become independent Pro advisor',
-    date: 1539291620000,
-    link: ''
-},{
-    title: 'Steps towards being a successful freelancer',
-    date: 1539291601000,
-    link: ''
-}];

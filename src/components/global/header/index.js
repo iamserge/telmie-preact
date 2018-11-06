@@ -73,6 +73,7 @@ class Header extends Component {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
+    const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
@@ -82,23 +83,31 @@ class Header extends Component {
           { this.state.loggedOff && (
             <Redirect to='/' />
           )}
+
+
 					<Link href={routes.HOME} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
-          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-          
-					<ul className="uk-navbar-nav" id={style.leftNav}>
+          { !isAtBlog && (
+            <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          )}
+
+
+					<ul className="uk-navbar-nav" id={isAtBlog ? style.leftNavText : style.leftNav}>
             {
               /*isLogin ? ([
                 (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
                 <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
-              ]) : */([
+              ]) : */
+              isAtBlog ? ([
+                <li><b>Blog</b></li>
+              ]) : ([
                 <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}

@@ -4,7 +4,7 @@
 	min-width: 294px;
 	width: 294px;
 	height: 372px;
-	margin: 0 24px;
+	margin: 0 12px;
 	overflow: hidden;
 	position: relative;
 	border-radius: 10px;
@@ -68,15 +68,22 @@
 	}
 
 	&s{
-		margin: 0 auto;
+		margin: 60px auto 0;
 		padding: 20px 0 80px;
 		border-top: 2px solid $paleGrey;
 		overflow-x: auto;
+		@media (max-width: 880px) {
+			padding-bottom: 100px;
+		}
 
 		&Slider {
-			display: flex;
-			justify-content: space-around;
-			align-items: stretch;
+			position: relative;
+
+			ul {
+				display: flex;
+				//justify-content: space-around;
+				align-items: stretch;
+			}
 		}
 
 		&Title {
@@ -84,9 +91,65 @@
 			margin: 0 auto;
 			padding-top: 60px;
 			padding-bottom: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
 			h3 {
-				margin-bottom: 30px;
+				margin: 0;
+				flex: 1;
+			}
+
+			@media (max-width: 880px) {
+				display: block;
+				text-align: center;
+				padding-top: 40px;
+				padding-bottom: 40px;
+			}
+		}
+
+		&Arrows {
+			flex: 1;
+			text-align: right;
+
+			button {
+				border-radius: 50%;
+				border: 1px solid $cloudyBlue;
+				color: $pinkishRed;
+				width: 48px;
+				height: 48px;
+				font-size: 16px;
+				text-align: center;
+				background: none;
+				outline: none;
+				transition: border .3s ease;
+				margin-left: 16px;
+
+				&:hover,
+				&:focus,
+				&:active {
+					border-color: $pinkishRed;
+				}
+
+				&[disabled] {
+					color: $cloudyBlue;
+					cursor: default;
+
+					&:hover,
+					&:focus,
+					&:active {
+						border-color: $cloudyBlue;
+					}
+				}
+			}
+
+			@media (max-width: 880px) {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				margin-top: 40px;
 			}
 		}
 	}

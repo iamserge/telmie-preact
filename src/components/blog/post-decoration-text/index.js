@@ -6,8 +6,8 @@ import { processPostText } from '../../../utils/prismic-middleware';
 const PostDecorationText = ({content = {}}) => {
   const postText = processPostText(content);
   return (
-    <div class={`${style.blogText} ${style.blogDecoration} uk-container`}>
-      {postText.map((Element)=> element )}
+    <div class={`${style.blogText} ${style.blogTextMain} ${style.blogDecoration} uk-container`}>
+      {postText.map((Element)=> Element )}
     </div>
   )
 }

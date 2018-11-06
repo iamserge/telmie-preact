@@ -10,6 +10,8 @@ import ScrollToTop from 'react-scroll-up';
 import FontAwesome from 'react-fontawesome';
 import { route } from 'preact-router';
 import BlogPosts from '../../components/blog/blog-posts';
+import BestComment from '../../components/blog/blog-best-comment';
+import BlogComments from '../../components/blog/blog-comments';
 
 import PostDecorationText from '../../components/blog/post-decoration-text';
 import PostText from '../../components/blog/post-text';
@@ -21,7 +23,7 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { blogPosts } from './mock-data';
+import { blogComments } from './mock-data';
 
 import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
 
@@ -87,6 +89,8 @@ class BlogPage extends Component {
 						</div>
 						<div class={style.date}>{ post.date }</div>
 					</div>
+
+          <div class={style.blogArticle}>
 					{postBody.map((content)=>{
 						switch (content.slice_type) {
 							case 'text':
@@ -101,142 +105,25 @@ class BlogPage extends Component {
 								return (<PostQuote content={content} />)
 								break;
 
-							case 'text_with_decoration':
+							case 'text1':
 								return (<PostDecorationText content={content} />)
 								break;
 						}
 					})}
-
-
-
-					<div class={`${style.blogAuthor} uk-container`}>
-						<h3>About the Author</h3>
-						<div class={style.blogAuthorInner}>
-							<div class={style.blogAuthorAvatar}>
-								<img src="/assets/experts/expert2.png" alt="" />
-							</div>
-							
-							<div class={style.blogAuthorAbout}>
-								<p class={style.blogAuthorInfo}>JOHANNA DOE</p>
-								Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit, eu
-								luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam.
-								Phasellus magna turpis, elementum at ligula non, blandit porta sapien.
-								Suspendisse congue diam nec ipsum sagittis rutrum.
-      						</div>
-						</div>
 					</div>
+
+{/*
+          <BestComment />
+*/}
+
 					{ !this.state.fetchingRecentPosts && this.state.recentPosts.length > 0 && (
 						<BlogPosts blogPosts={this.state.recentPosts} />
 					)}
-					
 
-					<div class={style.blogContainer}>
-						<div class={`${style.blogComments} uk-container`}>
-							<h3>25 Comments</h3>
+{/*
+          <BlogComments blogComments={blogComments} />
+*/}
 
-							<div class={style.blogComment}>
-								<div class={style.blogAuthorInner}>
-									<div class={style.blogAuthorAvatar}>
-										<img src="/assets/experts/expert2.png" alt="" />
-									</div>
-									<div class={style.blogAuthorAbout}>
-										<div class={style.blogAuthorInfo}>
-											<div class={style.blogAuthorName}>
-												<span class={style.name}>JOHANNA DOE</span>
-												<span class={style.date}>21.05.2018</span>
-											</div>
-											<button class={style.blogCommentReply}>Reply</button>
-										</div>
-										Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit,
-										eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam.
-										Phasellus magna turpis, elementum at ligula non, blandit porta
-										sapien. Suspendisse congue diam nec ipsum sagittis rutrum.
-          							</div>
-								</div>
-
-								<div class={style.blogComment}>
-									<div class={style.blogAuthorInner}>
-										<div class={style.blogAuthorAvatar}>
-											<img src="/assets/experts/expert1.png" alt="" />
-										</div>
-										<div class={style.blogAuthorAbout}>
-											<div class={style.blogAuthorInfo}>
-												<div class={style.blogAuthorName}>
-													<span class={style.name}>JOHANNA DOE</span>
-													<span class={style.date}>21.05.2018</span>
-												</div>
-												<button class={style.blogCommentReply}>Reply</button>
-											</div>
-											Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam
-											velit, eu luctus odio nulla ac libero. Cras sagittis eget lacus in
-											aliquam. Phasellus magna turpis, elementum at ligula non, blandit
-											porta sapien. Suspendisse congue diam nec ipsum sagittis rutrum.
-            							</div>
-									</div>
-								</div>
-							
-							</div>
-
-							<div class={style.blogComment}>
-								<div class={style.blogAuthorInner}>
-									<div class={style.blogAuthorAvatar}>
-										<img src="/assets/nouserimage.jpg" alt="" />
-									</div>
-									<div class={style.blogAuthorAbout}>
-										<div class={style.blogAuthorInfo}>
-											<div class={style.blogAuthorName}>
-												<span class={style.name}>JOHANNA DOE</span>
-												<span class={style.date}>21.05.2018</span>
-											</div>
-											<button class={style.blogCommentReply}>Reply</button>
-										</div>
-										Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit,
-										eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam.
-										Phasellus magna turpis, elementum at ligula non, blandit porta
-										sapien. Suspendisse congue diam nec ipsum sagittis rutrum.
-									</div>
-								</div>
-							</div>
-
-							<div class={style.blogComment}>
-								<div class={style.blogAuthorInner}>
-									<div class={style.blogAuthorAvatar}>
-										<img src="/assets/experts/expert2.png" alt="" />
-									</div>
-									<div class={style.blogAuthorAbout}>
-										<div class={style.blogAuthorInfo}>
-											<div class={style.blogAuthorName}>
-												<span class={style.name}>JOHANNA DOE</span>
-												<span class={style.date}>21.05.2018</span>
-											</div>
-											<button class={style.blogCommentReply}>Reply</button>
-										</div>
-										Vivamus ornare, leo eget pharetra euismod, nisl elit aliquam velit,
-										eu luctus odio nulla ac libero. Cras sagittis eget lacus in aliquam.
-										Phasellus magna turpis, elementum at ligula non, blandit porta
-										sapien. Suspendisse congue diam nec ipsum sagittis rutrum.
-          							</div>
-								</div>
-							</div>
-						</div>
-
-						<div class={style.blogCommentAdd}>
-							<h3>Add Comment</h3>
-							<form action="">
-								<div class={style.blogAuthorInner}>
-									<div class={style.blogAuthorAvatar}>
-										<img src="/assets/experts/expert2.png" alt="" />
-									</div>
-									<div class={style.blogCommentType}>
-										<textarea rows="12" />
-									</div>
-								</div>
-								<div class={style.blogCommentAddButton}>
-									<button class="red-btn">Post comment</button>
-								</div>
-							</form>
-						</div>
-					</div>
 
 					<ScrollToTop showUnder={150} style={{ zIndex: 1002 }}>
 						<div class="top-btn">
@@ -247,9 +134,10 @@ class BlogPage extends Component {
 
     );
 		} else {
+			return (
 			<div className="uk-container uk-container-small" id="staticPage" >
 				<Spinner />
-			</div>
+			</div>)
 		}
 	}
 };
