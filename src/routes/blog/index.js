@@ -134,9 +134,10 @@ class BlogPage extends Component {
 
     );
 		} else {
+			return (
 			<div className="uk-container uk-container-small" id="staticPage" >
 				<Spinner />
-			</div>
+			</div>)
 		}
 	}
 };
