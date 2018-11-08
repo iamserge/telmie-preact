@@ -82,19 +82,14 @@
 		margin: 60px auto 0;
 		padding: 20px 0 80px;
 		border-top: 2px solid $paleGrey;
-		overflow-x: auto;
+		overflow-x: hidden;
+
 		@media (max-width: 880px) {
 			padding-bottom: 100px;
 		}
 
 		&Slider {
 			position: relative;
-
-			ul {
-				display: flex;
-				//justify-content: space-around;
-				align-items: stretch;
-			}
 		}
 
 		&Title {
@@ -118,54 +113,63 @@
 				padding-bottom: 40px;
 			}
 		}
-
-		&Arrows {
-			flex: 1;
-			text-align: right;
-
-			button {
-				border-radius: 50%;
-				border: 1px solid $cloudyBlue;
-				color: $pinkishRed;
-				width: 48px;
-				height: 48px;
-				font-size: 16px;
-				text-align: center;
-				background: none;
-				outline: none;
-				transition: border .3s ease;
-				margin-left: 16px;
-
-				&:hover,
-				&:focus,
-				&:active {
-					border-color: $pinkishRed;
-				}
-
-				&[disabled] {
-					color: $cloudyBlue;
-					cursor: default;
-
-					&:hover,
-					&:focus,
-					&:active {
-						border-color: $cloudyBlue;
-					}
-				}
-			}
-
-			@media (max-width: 880px) {
-				position: absolute;
-				top: 100%;
-				left: 0;
-				right: 0;
-				text-align: center;
-				margin-top: 40px;
-			}
-		}
 	}
 }
 
+:global {
+  .slick-list {
+    padding: 0 !important;
+  }
+
+  .slick-arrow {
+    top: auto;
+    bottom: 100%;
+    right: 0;
+    border-radius: 50%;
+    border: 1px solid $cloudyBlue;
+    color: $pinkishRed;
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    text-align: center;
+    background: none;
+    outline: none;
+    transition: border .3s ease;
+    margin-left: 16px;
+
+    &:before {
+      content: ''
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $pinkishRed;
+      border-color: $pinkishRed;
+    }
+
+    span {
+      height: 100%;
+      line-height: 46px;
+    }
+
+    &.slick-disabled {
+      color: $cloudyBlue;
+      cursor: default;
+
+      &:hover,
+      &:focus,
+      &:active {
+        border-color: $cloudyBlue;
+      }
+    }
+  }
+
+  .slick-prev {
+    left: auto;
+    right: 60px;
+  }
+}
 
 
     
