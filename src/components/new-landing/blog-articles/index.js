@@ -12,6 +12,7 @@ const Blog = ({articles = [], featured}) => {
     return (
         <div class={style.blogConteiner}>
             <BigArticle key={featured.uid} {...featured}/>
+            <div class={style.smallArticlesContainer}>
             {
                 articles.reduce((accum, article) => {
                     return (
@@ -26,7 +27,7 @@ const Blog = ({articles = [], featured}) => {
                     )
                 }, [])
             }
-            
+            </div>
         </div>
 	)
 }
