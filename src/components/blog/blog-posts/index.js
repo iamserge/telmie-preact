@@ -48,7 +48,6 @@ class BlogPosts extends Component {
             naturalSlideHeight={372}
             totalSlides={allPosts.length}
             visibleSlides={this.state.visibleSlides}
-            currentSlide={1}
             dragEnabled={false}
           >
             <div class={`${style.blogPostsTitle} uk-container`}>
@@ -64,11 +63,13 @@ class BlogPosts extends Component {
                   background: `url('${post.img}') no-repeat center`,
                   backgroundSize: "auto 100%"
                 }}>
-                  <div class={style.blogPostDescription}>
-                    <p class={style.date}>{post.date}</p>
-                    {post.title}
-                    <Link href={post.link} class="red-btn">Full story</Link>
-                  </div>
+                  <Link href={post.link}>
+                    <div class={style.blogPostDescription}>
+                      <p class={style.date}>{post.date}</p>
+                      <p class={style.title}>{post.title}</p>
+                      <button class="red-btn">Full story</button>
+                    </div>
+                  </Link>
                 </li>
               ))}
             </Slider>

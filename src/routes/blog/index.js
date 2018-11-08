@@ -56,7 +56,7 @@ class BlogPage extends Component {
 				that.setState({ fetchingPost: false, post: processPostData(post.data) })
 			});
 		}
-		
+
 	}
 	fetchRecentPosts(props) {
 		let that = this;
@@ -70,10 +70,6 @@ class BlogPage extends Component {
 				recentPosts: processRecentPosts(response.results)
 			})
 		});
-		
-	}
-	componentWillReceiveProps(nextProps) {
-
 	}
 
 	render() {
