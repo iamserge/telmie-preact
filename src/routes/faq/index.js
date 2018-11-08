@@ -7,7 +7,7 @@ import {landingFAQ} from './mock-data'
 const FAQ = (props) => {
     
 	return (<div class='uk-container uk-container-small' style={{paddingTop: 50}}>
-		<LandingFAQ {...landingFAQ} />
+		<LandingFAQ faqs={landingFAQ} />
 	</div>)	
 }
 
