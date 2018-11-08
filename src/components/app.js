@@ -57,6 +57,7 @@ export const routes = {
 	FORGOT_PASSWORD: '/forgot-password',
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
+	BLOG_LINK: '/#blog',
 	BLOG_POST: '/blog/:uid'
 };
 
