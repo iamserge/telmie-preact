@@ -2,7 +2,7 @@ import { h } from 'preact';
 import style from './style.scss';
 
 const ServiceCard = ({background, serviceName, description, downloadApp}) => {
-    const cardStyle = {background: `url('${background}') no-repeat center`, backgroundSize: "auto 100%"};
+    const cardStyle = {background: `url('${background}') no-repeat center`, backgroundSize: "cover"};
     
     return (
         <div style={cardStyle} class={style.serviceCard}>
