@@ -52,22 +52,10 @@ class HomePage extends Component {
 		const {hash} = window.location;
 
 		hash && (
-			((hash.indexOf('contact-us') + 1) &&
+			(hash.indexOf('blog') + 1) &&
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
-						scroller.scrollTo('contactUsElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-						}),
-						clearInterval(this.scrollInterval),
-						this.scrollInterval = null
-					)
-				}, 100))),
-			(hash.indexOf('faq') + 1) &&
-				(this.scrollInterval = setInterval(() => {
-					this.contactUs !== null && (
-						scroller.scrollTo('FAQElement', {
+						scroller.scrollTo('blogElement', {
 							spy: true,
 							smooth: true,
 							duration: 500,
@@ -209,6 +197,7 @@ class HomePage extends Component {
 						<ProDetails content={pageData.becomePro} appLink={appLink} />
 					</div>
 
+					<Element name="blogElement"></Element>
 					<div class={`${style.blogContainer} uk-container`}>
 						<div class={style.header}>Blog</div>
 						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (

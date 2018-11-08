@@ -121,6 +121,10 @@ class Header extends Component {
                   : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
                 </li>,
                 <li>{isAtHome ? 
+                  <ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
+                  : <Link href={routes.BLOG_LINK}>Blog</Link>}
+                </li>,
+                <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
                   : <Link href={routes.CONTACT_US}>Contact us</Link>}
                 </li>
@@ -204,6 +208,9 @@ class Header extends Component {
           {isAtHome ? 
               <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink> 
               : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>}
+          {isAtHome ? 
+              <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink> 
+              : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>}
           {isAtHome ? 
               <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink> 
               : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>}

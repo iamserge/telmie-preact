@@ -7,6 +7,7 @@ import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import ScrollToTop from 'react-scroll-up';
+import { animateScroll as scroll } from 'react-scroll'
 import FontAwesome from 'react-fontawesome';
 import { route } from 'preact-router';
 import BlogPosts from '../../components/blog/blog-posts';
@@ -39,28 +40,29 @@ class BlogPage extends Component {
 		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
-		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
+		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
+			|| (this.props.uid !== nextProps.uid)) {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
 		}
 	}
 	componentDidMount() {
-		window.scrollTo(0,0)
+		window.scrollTo(0,0);
 		this.fetchPost(this.props);
 		this.fetchRecentPosts(this.props);
 	}
 	fetchPost(props) {
 		let that = this;
-		if (props.prismicCtx) {
-			props.prismicCtx.api.getByUID('blog_post', that.props.uid).then((post, err) => {
-				that.setState({ fetchingPost: false, post: processPostData(post.data) })
-			});
-		}
 
+		props.prismicCtx && props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
+			scroll.scrollToTop();
+			that.setState({ fetchingPost: false, post: processPostData(post.data) })
+		});
+		
 	}
 	fetchRecentPosts(props) {
 		let that = this;
-		props.prismicCtx.api.query([
+		props.prismicCtx && props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post')
 		],
 		{ pageSize: 10, orderings : '[document.first_publication_date desc]' }
@@ -91,19 +93,12 @@ class BlogPage extends Component {
 						switch (content.slice_type) {
 							case 'text':
 								return (<PostText content={content} />)
-								break;
-
 							case 'image_with_caption':
 								return (<PostImage content={content} />)
-								break;
-
 							case 'quote':
 								return (<PostQuote content={content} />)
-								break;
-
 							case 'text1':
 								return (<PostDecorationText content={content} />)
-								break;
 						}
 					})}
 					</div>
