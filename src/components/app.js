@@ -23,6 +23,7 @@ import ContactRoute from '../routes/contact-us';
 import ErrorRoute from '../routes/errorRoute';
 import FAQ from '../routes/faq';
 import BlogPage from '../routes/blog';
+import LanguagePractice from '../routes/language-practice';
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -58,7 +59,8 @@ export const routes = {
 	SETTINGS: '/settings',
 	REGISTER_PRO: '/register-pro',
 	BLOG_LINK: '/#blog',
-	BLOG_POST: '/blog/:uid'
+	BLOG_POST: '/blog/:uid',
+	LANGUAGE_PRACTICE: '/language-practice'
 };
 
 
@@ -127,6 +129,7 @@ class App extends Component {
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
+			<LanguagePractice path={routes.LANGUAGE_PRACTICE} />,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,

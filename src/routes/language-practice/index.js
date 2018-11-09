@@ -1,0 +1,218 @@
+import { h, Component } from 'preact';
+import Helmet from 'preact-helmet';
+import { bindActionCreators } from 'redux';
+import { connect } from 'preact-redux';
+import { hideSearchBox } from '../../actions';
+import Prismic from 'prismic-javascript';
+import PrismicReact from 'prismic-reactjs';
+import Spinner from '../../components/global/spinner';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll'
+import ScrollToTop from'react-scroll-up'
+import FontAwesome from 'react-fontawesome';
+
+
+import InfoComponent from '../../components/new-landing/info-component'
+import PhotoCards from '../../components/new-landing/photo-cards'
+import FeaturedServices from '../../components/new-landing/featured-services'
+import HowWorksSteps from '../../components/language-practice/how-works-steps'
+import LandingFAQ from '../../components/new-landing/landing-faq'
+import AppDetails from '../../components/new-landing/app-details'
+import ProDetails from '../../components/new-landing/pro-details'
+import BlogArticles from '../../components/new-landing/blog-articles'
+import ContactForm from '../../components/new-landing/contact-form'
+
+import { route } from 'preact-router';
+//import { verify, sendContactData, clearContactData } from '../../actions/user';
+import style from './style.scss';
+
+// mock-data
+import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data';
+
+import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+
+const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
+
+class LanguagePractice extends Component {
+  constructor(props){
+    super(props);
+/*    this.state =  {
+      page: null,
+      notFound: false,
+      verifyFailure: false,
+      fetchingPage: true,
+      fetchingFeaturedPost: true,
+      fetchingRecentPosts: true
+    }
+    this.contactUs = null;
+    this.fetchPage = this.fetchPage.bind(this);
+    this.fetchFeatuedPost = this.fetchFeatuedPost.bind(this);
+    this.fetchRecentPosts = this.fetchRecentPosts.bind(this);*/
+  }
+/*  scrollToContact = () => {
+    const {hash} = window.location;
+
+    hash && (
+      (hash.indexOf('blog') + 1) &&
+      (this.scrollInterval = setInterval(() => {
+        this.contactUs !== null && (
+          scroller.scrollTo('blogElement', {
+            spy: true,
+            smooth: true,
+            duration: 500,
+          }),
+            clearInterval(this.scrollInterval),
+            this.scrollInterval = null
+        )
+      }, 100)),
+      (hash.indexOf('how-it-works') + 1) &&
+      (this.scrollInterval = setInterval(() => {
+        this.contactUs !== null && (
+          scroller.scrollTo('howWorksElement', {
+            spy: true,
+            smooth: true,
+            duration: 500,
+            offset: -30,
+          }),
+            clearInterval(this.scrollInterval),
+            this.scrollInterval = null
+        )
+      }, 100)),
+      (hash.indexOf('become-pro') + 1) &&
+      (this.scrollInterval = setInterval(() => {
+        this.contactUs !== null && (
+          scroller.scrollTo('becomeProElement', {
+            spy: true,
+            smooth: true,
+            duration: 500,
+            offset: -70,
+          }),
+            clearInterval(this.scrollInterval),
+            this.scrollInterval = null
+        )
+      }, 100))
+    )
+  }
+  componentDidMount(){
+    //	window.scrollTo(0, 0);
+    if (this.props.prismicCtx) {
+      this.fetchPage(this.props);
+      this.fetchRecentPosts(this.props);
+      this.fetchFeatuedPost(this.props);
+    }
+
+    if (typeof this.props.token != 'undefined') {
+      this.props.verify(this.props.token)
+    }
+    this.scrollToContact();
+  }
+  componentWillReceiveProps(nextProps){
+    if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
+      this.fetchPage(nextProps);
+      this.fetchRecentPosts(nextProps);
+      this.fetchFeatuedPost(nextProps);
+    }
+
+    if (nextProps.verifySuccess) {
+      route('/log-in');
+    }
+
+    if (nextProps.verifyFailure) {
+      this.setState({
+        verifyFailure: true
+      })
+    }
+
+  }
+  fetchFeatuedPost(props){
+    let that = this;
+    props.prismicCtx.api.query([
+        Prismic.Predicates.at('document.type', 'blog_post'),
+        Prismic.Predicates.at('document.tags', ['featured'])
+      ],
+      { orderings : '[document.first_publication_date desc]' }
+    ).then(function(response) {
+      that.setState({
+        fetchingFeaturedPost: false,
+        featuredPost: processPostThumbnailData(response.results[0])
+      })
+    });
+  }
+  fetchRecentPosts(props){
+    let that = this;
+    props.prismicCtx.api.query([
+        Prismic.Predicates.at('document.type', 'blog_post'),
+        Prismic.Predicates.not('document.tags', ['featured'])
+      ],
+      { pageSize: 4, orderings : '[document.first_publication_date desc]' }
+    ).then(function(response) {
+      that.setState({
+        fetchingRecentPosts: false,
+        recentPosts: processRecentPosts(response.results)
+      })
+    });
+  }
+  componentWillUnmount(){
+    clearInterval(this.scrollInterval);
+    this.scrollInterval = null;
+  }*/
+
+/*
+  fetchPage(props) {
+    let that = this;
+    props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+      console.log(page.data);
+      that.setState({fetchingPage: false, page: processHomepageData(page.data)})
+    });
+  }
+*/
+
+
+  render() {
+   // if (!this.state.fetchingPage) {
+      const pageData = this.state.page;
+      const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
+      return (
+        <div id="language-practice">
+
+          <HowWorksSteps />
+
+          <div class={style.iosAppSection}>
+            <AppDetails appLink={appLink} content={pageData.app} />
+          </div>
+
+          <ScrollToTop showUnder={150} style={{zIndex: 1002}}>
+            <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
+          </ScrollToTop>
+        </div>
+
+      );
+/*    }
+    return (
+      <div  className="uk-container uk-container-small" id="staticPage" >
+        <Spinner />
+      </div>
+
+    );*/
+
+  }
+}
+
+const mapStateToProps = (state) => ({
+  /*  hiddenSearchBox: state.hiddenSearchBox,
+    verifySuccess: state.verifySuccess,
+    verifyFailure: state.verifyFailure,*/
+  userData: state.loggedInUser,
+  //sendContactMessageInfo: state.sendContactMessage
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  hideSearchBox,
+  verify,
+  sendContactData,
+  clearContactData,
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LanguagePractice);
