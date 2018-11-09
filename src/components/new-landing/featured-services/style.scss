@@ -5,11 +5,17 @@
 	
 	.header {
 		color: $hBlack;
-		font-size: 32px;
+		font-size: 22px;
 		margin-bottom: 40px;
-        line-height: 60px;
+        line-height: 2.9;
         font-family: 'Krub', sans-serif;
-        font-weight: 400;
+        font-weight: 500;
+
+      @media (max-width: 880px) {
+        font-size: 32px;
+        text-align: center;
+        line-height: 1.5;
+      }
 	}
 	.services{
 		display: flex;
