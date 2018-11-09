@@ -56,19 +56,12 @@ export function processPostText(postData){
         switch (type) {
             case 'list-item':
                 return (<li>{content}</li>);
-                break;
-
             case 'heading2':
                 return (<h2>{content}</h2>);
-                break;
-
             case 'heading3':
                 return (<h3>{content}</h3>);
-                break;
-
             default:
                 return (<p>{content}</p>);
-                break;
         }
         },
         nodes = [];
