@@ -11,7 +11,14 @@ import style from './style.scss';
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
-  const rightPosition = (window.screen.width-1200)/2;
+  let rightPosition;
+  if(window.screen.width>1200){
+    rightPosition = (window.screen.width-1200)/2;
+  }else if(window.screen.width<1200){
+    rightPosition = 15;
+  } else if(window.screen.width<880){
+    rightPosition = 0;
+  }
   return (
     <div className={className} onClick={onClick} style={{ ...style, right: `${rightPosition}px` }}>
       <FontAwesome name="angle-right" size="2x" />
@@ -21,7 +28,12 @@ function SampleNextArrow(props) {
 
 function SamplePrevArrow(props) {
   const { className, onClick } = props;
-  const rightPosition = (window.screen.width-1200)/2+64;
+  let rightPosition;
+  if(window.screen.width>1200){
+    rightPosition = (window.screen.width-1200)/2+64;
+  }else if(window.screen.width<1200){
+    rightPosition = 15+64;
+  }
   return (
     <div className={className} onClick={onClick} style={{ ...style, right: `${rightPosition}px` }}>
       <FontAwesome name="angle-left" size="2x" />

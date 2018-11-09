@@ -137,6 +137,17 @@
     transition: border .3s ease;
     margin-left: 16px;
 
+		@media (max-width: 1200px) {
+			right: 15px!important;
+		}
+		@media (max-width: 880px) {
+			right: 0!important;
+			left: 50%;
+			top: 100%;
+			bottom: auto;
+			margin-top: 60px;
+		}
+
     &:before {
       content: ''
     }
@@ -167,7 +178,15 @@
 
   .slick-prev {
     left: auto;
-    right: 60px;
+
+		@media (max-width: 1200px) {
+			right: 79px!important;
+		}
+		@media (max-width: 880px) {
+			right: 0!important;
+			left: 50%;
+			margin-left: -56px;
+		}
   }
 }
 
