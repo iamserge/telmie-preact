@@ -49,27 +49,6 @@ class BlogPosts extends Component {
     this.state = { visibleSlides: 5 };
   }
 
-  updateNumberOfSlides() {
-    if(window.screen.width <= 640){
-      this.setState({ visibleSlides: 1 });
-    }
-    else if (window.screen.width <= 980){
-      this.setState({ visibleSlides: 2 });
-    }
-    else if (window.screen.width <= 1200){
-      this.setState({ visibleSlides: 3 });
-    }
-    else if (window.screen.width <= 1500){
-      this.setState({ visibleSlides: 4 });
-    }
-  }
-
-  componentWillMount() {
-    this.updateNumberOfSlides();
-  }
-  componentDidMount() {
-    window.addEventListener('resize', this.updateNumberOfSlides());
-  }
 
   render(){
     const allPosts = this.props.blogPosts;
@@ -80,7 +59,6 @@ class BlogPosts extends Component {
       slidesToShow: 4,
       slidesToScroll: 1,
       variableWidth: true,
-     // initialSlide: 1,,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,
       responsive: [
@@ -132,41 +110,6 @@ class BlogPosts extends Component {
               </div>
             ))}
           </Slider>
-
-{/*
-          <CarouselProvider
-            className={style.blogPostsSlider}
-            naturalSlideWidth={294}
-            naturalSlideHeight={372}
-            totalSlides={allPosts.length}
-            visibleSlides={this.state.visibleSlides}
-            dragEnabled={false}
-          >
-            <div class={`${style.blogPostsTitle} uk-container`}>
-              <h3>Other posts</h3>
-              <div class={style.blogPostsArrows}>
-                <ButtonBack><FontAwesome name="angle-left" size="2x" /></ButtonBack>
-                <ButtonNext><FontAwesome name="angle-right" size="2x" /></ButtonNext>
-              </div>
-            </div>
-            <Slider>
-              {allPosts.map(post => (
-                <li class={style.blogPost} key={post.id} style={{
-                  background: `url('${post.img}') no-repeat center`,
-                  backgroundSize: "auto 100%"
-                }}>
-                  <Link href={post.link}>
-                    <div class={style.blogPostDescription}>
-                      <p class={style.date}>{post.date}</p>
-                      <p class={style.title}>{post.title}</p>
-                      <button class="red-btn">Full story</button>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </Slider>
-          </CarouselProvider>
-*/}
         </div>
       </div>
     )
