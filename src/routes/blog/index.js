@@ -40,7 +40,7 @@ class BlogPage extends Component {
 		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
-		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
 			|| (this.props.uid !== nextProps.uid)) {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
@@ -53,7 +53,7 @@ class BlogPage extends Component {
 	}
 	fetchPost(props) {
 		let that = this;
-		
+
 		props.prismicCtx && props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
 			scroll.scrollToTop();
 			that.setState({ fetchingPost: false, post: processPostData(post.data) })
@@ -72,7 +72,6 @@ class BlogPage extends Component {
 				recentPosts: processRecentPosts(response.results)
 			})
 		});
-		
 	}
 
 	render() {

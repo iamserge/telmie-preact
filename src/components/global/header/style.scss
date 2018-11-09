@@ -72,16 +72,27 @@
 		height: 40px;
 	}
 }
+
+.title {
+  font-family: 'Krub', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.6667;
+  letter-spacing: -.3px;
+  padding-left: 16px;
+  border-left: 1px solid #f2f2f2;
+  margin-left: 16px;
+
+  @media (max-width: 880px) {
+    font-size: 18px;
+    letter-spacing: -.3px;
+    padding-left: 12px;
+    margin-left: 12px;
+  }
+}
+
 #leftNav {
 	margin-left: 40px;
-
-	&Text {
-		margin-left: 16px;
-
-		@media (max-width: 880px) {
-			margin-left: 12px;
-		}
-	}
 }
 #signUp {
 	color: $red !important;

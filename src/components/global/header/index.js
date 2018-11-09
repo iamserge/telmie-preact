@@ -88,16 +88,16 @@ class Header extends Component {
 					<Link href={routes.HOME} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
-          { !isAtBlog && (
+          { isAtBlog ? <b class={style.title}>Blog</b> : null }
             <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
               <span></span>
               <span></span>
               <span></span>
             </span>
-          )}
 
 
-					<ul className="uk-navbar-nav" id={isAtBlog ? style.leftNavText : style.leftNav}>
+
+					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
               /*isLogin ? ([
                 (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
@@ -105,9 +105,10 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
-              isAtBlog ? ([
+/*              isAtBlog ? ([
                 <li><b>Blog</b></li>
-              ]) : ([
+              ]) : */([
+              //isAtBlog ? (<li><b>Blog</b></li>) : null,
                 <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
