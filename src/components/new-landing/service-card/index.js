@@ -6,6 +6,7 @@ const ServiceCard = ({background, serviceName, description, downloadApp}) => {
     
     return (
         <div style={cardStyle} class={style.serviceCard}>
+          <div>
             <div class={style.serviceName}>{serviceName}</div>
             <div class={style.serviceInfo}>
                 <div class={style.description}>
@@ -14,6 +15,7 @@ const ServiceCard = ({background, serviceName, description, downloadApp}) => {
                 </div>
                 <button class='red-btn' onClick={downloadApp}>Download app</button>
             </div>
+          </div>
         </div>
 	)
 }

@@ -1,84 +1,95 @@
 @import './src/style/variables';
 
-.proContainer{
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	align-items: stretch;
+.proContainer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
 
-	.textContent{
-		display: inline-block;
-		width: 50%;
+  .textContent {
+    display: inline-block;
+    width: 50%;
 
-		.header{
-			font-size: 40px;
-			color: $hBlack;
-            margin-bottom: 24px;
-            font-family: 'Krub', sans-serif;
-            font-weight: 300;
-		}
-		.content{
-			font-size: 18px;
-			line-height: 32px;
-			margin-bottom: 40px;
-		}
-		button{
-			margin-bottom: 107px;
-		}
-	}
-	.imgContent{
-		display: inline-block;
-		position: relative;
-		bottom: 0;
-		height: 100%;
-		min-height: 500px;
-		width: 50%;
+    .header {
+      font-size: 40px;
+      color: $hBlack;
+      margin-bottom: 24px;
+      font-family: 'Krub', sans-serif;
+      font-weight: 300;
 
-		.girl_pro{
-			position: absolute;
-			z-index: 10;
-			bottom: 0;
-			right: calc(50% - 180px);
-		}
-		.polygon_small{
-			position: absolute;
-			z-index: 9;
-			top: 63px;
-			left: 92px;
-		}
-		.polygon_medium{
-			position: absolute;
-			z-index: 8;
-			top: 167px;
-			right: 115px;
-		}
-		.polygon_large{
-			position: absolute;
-			z-index: 7;
-			bottom: 106px;
-			left: 24px;
-		}
-		.combinedShape{
-			position: absolute;
-			z-index: 7;
-			top: 192px;
-			right: 0;
-		}
-	}
-
-	@media (max-width: 880px) {
-		.imgContent {
-			width: 100%;
-		}
-
-		.textContent {
-            text-align: center;
-            width: 100%;
-
-            button{
-                margin-bottom: 75px;
-            }
-		}
+      @media (max-width: 880px) {
+        font-size: 30px;
+      }
     }
+    .content {
+      font-size: 18px;
+      line-height: 32px;
+      margin-bottom: 40px;
+      @media (max-width: 880px) {
+        font-size: 16px;
+      }
+    }
+    button {
+      margin-bottom: 107px;
+    }
+  }
+  .imgContent {
+    display: inline-block;
+    position: relative;
+    bottom: 0;
+    height: 100%;
+    min-height: 500px;
+    width: 50%;
+
+    .girl_pro {
+      position: absolute;
+      z-index: 10;
+      bottom: 0;
+      right: calc(50% - 180px);
+
+      @media (max-width: 880px) {
+        right: 0;
+      }
+    }
+    .polygon_small {
+      position: absolute;
+      z-index: 9;
+      top: 63px;
+      left: 92px;
+    }
+    .polygon_medium {
+      position: absolute;
+      z-index: 8;
+      top: 167px;
+      right: 115px;
+    }
+    .polygon_large {
+      position: absolute;
+      z-index: 7;
+      bottom: 106px;
+      left: 24px;
+    }
+    .combinedShape {
+      position: absolute;
+      z-index: 7;
+      top: 192px;
+      right: 0;
+    }
+  }
+
+  @media (max-width: 880px) {
+    .imgContent {
+      width: 100%;
+    }
+
+    .textContent {
+      text-align: center;
+      width: 100%;
+
+      button {
+        margin-bottom: 75px;
+      }
+    }
+  }
 }

@@ -1,109 +1,110 @@
 @import './src/style/variables';
 
-.iosAppContainer{
+.iosAppContainer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .textContent {
+    display: inline-block;
+    width: 50%;
+    color: white;
+    padding-top: 120px;
+
+    .header {
+      font-size: 48px;
+      margin-bottom: 24px;
+      font-family: 'Krub', sans-serif;
+      font-weight: 300;
+    }
+    .subHeader {
+      font-size: 18px;
+      line-height: 32px;
+      margin-bottom: 40px;
+    }
+    .btn {
+      margin-bottom: 125px;
+      cursor: pointer;
+    }
+  }
+  .imgContent {
+    display: inline-block;
+    width: 50%;
     position: relative;
-	display: flex;
-	flex-wrap: wrap;
-    justify-content: space-around;
-    
-    .textContent{
-        display: inline-block;
-        width: 50%;
-        color: white;
-        padding-top: 120px;
+    height: 100%;
+    min-height: 490px;
 
-        .header{
-            font-size: 48px;
-            margin-bottom: 24px;
-            font-family: 'Krub', sans-serif;
-            font-weight: 300;
-        }
-        .subHeader{
-            font-size: 18px;
-            line-height: 32px;
-            margin-bottom: 40px;
-        }
-        .btn{
-            margin-bottom: 125px;
-            cursor: pointer;
-        }
+    .appScreen {
+      position: absolute;
+      z-index: 10;
+      width: 347px;
+      height: 549px;
+      top: 30px;
+      right: calc(50% - 175px);
     }
-    .imgContent{
-        display: inline-block;
-        width: 50%;
-        position: relative;
-        height: 100%;
-		min-height: 490px;
+    .combinedShapeLeft {
+      position: absolute;
+      z-index: 8;
+      top: 23%;
+      left: 10%;
+    }
+    .combinedShapeRight {
+      position: absolute;
+      z-index: 8;
+      top: 60%;
+      right: 8%;
+      width: 135px;
+      height: 135px;
+    }
+    .polygon_large {
+      position: absolute;
+      z-index: 7;
+      top: 24%;
+      left: 12%;
+    }
+    .polygon_small {
+      position: absolute;
+      z-index: 9;
+      bottom: 29%;
+      left: 9%;
+    }
+  }
 
-        .appScreen{
-            position: absolute;
-            z-index: 10;
-            width: 347px;
-            height: 549px;
-			top: 30px;
-			right: calc(50% - 175px);
-        }
-        .combinedShapeLeft{
-            position: absolute;
-            z-index: 8;
-            top: 23%;
-            left: 10%;
-        }
-        .combinedShapeRight{
-            position: absolute;
-            z-index: 8;
-            top: 60%;
-            right: 8%;
-            width: 135px;
-            height: 135px;
-        }
-        .polygon_large{
-            position: absolute;
-            z-index: 7;
-            top: 24%;
-            left: 12%;
-        }
-        .polygon_small{
-            position: absolute;
-            z-index: 9;
-            bottom: 29%;
-            left: 9%;
-        }
+  @media (max-width: 880px) {
+    margin-bottom: 100px !important;
+    text-align: center;
+    .textContent {
+      padding-top: 60px;
     }
-
-    @media (max-width: 880px) {
-        margin-bottom: 100px !important;
-        text-align: center;
-        .textContent {
-            padding-top: 60px;
-        }
-		.imgContent{
-            width: 100%;
-            height: 350px;
-            min-height: 300px;
-            .appScreen{
-                height: 370px;
-                width: 248px;
-            }
-            .polygon_large{
-                width: 223px;
-                height: 223px;
-                left: 25%;
-            }
-            .polygon_small{
-                left: 18%;
-            }
-            .combinedShapeLeft{
-                width: 99px;
-                height: 99px;
-                left: 22%;
-            }
-        }
-        .textContent{
-            width: 100%;
-            .btn{
-                margin-bottom: 50px;
-            }
-        }
+    .imgContent {
+      width: 100%;
+      height: 350px;
+      min-height: 300px;
+      .appScreen {
+        height: 370px;
+        width: 248px;
+        right: 0;
+      }
+      .polygon_large {
+        width: 223px;
+        height: 223px;
+        left: 25%;
+      }
+      .polygon_small {
+        left: 18%;
+      }
+      .combinedShapeLeft {
+        width: 99px;
+        height: 99px;
+        left: 22%;
+      }
     }
+    .textContent {
+      width: 100%;
+      .btn {
+        margin-bottom: 50px;
+      }
+    }
+  }
 }
