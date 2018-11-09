@@ -21,7 +21,7 @@ const HowWorksSteps = ({steps = []}) => {
               ))}
           </div>
 
-          <Link href="" className="red-btn">Sign up & Become Pro</Link>
+          <Link href=""><button className="red-btn">Sign up & Become Pro</button></Link>
         </div>
       </div>
     )
