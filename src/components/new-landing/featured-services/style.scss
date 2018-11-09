@@ -29,6 +29,8 @@
     @media (max-width: 1200px) {
         .services{
             justify-content: center;
+            width: 80%;
+            margin: 0 auto;
             
             & > div{
                 width: 100%;
@@ -38,6 +40,11 @@
 
     @media (max-width: 880px) {
         margin-bottom: 50px !important;
+
+      .services {
+        width: 100%;
+      }
+
         .header {
             text-align: center;
         }
