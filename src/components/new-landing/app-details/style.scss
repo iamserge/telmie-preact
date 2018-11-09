@@ -84,7 +84,6 @@
       .appScreen {
         height: 370px;
         width: 248px;
-        right: 0;
       }
       .polygon_large {
         width: 223px;
@@ -105,6 +104,11 @@
       .btn {
         margin-bottom: 50px;
       }
+    }
+  }
+  @media (max-width: 400px) {
+    .imgContent .appScreen {
+      right: 0;
     }
   }
 }
