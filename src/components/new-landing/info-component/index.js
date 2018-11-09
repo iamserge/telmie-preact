@@ -2,7 +2,7 @@ import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
 import style from './style.scss';
 
-const InfoComponent = ({mainSection}) => {
+const InfoComponent = ({mainSection, appLink}) => {
     const downloadApp = () => appLink && window.open(appLink);
     const titleObj = mainSection.title.split('{words}');
     return (
