@@ -5,7 +5,7 @@
   flex: 1;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 130px auto;
+  margin: 130px auto 0;
   align-items: center;
 
   .howWorksText {
@@ -14,7 +14,6 @@
     padding: 15px 0;
     width: 50%;
     padding-right: 10px;
-    max-width: 500px ;
 
     @media (max-width: 880px) {
       margin-bottom: 60px;
@@ -36,6 +35,10 @@
     font-weight: 300;
   }
 
+  .text {
+    max-width: 530px;
+  }
+
   &Right {
     flex-direction: row-reverse;
 
@@ -45,14 +48,14 @@
     .howWorksVideo {
       text-align: center;
     }
-  }
 
-  @media (max-width: 1200px) {
-
+    .text {
+      float: right;
+    }
   }
 
   @media (max-width: 880px) {
-    margin-bottom: 55px;
+    margin: 60px auto 0;
     padding: 0;
     width: 100%;
     max-width: none;
@@ -61,6 +64,10 @@
 
     .header {
       font-size: 32px;
+    }
+
+    .text {
+      max-width: none;
     }
 
     .howWorksText, .howWorksVideo {

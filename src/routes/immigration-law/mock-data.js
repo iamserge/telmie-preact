@@ -8,19 +8,19 @@ export const steps = [{
   text: 'Once you submit your Pro application, we promise to review within one working day. When this is complete you will be notified via email.'
 }, {
   id: 3,
-  title: 'Become visible in search',
-  text: 'Once your Pro application is approved, you automatically become visible in Telmie search. This means new customers will begin finding you, texting you and eventually calling you to get your assistance.'
+  title: 'Invite your existing clients',
+  text: 'Whilst your Pro application is being reviewed you can invite your existing clients and provide your services to them immediately. We offer a reduced 5% Telmie fee for working with clients you invite to the platform.'
 }, {
   id: '$',
-  title: 'Receive payouts to your bank account',
-  text: 'All earned credit can be easily withdrawn directly in to your bank account.'
+  title: 'Onboard new customers',
+  text: 'Upon approval your profile will become visible in Telmie search. This will open a way for onboarding great new customers from anywhere in the world. '
 }];
 
 export const textMain = [{
   id: 1,
-  main: 'Earn money while you chat.',
-  title: 'Help others learn your language with friendly conversation.',
-  text: 'Make extra money as a language practice Pro. Simply download Telmie and help others learn your language.',
+  main: 'get paid instantly',
+  title: 'Onboard new customers, provide immigration advice',
+  text: 'Onboard new customers through the Telmie platform. Register for free and get new business straight away.',
   img: '/assets/pages/map.jpg'
 }];
 
@@ -28,15 +28,15 @@ export const texts = {
   block1: [{
     id: 1,
     right: false,
-    title: 'Start earning instantly',
-    text: 'Our platform gives Pros instant access to thousands of users looking for great services and it’s really easy to get started. Payment is automatic and is deposited directly into your bank account.',
-    img: '/assets/pages/start.jpg',
+    title: 'Worldwide multilingual market',
+    text: 'Telmie is available worldwide, so will be your service once you register as a Pro. If you are lucky enough to speak several languages, there will be more clients getting in touch. Many customers prefer discussing immigration matters in their first language, even when their English is fluent.',
+    img: '/assets/pages/map.jpg',
     videoId: false
   }],
   block2: [{
     id: 2,
     right: true,
-    title: 'Promote your services',
+    title: 'Telmie will promote your services',
     text: 'We\'re partners from the moment you sign up. That means we\'ll show your profile to thousands of potential customers, and even shoot professional photos and videos for the most active Pros. Because we know that partners succeed together.',
     img: '/assets/pages/promote-service.jpg',
     videoId: false
@@ -48,24 +48,32 @@ export const texts = {
     text: 'Our fee structure is very simple and fair. Pros receive 90% of everything their customers pay. The remaining 10% covers card processing fee and the platform running costs.',
     img: '/assets/pages/diagram.jpg',
     videoId: false
+  }],
+  block4: [{
+    id: 4,
+    right: true,
+    title: 'Simple registration process',
+    text: 'Our application process is very simple and can take as little as 20 minutes. You can then provide services to existing clients instantly. New customers will be able to see you on the platform as soon as the Pro application is approved by us, usually the following day. ',
+    img: '/assets/pages/app-in-phone.png',
+    videoId: false
   }]
 };
 
 export const reasons = [{
   id: 1,
-  icon: '/assets/icons/qualification@3x.png',
-  title: 'No qualifications needed',
-  text: 'All we require is that you’re friendly and a great conversationalist.'
+  icon: '/assets/icons/users@3x.png',
+  title: 'Expand your client base',
+  text: 'Onboard new customers through the Telmie platform. Register for free and get new business straight away.'
 }, {
   id: 2,
-  icon: '/assets/icons/settings@3x.png',
-  title: 'It\'s flexible',
-  text: 'Pick your own hours and work from anywhere you want – all you need is an iPhone and the Telmie app.'
+  icon: '/assets/icons/payments@3x.png',
+  title: 'Accept bank cards instantly',
+  text: 'Telmie is one of the easiest ways for experts like you to accept credit and debit cards. We do all card accepting for you, you simply receive payments into your bank account.'
 }, {
   id: 3,
-  icon: '/assets/icons/rewards@3x.png',
-  title: 'It\'s rewarding',
-  text: 'Help real people develop whilst improving your own skills and bolstering your resume.'
+  icon: '/assets/icons/settings@3x.png',
+  title: 'It\'s flexible',
+  text: 'Be able to help clients wherever you are with the Telmie mobile app. Accept requests 24/7, respond when you have free time.'
 }];
 
 export const reviews = [{
