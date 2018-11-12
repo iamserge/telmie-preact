@@ -212,3 +212,11 @@ export function processHomepageData(data){
     }
     return processedData;
 }
+
+export function processLangPracticeData(data){
+    let processedData = {};
+
+    processedData = { ...data };
+
+    return processedData;
+}

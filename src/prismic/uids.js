@@ -5,5 +5,6 @@ export const uids = {
 	TERMS: 'WoRP8igAACIAcojC',
 	PRIVACY: 'WoRQ-SgAACgAco1K',
 	CONTACT_US: 'WoRRbigAACgAco9L',
-	REGISTRATION: 'Wu7sWiUAAKoBSMxT'
+	REGISTRATION: 'Wu7sWiUAAKoBSMxT',
+	LANGUAGE_PRACTICE: 'W-m3FxAAACoAaksf',
 };

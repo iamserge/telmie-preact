@@ -22,7 +22,7 @@ import style from './style.scss';
 // mock-data
 import { steps, reasons, reviews } from './mock-data';
 
-import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { processLangPracticeData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -38,11 +38,22 @@ class LanguagePractice extends Component {
 
   }
 
-  fetchPage(props) {
+
+  componentDidMount(){
+      //window.scrollTo(0, 0);
+      this.props.prismicCtx && this.fetchPage(this.props);
+  }
+  componentWillReceiveProps(nextProps){
+    (this.props.prismicCtx == null 
+      && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
+	}
+
+
+  fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       console.log(page.data);
-      that.setState({fetchingPage: false, page: processHomepageData(page.data)})
+      that.setState({fetchingPage: false, page: processLangPracticeData(page.data)})
     });
   }
 
