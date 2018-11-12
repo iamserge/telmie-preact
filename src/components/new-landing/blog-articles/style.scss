@@ -1,5 +1,5 @@
-
 @import './src/style/variables';
+
 .blogConteiner{
     display: flex;
     flex-wrap: wrap;
@@ -56,7 +56,6 @@
     margin-right: 2%;
     font-family: 'Krub', sans-serif;
     font-weight: 500;
-    
     margin-bottom: 30px;
     border-radius: 10px;
     overflow: hidden;
@@ -104,6 +103,12 @@
         width: 100%;
     }
 
+    &:hover {
+        .title,
+        button {
+            text-decoration: underline;
+        }
+    }
 }
 
 @media (max-width: 1400px) { 

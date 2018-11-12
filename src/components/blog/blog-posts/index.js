@@ -1,45 +1,23 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
-/*import { CarouselProvider, Slider, ButtonBack, ButtonNext } from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';*/
 import Slider from "react-slick";
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import style from './style.scss';
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  let rightPosition;
-  if(window.screen.width>1200){
-    rightPosition = (window.screen.width-1200)/2;
-  }else if(window.screen.width<1200){
-    rightPosition = 15;
-  } else if(window.screen.width<880){
-    rightPosition = 0;
-  }
-  return (
-    <div className={className} onClick={onClick} style={{ ...style, right: `${rightPosition}px` }}>
+const SampleNextArrow = ({className, onClick, style}) => (
+    <div class={className} onClick={onClick} style={style}>
       <FontAwesome name="angle-right" size="2x" />
     </div>
-  );
-}
+);
 
-function SamplePrevArrow(props) {
-  const { className, onClick } = props;
-  let rightPosition;
-  if(window.screen.width>1200){
-    rightPosition = (window.screen.width-1200)/2+64;
-  }else if(window.screen.width<1200){
-    rightPosition = 15+64;
-  }
-  return (
-    <div className={className} onClick={onClick} style={{ ...style, right: `${rightPosition}px` }}>
+const SamplePrevArrow = ({className, onClick, style}) => (
+    <div class={className} onClick={onClick} style={style}>
       <FontAwesome name="angle-left" size="2x" />
     </div>
-  );
-}
+);
 
 
 class BlogPosts extends Component {

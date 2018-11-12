@@ -418,6 +418,22 @@ button.white-btn {
 	}
 }
 
+.slick-next{
+	right: calc(50% - 530px) !important;
+}
+.slick-prev{
+	right: calc(50% - 530px + 64px) !important;
+}
+
+@media (max-width: 1200px) {
+    .slick-next{
+		right: 15px !important;
+	}
+	.slick-prev{
+		right: calc(15px + 64px) !important;
+	}
+}
+
 @media (max-width: 880px) {
     .uk-container-small {
         width: auto;
@@ -439,5 +455,11 @@ button.white-btn {
 	}
 	#homepage .uk-container-big {
 		margin: 0;
+	}
+	.slick-next{
+		right: 0 !important;
+	}
+	.slick-prev{
+		right: 64px !important;
 	}
 }
