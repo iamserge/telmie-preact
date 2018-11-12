@@ -1,0 +1,76 @@
+@import './src/style/variables';
+
+.TextBlock {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 130px auto;
+  align-items: center;
+
+  .howWorksText {
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    padding: 15px 0;
+    width: 50%;
+    padding-right: 10px;
+    max-width: 500px ;
+
+    @media (max-width: 880px) {
+      margin-bottom: 60px;
+    }
+  }
+  .howWorksVideo {
+    width: 50%;
+    text-align: center;
+    & > div {
+      width: 100%;
+    }
+  }
+
+  .header {
+    color: $hBlack;
+    font-size: 40px;
+    margin-bottom: 25px;
+    font-family: 'Krub', sans-serif;
+    font-weight: 300;
+  }
+
+  &Right {
+    flex-direction: row-reverse;
+
+    .howWorksText{
+      text-align: right;
+    }
+    .howWorksVideo {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 1200px) {
+
+  }
+
+  @media (max-width: 880px) {
+    margin-bottom: 55px;
+    padding: 0;
+    width: 100%;
+    max-width: none;
+    text-align: center;
+    flex-direction: column-reverse;
+
+    .header {
+      font-size: 32px;
+    }
+
+    .howWorksText, .howWorksVideo {
+      width: 80%;
+      max-width: none;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .howWorksVideo {
+      margin-bottom: 60px;
+    }
+  }
+}

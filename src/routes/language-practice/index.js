@@ -13,6 +13,8 @@ import FontAwesome from 'react-fontawesome';
 import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
+import TextBlock from '../../components/language-practice/text-block'
+import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 
 import { route } from 'preact-router';
@@ -20,7 +22,7 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { steps, reasons, reviews } from './mock-data';
+import { steps, reasons, reviews, texts, textMain } from './mock-data';
 
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 
@@ -54,7 +56,15 @@ class LanguagePractice extends Component {
       return (
         <div id="language-practice">
 
+          <TextBlockMain textMain={textMain} appLink={appLink} />
+
           <HowWorksSteps steps={steps} />
+
+          <TextBlock text={texts.block1} />
+
+          <TextBlock text={texts.block2} />
+
+          <TextBlock text={texts.block3} />
 
           <WhyChooseUs reasons={reasons} />
 
