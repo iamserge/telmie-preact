@@ -16,29 +16,42 @@ export const steps = [{
   text: 'All earned credit can be easily withdrawn directly in to your bank account.'
 }];
 
+export const reasons = [{
+  icon: 1,
+  title: 'No qualifications needed',
+  text: 'All we require is that you’re friendly and a great conversationalist.'
+}, {
+  icon: 2,
+  title: 'It\'s flexible',
+  text: 'Pick your own hours and work from anywhere you want – all you need is an iPhone and the Telmie app.'
+}, {
+  icon: 3,
+  title: 'It\'s rewarding',
+  text: 'Help real people develop whilst improving your own skills and bolstering your resume.'
+}];
 
 export const reviews = [{
   id: 1,
   title: 'Great people to talk with',
   text: 'Once you submit your Pro application, we promise to review within one working day. When this is complete you will be notified via email.',
   author: 'Dashonte Clarke',
-  avatar: '/assests/experts/expert1.png'
+  avatar: '/assets/experts/expert1.png'
 }, {
   id: 2,
   title: 'Amazing product, amazing team!',
   text: 'Once you submit your Pro application, we promise to review within one working day. When this is complete you will be notified via email.',
   author: 'Dashonte Clarke',
-  avatar: '/assests/experts/expert2.png'
+  avatar: '/assets/experts/expert2.png'
 }, {
   id: 3,
   title: 'Happy to be part of Telmie',
   text: 'Once you submit your Pro application, we promise to review within one working day. When this is complete you will be notified via email.',
   author: 'Happy to be part of Telmie',
-  avatar: '/assests/experts/expert3.png'
+  avatar: '/assets/experts/expert3.png'
 }, {
   id: '4',
   title: 'Telmie is ',
   text: 'Once you submit your Pro application, we promise to review within one working day. When this is complete you will be notified via email.',
   author: 'Phawta Tuntayakul',
-  avatar: '/assests/experts/expert4.png'
+  avatar: '/assets/experts/expert4.png'
 }];

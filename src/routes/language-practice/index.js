@@ -11,6 +11,8 @@ import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
 import HowWorksSteps from '../../components/language-practice/how-works-steps'
+import WhyChooseUs from '../../components/language-practice/why-choose-us'
+import HappyUsers from '../../components/language-practice/happy-users'
 import AppDetails from '../../components/new-landing/app-details'
 
 import { route } from 'preact-router';
@@ -18,7 +20,7 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { steps } from './mock-data';
+import { steps, reasons, reviews } from './mock-data';
 
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 
@@ -48,11 +50,15 @@ class LanguagePractice extends Component {
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
-      const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
+     // const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
       return (
         <div id="language-practice">
 
           <HowWorksSteps steps={steps} />
+
+          <WhyChooseUs reasons={reasons} />
+
+          <HappyUsers reviews={reviews} />
 
 {/*          <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
@@ -77,7 +83,7 @@ const mapStateToProps = (state) => ({
     hiddenSearchBox: state.hiddenSearchBox,
     verifySuccess: state.verifySuccess,
     verifyFailure: state.verifyFailure,
-    userData: state.loggedInUser,
+   // userData: state.loggedInUser,
     sendContactMessageInfo: state.sendContactMessage
 });
 
