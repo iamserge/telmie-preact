@@ -33,7 +33,6 @@ class HappyUsers extends Component {
     const settings = {
       infinite: true,
       centerMode: true,
-      adaptiveHeight: true,
       slidesToShow: 2,
       slidesToScroll: 1,
       variableWidth: true,
@@ -47,14 +46,7 @@ class HappyUsers extends Component {
           }
         },
         {
-          breakpoint: 979,
-          settings: {
-            slidesToShow: 2,
-            swipeToSlide: true
-          }
-        },
-        {
-          breakpoint: 639,
+          breakpoint: 880,
           settings: {
             slidesToShow: 1
           }

@@ -17,15 +17,18 @@ export const steps = [{
 }];
 
 export const reasons = [{
-  icon: 1,
+  id: 1,
+  icon: '/assets/icons/payments@3x.png',
   title: 'No qualifications needed',
   text: 'All we require is that you’re friendly and a great conversationalist.'
 }, {
-  icon: 2,
+  id: 2,
+  icon: '/assets/icons/settings@3x.png',
   title: 'It\'s flexible',
   text: 'Pick your own hours and work from anywhere you want – all you need is an iPhone and the Telmie app.'
 }, {
-  icon: 3,
+  id: 3,
+  icon: '/assets/icons/users@3x.png',
   title: 'It\'s rewarding',
   text: 'Help real people develop whilst improving your own skills and bolstering your resume.'
 }];

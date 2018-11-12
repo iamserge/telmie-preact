@@ -1,7 +1,5 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
-import FontAwesome from 'react-fontawesome';
-
 import style from './style.scss';
 
 const WhyChooseUs = ({reasons = []}) => {
@@ -13,8 +11,8 @@ const WhyChooseUs = ({reasons = []}) => {
 
           <div class={style.steps}>
             {reasons.map(reason => (
-                <div class={style.step} key={reason.icon}>
-                  <FontAwesome name={reason.icon} size='2x'/>
+                <div class={style.step} key={reason.id}>
+                  <img class={style.icon} src={reason.icon} alt={style.title} />
                   <div class={style.title}>{reason.title}</div>
                   <div>{reason.text}</div>
                 </div>

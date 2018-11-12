@@ -10,7 +10,7 @@
 	letter-spacing: -.3px;
 	border-radius: 10px;
 	border: 1px solid $cloudyBlue;
-	padding: 25px 55px 30px 70px;
+	padding: 25px 55px 10px 70px;
 
 	.avatar {
 		height: 92px;
@@ -39,7 +39,9 @@
 		}
 
 		@media (max-width: 880px) {
-
+			top: -46px;
+			left: 50%;
+			margin-left: -46px;
 		}
 	}
 
@@ -52,17 +54,31 @@
 		font: 500 16px/2 'Krub', sans-serif;
 		font-style: italic;
 		letter-spacing: -.3px;
+		position: relative;
 
 		&:before {
-			content: '-';
+			content: ' ';
+			display: inline-block;
+			background: $pinkishRed;
+			width: 15px;
+			height: 2px;
+			position: absolute;
+			left: -30px;
+			top: 50%;
+			margin-top: -1px;
 
+			@media (max-width: 880px) {
+				position: relative;
+				margin-right: 15px;
+				left: auto;
+				top: -4px;
+			}
 		}
 	}
 
 	&s{
-		margin: 60px auto 0;
-		padding: 20px 0 80px;
-		border-top: 2px solid $paleGrey;
+		margin: 0 auto;
+		padding: 50px 0 80px;
 		overflow-x: hidden;
 
 		@media (max-width: 880px) {
@@ -75,18 +91,46 @@
 
 		h2 {
 			font: 300 40px/1.6 'Krub', sans-serif;
+			text-align: center;
+			margin-bottom: 65px;
+
+			@media (max-width: 880px) {
+				font-size: 32px;
+			}
 		}
+	}
+
+	@media (max-width: 880px) {
+		padding: 60px 40px 20px;
+		width: 300px;
+		min-height: 410px;
+		margin: 0 10px;
 	}
 }
 
 :global {
+	#language-practice {
+		max-width: 1470px;
+		margin: auto;
+	}
+
+
   .slick-list {
     padding: 0 !important;
+
+		@media (max-width: 880px) {
+			overflow: initial;
+		}
   }
+
+	.slick-track {
+		display: flex;
+
+	}
 
   .slick-arrow {
     top: auto;
-    bottom: 107%;
+    bottom: 117%;
     right: 0;
     border-radius: 50%;
     border: 1px solid $cloudyBlue;
