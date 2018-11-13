@@ -40,8 +40,6 @@ class LanguagePractice extends Component {
     //  fetchingRecentPosts: true
     }
 
-    this.fetchPage = this.fetchPage.bind(this);
-
   }
 
 

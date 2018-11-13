@@ -31,19 +31,29 @@ class ImmigrationLaw extends Component {
   constructor(props){
     super(props);
     this.state =  {
+      page: null,
+      notFound: false,
       verifyFailure: false,
-      fetchingPage: false
+      fetchingPage: true,
     }
-
-    this.fetchPage = this.fetchPage.bind(this);
 
   }
 
-  fetchPage(props) {
+  componentDidMount(){
+    //window.scrollTo(0, 0);
+    this.props.prismicCtx && this.fetchPage(this.props);
+  }
+  componentWillReceiveProps(nextProps){
+    (this.props.prismicCtx == null 
+      && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
+  }
+
+
+  fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      console.log(page.data);
-      that.setState({fetchingPage: false, page: processHomepageData(page.data)})
+      console.log('info',page.data);
+      that.setState({fetchingPage: false, /*page: processLangPracticeData(page.data)*/})
     });
   }
 
@@ -70,7 +80,7 @@ class ImmigrationLaw extends Component {
           <WhyChooseUs reasons={reasons} />
 
           <HappyUsers reviews={reviews} />
-
+          
 {/*          <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>*/}
