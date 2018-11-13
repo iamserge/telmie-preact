@@ -206,7 +206,7 @@ const getReasons = (data) => {
 
   data.reasons.forEach((reason, index)=>{
     let reasonData = {
-      icon: reason.icon_name[0].text,
+      icon: reason.reason_icon.url,
       title: reason.reason_title[0].text,
       text: reason.reason_text[0].text,
     }

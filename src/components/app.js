@@ -62,7 +62,7 @@ export const routes = {
 	BLOG_LINK: '/#blog',
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
-	IMMIGRATION_LOW: '/immigration-law'
+	IMMIGRATION_LAW: '/immigration-law'
 };
 
 
@@ -131,7 +131,7 @@ class App extends Component {
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
-			<ImmigrationLaw path={routes.IMMIGRATION_LOW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } />,
+			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } />,
 			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE }/>,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,

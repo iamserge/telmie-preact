@@ -89,11 +89,28 @@ class Header extends Component {
 						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
-            <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
+
+          <div class={style.title}>
+            { this.props.currentUrl === routes.LANGUAGE_PRACTICE ? 'Language practice'
+              : 'Immigration advice'
+            }
+            <FontAwesome name='angle-down'/>
+            <ul>
+              { this.props.currentUrl !== routes.IMMIGRATION_LAW ?
+                <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>
+                : null }
+              { this.props.currentUrl !== routes.LANGUAGE_PRACTICE ?
+                <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
+                : null }
+            </ul>
+          </div>
+
+
+          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
 
 
 
@@ -105,10 +122,7 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
-/*              isAtBlog ? ([
-                <li><b>Blog</b></li>
-              ]) : */([
-              //isAtBlog ? (<li><b>Blog</b></li>) : null,
+              ([
                 <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}

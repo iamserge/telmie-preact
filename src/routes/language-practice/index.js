@@ -64,10 +64,7 @@ class LanguagePractice extends Component {
 
           <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
-          <TextBlock content={pageData.start} />
-
-          <TextBlock content={pageData.promote} />
-          <TextBlock content={pageData.fee} />
+          <TextBlock content={pageData.info} />
 
           <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 

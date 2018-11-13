@@ -13,7 +13,7 @@ const WhyChooseUs = ({content = [], appLink = ''}) => {
         <div class={style.steps}>
           {content.map(reason => (
               <div class={style.step} key={reason.id}>
-                <img class={style.icon} src={`/assets/icons/${reason.icon}@3x.png`} alt={style.title} />
+                <img class={style.icon} src={reason.icon} alt={style.title} />
                 <div class={style.title}>{reason.title}</div>
                 <div>{reason.text}</div>
               </div>
