@@ -7,4 +7,5 @@ export const uids = {
 	CONTACT_US: 'WoRRbigAACgAco9L',
 	REGISTRATION: 'Wu7sWiUAAKoBSMxT',
 	LANGUAGE_PRACTICE: 'W-m3FxAAACoAaksf',
+	IMMIGRATION_ADVICE: 'W-p01BAAACkAbZQ-',
 };
