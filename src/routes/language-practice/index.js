@@ -22,7 +22,7 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 // mock-data
-import { steps, reasons, reviews, texts, textMain } from './mock-data';
+import { reviews, texts, textMain } from './mock-data';
 
 import { processLangPracticeData } from '../../utils/prismic-middleware';
 
@@ -32,8 +32,12 @@ class LanguagePractice extends Component {
   constructor(props){
     super(props);
     this.state =  {
-      verifyFailure: false,
-      fetchingPage: false
+      page: null,
+      notFound: false,
+    //  verifyFailure: false,
+      fetchingPage: true
+    //  fetchingFeaturedPost: true,
+    //  fetchingRecentPosts: true
     }
 
     this.fetchPage = this.fetchPage.bind(this);
@@ -54,7 +58,7 @@ class LanguagePractice extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      console.log(page.data);
+      console.log('dfdfdf',page.data);
       that.setState({fetchingPage: false, page: processLangPracticeData(page.data)})
     });
   }
@@ -67,23 +71,21 @@ class LanguagePractice extends Component {
       return (
         <div id="language-practice">
 
-          <TextBlockMain textMain={textMain} appLink={appLink} />
+          <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
-          <HowWorksSteps steps={steps} />
+          <HowWorksSteps content={pageData.steps} />
 
-          <TextBlock text={texts.block1} />
+          <TextBlock content={pageData.start} />
+          <TextBlock content={pageData.promote} />
+          <TextBlock content={pageData.fee} />
 
-          <TextBlock text={texts.block2} />
+          <WhyChooseUs content={pageData.reasons} />
 
-          <TextBlock text={texts.block3} />
+          <HappyUsers content={pageData.reviews} />
 
-          <WhyChooseUs reasons={reasons} />
-
-          <HappyUsers reviews={reviews} />
-
-{/*          <div class={style.iosAppSection}>
+          <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
-          </div>*/}
+          </div>
 
           <ScrollToTop showUnder={150} style={{zIndex: 1002}}>
             <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>

@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import Slider from "react-slick";
 
@@ -21,15 +20,12 @@ const SamplePrevArrow = ({className, onClick, style}) => (
 
 
 class HappyUsers extends Component {
-
   constructor(props) {
     super(props);
-    this.state = { visibleSlides: 5 };
   }
 
-
   render(){
-    const reviews = this.props.reviews;
+    const reviews = this.props.content;
     const settings = {
       infinite: true,
       centerMode: true,
@@ -62,13 +58,13 @@ class HappyUsers extends Component {
           <Slider {...settings} className={style.reviewsSlider}>
             {reviews.map(review => (
               <div>
-                <div class={style.review} key={review.id}>
+                <div class={style.review} key={review.name}>
                   <div class={style.avatar}>
-                    <img src={review.avatar} alt={review.author} />
+                    <img src={review.avatar} alt={review.name} />
                   </div>
                   <p class={style.title}>{review.title}</p>
                   <p>{review.text}</p>
-                  <p class={style.author}>{review.author}</p>
+                  <p class={style.author}>{review.name}</p>
                 </div>
               </div>
             ))}

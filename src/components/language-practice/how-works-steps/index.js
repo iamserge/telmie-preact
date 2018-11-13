@@ -3,7 +3,7 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 
 
-const HowWorksSteps = ({steps = []}) => {
+const HowWorksSteps = ({content = []}) => {
 
     return (
       <div class={style.blockBg}>
@@ -11,7 +11,7 @@ const HowWorksSteps = ({steps = []}) => {
           <h2>How it works</h2>
 
           <div class={style.steps}>
-            {steps.map(step => (
+            {content.map(step => (
                 <div class={style.step} key={step.id}>
                   <span class={style.line}></span>
                   <div class={step.id=='$' ? (`${style.count} ${style.countLast}`) : style.count}>{step.id}</div>

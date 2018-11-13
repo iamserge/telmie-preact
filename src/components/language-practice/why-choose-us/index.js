@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 
-const WhyChooseUs = ({reasons = []}) => {
+const WhyChooseUs = ({content = []}) => {
 
     return (
       <div class={style.blockBg}>
@@ -10,9 +10,9 @@ const WhyChooseUs = ({reasons = []}) => {
           <h2>Why choose us</h2>
 
           <div class={style.steps}>
-            {reasons.map(reason => (
+            {content.map(reason => (
                 <div class={style.step} key={reason.id}>
-                  <img class={style.icon} src={reason.icon} alt={style.title} />
+                  <img class={style.icon} src={`/assets/icons/${reason.icon}@3x.png`} alt={style.title} />
                   <div class={style.title}>{reason.title}</div>
                   <div>{reason.text}</div>
                 </div>

@@ -148,12 +148,12 @@ const getServices = (data) => {
         let serviceData = {
             background: service.image.url,
             serviceName: service.title1[0].text,
-        }
+        };
         services.push(serviceData);
     });
 
     return  services;
-}
+};
 
 const getFAQs = (faqData) => {
     let allFaqs = {},
@@ -186,7 +186,7 @@ export function processHomepageData(data){
         title: data.title[0].text,
         subTitle: data.sub_title[0].text,
         typedWords: data.typed_words[0].text
-    }
+    };
 
     processedData.experts = getExperts(data);
 
@@ -194,7 +194,7 @@ export function processHomepageData(data){
         title: data.how_it_works_title[0].text,
         text: data.how_it_works[0].text,
         videoID: data.how_it_works_video.video_id
-    }
+    };
 
 
     processedData.services = getServices(data);
@@ -202,21 +202,109 @@ export function processHomepageData(data){
     processedData.app = {
         title: data.app_title[0].text,
         text: data.app_text[0].text
-    }
+    };
 
     processedData.faqs = getFAQs(data);
 
     processedData.becomePro = {
         title: data.earn_more_title[0].text,
         text: data.earn_more_text[0].text
-    }
+    };
+
     return processedData;
 }
+
+
+const getSteps = (data) => {
+  let steps = [];
+
+  data.work_steps.forEach((step, index)=>{
+    let stepData = {
+      id: step.id[0].text,
+      title: step.step_title[0].text,
+      text: step.step_text[0].text,
+    }
+    steps.push(stepData);
+  });
+
+  return  steps;
+};
+
+const getReasons = (data) => {
+  let reasons = [];
+
+  data.reasons.forEach((reason, index)=>{
+    let reasonData = {
+      icon: reason.icon_name[0].text,
+      title: reason.reason_title[0].text,
+      text: reason.reason_text[0].text,
+    }
+    reasons.push(reasonData);
+  });
+
+  return  reasons;
+};
+
+const getReviews = (data) => {
+  let reviews = [];
+
+  data.reviews.forEach((review, index)=>{
+    let reviewData = {
+      avatar: review.avatar.url,
+      name: review.name[0].text,
+      title: review.review_title[0].text,
+      text: review.review_text[0].text,
+    }
+    reviews.push(reviewData);
+  });
+
+  return  reviews;
+};
 
 export function processLangPracticeData(data){
     let processedData = {};
 
     processedData = { ...data };
+
+/*  processedData.mainSection = {
+    title: data.title[0].text,
+    subTitle: data.sub_title[0].text,
+    typedWords: data.typed_words[0].text
+  };*/
+
+    processedData.becomePro = {
+        img: data.earn_money_image.url,
+        title: data.earn_money_title[0].text,
+        text: data.earn_money_text[0].text
+    };
+
+    processedData.start = {
+        img: '',
+        title: data.start_earning_title[0].text,
+        text: data.start_earning_text[0].text,
+        right: false
+    };
+    processedData.fee = {
+        img: data.fee_image.url,
+        title: data.fee_title[0].text,
+        text: data.fee_text[0].text,
+        right: false
+    };
+    processedData.promote = {
+        img: data.promote_image.url,
+        title: data.promote_title[0].text,
+        text: data.promote_text[0].text,
+        right: true
+    };
+
+    processedData.steps = getSteps(data);
+    processedData.reasons = getReasons(data);
+    processedData.reviews = getReviews(data);
+
+    processedData.app = {
+        title: data.app_title[0].text,
+        text: data.app_text[0].text
+    };
 
     return processedData;
 }
