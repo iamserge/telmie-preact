@@ -1,0 +1,66 @@
+@import './src/style/variables';
+
+.blockBg {
+  background: $paleGrey;
+}
+
+.blockBgInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 114px 0 127px;
+
+  h2 {
+    font: 300 40px/1.6 'Krub', sans-serif;
+  }
+
+  .red-btn {
+    display: inline-block;
+
+    a {
+      color: white;
+    }
+  }
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  line-height: 1.625;
+  letter-spacing: -.3px;
+  color: $charcoalGrey;
+  margin-top: 70px;
+
+  @media (max-width: 880px) {
+    display: block;
+  }
+
+  .step {
+    flex: 1;
+    max-width: 350px;
+    margin-bottom: 50px;
+    padding: 0 30px;
+    position: relative;
+
+    @media (max-width: 880px) {
+      width: 80%;
+      min-width: 300px;
+      max-width: none;
+      margin: 0 auto 50px;
+    }
+  }
+
+  .icon {
+
+    height: 52px;
+    max-width: 100%;
+
+  }
+
+  .title {
+    font: 500 20px/1.6 'Krub', sans-serif;
+    letter-spacing: -.3px;
+    margin: 36px 0 12px;
+  }
+}

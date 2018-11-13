@@ -69,6 +69,32 @@ class Header extends Component {
     this.props.logOff();
   }
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
+  renderPopoverMenu = (curUrl) => {
+    let item = '',
+      listItem = '';
+    switch (curUrl) {
+      case routes.LANGUAGE_PRACTICE:
+        item = 'Language practice';
+        listItem = <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>;
+        break;
+      case routes.IMMIGRATION_LAW:
+        item = 'Immigration advice';
+        listItem = <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>;
+        break;
+      default: 
+        return;
+    }
+
+    return (
+          <div class={style.title}>
+            { item }
+            <FontAwesome name='angle-down'/>
+            <ul>
+              { listItem }
+            </ul>
+          </div>
+    )
+  }
 	render() {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
@@ -89,13 +115,14 @@ class Header extends Component {
 						<img src="/assets/logo.png" alt="Telmie App"/>
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
-            <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
 
+          { this.renderPopoverMenu(this.props.currentUrl) }
 
+          <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
 
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
@@ -105,10 +132,7 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
-/*              isAtBlog ? ([
-                <li><b>Blog</b></li>
-              ]) : */([
-              //isAtBlog ? (<li><b>Blog</b></li>) : null,
+              ([
                 <li>{isAtHome ? 
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}

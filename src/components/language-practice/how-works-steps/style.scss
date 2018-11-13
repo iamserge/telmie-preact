@@ -1,0 +1,156 @@
+@import './src/style/variables';
+
+.blockBg {
+  background: $paleGrey;
+}
+
+.blockBgInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 114px 0 127px;
+
+  h2 {
+    font: 300 40px/1.6 'Krub', sans-serif;
+  }
+
+  .red-btn {
+    display: inline-block;
+
+    a {
+      color: white;
+    }
+  }
+
+  @media (max-width: 880px) {
+    padding: 80px 0;
+
+    h2 {
+      font-size: 32px;
+    }
+  }
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  line-height: 1.625;
+  letter-spacing: -.3px;
+  color: $charcoalGrey;
+  margin-top: 70px;
+
+  @media (max-width: 880px) {
+    display: block;
+  }
+
+  .step {
+    flex: 1;
+    max-width: 300px;
+    margin-bottom: 50px;
+    padding: 0 30px;
+    position: relative;
+
+    @media (max-width: 880px) {
+      width: 80%;
+      min-width: 300px;
+      max-width: none;
+      margin: 0 auto 50px;
+    }
+
+    .line {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      height: 2px;
+      background: $cloudyBlue;
+      width: calc(100% - 46px);
+      left: -50%;
+      top: 33px;
+      margin-left: 22px;
+      z-index: 5;
+
+      &:before,
+      &:after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: 2px solid white;
+        background: $pinkishRed;
+        border-radius: 50%;
+        position: absolute;
+        top: -6px;
+        left: 0;
+      }
+      &:after {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &:first-child .line {
+      display: none;
+    }
+
+    &:last-child .line {
+      width: calc(100% - 100px);
+
+      &:after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 880px) {
+      &:last-child {
+        margin-top: 80px;
+      }
+
+      .line {
+        display: none;
+      }
+    }
+  }
+
+  .count {
+    margin: 0 auto;
+    width: 66px;
+    height: 66px;
+    color: white;
+    background: $darkPeriwinkle;
+    font: 300 40px/1.7 'Krub', sans-serif;
+    position: relative;
+
+    &:after {
+      content: '';
+      background-image: url('/assets/avatar_comments_mask_xlarge.png');
+      background-size: 100%;
+      width: 66px;
+      height: 66px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+
+    &Last {
+      background: $pinkishRed;
+
+      &:before {
+        content: '';
+        background-image: url('/assets/mask_attention.png');
+        background-size: contain;
+        width: 122px;
+        height: 122px;
+        position: absolute;
+        top: -28px;
+        left: -28px;
+      }
+    }
+  }
+
+  .title {
+    font: 500 20px/1.6 'Krub', sans-serif;
+    letter-spacing: -.3px;
+    margin: 36px 0 12px;
+  }
+}

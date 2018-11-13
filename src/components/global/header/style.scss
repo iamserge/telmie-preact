@@ -11,9 +11,8 @@
 
 #header {
 	width: 100%;
-	background-color: white;
 	background-color: #fff;
-  	padding: 50px 115px 0 87px;
+  padding: 50px 115px 0 87px;
 	z-index: 1000;
 	max-width: 1470px;
 	margin: auto;
@@ -39,7 +38,97 @@
 			}
 		}
 	}
+
+	.title {
+		font: 500 24px/1.6667 'Krub', sans-serif;
+		letter-spacing: -.3px;
+		padding-left: 16px;
+		border-left: 1px solid #f2f2f2;
+		margin-left: 16px;
+		position: relative;
+		white-space: nowrap;
+
+		ul {
+			list-style: none;
+			padding-left: 16px;
+			margin: 0;
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: -1px;
+			border-left: 1px solid #f2f2f2;
+			right: 0;
+			transition: all .3s ease;
+			white-space: normal;
+			max-height: 300px;
+			overflow-y: auto;
+			background: #fff;
+
+			li {
+				margin: 15px 0;
+
+				a {
+					font: 500 24px/1.2 'Krub', sans-serif;
+					letter-spacing: -.3px;
+					text-transform: none;
+					display: block;
+					color: $charcoalGrey;
+					transition: color .3s ease;
+
+					&:hover {
+						color: $cherryRedTwo;
+					}
+				}
+			}
+		}
+
+		span {
+			color: $cherryRedTwo;
+			font-size: 16px;
+			margin-left: 10px;
+		}
+
+		&:hover {
+
+			ul {
+				display: block;
+			}
+
+		}
+
+		@media (max-width: 1200px) {
+			font-size: 18px;
+		}
+
+		@media (max-width: 880px) {
+			padding-left: 12px;
+			margin-left: 12px;
+			max-width: 180px;
+
+			ul li a {
+				font-size: 18px;
+				padding: 0;
+			}
+		}
+
+		@media (max-width: 420px) {
+			font-size: 13px;
+			max-width: 145px;
+			margin-left: 8px;
+			padding-left: 8px;
+
+			ul {
+				padding-left: 8px;
+
+				li a {
+					font-size: 13px;
+				}
+			}
+		}
+	}
+
 }
+
 #mobileNav {
 	display: none;
 	position: fixed;
@@ -72,25 +161,6 @@
 		height: 40px;
 	}
 }
-
-.title {
-  font-family: 'Krub', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.6667;
-  letter-spacing: -.3px;
-  padding-left: 16px;
-  border-left: 1px solid #f2f2f2;
-  margin-left: 16px;
-
-  @media (max-width: 880px) {
-    font-size: 18px;
-    letter-spacing: -.3px;
-    padding-left: 12px;
-    margin-left: 12px;
-  }
-}
-
 #leftNav {
 	margin-left: 40px;
 }
@@ -238,10 +308,25 @@
 }
 
 
-@media (max-width: 880px) {
+@media (max-width: 1200px) {
+	#header {
+		padding: 50px 0 0;
+		width: 90%;
+		margin: 0 auto;
 
+		ul > li > a {
+			padding: 0 10px;
+		}
+	}
+
+	#leftNav {
+		margin-left: 20px;
+	}
+}
+@media (max-width: 880px) {
 	
 	#header{
+		width: 100%;
 		padding: 24px 32px 0 24px;
 		height: auto;
 		
@@ -287,6 +372,15 @@
 		&.opened {
 			transform: translate(0, 0);
 		}
+	}
+}
+
+@media (max-width: 420px) {
+	#header{
+		padding: 24px 15px 0;
+	}
+	#expandMobileMenu {
+		margin-left: 12px;
 	}
 }
 

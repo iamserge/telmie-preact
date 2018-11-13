@@ -40,7 +40,7 @@ const BlogComments = ({blogComments = []}) => {
                 <div class={style.blogAuthorAbout}>
                   <div class={style.blogAuthorInfo}>
                     <div class={style.blogAuthorName}>
-                      <span class={style.name}>{comment.nanme}</span>
+                      <span class={style.name}>{comment.name}</span>
                       <span class={style.date}>{comment.date}</span>
                     </div>
                     <button class={style.blogCommentReply}>Reply</button>

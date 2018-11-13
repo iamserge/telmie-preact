@@ -26,33 +26,6 @@ export function processRecentPosts(rawPosts){
 export function processPostText(postData){
     let serialiseText = (type, content, tags) => {
 
-/*
-        if(tags.length>0){
-          tags.forEach((tag)=>{
-            let str = content.slice(tag.start, tag.end),
-                str_start = content.slice(0,tag.start),
-                str_end = content.slice(tag.end),
-                str_new;
-
-
-            if(tag.type === 'strong'){
-              let el = 'b'
-              str_new = document.createElement(el).innerHTML = str;
-             // console.log(str_new)
-              content.replace( str, str_new )
-            }else if(tag.type === 'hyperlink'){
-                let el = 'a',
-                str_new = document.createElement(el);
-                str_new.innerHTML = str;
-                str_new.setAttribute('href', tag.data.url);
-               // content = str_start.replace( /str/g, str_new )
-               // console.log(str_new)
-                content = `${str_start}${str_new}${str_end}`
-            }
-          });
-        }
-*/
-
         switch (type) {
             case 'list-item':
                 return (<li>{content}</li>);
@@ -82,7 +55,6 @@ export function processPostImage(postData){
     }
     return imageData;
 }
-
 
 export function processPostQuote(postData){
     let quoteData = {
@@ -142,34 +114,20 @@ const getExperts = (data) => {
 }
 
 const getServices = (data) => {
-    let services = [];
-        
-    data.services.forEach((service, index)=>{
-        let serviceData = {
-            background: service.image.url,
-            serviceName: service.title1[0].text,
-        }
-        services.push(serviceData);
-    });
-
-    return  services;
-}
+    return data.services.map((service) => ({
+        background: service.image.url,
+        serviceName: service.title1[0].text,
+    }));
+};
 
 const getFAQs = (faqData) => {
     let allFaqs = {},
         getFAQ = (name) => {
-            let faqs = [];
-            faqData[name].forEach((faq)=>{
-                faqs.push({
-                    question: faq.question[0].text,
-                    answer: faq.answer[0].text
-                })
-            })
-            return faqs;
+            return faqData[name].map((faq) => ({
+                question: faq.question[0].text,
+                answer: faq.answer[0].text
+            }))
         }
-
-        
-    
 
     allFaqs.generalQuestions = getFAQ('general_faqs');
     allFaqs.customersQuestions = getFAQ('customer_faqs');
@@ -186,7 +144,7 @@ export function processHomepageData(data){
         title: data.title[0].text,
         subTitle: data.sub_title[0].text,
         typedWords: data.typed_words[0].text
-    }
+    };
 
     processedData.experts = getExperts(data);
 
@@ -194,21 +152,81 @@ export function processHomepageData(data){
         title: data.how_it_works_title[0].text,
         text: data.how_it_works[0].text,
         videoID: data.how_it_works_video.video_id
-    }
-
+    };
 
     processedData.services = getServices(data);
 
     processedData.app = {
         title: data.app_title[0].text,
         text: data.app_text[0].text
-    }
+    };
 
     processedData.faqs = getFAQs(data);
 
     processedData.becomePro = {
         title: data.earn_more_title[0].text,
         text: data.earn_more_text[0].text
-    }
+    };
+
+    return processedData;
+}
+
+const getSteps = (data) => {
+    return data.work_steps.map((step) => ({
+      id: step.id[0].text,
+      title: step.step_title[0].text,
+      text: step.step_text[0].text,
+    }));
+};
+
+const getReasons = (data) => {
+    return data.reasons.map((reason) => ({
+      icon: reason.reason_icon.url,
+      title: reason.reason_title[0].text,
+      text: reason.reason_text[0].text,
+    }));
+};
+
+const getReviews = (data) => {
+    return data.reviews.map((review) => ({
+      avatar: review.avatar.url,
+      name: review.name[0].text,
+      title: review.review_title[0].text,
+      text: review.review_text[0].text,
+    }));
+};
+
+const getInfo = (data) => {
+    return data.info_section.map((infotext) => ({
+      img: infotext.section_image.url,
+      title: infotext.section_title[0].text,
+      text: infotext.section_text[0].text,
+      right: infotext.is_right_position
+    }));
+};
+
+export function processTextPageData(data){
+    let processedData = {};
+
+    processedData = { ...data };
+
+    processedData.becomePro = {
+        img: data.earn_money_image.url,
+        title: data.earn_money_title[0].text,
+        emphasized: data.emphasize_title_part[0].text,
+        text: data.earn_money_text[0].text
+    };
+
+    processedData.info = getInfo(data);
+
+    processedData.steps = getSteps(data);
+    processedData.reasons = getReasons(data);
+    processedData.reviews = getReviews(data);
+
+    processedData.app = {
+        title: data.app_title[0].text,
+        text: data.app_text[0].text
+    };
+
     return processedData;
 }

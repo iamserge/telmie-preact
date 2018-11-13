@@ -159,7 +159,6 @@ class HomePage extends Component {
 	fetchPage(props) {
 		let that = this;
 		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-			console.log(page.data);
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
   }
@@ -181,7 +180,7 @@ class HomePage extends Component {
 					<Element name='howWorksElement'  />
 					<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
 
-					<FeaturedServices services={pageData.services} />
+					<FeaturedServices services={pageData.services} appLink={appLink}/>
 
 					<div class={style.iosAppSection}>
 						<AppDetails appLink={appLink} content={pageData.app}/>

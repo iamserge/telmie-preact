@@ -5,11 +5,17 @@
 	
 	.header {
 		color: $hBlack;
-		font-size: 32px;
+		font-size: 22px;
 		margin-bottom: 40px;
-        line-height: 60px;
+        line-height: 2.9;
         font-family: 'Krub', sans-serif;
-        font-weight: 400;
+        font-weight: 500;
+
+      @media (max-width: 880px) {
+        font-size: 32px;
+        text-align: center;
+        line-height: 1.5;
+      }
 	}
 	.services{
 		display: flex;
@@ -23,6 +29,8 @@
     @media (max-width: 1200px) {
         .services{
             justify-content: center;
+            width: 80%;
+            margin: 0 auto;
             
             & > div{
                 width: 100%;
@@ -32,6 +40,11 @@
 
     @media (max-width: 880px) {
         margin-bottom: 50px !important;
+
+      .services {
+        width: 100%;
+      }
+
         .header {
             text-align: center;
         }
