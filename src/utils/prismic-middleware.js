@@ -26,33 +26,6 @@ export function processRecentPosts(rawPosts){
 export function processPostText(postData){
     let serialiseText = (type, content, tags) => {
 
-/*
-        if(tags.length>0){
-          tags.forEach((tag)=>{
-            let str = content.slice(tag.start, tag.end),
-                str_start = content.slice(0,tag.start),
-                str_end = content.slice(tag.end),
-                str_new;
-
-
-            if(tag.type === 'strong'){
-              let el = 'b'
-              str_new = document.createElement(el).innerHTML = str;
-             // console.log(str_new)
-              content.replace( str, str_new )
-            }else if(tag.type === 'hyperlink'){
-                let el = 'a',
-                str_new = document.createElement(el);
-                str_new.innerHTML = str;
-                str_new.setAttribute('href', tag.data.url);
-               // content = str_start.replace( /str/g, str_new )
-               // console.log(str_new)
-                content = `${str_start}${str_new}${str_end}`
-            }
-          });
-        }
-*/
-
         switch (type) {
             case 'list-item':
                 return (<li>{content}</li>);
@@ -82,7 +55,6 @@ export function processPostImage(postData){
     }
     return imageData;
 }
-
 
 export function processPostQuote(postData){
     let quoteData = {
@@ -214,7 +186,6 @@ export function processHomepageData(data){
     return processedData;
 }
 
-
 const getSteps = (data) => {
   let steps = [];
 
@@ -266,15 +237,10 @@ export function processLangPracticeData(data){
 
     processedData = { ...data };
 
-/*  processedData.mainSection = {
-    title: data.title[0].text,
-    subTitle: data.sub_title[0].text,
-    typedWords: data.typed_words[0].text
-  };*/
-
     processedData.becomePro = {
         img: data.earn_money_image.url,
         title: data.earn_money_title[0].text,
+        emphasized: data.emphasize_title_part[0].text,
         text: data.earn_money_text[0].text
     };
 
@@ -296,6 +262,8 @@ export function processLangPracticeData(data){
         text: data.promote_text[0].text,
         right: true
     };
+
+    //processedData.users = getUsers(data);
 
     processedData.steps = getSteps(data);
     processedData.reasons = getReasons(data);

@@ -76,6 +76,7 @@ class LanguagePractice extends Component {
           <HowWorksSteps content={pageData.steps} />
 
           <TextBlock content={pageData.start} />
+
           <TextBlock content={pageData.promote} />
           <TextBlock content={pageData.fee} />
 

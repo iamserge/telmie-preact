@@ -11,10 +11,7 @@ const TextBlock = ({content}) => {
                 <div class={style.text}>{content.text}</div>
             </div>
             <div class={style.howWorksVideo}>
-              {content.videoId ?
-                <Video videoId = { content.videoID } />
-                : <img src={content.img} alt={content.title}/>
-              }
+              <img src={content.img} alt={content.title}/>
             </div>
         </div> 
 	)
