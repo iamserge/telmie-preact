@@ -120,7 +120,9 @@ class Header extends Component {
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-          { this.renderPopoverMenu(this.props.currentUrl) }
+          { (this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.IMMIGRATION_LAW) &&
+            this.renderPopoverMenu(this.props.currentUrl)
+          }
 
           <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
             <span></span>
