@@ -90,20 +90,24 @@ class Header extends Component {
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-          <div class={style.title}>
-            { this.props.currentUrl === routes.LANGUAGE_PRACTICE ? 'Language practice'
-              : 'Immigration advice'
-            }
-            <FontAwesome name='angle-down'/>
-            <ul>
-              { this.props.currentUrl !== routes.IMMIGRATION_LAW ?
-                <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>
-                : null }
-              { this.props.currentUrl !== routes.LANGUAGE_PRACTICE ?
-                <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
-                : null }
-            </ul>
-          </div>
+          { (this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.IMMIGRATION_LAW)  && (
+            <div class={style.title}>
+              { this.props.currentUrl === routes.LANGUAGE_PRACTICE ? 'Language practice'
+                : 'Immigration advice'
+              }
+              <FontAwesome name='angle-down'/>
+              <ul>
+                { this.props.currentUrl !== routes.IMMIGRATION_LAW ?
+                  <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>
+                  : null }
+                { this.props.currentUrl !== routes.LANGUAGE_PRACTICE ?
+                  <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
+                  : null }
+              </ul>
+            </div>
+            )
+          }
+
 
 
           <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
