@@ -69,6 +69,36 @@ class Header extends Component {
     this.props.logOff();
   }
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
+  renderPopoverMenu = (curUrl) => {
+    let item = '',
+      listItem = '';
+    switch (curUrl) {
+      case routes.LANGUAGE_PRACTICE:
+        item = 'Language practice';
+        listItem = <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>;
+        break;
+      case routes.IMMIGRATION_LAW:
+        item = 'Immigration advice';
+        listItem = <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>;
+        break;
+      default: 
+        listItem = [
+          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+        ];
+        break;
+    }
+
+    return (
+          <div class={style.title}>
+            { item }
+            <FontAwesome name='angle-down'/>
+            <ul>
+              { listItem }
+            </ul>
+          </div>
+    )
+  }
 	render() {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
@@ -90,29 +120,13 @@ class Header extends Component {
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-          <div class={style.title}>
-            { this.props.currentUrl === routes.LANGUAGE_PRACTICE ? 'Language practice'
-              : 'Immigration advice'
-            }
-            <FontAwesome name='angle-down'/>
-            <ul>
-              { this.props.currentUrl !== routes.IMMIGRATION_LAW ?
-                <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>
-                : null }
-              { this.props.currentUrl !== routes.LANGUAGE_PRACTICE ?
-                <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
-                : null }
-            </ul>
-          </div>
+          { this.renderPopoverMenu(this.props.currentUrl) }
 
-
-          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+          <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
             <span></span>
             <span></span>
             <span></span>
           </span>
-
-
 
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
