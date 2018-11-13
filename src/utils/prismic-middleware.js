@@ -232,51 +232,6 @@ const getReviews = (data) => {
   return  reviews;
 };
 
-export function processLangPracticeData(data){
-    let processedData = {};
-
-    processedData = { ...data };
-
-    processedData.becomePro = {
-        img: data.earn_money_image.url,
-        title: data.earn_money_title[0].text,
-        emphasized: data.emphasize_title_part[0].text,
-        text: data.earn_money_text[0].text
-    };
-
-    processedData.start = {
-        img: '',
-        title: data.start_earning_title[0].text,
-        text: data.start_earning_text[0].text,
-        right: 0
-    };
-    processedData.fee = {
-        img: data.fee_image.url,
-        title: data.fee_title[0].text,
-        text: data.fee_text[0].text,
-        right: 0
-    };
-    processedData.promote = {
-        img: data.promote_image.url,
-        title: data.promote_title[0].text,
-        text: data.promote_text[0].text,
-        right: 1
-    };
-
-    //processedData.users = getUsers(data);
-
-    processedData.steps = getSteps(data);
-    processedData.reasons = getReasons(data);
-    processedData.reviews = getReviews(data);
-
-    processedData.app = {
-        title: data.app_title[0].text,
-        text: data.app_text[0].text
-    };
-
-    return processedData;
-}
-
 const getInfo = (data) => {
   let infotexts = [];
 
@@ -294,7 +249,7 @@ const getInfo = (data) => {
   return  infotexts;
 };
 
-export function processImmigrationLawData(data){
+export function processTextPageData(data){
     let processedData = {};
 
     processedData = { ...data };

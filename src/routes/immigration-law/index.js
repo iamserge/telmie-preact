@@ -15,11 +15,12 @@ import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/language-practice/text-block-main'
+import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from '../language-practice/style.scss';
 
-import { processImmigrationLawData } from '../../utils/prismic-middleware';
+import { processTextPageData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -47,7 +48,7 @@ class ImmigrationLaw extends Component {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       console.log('info',page.data);
-      that.setState({fetchingPage: false, page: processImmigrationLawData(page.data)})
+      that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
 
@@ -69,9 +70,9 @@ class ImmigrationLaw extends Component {
 
           <HappyUsers content={pageData.reviews} />
 
-{/*          <div class={style.iosAppSection}>
+          <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
-          </div>*/}
+          </div>
 
           <ScrollToTop showUnder={150} style={{zIndex: 1002}}>
             <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>

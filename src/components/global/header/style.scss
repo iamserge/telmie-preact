@@ -11,9 +11,8 @@
 
 #header {
 	width: 100%;
-	background-color: white;
 	background-color: #fff;
-  	padding: 50px 115px 0 87px;
+  padding: 50px 115px 0 87px;
 	z-index: 1000;
 	max-width: 1470px;
 	margin: auto;
@@ -47,23 +46,29 @@
 		border-left: 1px solid #f2f2f2;
 		margin-left: 16px;
 		position: relative;
+		white-space: nowrap;
 
 		ul {
 			list-style: none;
-			padding-left: 0;
+			padding-left: 16px;
 			margin: 0;
 			display: none;
 			position: absolute;
 			top: 100%;
-			left: 16px;
+			left: -1px;
+			border-left: 1px solid #f2f2f2;
 			right: 0;
 			transition: all .3s ease;
+			white-space: normal;
+			max-height: 300px;
+			overflow-y: auto;
+			background: #fff;
 
 			li {
-				margin: 10px 0;
+				margin: 15px 0;
 
 				a {
-					font: 500 24px/1.6667 'Krub', sans-serif;
+					font: 500 24px/1.2 'Krub', sans-serif;
 					letter-spacing: -.3px;
 					text-transform: none;
 					display: block;
@@ -77,13 +82,16 @@
 			}
 		}
 
-		span.fa {
+/*		span {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}*/
+
+		span {
 			color: $cherryRedTwo;
-			font-size: 10px;
-
-			&:before {
-
-			}
+			font-size: 16px;
+			margin-left: 10px;
 		}
 
 		&:hover {
@@ -94,11 +102,34 @@
 
 		}
 
-		@media (max-width: 880px) {
+		@media (max-width: 1200px) {
 			font-size: 18px;
-			letter-spacing: -.3px;
+		}
+
+		@media (max-width: 880px) {
 			padding-left: 12px;
 			margin-left: 12px;
+			max-width: 180px;
+
+			ul li a {
+				font-size: 18px;
+				padding: 0;
+			}
+		}
+
+		@media (max-width: 420px) {
+			font-size: 13px;
+			max-width: 145px;
+			margin-left: 8px;
+			padding-left: 8px;
+
+			ul {
+				padding-left: 8px;
+
+				li a {
+					font-size: 13px;
+				}
+			}
 		}
 	}
 
@@ -283,10 +314,25 @@
 }
 
 
-@media (max-width: 880px) {
+@media (max-width: 1200px) {
+	#header {
+		padding: 50px 0 0;
+		width: 90%;
+		margin: 0 auto;
 
+		ul > li > a {
+			padding: 0 10px;
+		}
+	}
+
+	#leftNav {
+		margin-left: 20px;
+	}
+}
+@media (max-width: 880px) {
 	
 	#header{
+		width: 100%;
 		padding: 24px 32px 0 24px;
 		height: auto;
 		
@@ -332,6 +378,15 @@
 		&.opened {
 			transform: translate(0, 0);
 		}
+	}
+}
+
+@media (max-width: 420px) {
+	#header{
+		padding: 24px 15px 0;
+	}
+	#expandMobileMenu {
+		margin-left: 12px;
 	}
 }
 

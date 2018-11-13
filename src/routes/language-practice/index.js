@@ -21,7 +21,7 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-import { processLangPracticeData } from '../../utils/prismic-middleware';
+import { processTextPageData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -48,7 +48,7 @@ class LanguagePractice extends Component {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       console.log('info',page.data);
-      that.setState({fetchingPage: false, page: processLangPracticeData(page.data)})
+      that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
 
