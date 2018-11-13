@@ -114,34 +114,20 @@ const getExperts = (data) => {
 }
 
 const getServices = (data) => {
-    let services = [];
-        
-    data.services.forEach((service, index)=>{
-        let serviceData = {
-            background: service.image.url,
-            serviceName: service.title1[0].text,
-        };
-        services.push(serviceData);
-    });
-
-    return  services;
+    return data.services.map((service) => ({
+        background: service.image.url,
+        serviceName: service.title1[0].text,
+    }));
 };
 
 const getFAQs = (faqData) => {
     let allFaqs = {},
         getFAQ = (name) => {
-            let faqs = [];
-            faqData[name].forEach((faq)=>{
-                faqs.push({
-                    question: faq.question[0].text,
-                    answer: faq.answer[0].text
-                })
-            })
-            return faqs;
+            return faqData[name].map((faq) => ({
+                question: faq.question[0].text,
+                answer: faq.answer[0].text
+            }))
         }
-
-        
-    
 
     allFaqs.generalQuestions = getFAQ('general_faqs');
     allFaqs.customersQuestions = getFAQ('customer_faqs');
@@ -168,7 +154,6 @@ export function processHomepageData(data){
         videoID: data.how_it_works_video.video_id
     };
 
-
     processedData.services = getServices(data);
 
     processedData.app = {
@@ -187,66 +172,37 @@ export function processHomepageData(data){
 }
 
 const getSteps = (data) => {
-  let steps = [];
-
-  data.work_steps.forEach((step, index)=>{
-    let stepData = {
+    return data.work_steps.map((step) => ({
       id: step.id[0].text,
       title: step.step_title[0].text,
       text: step.step_text[0].text,
-    }
-    steps.push(stepData);
-  });
-
-  return  steps;
+    }));
 };
 
 const getReasons = (data) => {
-  let reasons = [];
-
-  data.reasons.forEach((reason, index)=>{
-    let reasonData = {
+    return data.reasons.map((reason) => ({
       icon: reason.reason_icon.url,
       title: reason.reason_title[0].text,
       text: reason.reason_text[0].text,
-    }
-    reasons.push(reasonData);
-  });
-
-  return  reasons;
+    }));
 };
 
 const getReviews = (data) => {
-  let reviews = [];
-
-  data.reviews.forEach((review, index)=>{
-    let reviewData = {
+    return data.reviews.map((review) => ({
       avatar: review.avatar.url,
       name: review.name[0].text,
       title: review.review_title[0].text,
       text: review.review_text[0].text,
-    };
-    reviews.push(reviewData);
-  });
-
-  return  reviews;
+    }));
 };
 
 const getInfo = (data) => {
-  let infotexts = [];
-
-  data.info_section.forEach((infotext, index)=>{
-
-    let infotextData = {
+    return data.info_section.map((infotext) => ({
       img: infotext.section_image.url,
       title: infotext.section_title[0].text,
       text: infotext.section_text[0].text,
       right: infotext.is_right_position
-    };
-    infotexts.push(infotextData);
-  });
-
-  return  infotexts;
+    }));
 };
 
 export function processTextPageData(data){

@@ -10,7 +10,6 @@ const ServiceCard = ({background, serviceName, description, downloadApp}) => {
             <div class={style.serviceName}>{serviceName}</div>
             <div class={style.serviceInfo}>
                 <div class={style.description}>
-                    The only way to learn a language is by having a real conversation. Telmie lets you practice your skills with a native speaker. Download the Telmie App and start speaking your new language right now.
                     {description}
                 </div>
                 <button class='red-btn' onClick={downloadApp}>Download app</button>

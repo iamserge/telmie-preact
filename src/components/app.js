@@ -62,7 +62,7 @@ export const routes = {
 	BLOG_LINK: '/#blog',
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
-	IMMIGRATION_LAW: '/immigration-law'
+	IMMIGRATION_LAW: '/immigration-advice'
 };
 
 

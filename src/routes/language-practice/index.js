@@ -2,11 +2,9 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
-import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -18,7 +16,6 @@ import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 
 import { route } from 'preact-router';
-import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 import { processTextPageData } from '../../utils/prismic-middleware';
@@ -31,7 +28,6 @@ class LanguagePractice extends Component {
     this.state =  {
       page: null,
       notFound: false,
-      verifyFailure: false,
       fetchingPage: true
     }
   }
@@ -47,7 +43,6 @@ class LanguagePractice extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-     // console.log('info',page.data);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
@@ -90,15 +85,11 @@ class LanguagePractice extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    hiddenSearchBox: state.hiddenSearchBox,
-    verifySuccess: state.verifySuccess,
-    verifyFailure: state.verifyFailure,
-    sendContactMessageInfo: state.sendContactMessage
+    
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  hideSearchBox,
-  verify,
+
 }, dispatch);
 
 export default connect(

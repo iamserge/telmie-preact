@@ -159,7 +159,6 @@ class HomePage extends Component {
 	fetchPage(props) {
 		let that = this;
 		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-			console.log(page.data);
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
   }

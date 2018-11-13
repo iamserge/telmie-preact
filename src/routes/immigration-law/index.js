@@ -2,11 +2,9 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
-import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -17,7 +15,6 @@ import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
-import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from '../language-practice/style.scss';
 
 import { processTextPageData } from '../../utils/prismic-middleware';
@@ -30,7 +27,6 @@ class ImmigrationLaw extends Component {
     this.state =  {
       page: null,
       notFound: false,
-      verifyFailure: false,
       fetchingPage: true,
     }
   }
@@ -47,7 +43,6 @@ class ImmigrationLaw extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      //console.log('info',page.data);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
@@ -89,19 +84,10 @@ class ImmigrationLaw extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-    hiddenSearchBox: state.hiddenSearchBox,
-    verifySuccess: state.verifySuccess,
-    verifyFailure: state.verifyFailure,
-   // userData: state.loggedInUser,
-    sendContactMessageInfo: state.sendContactMessage
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  hideSearchBox,
-  verify,
-  sendContactData,
-  clearContactData,
+
 }, dispatch);
 
 export default connect(

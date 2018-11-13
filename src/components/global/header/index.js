@@ -82,11 +82,7 @@ class Header extends Component {
         listItem = <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>;
         break;
       default: 
-        listItem = [
-          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
-        ];
-        break;
+        return;
     }
 
     return (
@@ -120,9 +116,7 @@ class Header extends Component {
 					</Link>
           { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-          { (this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.IMMIGRATION_LAW) &&
-            this.renderPopoverMenu(this.props.currentUrl)
-          }
+          { this.renderPopoverMenu(this.props.currentUrl) }
 
           <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
             <span></span>

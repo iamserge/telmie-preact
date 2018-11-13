@@ -1,5 +1,4 @@
 import { h } from 'preact';
-import Video from '../../homepage/video';
 import style from './style.scss';
 
 const TextBlock = ({content = []}) => {
@@ -7,7 +6,7 @@ const TextBlock = ({content = []}) => {
     return (
       <div>
       {content.map(text => (
-        <div class={text.right == 1 ? `${style.TextBlock} ${style.TextBlockRight} uk-container` : `${style.TextBlock} uk-container`}>
+        <div class={`${text.right == 1 && style.TextBlockRight} ${style.TextBlock} uk-container`}>
           <div class={style.howWorksText}>
             <div class={style.header}>{text.title}</div>
             <div class={style.text}>{text.text}</div>
