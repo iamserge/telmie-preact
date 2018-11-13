@@ -225,7 +225,7 @@ const getReviews = (data) => {
       name: review.name[0].text,
       title: review.review_title[0].text,
       text: review.review_text[0].text,
-    }
+    };
     reviews.push(reviewData);
   });
 
@@ -248,22 +248,65 @@ export function processLangPracticeData(data){
         img: '',
         title: data.start_earning_title[0].text,
         text: data.start_earning_text[0].text,
-        right: false
+        right: 0
     };
     processedData.fee = {
         img: data.fee_image.url,
         title: data.fee_title[0].text,
         text: data.fee_text[0].text,
-        right: false
+        right: 0
     };
     processedData.promote = {
         img: data.promote_image.url,
         title: data.promote_title[0].text,
         text: data.promote_text[0].text,
-        right: true
+        right: 1
     };
 
     //processedData.users = getUsers(data);
+
+    processedData.steps = getSteps(data);
+    processedData.reasons = getReasons(data);
+    processedData.reviews = getReviews(data);
+
+    processedData.app = {
+        title: data.app_title[0].text,
+        text: data.app_text[0].text
+    };
+
+    return processedData;
+}
+
+const getInfo = (data) => {
+  let infotexts = [];
+
+  data.info_section.forEach((infotext, index)=>{
+
+    let infotextData = {
+      img: infotext.section_image.url,
+      title: infotext.section_title[0].text,
+      text: infotext.section_text[0].text,
+      right: infotext.is_right_position
+    };
+    infotexts.push(infotextData);
+  });
+
+  return  infotexts;
+};
+
+export function processImmigrationLawData(data){
+    let processedData = {};
+
+    processedData = { ...data };
+
+    processedData.becomePro = {
+        img: data.earn_money_image.url,
+        title: data.earn_money_title[0].text,
+        emphasized: data.emphasize_title_part[0].text,
+        text: data.earn_money_text[0].text
+    };
+
+    processedData.info = getInfo(data);
 
     processedData.steps = getSteps(data);
     processedData.reasons = getReasons(data);

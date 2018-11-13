@@ -14,16 +14,12 @@ import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
-import TextBlockMain from '../../components/immigration-law/text-block-main'
-
+import TextBlockMain from '../../components/language-practice/text-block-main'
 import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
-import style from './style.scss';
+import style from '../language-practice/style.scss';
 
-// mock-data
-import { steps, reasons, reviews, texts, textMain } from './mock-data';
-
-import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { processImmigrationLawData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -36,7 +32,6 @@ class ImmigrationLaw extends Component {
       verifyFailure: false,
       fetchingPage: true,
     }
-
   }
 
   componentDidMount(){
@@ -48,12 +43,11 @@ class ImmigrationLaw extends Component {
       && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
   }
 
-
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       console.log('info',page.data);
-      that.setState({fetchingPage: false, /*page: processLangPracticeData(page.data)*/})
+      that.setState({fetchingPage: false, page: processImmigrationLawData(page.data)})
     });
   }
 
@@ -61,26 +55,20 @@ class ImmigrationLaw extends Component {
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
-     // const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
+
       return (
         <div id="language-practice">
 
-          <TextBlockMain textMain={textMain} appLink={appLink} />
+          <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
-          <HowWorksSteps steps={steps} />
+          <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
-          <TextBlock text={texts.block1} />
+          <TextBlock content={pageData.info} />
 
-          <TextBlock text={texts.block2} />
+          <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 
-          <TextBlock text={texts.block3} />
+          <HappyUsers content={pageData.reviews} />
 
-          <TextBlock text={texts.block4} />
-
-          <WhyChooseUs reasons={reasons} />
-
-          <HappyUsers reviews={reviews} />
-          
 {/*          <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>*/}

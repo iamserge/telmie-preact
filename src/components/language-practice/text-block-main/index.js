@@ -10,7 +10,6 @@ const TextBlockMain = ({content, appLink = ''}) => {
   if(content.title.indexOf(content.emphasized) + 1) {
     header = content.title.replace(content.emphasized, `<span>${content.emphasized}</span>`);
     let headerTag = document.getElementsByClassName('header');
-   // console.log(headerTag);
     headerTag.innerHTML = header;
   }
 
@@ -19,10 +18,13 @@ const TextBlockMain = ({content, appLink = ''}) => {
             <div class={style.howWorksText}>
                 <h1 className="header">{header}</h1>
                 <div class={style.text}>{content.text}</div>
+              <button class='red-btn' onClick={downloadApp}>Download app</button>
+{/*
                 <div class={style.buttons}>
                   <Link href=""><button class='red-btn main-btn'>Sign up <span>free</span> <span>& Become Pro</span></button></Link>
                   <button class='white-btn main-btn' onClick={downloadApp}>Download app</button>
                 </div>
+*/}
             </div>
             <div class={style.image}>
               <img src={content.img} alt={content.title} />

@@ -21,9 +21,6 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-// mock-data
-import { reviews, texts, textMain } from './mock-data';
-
 import { processLangPracticeData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
@@ -34,17 +31,12 @@ class LanguagePractice extends Component {
     this.state =  {
       page: null,
       notFound: false,
-    //  verifyFailure: false,
+      verifyFailure: false,
       fetchingPage: true
-    //  fetchingFeaturedPost: true,
-    //  fetchingRecentPosts: true
     }
-
   }
 
-
   componentDidMount(){
-      //window.scrollTo(0, 0);
       this.props.prismicCtx && this.fetchPage(this.props);
   }
   componentWillReceiveProps(nextProps){
@@ -52,11 +44,10 @@ class LanguagePractice extends Component {
       && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
 	}
 
-
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      console.log('dfdfdf',page.data);
+      console.log('info',page.data);
       that.setState({fetchingPage: false, page: processLangPracticeData(page.data)})
     });
   }
@@ -65,20 +56,20 @@ class LanguagePractice extends Component {
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
-     // const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
+
       return (
         <div id="language-practice">
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
-          <HowWorksSteps content={pageData.steps} />
+          <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
           <TextBlock content={pageData.start} />
 
           <TextBlock content={pageData.promote} />
           <TextBlock content={pageData.fee} />
 
-          <WhyChooseUs content={pageData.reasons} />
+          <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 
           <HappyUsers content={pageData.reviews} />
 
@@ -105,15 +96,12 @@ const mapStateToProps = (state) => ({
     hiddenSearchBox: state.hiddenSearchBox,
     verifySuccess: state.verifySuccess,
     verifyFailure: state.verifyFailure,
-   // userData: state.loggedInUser,
     sendContactMessageInfo: state.sendContactMessage
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   hideSearchBox,
   verify,
-  sendContactData,
-  clearContactData,
 }, dispatch);
 
 export default connect(
