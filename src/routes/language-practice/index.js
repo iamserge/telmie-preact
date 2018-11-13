@@ -47,7 +47,7 @@ class LanguagePractice extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      console.log('info',page.data);
+     // console.log('info',page.data);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
