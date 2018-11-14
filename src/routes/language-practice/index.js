@@ -5,6 +5,7 @@ import { connect } from 'preact-redux';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll';
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -45,7 +46,7 @@ class LanguagePractice extends Component {
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
-  }
+  };
 
 
   render() {
@@ -57,6 +58,7 @@ class LanguagePractice extends Component {
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
+          <Element name="howWorksElement" />
           <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
           <TextBlock content={pageData.info} />
@@ -65,6 +67,7 @@ class LanguagePractice extends Component {
 
           <HappyUsers content={pageData.reviews} />
 
+          <Element name="AppDetails" />
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>

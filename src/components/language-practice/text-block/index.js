@@ -6,7 +6,7 @@ const TextBlock = ({content = []}) => {
     return (
       <div>
       {content.map(text => (
-        <div class={`${text.right == 1 && style.TextBlockRight} ${style.TextBlock} uk-container`}>
+        <div id={`info-section-${text.id}`} class={`${text.right == 1 && style.TextBlockRight} ${style.TextBlock} uk-container`}>
           <div class={style.howWorksText}>
             <div class={style.header}>{text.title}</div>
             <div class={style.text}>{text.text}</div>

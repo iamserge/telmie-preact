@@ -198,6 +198,7 @@ const getReviews = (data) => {
 
 const getInfo = (data) => {
     return data.info_section.map((infotext) => ({
+      id: infotext.section_id,
       img: infotext.section_image.url,
       title: infotext.section_title[0].text,
       text: infotext.section_text[0].text,
