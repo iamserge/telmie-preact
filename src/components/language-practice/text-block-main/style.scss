@@ -44,7 +44,6 @@
       border-radius: 15px;
       padding: 2px 15px;
       position: absolute;
-      //opacity: 0;
       animation: blink 2s infinite;
 
       &:before {
@@ -67,8 +66,6 @@
     30% { opacity: 1; }
     100% { opacity: 0.1; }
   }
-
-
 
   @media (max-width: 1200px) {
     padding: 0;
