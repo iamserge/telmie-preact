@@ -15,6 +15,7 @@ import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
+import { animateScroll as scroll } from 'react-scroll'
 import style from '../language-practice/style.scss';
 
 import { processTextPageData } from '../../utils/prismic-middleware';
@@ -43,6 +44,7 @@ class ImmigrationLaw extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+      scroll.scrollToTop();
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
@@ -77,7 +79,7 @@ class ImmigrationLaw extends Component {
       );
     }
     return (
-      <div  className="uk-container uk-container-small" id="staticPage" >
+      <div  className="uk-container uk-container-small">
         <Spinner />
       </div>
     );
