@@ -45,6 +45,7 @@
       padding: 2px 15px;
       position: absolute;
       //opacity: 0;
+      animation: blink 2s infinite;
 
       &:before {
         content: '';
@@ -59,6 +60,12 @@
         margin-left: -5px;
       }
     }
+  }
+
+  @keyframes blink {
+    0% { opacity: 0.1; }
+    30% { opacity: 1; }
+    100% { opacity: 0.1; }
   }
 
 
