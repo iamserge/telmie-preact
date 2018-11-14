@@ -138,7 +138,7 @@ class Header extends Component {
                   <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement">How it works</ScrollLink>
                 </li>,
                 <li>
-                  <ScrollLink spy={true} smooth={true} duration={500} offset={-50} to="info-section-3">Fees</ScrollLink>
+                  <ScrollLink spy={true} smooth={true} duration={500} offset={50} to="info-section-3">Fees</ScrollLink>
                 </li>,
                 <li>
                   <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails">Download app</ScrollLink>

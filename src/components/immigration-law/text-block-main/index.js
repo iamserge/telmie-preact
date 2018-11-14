@@ -1,22 +1,15 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
+import { setEmphasizedText } from '../../../utils/index'
 
 const TextBlockMain = ({content, appLink = ''}) => {
   const downloadApp = () => appLink && window.open(appLink);
-       let header;
-
-  function setEmphasizedText() {
-    if(content.title.indexOf(content.emphasized) + 1) {
-      header = content.title.replace(content.emphasized, `<span>${content.emphasized}</span>`);
-    }
-    return {__html: header};
-  }
 
   return (
       <div class={`${style.TextBlock} uk-container`}>
           <div class={style.howWorksText}>
-              <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText()}>{content.title}</h1>
+              <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText(content)}>{content.title}</h1>
               <div class={style.text}>{content.text}</div>
             <button class='red-btn' onClick={downloadApp}>Download app</button>
 {/*

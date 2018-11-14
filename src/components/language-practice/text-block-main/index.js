@@ -1,7 +1,9 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
+import { setEmphasizedText } from '../../../utils'
 
+const greetings = [ 'Гамарджоба', 'Hello', 'Ola', 'Konnichiwa', 'Hola', 'Marhaba' ];
 
 class TextBlockMain extends Component {
 
@@ -10,15 +12,14 @@ class TextBlockMain extends Component {
   }
 
   componentDidMount() {
-    let intervalId = setInterval(this.timer, 2000);
-    this.setState({intervalId: intervalId, currentCount: 3});
+    this.intervalId = setInterval(this.timer, 2000);
+    this.setState({ currentCount: 3 });
   }
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    clearInterval(this.intervalId);
   }
 
   timer = () => {
-    const greetings = [ 'Гамарджоба', 'Hello', 'Ola', 'Konnichiwa', 'Hola', 'Marhaba' ];
     let index = Math.floor(Math.random()*greetings.length);
     this.setState({ currentCount: index });
   };
@@ -27,20 +28,11 @@ class TextBlockMain extends Component {
 
   render() {
     const content = this.props.content;
-    const greetings = [ 'Гамарджоба', 'Hello', 'Ola', 'Konnichiwa', 'Hola', 'Marhaba' ];
-
-    function setEmphasizedText() {
-      let header;
-      if(content.title.indexOf(content.emphasized) + 1) {
-        header = content.title.replace(content.emphasized, `<span>${content.emphasized}</span>`);
-      }
-      return {__html: header};
-    }
 
     return (
       <div class={`${style.TextBlock} uk-container`}>
         <div class={style.howWorksText}>
-          <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText()}>{content.title}</h1>
+          <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText(content)}>{content.title}</h1>
           <div class={style.text}>{content.text}</div>
 
           <button class='red-btn' onClick={this.downloadApp}>Download app</button>
