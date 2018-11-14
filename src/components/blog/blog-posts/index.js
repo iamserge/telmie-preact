@@ -24,16 +24,13 @@ class BlogPosts extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { visibleSlides: 5 };
   }
-
 
   render(){
     const allPosts = this.props.blogPosts;
     const settings = {
       infinite: true,
       centerMode: true,
-      adaptiveHeight: true,
       slidesToShow: 4,
       slidesToScroll: 1,
       variableWidth: true,
