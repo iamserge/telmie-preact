@@ -17,7 +17,6 @@ class StaticPage extends Component {
 	  }
 	}
 	componentDidMount(){
-		window.scrollTo(0, 0);
 		this.fetchPage(this.props);
 	}
 	componentWillReceiveProps(nextProps){
@@ -29,12 +28,13 @@ class StaticPage extends Component {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
         if (doc) {
-          // We put the retrieved content in the state as a doc variable
+					// We put the retrieved content in the state as a doc variable
           this.setState({ doc });
         } else {
           // We changed the state to display error not found if no matched doc
           this.setState({ notFound: !doc });
-        }
+				}
+				window.scrollTo(0, 0);
       });
 			/*
 			return props.prismicCtx.api.query('').then(function(response) {

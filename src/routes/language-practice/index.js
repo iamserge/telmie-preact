@@ -7,6 +7,7 @@ import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
+import { animateScroll as scroll } from 'react-scroll'
 
 import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
@@ -43,6 +44,7 @@ class LanguagePractice extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+      scroll.scrollToTop();
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
@@ -77,7 +79,7 @@ class LanguagePractice extends Component {
       );
     }
     return (
-      <div  className="uk-container uk-container-small" id="staticPage" >
+      <div  className="uk-container uk-container-small">
         <Spinner />
       </div>
     );
