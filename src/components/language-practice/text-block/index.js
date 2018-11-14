@@ -11,7 +11,7 @@ const TextBlock = ({content = []}) => {
             <div class={style.header}>{text.title}</div>
             <div class={style.text}>{text.text}</div>
           </div>
-          <div class={style.howWorksVideo}>
+          <div class={style.image}>
             <img src={text.img} alt={text.title}/>
           </div>
         </div>

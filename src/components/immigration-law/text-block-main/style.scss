@@ -35,32 +35,7 @@
 
   .image {
     flex: 1;
-    position: relative;
-
-
-    span {
-      background: $pinkishRed;
-      color: #fff;
-      border-radius: 15px;
-      padding: 2px 15px;
-      position: absolute;
-      //opacity: 0;
-
-      &:before {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 5px 5px 5px;
-        border-color: transparent transparent $pinkishRed transparent;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-      }
-    }
   }
-
 
 
   @media (max-width: 1200px) {
@@ -100,44 +75,9 @@
       justify-content: center;
     }
   }
-
-  @media (max-width: 640px) {
-    .image {
-      width: 95%;
-
-      span {
-        font-size: 12px;
-      }
-    }
-  }
 }
 
 :global {
-
-  .greeting0 {
-    top: 61%;
-    right: 20%;
-  }
-  .greeting1 {
-    bottom: -2%;
-    right: 11%;
-  }
-  .greeting2 {
-    top: 40%;
-    left: 19%;
-  }
-  .greeting3 {
-    top: 46%;
-    right: -1%;
-  }
-  .greeting4 {
-    bottom: 14%;
-    left: 24%;
-  }
-  .greeting5 {
-    bottom: -2%;
-    left: 46%;
-  }
 
   button.main-btn {
     transition: all .3s ease;

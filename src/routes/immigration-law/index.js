@@ -13,7 +13,7 @@ import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
-import TextBlockMain from '../../components/language-practice/text-block-main'
+import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
 import style from '../language-practice/style.scss';

@@ -1,18 +1,10 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { Link } from 'preact-router';
 import style from './style.scss';
 
-/*componentDidMount: function() {
-  this.countdown = setInterval(this.timer, 1000);
-},*/
-
-
-//class TextBlockMain extends Component {
 const TextBlockMain = ({content, appLink = ''}) => {
   const downloadApp = () => appLink && window.open(appLink);
        let header;
-
-  const greetings = [ 'Гамарджоба', 'Hello', 'Ola', 'Konnichiwa', 'Hola', 'Marhaba' ];
-  let index = Math.floor(Math.random()*greetings.length);
 
   function setEmphasizedText() {
     if(content.title.indexOf(content.emphasized) + 1) {
@@ -36,7 +28,6 @@ const TextBlockMain = ({content, appLink = ''}) => {
           </div>
           <div class={style.image}>
             <img src={content.img} alt={content.title} />
-            <span className={`greeting${index}`}>{greetings[index]}</span>
           </div>
       </div>
 	)
