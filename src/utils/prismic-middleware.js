@@ -140,7 +140,6 @@ const getFAQs = (faqData) => {
 
 export function processHomepageData(data){
     let processedData = {};
-    console.log(data);
 
     processedData.mainSection = {
         title: data.title[0].text,
@@ -160,7 +159,8 @@ export function processHomepageData(data){
 
     processedData.app = {
         title: data.app_title[0].text,
-        text: data.app_text[0].text
+        text: data.app_text[0].text,
+        img: data.app_image.url,
     };
 
     processedData.faqs = getFAQs(data);
@@ -178,6 +178,7 @@ const getSteps = (data) => {
       id: step.id[0].text,
       title: step.step_title[0].text,
       text: step.step_text[0].text,
+      icon: step.step_icon.url,
     }));
 };
 
@@ -232,7 +233,8 @@ export function processTextPageData(data){
 
     processedData.app = {
         title: data.app_title[0].text,
-        text: data.app_text[0].text
+        text: data.app_text[0].text,
+        img: data.app_image.url,
     };
 
     return processedData;
