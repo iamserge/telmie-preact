@@ -9,11 +9,9 @@ const ServiceCard = ({background, serviceName, description, downloadApp}) => {
           <div>
             <div class={style.serviceName}>{serviceName}</div>
             <div class={style.serviceInfo}>
-                <div class={style.description}>
-                    {description}
-                </div>
-                <button class='red-btn' onClick={downloadApp}>Download app</button>
+               {description}
             </div>
+            <button class='red-btn' onClick={downloadApp}>Download app</button>
           </div>
         </div>
 	)
