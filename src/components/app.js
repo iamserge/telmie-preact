@@ -131,8 +131,8 @@ class App extends Component {
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
-			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } />,
-			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE }/>,
+			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,

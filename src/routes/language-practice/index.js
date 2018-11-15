@@ -16,7 +16,7 @@ import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
 import style from './style.scss';
 
-import { processTextPageData } from '../../utils/prismic-middleware';
+import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -40,16 +40,24 @@ class LanguagePractice extends Component {
 
   fetchPage = (props) => {
     let that = this;
+    that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
 
+  fetchReviews = (props) => {
+    let that = this;
+    props.prismicCtx.api.getByID(that.props.reviewsUid).then((page, err) => {
+      that.setState({reviews: processReviewsData(page.data)})
+    });
+  }
 
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
+      const reviewsData = this.state.reviews;
 
       return (
         <div id="language-practice">
@@ -62,7 +70,7 @@ class LanguagePractice extends Component {
 
           <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 
-          <HappyUsers content={pageData.reviews} />
+          <HappyUsers content={reviewsData} />
 
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
