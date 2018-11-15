@@ -41,8 +41,8 @@
     span {
       background: $pinkishRed;
       color: #fff;
-      border-radius: 15px;
-      padding: 2px 15px;
+      border-radius: 22px;
+      padding: 1px 22px;
       position: absolute;
       animation: blink 2s infinite;
 
@@ -120,27 +120,31 @@
 
   .greeting0 {
     top: 61%;
-    right: 20%;
+    right: 22%;
   }
   .greeting1 {
     bottom: -2%;
-    right: 11%;
+    right: 10%;
   }
   .greeting2 {
     top: 40%;
-    left: 19%;
+    left: 17%;
   }
   .greeting3 {
     top: 46%;
-    right: -1%;
+    right: 4%;
   }
   .greeting4 {
-    bottom: 14%;
+    bottom: 15%;
     left: 24%;
   }
   .greeting5 {
     bottom: -2%;
-    left: 46%;
+    left: 48%;
+  }
+  .greeting6 {
+    top: 37%;
+    left: 40%;
   }
 
   button.main-btn {

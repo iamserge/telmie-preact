@@ -3,7 +3,7 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import { setEmphasizedText } from '../../../utils'
 
-const greetings = [ 'Гамарджоба', 'Hello', 'Ola', 'Konnichiwa', 'Hola', 'Marhaba' ];
+const greetings = [ 'Привет', 'Hola', 'Hello', '嗨', 'Oi', 'مرحبا', 'Bonjour' ];
 
 class TextBlockMain extends Component {
 
