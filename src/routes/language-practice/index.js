@@ -2,8 +2,6 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import { Element, scroller, Link as ScrollLink } from 'react-scroll';
 import ScrollToTop from'react-scroll-up'
@@ -44,6 +42,7 @@ class LanguagePractice extends Component {
   fetchPage = (props) => {
     let that = this;
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+      window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   };
@@ -80,7 +79,7 @@ class LanguagePractice extends Component {
       );
     }
     return (
-      <div  className="uk-container uk-container-small" id="staticPage" >
+      <div  className="uk-container uk-container-small">
         <Spinner />
       </div>
     );

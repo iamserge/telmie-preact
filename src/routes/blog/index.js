@@ -126,7 +126,7 @@ class BlogPage extends Component {
     );
 		} else {
 			return (
-			<div className="uk-container uk-container-small" id="staticPage" >
+			<div className="uk-container uk-container-small" >
 				<Spinner />
 			</div>)
 		}
