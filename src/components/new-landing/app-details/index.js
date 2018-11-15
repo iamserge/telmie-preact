@@ -8,7 +8,7 @@ const AppDetails = ({content = {}, appLink=''}) => {
         <div class={`uk-container ${style.iosAppContainer}`}>
             <div class={style.textContent}>
                 <div class={style.header}>{content.title}</div>
-                <div class={style.subHeader}>{content.text}</div>
+                {content.text ? <div class={style.subHeader}>{content.text}</div> : null}
                 <div class={style.btn}>
                     <img onClick={downloadApp} src='/assets/new-landing-page/appStoreCoupon.png' alt=''/>
                 </div>

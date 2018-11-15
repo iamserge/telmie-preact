@@ -14,7 +14,7 @@
     width: 52%;
     padding-right: 10px;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1000px) {
       width: 100%;
     }
   }
@@ -67,7 +67,7 @@
     100% { opacity: 0.1; }
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1000px) {
     padding: 0;
     width: 100%;
     max-width: none;

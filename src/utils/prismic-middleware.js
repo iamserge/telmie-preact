@@ -200,9 +200,12 @@ const getReviews = (data) => {
 };
 
 const getInfo = (data) => {
+    console.log(data.info_section, '44')
     return data.info_section.map((infotext) => ({
       id: infotext.section_id,
       img: infotext.section_image.url,
+      img_height: infotext.section_image.dimensions.height,
+      img_width: infotext.section_image.dimensions.width,
       title: infotext.section_title[0].text,
       text: infotext.section_text[0].text,
       right: infotext.is_right_position
