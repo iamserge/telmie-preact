@@ -67,11 +67,11 @@ class LanguageLearners extends Component {
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
           <Element name="howWorksElement" />
-          <HowWorksSteps content={pageData.steps} appLink={appLink} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles}  appLink={appLink} />
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} appLink={appLink} />
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles}  appLink={appLink} />
 
           <HappyUsers content={reviewsData} />
 

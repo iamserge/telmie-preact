@@ -100,7 +100,7 @@ class Header extends Component {
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
     const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
-    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE;
+    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
