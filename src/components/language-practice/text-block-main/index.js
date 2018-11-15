@@ -32,7 +32,7 @@ class TextBlockMain extends Component {
     return (
       <div class={`${style.TextBlock} uk-container`}>
         <div class={style.howWorksText}>
-          <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText(content)}>{content.title}</h1>
+          {setEmphasizedText(content, style.header)}
           <div class={style.text}>{content.text}</div>
 
           <button class='red-btn' onClick={this.downloadApp}>Download app</button>
