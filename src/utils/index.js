@@ -1,4 +1,5 @@
 import { map, without } from 'lodash';
+import emoji from 'react-easy-emoji'
 
 export function processActivities(activities){
   let collapsedActivities = [],
@@ -67,10 +68,15 @@ export function convertDuration(totalSeconds){
 
 }
 
-export function setEmphasizedText(content) {
-  let header;
-  if(content.title.indexOf(content.emphasized) + 1) {
-    header = content.title.replace(content.emphasized, `<span>${content.emphasized}</span>`);
-  }
-  return {__html: header};
+export function setEmphasizedText(content, elClass) {
+  let emphasizedPosition = content.title.indexOf(content.emphasized),
+    emphasizedLen = content.emphasized.length;
+
+  return (emphasizedPosition + 1) ?
+    <h1 class={elClass}>
+      {emoji(content.title.substring(0,emphasizedPosition))}
+      <span>{emoji(content.emphasized)}</span>
+      {emoji(content.title.substring(emphasizedPosition + emphasizedLen))}
+    </h1>
+    : <h1 class={elClass}>{emoji(content.title)}</h1>;
 }
