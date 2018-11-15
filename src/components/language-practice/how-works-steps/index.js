@@ -4,14 +4,14 @@ import StepItem from './step'
 import style from './style.scss';
 
 
-const HowWorksSteps = ({content = [], appLink = ''}) => {
+const HowWorksSteps = ({content = [], title,  appLink = ''}) => {
   const downloadApp = () => appLink && window.open(appLink);
   const stepsCount = content.length;
 
   return (
     <div class={style.blockBg}>
       <div class={style.blockBgInner}>
-        <h2>How it works</h2>
+        <h2>{title.how_works_title}</h2>
 
         <div class={style.steps}>
           {content.map((step, index) => <StepItem step={step} isLast={stepsCount === (index + 1)}/>)}

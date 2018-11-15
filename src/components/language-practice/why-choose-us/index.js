@@ -2,13 +2,13 @@ import { h } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 
-const WhyChooseUs = ({content = [], appLink = ''}) => {
+const WhyChooseUs = ({content = [], title, addClass, appLink = ''}) => {
   const downloadApp = () => appLink && window.open(appLink);
 
   return (
-    <div class={style.blockBg}>
+    <div class={addClass ?  `up-margin ${style.blockBg}` : style.blockBg}>
       <div class={style.blockBgInner}>
-        <h2>Why choose us</h2>
+        <h2>{title.choose_us_title}</h2>
 
         <div class={style.steps}>
           {content.map(reason => (

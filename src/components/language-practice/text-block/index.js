@@ -12,7 +12,7 @@ const TextBlock = ({content = []}) => {
             <div class={style.text}>{text.text}</div>
           </div>
           <div class={style.image}>
-            <img src={text.img} alt={text.title}/>
+            <img src={text.img} height={text.img_height/2} width={text.img_width/2} alt={text.title}/>
           </div>
         </div>
       ))}

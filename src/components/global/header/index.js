@@ -75,13 +75,24 @@ class Header extends Component {
     switch (curUrl) {
       case routes.LANGUAGE_PRACTICE:
         item = 'Language practice';
-        listItem = <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>;
-        break;
+        listItem = [
+          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+          <li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>
+        ];        break;
       case routes.IMMIGRATION_LAW:
         item = 'Immigration advice';
-        listItem = <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>;
+        listItem = [
+          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+          <li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>
+        ];        break;
+      case routes.LANGUAGE_LEARNERS:
+        item = 'Изучение языка';
+        listItem = [
+          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
+        ];
         break;
-      default: 
+      default:
         return;
     }
 
@@ -100,7 +111,7 @@ class Header extends Component {
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
     const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
-    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE;
+    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
@@ -119,11 +130,14 @@ class Header extends Component {
 
           { this.renderPopoverMenu(this.props.currentUrl) }
 
-          <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
+          {!(isTextPage || isAtBlog) ?
+              <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            : null
+          }
 
 					<ul className="uk-navbar-nav" id={style.leftNav}>
             {
@@ -234,34 +248,26 @@ class Header extends Component {
           </span>
           </div>
 
-          {isTextPage ? ([
-            <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>,
-            <ScrollLink spy={true} smooth={true} duration={500} offset={-30} to="info-section-3" onClick={this.toggleMobileMenu}>Fees</ScrollLink>,
-            <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails" onClick={this.toggleMobileMenu}>Download app</ScrollLink>
-          ]) : ([
-              <div>{isAtHome ?
-                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
-                : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
-              }</div> ,
-            <div>{isAtHome ?
-                <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
-            }</div> ,
-              <div>{isAtHome ?
-                <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
-                : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
-              }</div>,
-              <div>{isAtHome ?
-                <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
-                : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
-              }</div>,
-              <div>{isAtHome ?
-                <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
-                : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
-              }</div>
-          ])
+          {isAtHome ?
+            <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
+            : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
           }
-
+          {isAtHome ?
+              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
+              : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
+          }
+          {isAtHome ?
+            <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
+            : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+          }
+          {isAtHome ?
+            <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
+            : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+          }
+          {isAtHome ?
+            <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
+            : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
+          }
               
           {/* !isLogin  ? (
 					  <div>
