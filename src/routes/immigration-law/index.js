@@ -68,7 +68,7 @@ class ImmigrationLaw extends Component {
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} appLink={appLink} />
+          <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} />
 
           <HappyUsers content={reviewsData} />
 

@@ -43,7 +43,6 @@ class LanguageLearners extends Component {
     let that = this;
     that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      console.log(page.data);
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
