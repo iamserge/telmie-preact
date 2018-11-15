@@ -221,10 +221,14 @@ export function processTextPageData(data){
     };
 
     processedData.info = getInfo(data);
-
     processedData.steps = getSteps(data);
     processedData.reasons = getReasons(data);
     //processedData.reviews = getReviews(data);
+
+    processedData.titles = {
+      how_works_title: data.how_works_title[0].text,
+      choose_us_title: data.choose_us_title[0].text
+    };
 
     processedData.app = {
         title: data.app_title[0].text,

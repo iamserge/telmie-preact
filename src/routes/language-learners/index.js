@@ -11,40 +11,43 @@ import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
-import TextBlockMain from '../../components/immigration-law/text-block-main'
+import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
-import style from '../language-practice/style.scss';
+
+import { route } from 'preact-router';
+import style from './style.scss';
 
 import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
-class ImmigrationLaw extends Component {
+class LanguageLearners extends Component {
   constructor(props){
     super(props);
     this.state =  {
       page: null,
       notFound: false,
-      fetchingPage: true,
+      fetchingPage: true
     }
   }
 
   componentDidMount(){
-    this.props.prismicCtx && this.fetchPage(this.props);
+      this.props.prismicCtx && this.fetchPage(this.props);
   }
   componentWillReceiveProps(nextProps){
     (this.props.prismicCtx == null 
       && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
-  }
+	}
 
   fetchPage = (props) => {
     let that = this;
     that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+      console.log(page.data);
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
-  }
+  };
 
   fetchReviews = (props) => {
     let that = this;
@@ -64,11 +67,11 @@ class ImmigrationLaw extends Component {
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
           <Element name="howWorksElement" />
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} appLink={appLink} />
+          <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} appLink={appLink} />
+          <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 
           <HappyUsers content={reviewsData} />
 
@@ -92,7 +95,9 @@ class ImmigrationLaw extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
@@ -101,4 +106,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ImmigrationLaw);
+)(LanguageLearners);
