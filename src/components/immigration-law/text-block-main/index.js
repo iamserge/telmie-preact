@@ -9,9 +9,9 @@ const TextBlockMain = ({content, appLink = ''}) => {
   return (
       <div class={`${style.TextBlock} uk-container`}>
           <div class={style.howWorksText}>
-              <h1 class={style.header} dangerouslySetInnerHTML={setEmphasizedText(content)}>{content.title}</h1>
-              {content.text ? <div class={style.text}>{content.text}</div> : null}
-              <button class='red-btn' onClick={downloadApp}>Download app</button>
+            {setEmphasizedText(content, style.header)}
+            {content.text ? <div class={style.text}>{content.text}</div> : null}
+            <button class='red-btn' onClick={downloadApp}>Download app</button>
 {/*
               <div class={style.buttons}>
                 <Link href=""><button class='red-btn main-btn'>Sign up <span>free</span> <span>& Become Pro</span></button></Link>

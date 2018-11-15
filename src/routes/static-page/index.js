@@ -24,6 +24,7 @@ class StaticPage extends Component {
 	}
 
 	fetchPage(props) {
+		window.scrollTo(0, 0);
     if (props.prismicCtx) {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
@@ -33,8 +34,7 @@ class StaticPage extends Component {
         } else {
           // We changed the state to display error not found if no matched doc
           this.setState({ notFound: !doc });
-				}
-				window.scrollTo(0, 0);
+				}				
       });
 			/*
 			return props.prismicCtx.api.query('').then(function(response) {
