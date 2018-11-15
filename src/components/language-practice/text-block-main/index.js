@@ -45,7 +45,7 @@ class TextBlockMain extends Component {
         </div>
         <div class={style.image}>
           <img src={content.img} alt={content.title}/>
-          <span key="greetings" className={`greeting${this.state.currentCount}`}>{greetings[this.state.currentCount]}</span>
+          <span key="greetings" className={`greeting${this.state.currentCount}`}>{greetings[this.state.currentCount]}!</span>
         </div>
       </div>
     )
