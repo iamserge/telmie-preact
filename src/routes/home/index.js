@@ -25,9 +25,6 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-// mock-data
-import { photoCards, serviceCards, landingFAQ, blogArtilces, autoprintWords } from './mock-data';
-
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';

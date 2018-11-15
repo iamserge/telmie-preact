@@ -15,7 +15,7 @@ import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import style from '../language-practice/style.scss';
 
-import { processTextPageData } from '../../utils/prismic-middleware';
+import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -39,16 +39,24 @@ class ImmigrationLaw extends Component {
 
   fetchPage = (props) => {
     let that = this;
+    that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
 
+  fetchReviews = (props) => {
+    let that = this;
+    props.prismicCtx.api.getByID(that.props.reviewsUid).then((page, err) => {
+      that.setState({reviews: processReviewsData(page.data)})
+    });
+  }
 
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
+      const reviewsData = this.state.reviews;
 
       return (
         <div id="language-practice">
@@ -62,7 +70,7 @@ class ImmigrationLaw extends Component {
 
           <WhyChooseUs content={pageData.reasons} appLink={appLink} />
 
-          <HappyUsers content={pageData.reviews} />
+          <HappyUsers content={reviewsData} />
 
           <Element name="AppDetails" />
           <div class={style.iosAppSection}>
