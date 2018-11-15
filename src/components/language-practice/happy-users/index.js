@@ -25,7 +25,7 @@ class HappyUsers extends Component {
   }
 
   render(){
-    const reviews = this.props.content;
+    const { content: reviews = [] }= this.props;
     const settings = {
       infinite: true,
       centerMode: true,

@@ -117,6 +117,7 @@ const getServices = (data) => {
     return data.services.map((service) => ({
         background: service.image.url,
         serviceName: service.title1[0].text,
+        description: service.description[0] && service.description[0].text,
     }));
 };
 
@@ -139,6 +140,7 @@ const getFAQs = (faqData) => {
 
 export function processHomepageData(data){
     let processedData = {};
+    console.log(data);
 
     processedData.mainSection = {
         title: data.title[0].text,
@@ -221,7 +223,7 @@ export function processTextPageData(data){
 
     processedData.steps = getSteps(data);
     processedData.reasons = getReasons(data);
-    processedData.reviews = getReviews(data);
+    //processedData.reviews = getReviews(data);
 
     processedData.app = {
         title: data.app_title[0].text,
@@ -229,4 +231,7 @@ export function processTextPageData(data){
     };
 
     return processedData;
+}
+export function processReviewsData(data){
+    return getReviews(data);
 }
