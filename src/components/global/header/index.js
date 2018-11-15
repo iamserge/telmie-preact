@@ -100,6 +100,7 @@ class Header extends Component {
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
     const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
+    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE;
 
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
@@ -132,8 +133,18 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
-              ([
-                <li>{isAtHome ? 
+              isTextPage ? ([
+                <li>
+                  <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement">How it works</ScrollLink>
+                </li>,
+                <li>
+                  <ScrollLink spy={true} smooth={true} duration={500} offset={50} to="info-section-3">Fees</ScrollLink>
+                </li>,
+                <li>
+                  <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails">Download app</ScrollLink>
+                </li>
+              ]) : ([
+                <li>{isAtHome ?
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                 </li>,
@@ -222,23 +233,35 @@ class Header extends Component {
             <span></span>
           </span>
           </div>
-          
-          {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink> 
-              : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>}
-          {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink> 
-              : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>}
-          {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink> 
-              : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>}
-          {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink> 
-              : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>}
-          {isAtHome ? 
-              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink> 
-              : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>}
-          
+
+          {isTextPage ? ([
+            <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>,
+            <ScrollLink spy={true} smooth={true} duration={500} offset={-30} to="info-section-3" onClick={this.toggleMobileMenu}>Fees</ScrollLink>,
+            <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails" onClick={this.toggleMobileMenu}>Download app</ScrollLink>
+          ]) : ([
+              <div>{isAtHome ?
+                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
+                : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
+              }</div> ,
+            <div>{isAtHome ?
+                <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
+                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
+            }</div> ,
+              <div>{isAtHome ?
+                <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
+                : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+              }</div>,
+              <div>{isAtHome ?
+                <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
+                : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+              }</div>,
+              <div>{isAtHome ?
+                <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
+                : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
+              }</div>
+          ])
+          }
+
               
           {/* !isLogin  ? (
 					  <div>

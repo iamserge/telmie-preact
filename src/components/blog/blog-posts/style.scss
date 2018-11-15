@@ -121,6 +121,10 @@
     padding: 0 !important;
   }
 
+	.slick-track {
+		display: flex;
+	}
+
   .slick-arrow {
     top: auto;
     bottom: 107%;

@@ -3,6 +3,7 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import Spinner from '../../components/global/spinner';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll';
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -10,7 +11,7 @@ import HowWorksSteps from '../../components/language-practice/how-works-steps'
 import WhyChooseUs from '../../components/language-practice/why-choose-us'
 import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
-import TextBlockMain from '../../components/language-practice/text-block-main'
+import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import style from '../language-practice/style.scss';
 
@@ -62,6 +63,7 @@ class ImmigrationLaw extends Component {
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
+          <Element name="howWorksElement" />
           <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
           <TextBlock content={pageData.info} />
@@ -70,6 +72,7 @@ class ImmigrationLaw extends Component {
 
           <HappyUsers content={reviewsData} />
 
+          <Element name="AppDetails" />
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>

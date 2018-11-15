@@ -3,6 +3,7 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import Spinner from '../../components/global/spinner';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll';
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -45,7 +46,7 @@ class LanguagePractice extends Component {
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
-  }
+  };
 
   fetchReviews = (props) => {
     let that = this;
@@ -64,6 +65,7 @@ class LanguagePractice extends Component {
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
+          <Element name="howWorksElement" />
           <HowWorksSteps content={pageData.steps} appLink={appLink} />
 
           <TextBlock content={pageData.info} />
@@ -72,6 +74,7 @@ class LanguagePractice extends Component {
 
           <HappyUsers content={reviewsData} />
 
+          <Element name="AppDetails" />
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>

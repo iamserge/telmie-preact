@@ -19,12 +19,9 @@
       margin-bottom: 60px;
     }
   }
-  .howWorksVideo {
-    width: 50%;
-    text-align: center;
-    & > div {
-      width: 100%;
-    }
+
+  .image {
+    flex: 1;
   }
 
   .header {
@@ -45,7 +42,8 @@
     .howWorksText{
       text-align: right;
     }
-    .howWorksVideo {
+
+    .image {
       text-align: center;
     }
 
@@ -70,13 +68,13 @@
       max-width: none;
     }
 
-    .howWorksText, .howWorksVideo {
+    .howWorksText, .image {
       width: 80%;
       max-width: none;
       margin: 0 auto;
       text-align: center;
     }
-    .howWorksVideo {
+    .image {
       margin-bottom: 60px;
     }
   }

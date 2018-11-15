@@ -35,37 +35,8 @@
 
   .image {
     flex: 1;
-    position: relative;
-
-
-    span {
-      background: $pinkishRed;
-      color: #fff;
-      border-radius: 22px;
-      padding: 1px 22px;
-      position: absolute;
-      animation: blink 2s infinite;
-
-      &:before {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 5px 5px 5px;
-        border-color: transparent transparent $pinkishRed transparent;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-      }
-    }
   }
 
-  @keyframes blink {
-    0% { opacity: 0.1; }
-    30% { opacity: 1; }
-    100% { opacity: 0.1; }
-  }
 
   @media (max-width: 1200px) {
     padding: 0;
@@ -104,48 +75,9 @@
       justify-content: center;
     }
   }
-
-  @media (max-width: 640px) {
-    .image {
-      width: 95%;
-
-      span {
-        font-size: 12px;
-      }
-    }
-  }
 }
 
 :global {
-
-  .greeting0 {
-    top: 61%;
-    right: 22%;
-  }
-  .greeting1 {
-    bottom: -2%;
-    right: 10%;
-  }
-  .greeting2 {
-    top: 40%;
-    left: 17%;
-  }
-  .greeting3 {
-    top: 46%;
-    right: 4%;
-  }
-  .greeting4 {
-    bottom: 15%;
-    left: 24%;
-  }
-  .greeting5 {
-    bottom: -2%;
-    left: 48%;
-  }
-  .greeting6 {
-    top: 37%;
-    left: 40%;
-  }
 
   button.main-btn {
     transition: all .3s ease;

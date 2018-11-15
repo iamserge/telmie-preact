@@ -66,3 +66,11 @@ export function convertDuration(totalSeconds){
 	return minutes + ':' + seconds;
 
 }
+
+export function setEmphasizedText(content) {
+  let header;
+  if(content.title.indexOf(content.emphasized) + 1) {
+    header = content.title.replace(content.emphasized, `<span>${content.emphasized}</span>`);
+  }
+  return {__html: header};
+}
