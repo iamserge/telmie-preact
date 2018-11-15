@@ -140,7 +140,6 @@ const getFAQs = (faqData) => {
 
 export function processHomepageData(data){
     let processedData = {};
-    console.log(data);
 
     processedData.mainSection = {
         title: data.title[0].text,
@@ -179,6 +178,7 @@ const getSteps = (data) => {
       id: step.id[0].text,
       title: step.step_title[0].text,
       text: step.step_text[0].text,
+      icon: step.step_icon.url,
     }));
 };
 

@@ -111,13 +111,24 @@
     }
   }
 
-  .count {
+  .iconContainer{
     margin: 0 auto;
-    width: 66px;
     height: 66px;
+
+    & > img{
+      position: relative;
+      top: -29px;
+      width: 122px;
+      height: 122px;
+    }
+  }
+  .count {
     color: white;
     background: $darkPeriwinkle;
     font: 300 40px/1.7 'Krub', sans-serif;
+    margin: 0 auto;
+    width: 66px;
+    height: 66px;
     position: relative;
 
     &:after {

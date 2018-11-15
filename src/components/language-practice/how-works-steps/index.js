@@ -1,10 +1,12 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
+import StepItem from './step'
 import style from './style.scss';
 
 
 const HowWorksSteps = ({content = [], appLink = ''}) => {
   const downloadApp = () => appLink && window.open(appLink);
+  const stepsCount = content.length;
 
   return (
     <div class={style.blockBg}>
@@ -12,14 +14,7 @@ const HowWorksSteps = ({content = [], appLink = ''}) => {
         <h2>How it works</h2>
 
         <div class={style.steps}>
-          {content.map(step => (
-              <div class={style.step} key={step.id}>
-                <span class={style.line}></span>
-                <div class={step.id=='$' ? (`${style.count} ${style.countLast}`) : style.count}>{step.id}</div>
-                <div class={style.title}>{step.title}</div>
-                <div>{step.text}</div>
-              </div>
-            ))}
+          {content.map((step, index) => <StepItem step={step} isLast={stepsCount === (index + 1)}/>)}
         </div>
 
         <button class='red-btn' onClick={downloadApp}>Download app</button>
