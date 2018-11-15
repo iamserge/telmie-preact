@@ -14,11 +14,12 @@ const AppDetails = ({content = {}, appLink=''}) => {
                 </div>
             </div>
             <div class={style.imgContent}>
-                <img class={style.appScreen} src='/assets/new-landing-page/appScreen.png' alt="App Screen"/>
-                <img class={style.combinedShapeLeft} src='/assets/new-landing-page/combinedShape_sq.png' alt='shape1'/>
+                <img class={style.appScreen} src={content.img} alt="App Screen"/>
+                {/*<img class={style.combinedShapeLeft} src='/assets/new-landing-page/combinedShape_sq.png' alt='shape1'/>
                 <img class={style.combinedShapeRight} src='/assets/new-landing-page/combinedShape_sq.png' alt='shape2'/>
                 <img class={style.polygon_large} src='/assets/new-landing-page/polygon_violet.png' alt='shape3'/>
-                <img class={style.polygon_small} src='/assets/new-landing-page/polygon_lightBlue.png' alt='shape4'/>
+    <img class={style.polygon_small} src='/assets/new-landing-page/polygon_lightBlue.png' alt='shape4'/>*/}
+                
             </div>
         </div>
 	)

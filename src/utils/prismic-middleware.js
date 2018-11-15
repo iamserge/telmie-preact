@@ -160,7 +160,8 @@ export function processHomepageData(data){
 
     processedData.app = {
         title: data.app_title[0].text,
-        text: data.app_text[0].text
+        text: data.app_text[0].text,
+        img: data.app_image.url,
     };
 
     processedData.faqs = getFAQs(data);
@@ -227,7 +228,8 @@ export function processTextPageData(data){
 
     processedData.app = {
         title: data.app_title[0].text,
-        text: data.app_text[0].text
+        text: data.app_text[0].text,
+        img: data.app_image.url,
     };
 
     return processedData;

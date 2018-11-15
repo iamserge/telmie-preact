@@ -36,14 +36,13 @@
     min-height: 490px;
 
     .appScreen {
-      position: absolute;
+      position: relative;
       z-index: 10;
-      width: 347px;
-      height: 549px;
-      top: 30px;
-      right: calc(50% - 175px);
+      max-height: 563px;
+      bottom: -80px;
+      left: auto;
     }
-    .combinedShapeLeft {
+    /*.combinedShapeLeft {
       position: absolute;
       z-index: 8;
       top: 23%;
@@ -68,7 +67,7 @@
       z-index: 9;
       bottom: 29%;
       left: 9%;
-    }
+    }*/
   }
 
   @media (max-width: 880px) {
@@ -82,10 +81,12 @@
       height: 350px;
       min-height: 300px;
       .appScreen {
-        height: 370px;
-        width: 248px;
+        position: relative;
+        top: 0;
+        left: auto;
+        max-height: 450px;
       }
-      .polygon_large {
+      /*.polygon_large {
         width: 223px;
         height: 223px;
         left: 25%;
@@ -97,7 +98,7 @@
         width: 99px;
         height: 99px;
         left: 22%;
-      }
+      }*/
     }
     .textContent {
       width: 100%;
