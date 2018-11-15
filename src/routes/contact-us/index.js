@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h, Component, render } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
@@ -6,18 +6,22 @@ import ContactForm from '../../components/new-landing/contact-form'
 
 import { sendContactData, clearContactData } from '../../actions/user';
 
-const ContactPage = props => {
+class ContactPage extends Component {
 	
-    const {sendContactMessageInfo = {}} = props;
-
-    return (
-		<div >				
-			<ContactForm sendData={props.sendContactData} 
-				info={sendContactMessageInfo} 
-				clearContactData={props.clearContactData}/>
-        </div>
-    );
-	
+	componentDidMount(){
+		window.scrollTo(0, 0);
+	}
+    
+	render(){
+		const {sendContactMessageInfo = {}} = this.props;
+		return (
+			<div >				
+				<ContactForm sendData={this.props.sendContactData} 
+					info={sendContactMessageInfo} 
+					clearContactData={this.props.clearContactData}/>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => ({

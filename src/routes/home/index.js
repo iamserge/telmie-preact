@@ -90,7 +90,6 @@ class HomePage extends Component {
 		)
 	}
 	componentDidMount(){
-	//	window.scrollTo(0, 0);
 		if (this.props.prismicCtx) {
 			this.fetchPage(this.props);
 			this.fetchRecentPosts(this.props);
@@ -155,6 +154,7 @@ class HomePage extends Component {
 
 	fetchPage(props) {
 		let that = this;
+		window.scrollTo(0, 0);
 		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
