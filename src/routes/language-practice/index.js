@@ -41,9 +41,9 @@ class LanguagePractice extends Component {
 
   fetchPage = (props) => {
     let that = this;
+    window.scrollTo(0, 0);
     that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   };
