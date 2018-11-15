@@ -45,6 +45,7 @@
       padding: 1px 22px;
       position: absolute;
       animation: blink 2s infinite;
+      font-size: 15px;
 
       &:before {
         content: '';
@@ -121,31 +122,31 @@
 
   .greeting0 {
     top: 61%;
-    right: 22%;
+    right: 23%;
   }
   .greeting1 {
-    bottom: -2%;
+    bottom: 0;
     right: 10%;
   }
   .greeting2 {
     top: 40%;
-    left: 17%;
+    left: 18%;
   }
   .greeting3 {
     top: 46%;
     right: 4%;
   }
   .greeting4 {
-    bottom: 15%;
+    bottom: 16%;
     left: 24%;
   }
   .greeting5 {
-    bottom: -2%;
+    bottom: -1%;
     left: 48%;
   }
   .greeting6 {
     top: 37%;
-    left: 40%;
+    left: 41%;
   }
 
   button.main-btn {
