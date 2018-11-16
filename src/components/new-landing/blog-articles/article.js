@@ -6,7 +6,7 @@ const Article = ({id, title, date, link}) => {
     return (
         <div class={style.article}>
             <Link href={link} class={style.title}>{title}</Link>
-            <div class={style.date}>{date}</div>
+            <div class={style.date}>{new Date(date).customParse()}</div>
         </div>
 	)
 }
