@@ -81,9 +81,11 @@
         font-size: 32px;
         width:auto;
         white-space: nowrap;
-        -webkit-animation: countNumber 1s;
-        -webkit-animation-fill-mode: forwards;
-        -webkit-animation-timing-function: steps(10);
+        &.animated {
+            -webkit-animation: countNumber 1s;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-timing-function: steps(10);
+        }
     }
     .signature{
         font-size: 12px;
