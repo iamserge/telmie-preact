@@ -70,8 +70,6 @@ export default class Footer extends Component {
 								<ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
 								: <Link href={routes.FAQ}>FAQ</Link>}
 							</li>
-							<li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
-							<li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>
 						</ul>
 					</nav>
 					<div class={style.socialIcons}>
