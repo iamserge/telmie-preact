@@ -3,7 +3,6 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import Spinner from '../../components/global/spinner';
-import { Element, scroller, Link as ScrollLink } from 'react-scroll';
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
@@ -14,7 +13,6 @@ import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 
-import { route } from 'preact-router';
 import style from './style.scss';
 
 import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
@@ -65,7 +63,6 @@ class LanguageLearners extends Component {
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
-          <Element name="howWorksElement" />
           <HowWorksSteps content={pageData.steps} title={pageData.titles}  appLink={appLink} />
 
           <TextBlock content={pageData.info} />
@@ -74,7 +71,6 @@ class LanguageLearners extends Component {
 
           <HappyUsers content={reviewsData} />
 
-          <Element name="AppDetails" />
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>
