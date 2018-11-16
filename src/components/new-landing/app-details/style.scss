@@ -13,15 +13,18 @@
     padding-top: 120px;
 
     .header {
-      font-size: 48px;
       margin-bottom: 24px;
-      font-family: 'Krub', sans-serif;
-      font-weight: 300;
+      font: 300 48px/1.3333 'Krub', sans-serif;
     }
     .subHeader {
       font-size: 18px;
       line-height: 32px;
       margin-bottom: 40px;
+      letter-spacing: -.3px;
+      max-width: 500px;
+      @media (max-width: 880px) {
+        max-width: none;
+      }
     }
     .btn {
       margin-bottom: 125px;
@@ -29,11 +32,11 @@
     }
   }
   .imgContent {
-    display: inline-block;
     width: 50%;
     position: relative;
     height: 100%;
     min-height: 490px;
+    flex: 1;
 
     .appScreen {
       position: relative;

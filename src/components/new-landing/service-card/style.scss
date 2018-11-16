@@ -1,3 +1,5 @@
+@import './src/style/variables';
+
 .serviceCard{
     display: flex;
     flex-wrap: wrap;
@@ -9,7 +11,7 @@
     justify-content: center;
     color: white;
     text-align: center;
-    padding: 10px 32px;
+    padding: 10px 55px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -28,6 +30,15 @@
         right: 0;
         background: rgba(2,2,2,.2);
         transition: background .3s ease;
+    }
+
+    .serviceDescription {
+        color:white;
+        display: block;
+
+        &:hover *{
+            text-decoration: none;
+        }
     }
 
     .serviceName{
@@ -53,18 +64,27 @@
         z-index: 2;
         transform: translateZ(0);
         transition: display .3s ease;
-        margin-bottom: 30px;
+        margin-bottom: 34px;
     }
 
     button {
         position: relative;
         z-index: 2;
         transform: translateZ(0);
+
+        &.white-btn {
+            color: $pinkishRed;
+        }
     }
 
     &:hover{
         &:before{
             background: rgba(2,2,2,.4);
+        }
+
+        .serviceDescription {
+            color: white;
+            text-decoration: none;
         }
 
         .serviceName {
@@ -75,26 +95,28 @@
             display: block;
             animation: showtext  2s  ease;
         }
+
         button {
+            color: #fff;
+            border-color: $pinkishRed;
+            background: $pinkishRed;
             animation: slideDown  2s  ease;
         }
     }
 
     @keyframes showtext{
         0% {transform: rotate(0deg) scale(0.3,0.3); opacity: 0;}
-        50% {transform: rotate(0deg) scale(1.05,1.05); opacity: 1;}
+        50% {transform: rotate(0deg) scale(1.0,1.0); opacity: 1;}
         100% {transform: rotate(0deg) scale(1.0,1.0);}
     }
     @keyframes slideUp{
         0% {transform: translateY(100%);}
-        50%{transform: translateY(8%);}
-        95%{transform: translateY(2%);}
+        45%{transform: translateY(0%);}
         100%{transform: translateY(0%);}
     }
     @keyframes slideDown {
         0% {transform: translateY(-100%);}
-        50%{transform: translateY(-8%);}
-        95%{transform: translateY(-2%);}
+        45%{transform: translateY(0%);}
         100% {transform: translateY(0%);}
     }
 }

@@ -177,7 +177,7 @@ class HomePage extends Component {
 					<Element name='howWorksElement'  />
 					<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
 
-					<FeaturedServices services={pageData.services} appLink={appLink}/>
+					<FeaturedServices services={pageData.services}/>
 
 					<div class={style.iosAppSection}>
 						<AppDetails appLink={appLink} content={pageData.app}/>
