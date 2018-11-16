@@ -15,7 +15,7 @@ const WhyChooseUs = ({content = [], title, addClass, appLink = ''}) => {
               <div class={style.step} key={reason.id}>
                 <img class={style.icon} src={reason.icon} alt={style.title} />
                 <div class={style.title}>{reason.title}</div>
-                <div>{reason.text}</div>
+                <div class={style.text}>{reason.text}</div>
               </div>
             ))}
         </div>

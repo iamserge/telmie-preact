@@ -44,6 +44,10 @@
     padding: 0 30px;
     position: relative;
 
+    [lang="ru"] & {
+      padding: 0 16px;
+    }
+
     @media (max-width: 880px) {
       width: 80%;
       min-width: 300px;
@@ -62,6 +66,16 @@
     letter-spacing: -.4px;
     margin: 36px 0 12px;
     color: $hBlack;
+
+    [lang="ru"] & {
+      font-weight: 400;
+    }
+  }
+  .text {
+
+    [lang="ru"] & {
+      padding: 0 14px;
+    }
   }
 }
 

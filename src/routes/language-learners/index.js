@@ -53,7 +53,7 @@ class LanguageLearners extends Component {
     props.prismicCtx.api.getByID(that.props.reviewsUid).then((page, err) => {
       that.setState({reviews: processReviewsData(page.data)})
     });
-  }
+  };
 
   render() {
     if (!this.state.fetchingPage) {
@@ -61,7 +61,7 @@ class LanguageLearners extends Component {
       const reviewsData = this.state.reviews;
 
       return (
-        <div id="language-practice">
+        <div id="language-learners" lang="ru">
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 

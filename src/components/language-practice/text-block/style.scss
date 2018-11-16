@@ -35,6 +35,10 @@
 
   .text {
     max-width: 530px;
+
+    [lang="ru"] & {
+      max-width: 535px;
+    }
   }
 
   &Right {
@@ -43,11 +47,19 @@
     .howWorksText{
       text-align: right;
       width: 40%;
+
+      [lang="ru"] & {
+        width: 48%;
+      }
     }
 
     .text {
       float: right;
       max-width: 500px;
+
+      [lang="ru"] & {
+        max-width: 450px;
+      }
     }
   }
 
