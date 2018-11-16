@@ -26,8 +26,11 @@
       font-size: 18px;
       line-height: 32px;
       margin-bottom: 40px;
+      max-width: 490px;
+      letter-spacing: -.3px;
       @media (max-width: 880px) {
         font-size: 16px;
+        max-width: none;
       }
     }
     button {

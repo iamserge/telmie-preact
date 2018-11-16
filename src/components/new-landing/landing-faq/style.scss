@@ -77,14 +77,13 @@
     text-indent: 0 !important;
     background-color: white;
     color: $hBlack !important;
-    font-size: 20px;
     border: none !important;
     padding: 20px 0 20px 50px;
     height: auto !important;
     border-bottom: 1px solid $lightGrey !important;
     outline: none;
-    font-family: 'Krub', sans-serif;
-    font-weight: 500;
+    font: 500 20px/1.6 'Krub', sans-serif;
+    letter-spacing: -.4px;
 
     .hIcon{
         position: absolute;

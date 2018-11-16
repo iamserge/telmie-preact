@@ -8,10 +8,11 @@
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  padding: 114px 0 127px;
+  padding: 100px 0 127px;
 
   h2 {
     font: 300 40px/1.6 'Krub', sans-serif;
+    color: $hBlack;
   }
 
   .red-btn {
@@ -43,6 +44,10 @@
     padding: 0 30px;
     position: relative;
 
+    [lang="ru"] & {
+      padding: 0 16px;
+    }
+
     @media (max-width: 880px) {
       width: 80%;
       min-width: 300px;
@@ -52,16 +57,25 @@
   }
 
   .icon {
-
     height: 52px;
     max-width: 100%;
-
   }
 
   .title {
     font: 500 20px/1.6 'Krub', sans-serif;
-    letter-spacing: -.3px;
+    letter-spacing: -.4px;
     margin: 36px 0 12px;
+    color: $hBlack;
+
+    [lang="ru"] & {
+      font-weight: 400;
+    }
+  }
+  .text {
+
+    [lang="ru"] & {
+      padding: 0 14px;
+    }
   }
 }
 

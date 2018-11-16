@@ -1,24 +1,28 @@
+@import './src/style/variables';
+
 .serviceCard{
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: 49%;
     height: 350px;
     margin-bottom: 10px;
     border-radius: 10px;
+    padding: 10px 55px;
     align-items: center;
     justify-content: center;
     color: white;
     text-align: center;
-    padding: 10px 32px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     transition: all .3s ease;
-    @media (max-width: 880px) {
+
+    @media (max-width: 1200px) {
         min-height: 350px;
         height: auto;
+        width: 100%;
     }
-    
+
     &:before {
         content: '';
         position: absolute;
@@ -46,55 +50,71 @@
         display: none;
         font-size: 16px;
         font-family: 'OpenSans', sans-serif;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: -.3px;
         line-height: 1.75;
         position: relative;
         z-index: 2;
         transform: translateZ(0);
         transition: display .3s ease;
-        margin-bottom: 30px;
+        margin-bottom: 34px;
     }
 
     button {
+        color: $pinkishRed!important;
         position: relative;
         z-index: 2;
         transform: translateZ(0);
+        transition: all .3s ease;
+
+        &:hover {
+            color: #fff!important;
+            border-color: $pinkishRed;
+            background: $pinkishRed;
+        }
     }
 
     &:hover{
+        color: #fff;
+        text-decoration: none!important;
+
         &:before{
             background: rgba(2,2,2,.4);
         }
+    }
 
-        .serviceName {
-            animation: slideUp  2s  ease;
-        }
+    &Animated {
+        &:hover{
+            .serviceName {
+                animation: slideUp  2s  ease;
+            }
 
-        .serviceInfo {
-            display: block;
-            animation: showtext  2s  ease;
-        }
-        button {
-            animation: slideDown  2s  ease;
+            .serviceInfo {
+                display: block;
+                animation: showtext  2s  ease;
+            }
+
+            button {
+                animation: slideDown  2s  ease;
+            }
         }
     }
 
     @keyframes showtext{
         0% {transform: rotate(0deg) scale(0.3,0.3); opacity: 0;}
-        50% {transform: rotate(0deg) scale(1.05,1.05); opacity: 1;}
+        50% {transform: rotate(0deg) scale(1.0,1.0); opacity: 1;}
         100% {transform: rotate(0deg) scale(1.0,1.0);}
     }
     @keyframes slideUp{
         0% {transform: translateY(100%);}
-        50%{transform: translateY(8%);}
-        95%{transform: translateY(2%);}
+        45%{transform: translateY(0%);}
         100%{transform: translateY(0%);}
     }
     @keyframes slideDown {
         0% {transform: translateY(-100%);}
-        50%{transform: translateY(-8%);}
-        95%{transform: translateY(-2%);}
+        45%{transform: translateY(0%);}
         100% {transform: translateY(0%);}
     }
+
+
 }

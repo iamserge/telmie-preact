@@ -114,7 +114,9 @@ const getExperts = (data) => {
 }
 
 const getServices = (data) => {
+    console.log(data)
     return data.services.map((service) => ({
+        link: service.link[0].text,
         background: service.image.url,
         serviceName: service.title1[0].text,
         description: service.description[0] && service.description[0].text,

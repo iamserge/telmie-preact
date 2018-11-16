@@ -11,7 +11,7 @@
         font-family: 'Krub', sans-serif;
         font-weight: 500;
 
-      @media (max-width: 880px) {
+      @media (max-width: 1200px) {
         font-size: 32px;
         text-align: center;
         line-height: 1.5;
@@ -21,20 +21,12 @@
 		display: flex;
 		flex-wrap: wrap;
         justify-content: space-between;
-        
-        & > div{
-            width: 49%;
-        }
     }
     @media (max-width: 1200px) {
         .services{
             justify-content: center;
             width: 80%;
             margin: 0 auto;
-            
-            & > div{
-                width: 100%;
-            }
         }
     }
 

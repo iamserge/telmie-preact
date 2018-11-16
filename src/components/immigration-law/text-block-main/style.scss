@@ -9,10 +9,14 @@
 
   .howWorksText {
     font-size: 23px;
-    letter-spacing: -0.3px;
+    line-height: 1.739;
     padding: 15px 0;
-    width: 52%;
+    width: 53%;
     padding-right: 10px;
+
+    [lang="ru"] & {
+      width: 58%;
+    }
 
     @media (max-width: 1000px) {
       width: 100%;

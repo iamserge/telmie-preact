@@ -147,17 +147,7 @@ class Header extends Component {
                 <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
-              isTextPage ? ([
-                <li>
-                  <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement">How it works</ScrollLink>
-                </li>,
-                <li>
-                  <ScrollLink spy={true} smooth={true} duration={500} offset={-50} to="info-section-3">Fees</ScrollLink>
-                </li>,
-                <li>
-                  <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails">Download app</ScrollLink>
-                </li>
-              ]) : ([
+              isTextPage ? null : ([
                 <li>{isAtHome ?
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
                   : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}

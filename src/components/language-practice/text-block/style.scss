@@ -10,9 +10,10 @@
 
   .howWorksText {
     font-size: 18px;
+    line-height: 1.7778;
     letter-spacing: -0.3px;
     padding: 15px 0;
-    width: 50%;
+    width: 51%;
     padding-right: 10px;
 
     @media (max-width: 880px) {
@@ -27,14 +28,17 @@
 
   .header {
     color: $hBlack;
-    font-size: 40px;
     margin-bottom: 25px;
-    font-family: 'Krub', sans-serif;
-    font-weight: 300;
+    font: 300 40px/1.4 'Krub', sans-serif;
+    letter-spacing: .7px;
   }
 
   .text {
     max-width: 530px;
+
+    [lang="ru"] & {
+      max-width: 535px;
+    }
   }
 
   &Right {
@@ -42,10 +46,20 @@
 
     .howWorksText{
       text-align: right;
+      width: 40%;
+
+      [lang="ru"] & {
+        width: 48%;
+      }
     }
 
     .text {
       float: right;
+      max-width: 500px;
+
+      [lang="ru"] & {
+        max-width: 450px;
+      }
     }
   }
 
