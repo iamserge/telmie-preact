@@ -12,6 +12,7 @@
 
   h2 {
     font: 300 40px/1.6 'Krub', sans-serif;
+    color: $hBlack;
   }
 
   .red-btn {
@@ -161,7 +162,8 @@
 
   .title {
     font: 500 20px/1.6 'Krub', sans-serif;
-    letter-spacing: -.3px;
+    letter-spacing: -.4px;
     margin: 36px 0 12px;
+    color: $hBlack;
   }
 }

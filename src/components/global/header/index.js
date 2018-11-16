@@ -148,7 +148,7 @@ class Header extends Component {
                 (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
               ]) : */
               isTextPage ? ([
-                <li>
+{/*                <li>
                   <ScrollLink spy={true} smooth={true} duration={500} to="howWorksElement">How it works</ScrollLink>
                 </li>,
                 <li>
@@ -156,7 +156,7 @@ class Header extends Component {
                 </li>,
                 <li>
                   <ScrollLink spy={true} smooth={true} duration={500} to="AppDetails">Download app</ScrollLink>
-                </li>
+                </li>*/}
               ]) : ([
                 <li>{isAtHome ?
                   <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
