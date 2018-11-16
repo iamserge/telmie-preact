@@ -65,6 +65,13 @@
         position: relative;
         z-index: 2;
         transform: translateZ(0);
+        transition: all .3s ease;
+
+        &:hover {
+            color: #fff!important;
+            border-color: $pinkishRed;
+            background: $pinkishRed;
+        }
     }
 
     &:hover{
@@ -74,21 +81,22 @@
         &:before{
             background: rgba(2,2,2,.4);
         }
+    }
 
-        .serviceName {
-            animation: slideUp  2s  ease;
-        }
+    &Animated {
+        &:hover{
+            .serviceName {
+                animation: slideUp  2s  ease;
+            }
 
-        .serviceInfo {
-            display: block;
-            animation: showtext  2s  ease;
-        }
+            .serviceInfo {
+                display: block;
+                animation: showtext  2s  ease;
+            }
 
-        button {
-            color: #fff!important;
-            border-color: $pinkishRed;
-            background: $pinkishRed;
-            animation: slideDown  2s  ease;
+            button {
+                animation: slideDown  2s  ease;
+            }
         }
     }
 
@@ -107,4 +115,6 @@
         45%{transform: translateY(0%);}
         100% {transform: translateY(0%);}
     }
+
+
 }

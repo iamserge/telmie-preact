@@ -7,7 +7,7 @@ const ServiceCard = ({background, serviceName, description, link}) => {
     
     return (
 
-          <Link href={link} style={cardStyle} class={style.serviceCard}>
+          <Link href={link} style={cardStyle} class={description ? `${style.serviceCard} ${style.serviceCardAnimated}`: style.serviceCard}>
             <div class={style.serviceDescription}>
               <div class={style.serviceName}>{serviceName}</div>
               <div class={style.serviceInfo}>
