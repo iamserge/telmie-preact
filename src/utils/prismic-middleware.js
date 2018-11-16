@@ -209,7 +209,8 @@ const getInfo = (data) => {
       img_width: infotext.section_image.dimensions.width,
       title: infotext.section_title[0].text,
       text: infotext.section_text[0].text,
-      right: infotext.is_right_position
+      right: infotext.is_right_position,
+      animated: infotext.is_animated
     }));
 };
 

@@ -71,7 +71,10 @@
         padding: 0 !important;
         & > div{
             width: 100%;
+
+            &.videoWrapper {
+                margin-right: 0;
+            }
         }
     }
-    
 }
