@@ -13,8 +13,9 @@ const ServiceCard = ({background, serviceName, description, link}) => {
               <div class={style.serviceInfo}>
                  {description}
               </div>
-              <button class='white-btn'>Start learning</button>
+
             </div>
+            <button class='white-btn'>Start learning</button>
           </Link>
 	)
 }
