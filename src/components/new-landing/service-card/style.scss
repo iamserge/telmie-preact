@@ -3,24 +3,26 @@
 .serviceCard{
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: 49%;
     height: 350px;
     margin-bottom: 10px;
     border-radius: 10px;
+    padding: 10px 55px;
     align-items: center;
     justify-content: center;
     color: white;
     text-align: center;
-    padding: 10px 55px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     transition: all .3s ease;
+
     @media (max-width: 880px) {
         min-height: 350px;
         height: auto;
+        width: 100%;
     }
-    
+
     &:before {
         content: '';
         position: absolute;
@@ -30,15 +32,6 @@
         right: 0;
         background: rgba(2,2,2,.2);
         transition: background .3s ease;
-    }
-
-    .serviceDescription {
-        color:white;
-        display: block;
-
-        &:hover *{
-            text-decoration: none;
-        }
     }
 
     .serviceName{
@@ -68,23 +61,18 @@
     }
 
     button {
+        color: $pinkishRed!important;
         position: relative;
         z-index: 2;
         transform: translateZ(0);
-
-        &.white-btn {
-            color: $pinkishRed;
-        }
     }
 
     &:hover{
+        color: #fff;
+        text-decoration: none!important;
+
         &:before{
             background: rgba(2,2,2,.4);
-        }
-
-        .serviceDescription {
-            color: white;
-            text-decoration: none;
         }
 
         .serviceName {
@@ -97,7 +85,7 @@
         }
 
         button {
-            color: #fff;
+            color: #fff!important;
             border-color: $pinkishRed;
             background: $pinkishRed;
             animation: slideDown  2s  ease;
