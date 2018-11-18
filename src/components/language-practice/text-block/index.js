@@ -13,7 +13,7 @@ const TextBlock = ({content = []}) => {
             <div class={style.text}>{text.text}</div>
           </div>
           <div class={style.image}>
-            {text.animated.length > 0 ?
+            {text.animated == 1 ?
               <AnimatedImage content={text} />
               : <img src={text.img} height={text.img_height/2} width={text.img_width/2} alt={text.title}/>
             }

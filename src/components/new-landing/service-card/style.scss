@@ -61,24 +61,32 @@
         font-weight: 400;
         letter-spacing: -.3px;
         line-height: 1.75;
+        margin-bottom: 100px;
         position: relative;
         z-index: 2;
         transform: translateZ(0);
         transition: display .3s ease;
-        margin-bottom: 34px;
 
         @media (max-width: 580px) {
-            margin-bottom: 15px;
             line-height: 1.6;
         }
     }
 
     button {
         color: $pinkishRed!important;
-        position: relative;
         z-index: 2;
-        transform: translateZ(0);
         transition: all .3s ease;
+        position: absolute;
+        bottom: 67px;
+        left: 50%;
+        transform: translateX(-50%);
+
+
+        @media (max-width: 580px) {
+            margin-top: 15px;
+            bottom: 40px;
+            white-space: nowrap;
+        }
 
         &:hover {
             color: #fff!important;
@@ -106,28 +114,15 @@
                 display: block;
                 animation: showtext  2s  ease;
             }
-
-            button {
-                animation: slideDown  2s  ease;
-            }
         }
     }
 
     @keyframes showtext{
-        0% {transform: rotate(0deg) scale(0.3,0.3); opacity: 0;}
-        50% {transform: rotate(0deg) scale(1.0,1.0); opacity: 1;}
-        100% {transform: rotate(0deg) scale(1.0,1.0);}
+        0% {opacity: 0;}
+        70% {opacity: 1;}
     }
     @keyframes slideUp{
         0% {transform: translateY(100%);}
         45%{transform: translateY(0%);}
-        100%{transform: translateY(0%);}
     }
-    @keyframes slideDown {
-        0% {transform: translateY(-100%);}
-        45%{transform: translateY(0%);}
-        100% {transform: translateY(0%);}
-    }
-
-
 }
