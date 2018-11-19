@@ -13,7 +13,9 @@ const WhyChooseUs = ({content = [], title, addClass, appLink = ''}) => {
         <div class={style.steps}>
           {content.map(reason => (
               <div class={style.step} key={reason.id}>
-                <img class={style.icon} src={reason.icon} alt={style.title} />
+                <div class={style.iconContainer}>
+                  <img class={style.icon} src={reason.icon} alt={style.title} />
+                </div>
                 <div class={style.title}>{reason.title}</div>
                 <div class={style.text}>{reason.text}</div>
               </div>
