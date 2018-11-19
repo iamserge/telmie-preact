@@ -1,66 +1,23 @@
 import { h, Component } from 'preact';
+import { init } from 'ityped'
 import style from './style.scss';
 
+const _words = ["Sports Coach", "Immigration Adviser", "Dietary Guru", "Fashion Expert", "Growth Hacker", "Career Coach", "Wedding Planner", "GDPR Expert", "Business Adviser", "Language Speaker", "Startup Ninja", "Design Consultant", "Scale-up Hacker", "SEO Rock Star", "Pets Guru", "Marketing Ninja"];
 class AutoPrintText extends Component {
-    constructor(props){
-        super(props);
-
-        this.state = {
-            wordIndex: 0,
-            currentWord: '',
-            words: this.props.mainSection.typedWords.split(',')
-        }
-    }
-
+    
     componentDidMount(){
-        this.changeWordInterval = setInterval(this.changeWord, 3100);
-        this.autoPrint(200);
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.changeWordInterval);
+        init(this.wordArea, { showCursor: false, typeSpeed:  150, backDelay:  1000, strings: _words });
     }
 
     componentDidUpdate(_, prevState){
-        (prevState.wordIndex !== this.state.wordIndex) && this.autoPrint(150);
-    }
-
-    autoPrint(speed){        
-        const words = this.state.words;
-        const { wordIndex } = this.state;
-        
-        const word = words[wordIndex];
-
-        for(let i = 0, len = word.length; i < len; i++){
-            ((i, letter) => {
-                setTimeout(() => {
-                    this.setState(prev => ({currentWord: prev.currentWord + letter}))
-                },i*speed);
-            })(i+1, word[i])
-            
-          }
-      }
-
-    changeWord = () => {
-        const words = this.state.words;
-        const len = words.length;
-        len && (
-            this.setState(prev => ({
-                wordIndex: (prev.wordIndex === len - 1) ? 0 : prev.wordIndex + 1,
-                currentWord: '',
-            }))
-        );
+        //(prevState.wordIndex !== this.state.wordIndex) && this.autoPrint(200);
     }
 
     render(){
-        const words = this.state.words;
-        const { wordIndex, currentWord } = this.state;
 
         return (
             <div class={style.wordContainer}>
-                <span class={style.word}>
-                    { currentWord }
-                </span>
+                <span class={style.word} ref={ref => this.wordArea = ref} />
             </div>
         )
     }
