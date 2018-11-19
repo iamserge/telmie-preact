@@ -52,6 +52,8 @@ a {
 }
 .uk-container {
 	min-height: calc(100% - 174px);
+	max-width: 1470px;
+	margin: 0 auto;
     @media (max-width: 880px) {
         width: calc(100% - 10px);
         box-sizing: border-box;
@@ -80,8 +82,6 @@ a {
 }
 #homepage {
 	padding-top: 100px;
-	max-width: 1470px;
-	margin: auto;
 }
 #homepage .uk-container-small {
     h1,
@@ -100,10 +100,7 @@ a {
 }
 
 #homepage .uk-container {
-	margin: 0 115px 0 145px;
-	//margin: 0 115px 0 87px;
-	//margin: 0 0 0 58px;
-	max-width: none;
+	padding: 0 115px 0 145px;	
 }
 #homepage .uk-container-big {
 	margin: 0 115px 0 87px;
@@ -423,13 +420,6 @@ button.white-btn {
 		top: calc(50% - 19px);
 		left: calc(50% - 11px);
 	}
-}
-
-.slick-next{
-	right: calc(50% - 530px) !important;
-}
-.slick-prev{
-	right: calc(50% - 530px + 64px) !important;
 }
 
 @media (max-width: 1200px) {
