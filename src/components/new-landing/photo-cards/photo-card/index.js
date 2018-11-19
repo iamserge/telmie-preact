@@ -22,7 +22,7 @@ class PhotoCard extends Component {
         let minutesBoxPos = document.getElementById('navigationScroll').getBoundingClientRect();
         let scrollTop = window.pageYOffset;
 
-        if ( scrollTop >= minutesBoxPos.top) {
+        if ( scrollTop >= minutesBoxPos.top - 280) {
             this.setState({ animation: true });
         }
     }
