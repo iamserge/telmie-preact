@@ -40,14 +40,22 @@ class LandingFAQ extends Component {
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
-    renderHeder = (text) => ([<img src='/assets/new-landing-page/group28.png' alt='' class={style.hIcon}/>, text])
+    renderHeder = (text, index, active) => ([
+        <div class={`${style.toggle} ${index == active ? style.openedToggle : style.closedToggle}`}>
+            <div class={style.horizontal}></div>
+            <div class={style.vertical}></div>
+        </div>,
+        text
+    ]);
 
     renderQuestions = (arr = []) => {
         const {activeQuest} = this.state;
         return (
             <Collapse accordion={true} activeKey={activeQuest} onChange={this.setActiveQuest}>
                 {arr.map(({question, answer}, index) => (
-                    <Collapse.Panel key={index} header={this.renderHeder(question)} {...headerProps}>
+                    <Collapse.Panel key={index.toString()} 
+                        header={this.renderHeder(question, index.toString(), activeQuest)} 
+                        {...headerProps}>
                         {answer}
                     </Collapse.Panel>
                 ))}
@@ -59,6 +67,8 @@ class LandingFAQ extends Component {
         const { activeTab } = this.state;
         const { nodeBeforeQuestions = '' } = this.props;
         const currentQuestions = this.props.faqs[`${activeTab}Questions`];
+
+        console.log(this.state);
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
