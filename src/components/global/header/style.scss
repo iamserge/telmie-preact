@@ -11,11 +11,13 @@
 
 #header {
   width: 100%;
+  position: sticky;
   background-color: #fff;
   padding: 50px 115px 0 87px;
   z-index: 1000;
   max-width: 1470px;
   margin: auto;
+  transition: .5s;
   ul {
     > li {
       > a {
@@ -129,6 +131,25 @@
     }
   }
 
+}
+
+.smallHeader{
+  position: fixed !important;
+  top: 0;
+  z-index: 100;
+  #header{
+    position: relative;
+    padding-top: 0 !important;
+    z-index: 1000;
+    line-height: 80px;
+  
+    #logo {
+      img {
+        height: 30px !important;
+      }
+    }
+  }
+  
 }
 
 #mobileNav {
