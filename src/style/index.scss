@@ -136,7 +136,7 @@ a {
 	}
 }
 
-%custom-btn {
+button {
 	font-size: 16px;
 	height: 50px;
 	border: none;
@@ -146,19 +146,23 @@ a {
 	outline: none;
 	font-family: 'Krub', sans-serif;
 	font-weight: 600;
+	transition: all .3s ease;
 }
 
 button.red-btn, a.red-btn {
-	@extend %custom-btn;
 	background-color: $red;
 	color: white !important;
+	&:hover{
+		background-color: darken($red, 5%);
+	}
 }
 
 button.white-btn {
-	@extend %custom-btn;
-	border: 1px solid $backgroundGrey;
 	color: $black !important;
 	background-color: white;
+	&:hover{
+		background-color: $red;
+	}
 }
 
 .switchContainer {
@@ -462,5 +466,9 @@ button.white-btn {
 	}
 	.slick-prev{
 		right: 64px !important;
+	}
+	button{
+		font-size: 14px;
+		padding: 0 30px;
 	}
 }

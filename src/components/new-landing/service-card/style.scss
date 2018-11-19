@@ -75,7 +75,6 @@
     button {
         color: $pinkishRed!important;
         z-index: 2;
-        transition: all .3s ease;
         position: absolute;
         bottom: 67px;
         left: 50%;
@@ -90,7 +89,6 @@
 
         &:hover {
             color: #fff!important;
-            border-color: $pinkishRed;
             background: $pinkishRed;
         }
     }
@@ -98,7 +96,6 @@
     &:hover{
         color: #fff;
         text-decoration: none!important;
-
         &:before{
             background: rgba(2,2,2,.4);
         }

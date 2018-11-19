@@ -175,12 +175,6 @@
     &.slick-disabled {
       color: $cloudyBlue;
       cursor: default;
-
-      &:hover,
-      &:focus,
-      &:active {
-        border-color: $cloudyBlue;
-      }
     }
   }
 
