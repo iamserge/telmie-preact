@@ -13,16 +13,33 @@
 	background-color: $blue;
 }*/
 .playButton {
-  background: rgba(61, 82, 115, 0.65);
-  border: none;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-cursor: pointer;
-    > img {
+	border-radius: 10px;
+    background: rgba(61, 82, 115, 0.35);
+    border: none;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+	cursor: pointer;
+
+	svg{
+		transition: all .2s ease;
+		width: 150px;
+		height: 150px;
+		path{
+			fill: rgba(237, 232, 219, 0.6);
+		}
+	}
+	
+	&:hover{
+		svg{
+			transform: scale(1.1);
+		}
+	}
+	
+    /*> img {
         }
 	> span {
 		position: absolute;
@@ -52,7 +69,7 @@ cursor: pointer;
 			display: block;
 			color: $lightRed2;
 		}
-	}
+	}*/
 }
 /*@media (max-width: 880px) {
 	.videoContainer {
