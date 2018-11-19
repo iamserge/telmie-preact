@@ -3,7 +3,7 @@
 .animatedImage {
   position: relative;
 
-  span {
+  .greeting {
     background: $pinkishRed;
     color: #fff;
     border-radius: 22px;
@@ -34,18 +34,16 @@
   0% {
     opacity: 0;
   }
-  30% {
+  35% {
     opacity: 1;
   }
-  60% {
-    opacity: 0;
+  65% {
+    opacity: 1;
   }
   100% {
     opacity: 0;
   }
 }
-
-:global {
 
   .greeting0 {
     top: 61%;
@@ -75,4 +73,3 @@
     top: 37%;
     left: 40%;
   }
-}
