@@ -3,7 +3,7 @@ import style from './style.scss';
 import { route } from 'preact-router';
 
 const BigArticle = ({title, date,link, img}) => {    
-    const articleStyle =  {background: `url('${img}') no-repeat center`, backgroundSize: "auto 100%"}
+    const articleStyle =  {background: `url('${img}') no-repeat center`, backgroundSize: "cover"}
     const onClick = () => route(link);
     return (
         <div href={link} class={style.bigArticle} style={articleStyle}>

@@ -3,9 +3,6 @@
 .blogConteiner{
     display: flex;
     flex-wrap: wrap;
-    @media (max-width: 880px) {
-        justify-content: space-around;
-    }
 }
 
 .smallArticlesContainer{
@@ -22,11 +19,6 @@
     //max-width: 290px;
     margin-right: 1%;
     margin-bottom: 20px;
-
-    @media (max-width: 880px) { 
-        max-width: 350px;
-        width: 100%;
-    }
 }
 .article{
     color: $hBlack;
@@ -101,11 +93,6 @@
         height: 40px !important;
         line-height: 40px;
     }
-
-    @media (max-width: 880px) { 
-        width: 100%;
-    }
-
     &:hover {
         .title{
             text-decoration: underline;
@@ -113,14 +100,28 @@
     }
 }
 
-@media (max-width: 1400px) { 
+@media (max-width: 1200px) { 
     .bigArticle, .smallArticlesContainer{
         width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
+    .bigArticle{
+        max-width: none;
+    }
 }
-@media (max-width: 880px) { 
+@media (max-width: 780px) { 
+    .blogConteiner{
+        justify-content: space-around;
+    }
+    .articleCol{
+        max-width: 350px;
+        width: 100%;
+    }
+    .bigArticle{
+        width: 100%;
+        max-width: 560px;
+    }
     .smallArticlesContainer{
         width: 560px;
         & > div {
