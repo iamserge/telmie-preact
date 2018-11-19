@@ -71,8 +71,8 @@ class Header extends Component {
 
   handleScroll = (e) => {
     (window.pageYOffset || document.documentElement.scrollTop) ?
-      this.state.isTop && (this.setState({isTop: false}), console.log('set false', window.pageYOffset))
-      : !this.state.isTop && (this.setState({isTop: true}), console.log('set true', window.pageYOffset));
+      this.state.isTop && this.setState({isTop: false})
+      : !this.state.isTop && this.setState({isTop: true});
   }
   
   logOff(){
