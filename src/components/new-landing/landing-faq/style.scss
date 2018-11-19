@@ -78,7 +78,6 @@
     border: none !important;
     padding: 20px 0 20px 50px;
     height: auto !important;
-    border-bottom: 1px solid $lightGrey !important;
     outline: none;
     font: 500 20px/1.6 'Krub', sans-serif;
     letter-spacing: -.4px;
@@ -105,26 +104,22 @@
             left: 50%;
         }
     }
-    .openedToggle{
-        opacity: 1;
-        .vertical {
-          transition: all 0.5s ease-in-out;
+    &.opened{
+        border-bottom: 1px solid $lightGrey !important;
+        .vertical, .horizontal {
+          transition: all 0.3s ease-in-out;
           transform: rotate(90deg);
         }
         .horizontal {
-          transition: all 0.5s ease-in-out;
-          transform: rotate(90deg);
           opacity: 0;
         }
     }
-    .closedToggle{
-        .vertical {
-            transition: all 0.5s ease-in-out;
+    &.closed{
+        .vertical, .horizontal {
+            transition: all 0.3s ease-in-out;
             transform: rotate(-90deg);
           }
           .horizontal {
-            transition: all 0.5s ease-in-out;
-            transform: rotate(-90deg);
             opacity: 1;
           }
     }

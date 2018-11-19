@@ -18,10 +18,10 @@ const tabs = [{
     value: 'payments',
 }];
 
-const headerProps = {
+const headerProps = (index, active) => ({
     showArrow: false,
-    headerClass: style.collapseHeader,
-}
+    headerClass: `${style.collapseHeader} ${index == active ? style.opened : style.closed}`,
+});
 
 class LandingFAQ extends Component {
     constructor(props){
@@ -40,8 +40,8 @@ class LandingFAQ extends Component {
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
-    renderHeder = (text, index, active) => ([
-        <div class={`${style.toggle} ${index == active ? style.openedToggle : style.closedToggle}`}>
+    renderHeder = (text) => ([
+        <div class={`${style.toggle}`}>
             <div class={style.horizontal}></div>
             <div class={style.vertical}></div>
         </div>,
@@ -54,8 +54,8 @@ class LandingFAQ extends Component {
             <Collapse accordion={true} activeKey={activeQuest} onChange={this.setActiveQuest}>
                 {arr.map(({question, answer}, index) => (
                     <Collapse.Panel key={index.toString()} 
-                        header={this.renderHeder(question, index.toString(), activeQuest)} 
-                        {...headerProps}>
+                        header={this.renderHeder(question)} 
+                        {...headerProps(index.toString(), activeQuest)}>
                         {answer}
                     </Collapse.Panel>
                 ))}
