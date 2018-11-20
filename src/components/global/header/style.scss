@@ -68,10 +68,11 @@
       width: 250px;
 
       li {
-        margin: 15px 0;
+        margin-top: 5px;
 
         a {
-          font: 500 24px/1.2 'Krub', sans-serif;
+          //font: 500 24px/1.2 'Krub', sans-serif;
+          font-size: 0.8em;
           letter-spacing: -.3px;
           text-transform: none;
           display: block;
@@ -102,9 +103,12 @@
     @media (max-width: 1200px) {
       font-size: 18px;
 
-      ul li a {
-        font-size: 18px;
-        padding: 0;
+      ul li {
+        margin-top: 3px;
+        a {
+          font-size: 0.9em;
+          padding: 0;
+        }
       }
     }
 
