@@ -1,11 +1,12 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { Link, route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import Slider from "react-slick";
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import style from './style.scss';
+import slickStyle from '../../../style/slick-styles.scss';
 
 const SampleNextArrow = ({className, onClick, style}) => (
     <div class={className} onClick={onClick} style={style}>
@@ -25,6 +26,8 @@ class BlogPosts extends Component {
   constructor(props) {
     super(props);
   }
+
+  onArticleClick = (link) => () => route(link);
 
   render(){
     const allPosts = this.props.blogPosts;
@@ -74,13 +77,13 @@ class BlogPosts extends Component {
                   background: `url('${post.img}') no-repeat center`,
                   backgroundSize: "auto 100%"
                 }}>
-                  <Link href={post.link}>
+                  <div class={style.blogPostWrapper}>
                     <div class={style.blogPostDescription}>
                       <p class={style.date}>{post.date}</p>
-                      <p class={style.title}>{post.title}</p>
-                      <button class="red-btn">Full story</button>
+                      <p class={style.title} onClick={this.onArticleClick(post.link)}>{post.title}</p>
+                      <button class="red-btn" onClick={this.onArticleClick(post.link)}>Full story</button>
                     </div>
-                  </Link>
+                  </div>
                 </div>
               </div>
             ))}

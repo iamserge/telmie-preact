@@ -31,6 +31,7 @@ a {
 	color: #323232;
 	&:hover {
 		text-decoration: underline !important;
+		color: $red;
 	}
 }
 
@@ -49,8 +50,13 @@ a {
 	transform: none;
 	transition: none;
 }
+.uk-navbar-container{
+	background-color: #fff !important;
+}
 .uk-container {
 	min-height: calc(100% - 174px);
+	max-width: 1470px;
+	margin: 0 auto;
     @media (max-width: 880px) {
         width: calc(100% - 10px);
         box-sizing: border-box;
@@ -79,8 +85,6 @@ a {
 }
 #homepage {
 	padding-top: 100px;
-	max-width: 1470px;
-	margin: auto;
 }
 #homepage .uk-container-small {
     h1,
@@ -99,10 +103,7 @@ a {
 }
 
 #homepage .uk-container {
-	margin: 0 115px 0 145px;
-	//margin: 0 115px 0 87px;
-	//margin: 0 0 0 58px;
-	max-width: none;
+	padding: 0 115px 0 145px;	
 }
 #homepage .uk-container-big {
 	margin: 0 115px 0 87px;
@@ -135,7 +136,7 @@ a {
 	}
 }
 
-%custom-btn {
+button {
 	font-size: 16px;
 	height: 50px;
 	border: none;
@@ -145,19 +146,23 @@ a {
 	outline: none;
 	font-family: 'Krub', sans-serif;
 	font-weight: 600;
+	transition: all .3s ease;
 }
 
 button.red-btn, a.red-btn {
-	@extend %custom-btn;
 	background-color: $red;
 	color: white !important;
+	&:hover{
+		background-color: darken($red, 5%);
+	}
 }
 
 button.white-btn {
-	@extend %custom-btn;
-	border: 1px solid $backgroundGrey;
 	color: $black !important;
 	background-color: white;
+	&:hover{
+		background-color: $red;
+	}
 }
 
 .switchContainer {
@@ -400,8 +405,8 @@ button.white-btn {
 	color: rgb(182, 185, 190);
 }
 .top-btn{
-	height: 38px;
-	width: 38px;
+	height: 48px;
+	width: 48px;
 	position: relative;
 	background-color: $red;
 	color: white;
@@ -413,17 +418,11 @@ button.white-btn {
 		background-color: rgba($color: $red, $alpha: .8);
 	}
 	& > span {
+		font-size: 34px;
 		position: absolute;
-		top: 2px;
-		left: 9px;
+		top: calc(50% - 19px);
+		left: calc(50% - 11px);
 	}
-}
-
-.slick-next{
-	right: calc(50% - 530px) !important;
-}
-.slick-prev{
-	right: calc(50% - 530px + 64px) !important;
 }
 
 @media (max-width: 1200px) {
@@ -461,5 +460,9 @@ button.white-btn {
 	}
 	.slick-prev{
 		right: 64px !important;
+	}
+	button{
+		font-size: 14px;
+		padding: 0 30px;
 	}
 }

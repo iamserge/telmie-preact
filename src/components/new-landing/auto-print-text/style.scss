@@ -1,26 +1,47 @@
 @import './src/style/variables';
 
 .wordContainer{
-    display: inline-block;
-    min-width: 280px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 84px;
+    @media (max-width: 880px) {
+        height: 48px;
+    }
+    @media (max-width: 450px) {
+        height: 96px;
+    }
 }
 .word{
     color: $red;
     padding-right: 4px;
-    border-right: 2px solid $red;
     
-    -webkit-animation: blink 1.3s linear infinite;
-    animation: blink 1.3s linear infinite;
-}
+    &::after{
+        content: " ";
+        display: inline-block;
+        position: relative;
+        width: 2px;
+        height: 76px;
+        background-color: $red;
+        bottom: -20px;
+        margin-left: 7px;
+        animation: blink 1.5s linear infinite;
 
+        @media (max-width: 880px) {
+            height: 48px;
+            bottom: -9px;
+        }
+    }
+}
 
 @-webkit-keyframes blink {
-    50% { border-right-color: rgb(245, 13, 68); }
-    51% { border-right-color: rgba(245, 13, 68, 0); }
-    100% { border-right-color: rgba(245, 13, 68, 0); }
+    50% { background-color: rgb(245, 13, 68); }
+    51% { background-color: rgba(245, 13, 68, 0); }
+    100% { background-color: rgba(245, 13, 68, 0); }
 }
 @keyframes blink {
-    50% { border-right-color: rgb(245, 13, 68); }
-    51% { border-right-color: rgba(245, 13, 68, 0); }
-    100% { border-right-color: rgba(245, 13, 68, 0); }
+    50% { background-color: rgb(245, 13, 68); }
+    51% { background-color: rgba(245, 13, 68, 0); }
+    100% { background-color: rgba(245, 13, 68, 0); }
 }

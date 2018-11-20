@@ -14,7 +14,7 @@
 		//margin-right: 75px;
 		padding: 15px 0;
 		width: 50%;
-		padding-right: 10px;		
+		padding-right: 35px;		
 		.header{
 			color: $hBlack;
 			font-size: 48px;
@@ -40,7 +40,10 @@
 		.howWorksText, .howWorksVideo{
 			width: 80%;
 		}
-    }
+		.howWorksText{
+			padding-right: 0;
+		}
+	}
     @media (max-width: 880px) {
 		margin-bottom: 55px !important;
 		padding: 0 !important;

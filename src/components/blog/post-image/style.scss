@@ -1,13 +1,27 @@
 @import './src/style/variables';
 
+.blogImageWrapper{
+	width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 .blogImage {
 	height: 512px;
-	max-width: 1200px;
-	margin: 0 auto;
 	border-radius: 10px;
-  
-	@media (max-width: 880px) {
-	  height: 274px;
+}
+@media (max-width: 880px) {
+	.blogImageWrapper{
+		padding: 0;
+	}
+	.blogImage{
+		height: 360px;
+		border-radius: 0;
+	}
+}
+@media (max-width: 720px) {
+	.blogImage{
+		height: 274px;
 		border-radius: 0;
 	}
 }

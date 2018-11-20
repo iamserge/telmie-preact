@@ -1,66 +1,64 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 
+const _words = ["Sports Coach", "Immigration Adviser", "Dietary Guru", "Fashion Expert", "Growth Hacker", "Career Coach", "Wedding Planner", "GDPR Expert", "Business Adviser", "Language Speaker", "Startup Ninja", "Design Consultant", "Scale-up Hacker", "SEO Rock Star", "Pets Guru", "Marketing Ninja"];
 class AutoPrintText extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            wordIndex: 0,
-            currentWord: '',
-            words: this.props.mainSection.typedWords.split(',')
+            txt: '',
         }
     }
 
+    txtType = (period) => {
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    tick = () => {
+        let i = this.loopNum % _words.length,
+            fullTxt = _words[i];
+    
+        this.isDeleting ? 
+            this.setState(prev => ({txt : fullTxt.substring(0, prev.txt.length - 1)}))
+            : this.setState(prev => ({txt : fullTxt.substring(0, prev.txt.length + 1)}));
+        
+        let delta = 200 - Math.random() * 100;    
+        this.isDeleting && (delta /= 2);
+    
+        if (!this.isDeleting && this.state.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.state.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 100;
+        }
+    
+        this.timeout = setTimeout(() => this.tick(), delta);
+    };
+    
     componentDidMount(){
-        this.changeWordInterval = setInterval(this.changeWord, 3100);
-        this.autoPrint(200);
+        this.txtType(1500);
     }
 
     componentWillUnmount(){
-        clearInterval(this.changeWordInterval);
+        clearTimeout(this.timeout);
     }
 
     componentDidUpdate(_, prevState){
-        (prevState.wordIndex !== this.state.wordIndex) && this.autoPrint(150);
-    }
-
-    autoPrint(speed){        
-        const words = this.state.words;
-        const { wordIndex } = this.state;
-        
-        const word = words[wordIndex];
-
-        for(let i = 0, len = word.length; i < len; i++){
-            ((i, letter) => {
-                setTimeout(() => {
-                    this.setState(prev => ({currentWord: prev.currentWord + letter}))
-                },i*speed);
-            })(i+1, word[i])
-            
-          }
-      }
-
-    changeWord = () => {
-        const words = this.state.words;
-        const len = words.length;
-        len && (
-            this.setState(prev => ({
-                wordIndex: (prev.wordIndex === len - 1) ? 0 : prev.wordIndex + 1,
-                currentWord: '',
-            }))
-        );
+        //(prevState.wordIndex !== this.state.wordIndex) && this.autoPrint(200);
     }
 
     render(){
-        const words = this.state.words;
-        const { wordIndex, currentWord } = this.state;
 
         return (
             <div class={style.wordContainer}>
-                <span class={style.word}>
-                    { currentWord }
-                </span>
+                <span class={style.word}>{this.state.txt}</span>
             </div>
         )
     }

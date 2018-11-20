@@ -1,21 +1,16 @@
 @import './src/style/variables';
 
 .serviceCard{
-    display: flex;
-    flex-wrap: wrap;
     width: 49%;
     height: 350px;
     margin-bottom: 10px;
     border-radius: 10px;
-    padding: 10px 55px;
-    align-items: center;
-    justify-content: center;
+    padding: 90px 55px 115px 55px;
     color: white;
     text-align: center;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
-    transition: all .3s ease;
+    transition: all .5s ease;
 
     @media (max-width: 1200px) {
         min-height: 350px;
@@ -23,9 +18,11 @@
         width: 100%;
     }
 
-    @media (max-width: 580px) {
-        padding: 10px;
+    @media (max-width: 460px) {
+        padding-left: 30px;
+        padding-right: 30px;
     }
+
 
     &:before {
         content: '';
@@ -38,17 +35,23 @@
         transition: background .3s ease;
     }
 
+    .serviceDescription{
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
     .serviceName{
         width: 100%;
         font-size: 32px;
-        margin: 0 auto 30px;
         font-family: 'Krub', sans-serif;
         font-weight: 300;
-        line-height: 1.25;
         position: relative;
         z-index: 2;
-        transform: translateZ(0);
-        transition: all .3s ease;
+        transition: all .5s ease;
 
         @media (max-width: 580px) {
             margin-bottom: 15px;
@@ -61,11 +64,8 @@
         font-weight: 400;
         letter-spacing: -.3px;
         line-height: 1.75;
-        margin-bottom: 100px;
         position: relative;
         z-index: 2;
-        transform: translateZ(0);
-        transition: display .3s ease;
 
         @media (max-width: 580px) {
             line-height: 1.6;
@@ -75,22 +75,13 @@
     button {
         color: $pinkishRed!important;
         z-index: 2;
-        transition: all .3s ease;
         position: absolute;
         bottom: 67px;
         left: 50%;
         transform: translateX(-50%);
 
-
-        @media (max-width: 580px) {
-            margin-top: 15px;
-            bottom: 40px;
-            white-space: nowrap;
-        }
-
         &:hover {
             color: #fff!important;
-            border-color: $pinkishRed;
             background: $pinkishRed;
         }
     }
@@ -98,7 +89,8 @@
     &:hover{
         color: #fff;
         text-decoration: none!important;
-
+        padding-top: 10px;
+        
         &:before{
             background: rgba(2,2,2,.4);
         }
@@ -108,21 +100,27 @@
         &:hover{
             .serviceName {
                 animation: slideUp  2s  ease;
+                margin-top: 15px;
             }
-
             .serviceInfo {
                 display: block;
-                animation: showtext  2s  ease;
+                animation: slideUp  2s  ease;
+                margin-bottom: 15px;
             }
         }
     }
 
-    @keyframes showtext{
-        0% {opacity: 0;}
-        70% {opacity: 1;}
-    }
     @keyframes slideUp{
-        0% {transform: translateY(100%);}
+        0% {transform: translateY(150%);}
         45%{transform: translateY(0%);}
+    }
+}
+
+@media (max-width: 580px) {
+    .serviceCard{
+        padding-bottom: 85px;
+        button{
+            bottom: 35px;
+        }
     }
 }

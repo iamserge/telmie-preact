@@ -18,10 +18,10 @@ const tabs = [{
     value: 'payments',
 }];
 
-const headerProps = {
+const headerProps = (index, active) => ({
     showArrow: false,
-    headerClass: style.collapseHeader,
-}
+    headerClass: `${style.collapseHeader} ${index == active ? style.opened : style.closed}`,
+});
 
 class LandingFAQ extends Component {
     constructor(props){
@@ -40,14 +40,22 @@ class LandingFAQ extends Component {
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
-    renderHeder = (text) => ([<img src='/assets/new-landing-page/group28.png' alt='' class={style.hIcon}/>, text])
+    renderHeder = (text) => ([
+        <div class={`${style.toggle}`}>
+            <div class={style.horizontal}></div>
+            <div class={style.vertical}></div>
+        </div>,
+        text
+    ]);
 
     renderQuestions = (arr = []) => {
         const {activeQuest} = this.state;
         return (
             <Collapse accordion={true} activeKey={activeQuest} onChange={this.setActiveQuest}>
                 {arr.map(({question, answer}, index) => (
-                    <Collapse.Panel key={index} header={this.renderHeder(question)} {...headerProps}>
+                    <Collapse.Panel key={index.toString()} 
+                        header={this.renderHeder(question)} 
+                        {...headerProps(index.toString(), activeQuest)}>
                         {answer}
                     </Collapse.Panel>
                 ))}

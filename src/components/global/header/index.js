@@ -31,9 +31,11 @@ class Header extends Component {
     super(props);
     this.state = {
       loggedOff: false,
-      mobileMenuOpened: false
+      mobileMenuOpened: false,
+      isTop: true,
     }
-  }
+  };
+
   componentWillReceiveProps(nextProps){
     if (typeof this.props.userAuth != 'undefined' && typeof nextProps.userAuth != 'undefined') {
       if (Object.keys(this.props.userAuth).length != 0 && Object.keys(nextProps.userAuth).length === 0) {
@@ -46,11 +48,11 @@ class Header extends Component {
         })
       }
     }
+  };
 
-
-  }
 	componentDidMount(){
     let that = this;
+    window.addEventListener('scroll', this.handleScroll);
     router.subscribers.push(()=>{
       that.setState({
         mobileMenuOpened: false
@@ -61,14 +63,27 @@ class Header extends Component {
 		if (userAuth != null) {
 			this.props.logIn(userAuth)
 		}
-	}
+  };
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = (e) => {
+    (window.pageYOffset || document.documentElement.scrollTop) ?
+      this.state.isTop && this.setState({isTop: false})
+      : !this.state.isTop && this.setState({isTop: true});
+  }
+  
   logOff(){
     this.setState({
       loggedOff: true
     });
     this.props.logOff();
-  }
+  };
+
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
+
   renderPopoverMenu = (curUrl) => {
     let item = '',
       listItem = '';
@@ -105,7 +120,8 @@ class Header extends Component {
             </ul>
           </div>
     )
-  }
+  };
+
 	render() {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
@@ -114,181 +130,181 @@ class Header extends Component {
     const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
-			<header id={style.header} className='uk-navbar uk-navbar-container'>
-        
-        <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
-				<div class={`${style.navbarLeft} uk-navbar-left`} >
-          { this.state.loggedOff && (
-            <Redirect to='/' />
-          )}
+			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%"}}>
+        <div id={style.header}>
+
+          <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
+          <div class={`${style.navbarLeft} uk-navbar-left`} >
+            { this.state.loggedOff && (
+              <Redirect to='/' />
+            )}
 
 
-					<Link href={routes.HOME} id={style.logo}>
-						<img src="/assets/logo.png" alt="Telmie App"/>
-					</Link>
-          { isAtBlog ? <b class={style.title}>Blog</b> : null }
+            <Link href={routes.HOME} id={style.logo}>
+              <img src="/assets/logo.png" alt="Telmie App"/>
+            </Link>
+            { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-          { this.renderPopoverMenu(this.props.currentUrl) }
+            { this.renderPopoverMenu(this.props.currentUrl) }
 
-          {!(isTextPage || isAtBlog) ?
-              <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+            {!(isTextPage || isAtBlog) ?
+                <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              : null
+            }
+
+            <ul className="uk-navbar-nav" id={style.leftNav}>
+              {
+                /*isLogin ? ([
+                  (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
+                  <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
+                  <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
+                  (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
+                ]) : */
+                isTextPage ? null : ([
+                  <li>{isAtHome ?
+                    <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
+                    : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+                  </li>,
+                  <li>{isAtHome ? 
+                    <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
+                    : <Link href={routes.FAQ}>FAQ</Link>}
+                  </li>,<li>{isAtHome ? 
+                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+                    : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+                  </li>,
+                  <li>{isAtHome ? 
+                    <ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
+                    : <Link href={routes.BLOG_LINK}>Blog</Link>}
+                  </li>,
+                  <li>{isAtHome ? 
+                    <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
+                    : <Link href={routes.CONTACT_US}>Contact us</Link>}
+                  </li>
+                ])
+              }
+              
+            </ul>
+          </div>
+
+          {/*<div class={`${style.navbarRight} uk-navbar-right`}>
+            { /*currentUrl != '/' && (
+                <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
+                  hideSearchBox = { this.props.hideSearchBox } 
+                  isLogin = {isLogin} 
+                  home= { false }/>
+            )*/}
+
+            {/* !isLogin  ? (
+              <nav>
+                <ul className="uk-navbar-nav" >
+                  <li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
+                  <li><Link href={routes.LOG_IN}>Login</Link></li>
+                </ul>
+              </nav>
+            ) : (
+              <div className={style.loggedInContainer}>
+                <div className="mobile-hide">
+                  { user.name } { user.lastName }
+                </div>
+                <FontAwesome name='caret-down' />
+                <div className={style.avatar}>
+
+                  {(user.avatar != null) ? (
+                    <img src={apiRoot + 'image/' + user.avatar.id} alt={user.name + ' ' + user.lastName} />
+                  ) : (
+                    <img src="/assets/nouserimage.jpg" alt={user.name + ' ' + user.lastName} />
+                  )}
+
+                </div>
+                <div className={style.dropdown + ' uk-dropdown'}>
+                    <ul className="uk-nav uk-dropdown-nav">
+                        {/*<li><Link href="/profile">My Account</Link></li>
+                        <li><Link href="/my-pros">My Pros</Link></li>
+                        {(user.pro != null) && (
+                            <li><Link href="/my-clients">My Clients</Link></li>
+                        )}
+                        <li><Link href="/my-shortlist">My Shortlist</Link></li>
+                        <li><Link href="/transactions">Money</Link></li>
+                        <li><Link href="/edit-profile">Edit Profile</Link></li>
+                        <li><Link href="/register-pro">Register as Pro</Link></li>
+                        <li className="uk-nav-divider"></li>
+                        <li><Link href="/edit-profile">Edit Profile</Link></li>
+                        <li className="uk-nav-divider"></li>*/}
+                        {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>
+                        <li><a onClick={()=>this.logOff()}>Log out</a></li>
+                    </ul>
+                </div>
+
+              </div>
+            )}
+          </div>
+          */}
+          <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
+            <div class={style.mobileNavHeader}>
+            <Link href={routes.HOME} id={style.logo}>
+              <img src="/assets/logo.png" alt="Telmie App"/>
+            </Link>
+            <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
               <span></span>
               <span></span>
               <span></span>
             </span>
-            : null
-          }
+            </div>
 
-					<ul className="uk-navbar-nav" id={style.leftNav}>
-            {
-              /*isLogin ? ([
-                (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
-                <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
-                <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
-                (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
-              ]) : */
-              isTextPage ? null : ([
-                <li>{isAtHome ?
-                  <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
-                  : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
-                </li>,
-                <li>{isAtHome ? 
-                  <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
-                  : <Link href={routes.FAQ}>FAQ</Link>}
-                </li>,<li>{isAtHome ? 
-                  <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
-                  : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
-                </li>,
-                <li>{isAtHome ? 
-                  <ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
-                  : <Link href={routes.BLOG_LINK}>Blog</Link>}
-                </li>,
-                <li>{isAtHome ? 
-                  <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
-                  : <Link href={routes.CONTACT_US}>Contact us</Link>}
-                </li>
-              ])
+            {isAtHome ?
+              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
+              : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
             }
-						
-					</ul>
-				</div>
+            {isAtHome ?
+                <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
+                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
+            }
+            {isAtHome ?
+              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
+              : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+            }
+            {isAtHome ?
+              <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
+              : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+            }
+            {isAtHome ?
+              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
+              : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
+            }
+                
+            {/* !isLogin  ? (
+              <div>
+                <h3>My account</h3>
+                <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
+                <Link href={routes.LOG_IN}>Login</Link>
+              </div>
+            ) : (
+              <div>
+                {/*<Link href="/profile">My Account</Link>
+                <Link href="/my-pros">My Pros</Link>
+                {(user.pro != null) && (
+                    <Link href="/my-clients">My Clients</Link>
+                )}
+                <Link href="/my-shortlist">My Shortlist</Link>
+                <Link href="/transactions">Money</Link>
+                <Link href="/edit-profile">Edit Profile</Link>
+                <Link href="/register-pro">Register as Pro</Link>
+                <Link href="/edit-profile">Edit Profile</Link>*/}
+                {/*{(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+                <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
+                <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
+                {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
+                <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
+                <a onClick={()=>this.logOff()}>Log out</a>
+              </div>
+            )}*/}
 
-				{/*<div class={`${style.navbarRight} uk-navbar-right`}>
-          { /*currentUrl != '/' && (
-              <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
-                hideSearchBox = { this.props.hideSearchBox } 
-                isLogin = {isLogin} 
-                home= { false }/>
-          )*/}
-
-					 {/* !isLogin  ? (
-						<nav>
-							<ul className="uk-navbar-nav" >
-								<li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
-								<li><Link href={routes.LOG_IN}>Login</Link></li>
-							</ul>
-						</nav>
-					) : (
-						<div className={style.loggedInContainer}>
-							<div className="mobile-hide">
-								{ user.name } { user.lastName }
-							</div>
-							<FontAwesome name='caret-down' />
-							<div className={style.avatar}>
-
-								{(user.avatar != null) ? (
-									<img src={apiRoot + 'image/' + user.avatar.id} alt={user.name + ' ' + user.lastName} />
-								) : (
-									<img src="/assets/nouserimage.jpg" alt={user.name + ' ' + user.lastName} />
-								)}
-
-							</div>
-							<div className={style.dropdown + ' uk-dropdown'}>
-							    <ul className="uk-nav uk-dropdown-nav">
-							        {/*<li><Link href="/profile">My Account</Link></li>
-											<li><Link href="/my-pros">My Pros</Link></li>
-                      {(user.pro != null) && (
-                          <li><Link href="/my-clients">My Clients</Link></li>
-                      )}
-                      <li><Link href="/my-shortlist">My Shortlist</Link></li>
-											<li><Link href="/transactions">Money</Link></li>
-											<li><Link href="/edit-profile">Edit Profile</Link></li>
-                      <li><Link href="/register-pro">Register as Pro</Link></li>
-							        <li className="uk-nav-divider"></li>
-                      <li><Link href="/edit-profile">Edit Profile</Link></li>
-                      <li className="uk-nav-divider"></li>*/}
-                      {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>
-							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
-							    </ul>
-							</div>
-
-						</div>
-					)}
-				</div>
-        */}
-        <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
-          <div class={style.mobileNavHeader}>
-          <Link href={routes.HOME} id={style.logo}>
-						<img src="/assets/logo.png" alt="Telmie App"/>
-					</Link>
-          <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
           </div>
-
-          {isAtHome ?
-            <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
-            : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
-          }
-          {isAtHome ?
-              <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-              : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
-          }
-          {isAtHome ?
-            <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
-            : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
-          }
-          {isAtHome ?
-            <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
-            : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
-          }
-          {isAtHome ?
-            <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
-            : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
-          }
-              
-          {/* !isLogin  ? (
-					  <div>
-              <h3>My account</h3>
-              <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
-              <Link href={routes.LOG_IN}>Login</Link>
-            </div>
-					) : (
-            <div>
-              {/*<Link href="/profile">My Account</Link>
-              <Link href="/my-pros">My Pros</Link>
-              {(user.pro != null) && (
-                  <Link href="/my-clients">My Clients</Link>
-              )}
-              <Link href="/my-shortlist">My Shortlist</Link>
-							<Link href="/transactions">Money</Link>
-							<Link href="/edit-profile">Edit Profile</Link>
-              <Link href="/register-pro">Register as Pro</Link>
-              <Link href="/edit-profile">Edit Profile</Link>*/}
-              {/*{(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
-              <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
-              <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
-              {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
-              <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
-              <a onClick={()=>this.logOff()}>Log out</a>
-            </div>
-					)}*/}
-
         </div>
-
-
 			</header>
 		);
 	}

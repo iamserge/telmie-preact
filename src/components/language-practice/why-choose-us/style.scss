@@ -56,9 +56,14 @@
     }
   }
 
-  .icon {
+  .iconContainer{
+    text-align: center;
     height: 52px;
-    max-width: 100%;
+    line-height: 52px;
+  }
+  .icon {
+    max-height: 52px;
+    max-width: 115px;
   }
 
   .title {

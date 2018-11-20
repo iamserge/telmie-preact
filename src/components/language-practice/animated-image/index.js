@@ -19,17 +19,20 @@ class AnimatedImage extends Component {
   }
 
   timer = () => {
-    let index = Math.floor(Math.random()*greetings.length);
-    this.setState({ currentCount: index });
+    let currentCount = Math.floor(Math.random() * (greetings.length - 1));
+    this.setState({ currentCount });
   };
 
   render() {
-    const content = this.props.content;
+    const {content} = this.props;
+    const {currentCount} = this.state;
 
     return (
         <div class={style.animatedImage}>
           <img src={content.img} alt={content.title}/>
-          <span key="greetings" className={`greeting${this.state.currentCount}`}>{greetings[this.state.currentCount]}!</span>
+          <span class={`${style.greeting} ${style[`greeting${currentCount}`]}`}>
+            {greetings[currentCount]}!
+          </span>          
         </div>
     )
   }

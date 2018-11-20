@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import style from './style.scss';
+import slickStyle from '../../../style/slick-styles.scss';
 
 const SampleNextArrow = ({className, onClick, style}) => (
     <div class={className} onClick={onClick} style={style}>

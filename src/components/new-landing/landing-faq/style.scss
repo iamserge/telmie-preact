@@ -20,11 +20,9 @@
     .menuContainer{
         width: 22%;
     }
-
     .content{
         width: 78%;
     }
-
 
     @media (max-width: 990px) {
         justify-content: space-around;
@@ -80,14 +78,49 @@
     border: none !important;
     padding: 20px 0 20px 50px;
     height: auto !important;
-    border-bottom: 1px solid $lightGrey !important;
     outline: none;
     font: 500 20px/1.6 'Krub', sans-serif;
     letter-spacing: -.4px;
 
-    .hIcon{
+    .toggle{
         position: absolute;
-        top: calc(50% - 14px);
-        left: 0;
+        width: 25px;
+        height: 26px;
+        top: calc(50% - 12px);
+        left: 9px;
+
+        .horizontal {
+            position: relative;
+            background-color: $red;
+            width: 25px;
+            height: 1px;
+            top: 13px;
+        }
+        .vertical {
+            position: absolute;
+            background-color: $red;
+            width: 1px;
+            height: 25px;
+            left: 50%;
+        }
+    }
+    &.opened{
+        border-bottom: 1px solid $lightGrey !important;
+        .vertical, .horizontal {
+          transition: all 0.3s ease-in-out;
+          transform: rotate(90deg);
+        }
+        .horizontal {
+          opacity: 0;
+        }
+    }
+    &.closed{
+        .vertical, .horizontal {
+            transition: all 0.3s ease-in-out;
+            transform: rotate(-90deg);
+          }
+          .horizontal {
+            opacity: 1;
+          }
     }
 }
