@@ -6,6 +6,10 @@
   flex-wrap: wrap;
   justify-content: space-around;
 
+  &::before, &::after {
+    display: none !important;
+  }
+
   .textContent {
     display: inline-block;
     width: 50%;
