@@ -5,9 +5,7 @@
     height: 350px;
     margin-bottom: 10px;
     border-radius: 10px;
-    padding: 10px 55px;
-    padding-bottom: 115px;
-    padding-top: 90px;
+    padding: 90px 55px 115px 55px;
     color: white;
     text-align: center;
     position: relative;
@@ -18,6 +16,11 @@
         min-height: 350px;
         height: auto;
         width: 100%;
+    }
+
+    @media (max-width: 460px) {
+        padding-left: 30px;
+        padding-right: 30px;
     }
 
 
