@@ -128,7 +128,7 @@ class Header extends Component {
     const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
-			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%"}}>
+			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', margin: '0 auto', top: 0,}}>
         <div id={style.header}>
 
           <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
