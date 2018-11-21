@@ -70,7 +70,7 @@ class LandingFAQ extends Component {
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
-                <div class={style.headerFAQ}>FAQ</div>
+                <div class={style.headerFAQ}>{this.props.headerFAQ || 'FAQ'}</div>
                 {nodeBeforeQuestions && <div>{nodeBeforeQuestions}</div>}
                 <div class={style.landingFAQ}>
                     <div class={style.menuContainer}>

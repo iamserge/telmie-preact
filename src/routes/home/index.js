@@ -185,7 +185,7 @@ class HomePage extends Component {
 
 					<div class={style.faqContainer}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ faqs={pageData.faqs}/>
+						<LandingFAQ headerFAQ='Most popular questions' faqs={pageData.faqs}/>
 					</div>
 
 					<div class={style.proWrapper}>
