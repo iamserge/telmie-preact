@@ -58,6 +58,23 @@ export function processPostText(postData){
     return nodes;
 }
 
+function processFAQText(postData){
+    let nodes = [];
+    postData.spans && postData.spans.forEach(el => {
+        switch (el.type){
+            case "hyperlink":
+                nodes.push(postData.text.substring(0, el.start));
+                nodes.push(<a href={el.data.url} target="_blank">{postData.text.substring(el.start, el.end)}</a>);
+                nodes.push(postData.text.substring(el.end));
+                break;
+            default: 
+                nodes.push(postData.text);
+        }
+    })
+    
+    return nodes.length ? nodes : postData.text;
+}
+
 export function processPostImage(postData ={}){
     let imageData = {
         url: postData.primary.image.url
@@ -166,7 +183,7 @@ const getFAQs = (faqData) => {
             try {
                 return faqData[name].map((faq) => ({
                     question: faq.question[0].text,
-                    answer: faq.answer[0].text
+                    answer: processFAQText(faq.answer[0]),
                 }))
             } catch(e){
                 console.log(e);
@@ -386,7 +403,7 @@ export function processFAQPageData(data){
     try{
         processedData.mainQuestion = {
             question: data.telmie_question[0].text,
-            answer: data.telmie_answer[0].text,
+            answer: processFAQText(data.telmie_answer[0]),
         };
     } catch(e){
         console.log(e);
