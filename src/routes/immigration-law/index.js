@@ -68,7 +68,7 @@ class ImmigrationLaw extends Component {
 
           <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} />
 
-          <HappyUsers content={reviewsData} />
+          {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
