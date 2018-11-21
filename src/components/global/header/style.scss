@@ -145,7 +145,10 @@
     position: relative;
     padding-top: 0 !important;
     z-index: 1000;
-    line-height: 80px;
+
+    .navbarLeft{
+      line-height: 80px;
+    }
   
     #logo {
       img {
@@ -364,6 +367,7 @@
 
     .navbarLeft, .navbarRight {
       height: 40px !important;
+      line-height: 40px !important;
     }
   }
   header {
