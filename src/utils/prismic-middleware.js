@@ -377,3 +377,20 @@ export function processTextPageData(data){
 export function processReviewsData(data){
     return getReviews(data);
 }
+
+export function processFAQPageData(data){
+    let processedData = {};
+
+    processedData.faqs = getFAQs(data);
+
+    try{
+        processedData.mainQuestion = {
+            question: data.telmie_question[0].text,
+            answer: data.telmie_answer[0].text,
+        };
+    } catch(e){
+        console.log(e);
+    }
+
+    return processedData;
+}

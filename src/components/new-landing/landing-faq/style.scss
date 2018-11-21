@@ -12,6 +12,18 @@
     }
 }
 
+.mainQuestionContainer{
+    margin-bottom: 50px;
+
+    .question{
+        font: 500 26px/1.6 'Krub', sans-serif;
+        margin-bottom: 10px;
+    }
+    .answer{
+        font-size: 18px;
+    }
+}
+
 .landingFAQ{
     display: flex;
 	flex-wrap: wrap;

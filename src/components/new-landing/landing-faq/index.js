@@ -65,13 +65,17 @@ class LandingFAQ extends Component {
 
     render(){
         const { activeTab } = this.state;
-        const { nodeBeforeQuestions = '' } = this.props;
+        const { nodeBeforeQuestions = '', mainQuestion } = this.props;
         const currentQuestions = this.props.faqs[`${activeTab}Questions`];
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
                 <div class={style.headerFAQ}>{this.props.headerFAQ || 'FAQ'}</div>
                 {nodeBeforeQuestions && <div>{nodeBeforeQuestions}</div>}
+                {mainQuestion && <div class={style.mainQuestionContainer}>
+                    <div class={style.question}>{mainQuestion.question}</div>
+                    <div class={style.answer}>{mainQuestion.answer}</div>
+                </div>}
                 <div class={style.landingFAQ}>
                     <div class={style.menuContainer}>
                         <ul class={style.faqMenu}>
