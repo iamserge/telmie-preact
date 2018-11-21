@@ -193,8 +193,8 @@ class HomePage extends Component {
 						<ProDetails content={pageData.becomePro} appLink={appLink} />
 					</div>
 
-					<Element name="blogElement"></Element>
 					<div class={`${style.blogContainer} uk-container`}>
+						<Element name="blogElement"></Element>
 						<div class={style.header}>Blog</div>
 						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
 							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />

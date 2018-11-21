@@ -85,6 +85,9 @@ a {
 }
 #homepage {
 	padding-top: 100px;
+	@media (max-width: 880px) {
+        padding-top: 60px;
+    }
 }
 #homepage .uk-container-small {
     h1,
@@ -374,8 +377,18 @@ button.white-btn {
 #app {
 	min-height: 500px;
 }
+.service-page{
+	padding-top: 60px;
+	@media (max-width: 880px) {
+		padding-top: 30px;
+	}
+}
 .mainContainer {
 	height: calc(100% - 80px);
+	margin-top: 130px;
+	@media (max-width: 880px) {
+		margin-top: 64px;
+	}
 }
 
 .new-input{

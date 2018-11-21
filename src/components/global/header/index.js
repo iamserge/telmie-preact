@@ -164,18 +164,18 @@ class Header extends Component {
                 ]) : */
                 isTextPage ? null : ([
                   <li>{isAtHome ?
-                    <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement">How it works</ScrollLink> 
+                    <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">How it works</ScrollLink> 
                     : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
+                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
                     : <Link href={routes.FAQ}>FAQ</Link>}
                   </li>,<li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
+                    <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
                     : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
+                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">Blog</ScrollLink> 
                     : <Link href={routes.BLOG_LINK}>Blog</Link>}
                   </li>,
                   <li>{isAtHome ? 
@@ -258,7 +258,7 @@ class Header extends Component {
               : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
             }
             {isAtHome ?
-                <ScrollLink spy={true} smooth={true} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
+                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
                 : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
             }
             {isAtHome ?
@@ -266,7 +266,7 @@ class Header extends Component {
               : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
             }
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
+              <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
               : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
             }
             {isAtHome ?

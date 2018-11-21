@@ -59,7 +59,7 @@ class LanguagePractice extends Component {
       const reviewsData = this.state.reviews;
 
       return (
-        <div id="language-practice">
+        <div id="language-practice" class="service-page">
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 

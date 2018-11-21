@@ -66,10 +66,7 @@ export default class Footer extends Component {
 								<ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
 								: <Link href={routes.BLOG_LINK}>Blog</Link>}
 							</li>
-							<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-								<ScrollLink spy={true} smooth={true} duration={500} to="FAQElement">FAQ</ScrollLink> 
-								: <Link href={routes.FAQ}>FAQ</Link>}
-							</li>
+							<li><Link href={routes.FAQ}>FAQ</Link></li>
 						</ul>
 					</nav>
 					<div class={style.socialIcons}>
