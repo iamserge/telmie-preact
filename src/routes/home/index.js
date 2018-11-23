@@ -56,6 +56,7 @@ class HomePage extends Component {
 							spy: true,
 							smooth: true,
 							duration: 500,
+							offset: -70,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -68,7 +69,7 @@ class HomePage extends Component {
 							spy: true,
 							smooth: true,
 							duration: 500,
-							offset: -30,
+							offset: -50,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -81,7 +82,7 @@ class HomePage extends Component {
 							spy: true,
 							smooth: true,
 							duration: 500,
-							offset: -70,
+							offset: -110,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null

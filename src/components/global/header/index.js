@@ -130,7 +130,7 @@ class Header extends Component {
     const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
-			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', margin: '0 auto', top: 0,}}>
+			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
         <div id={style.header}>
 
           <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
@@ -170,15 +170,16 @@ class Header extends Component {
                     : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
-                    : <Link href={routes.FAQ}>FAQ</Link>}
-                  </li>,<li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
                     : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">Blog</ScrollLink> 
                     : <Link href={routes.BLOG_LINK}>Blog</Link>}
+                  </li>,
+                  <li>{isAtHome ? 
+                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
+                    : <Link href={routes.FAQ}>FAQ</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
@@ -260,16 +261,16 @@ class Header extends Component {
               : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
             }
             {isAtHome ?
-                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
-            }
-            {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
               : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
               : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+            }
+            {isAtHome ?
+                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
+                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
