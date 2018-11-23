@@ -92,17 +92,19 @@ class Header extends Component {
         item = 'Language practice';
         listItem = [
           <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
       case routes.IMMIGRATION_LAW:
         item = 'Immigration advice';
         listItem = [
           <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
       case routes.LANGUAGE_LEARNERS:
         item = 'Изучение языка';
         listItem = [
-          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>
+          {/*<li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+        <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>*/}
         ];
         break;
       default:

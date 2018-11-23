@@ -4,8 +4,9 @@ import StepItem from './step'
 import style from './style.scss';
 
 
-const HowWorksSteps = ({content = [], title,  appLink = ''}) => {
-  const downloadApp = () => appLink && window.open(appLink);
+const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp}) => {
+  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
+
   const stepsCount = content.length;
 
   return (

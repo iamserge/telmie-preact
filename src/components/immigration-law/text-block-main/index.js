@@ -3,8 +3,8 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import { setEmphasizedText } from '../../../utils/index'
 
-const TextBlockMain = ({content, appLink = ''}) => {
-  const downloadApp = () => appLink && window.open(appLink);
+const TextBlockMain = ({content, appLink = '', onDownloadApp}) => {
+  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   return (
       <div class={`${style.TextBlock} uk-container`}>

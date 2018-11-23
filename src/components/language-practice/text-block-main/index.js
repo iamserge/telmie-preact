@@ -12,7 +12,9 @@ class TextBlockMain extends Component {
     super(props);
   }
 
-  downloadApp = () => this.props.appLink && window.open(this.props.appLink);
+  downloadApp = this.props.onDownloadApp ? 
+    this.props.onDownloadApp 
+    : () => this.props.appLink && window.open(this.props.appLink);
 
   render() {
     const content = this.props.content;

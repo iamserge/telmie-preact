@@ -67,7 +67,6 @@ export const routes = {
 	LANGUAGE_LEARNERS: '/language-learners'
 };
 
-
 class App extends Component {
 
 	constructor(props){
