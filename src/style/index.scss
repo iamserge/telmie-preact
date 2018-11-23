@@ -105,7 +105,8 @@ a {
 	display: none;
 }
 
-#homepage .uk-container {
+#homepage .uk-container,
+.service-page .uk-container	 {
 	padding: 0 115px 0 145px;	
 }
 #homepage .uk-container-big {
@@ -461,7 +462,8 @@ button.white-btn {
 		width: 90%;
 	}
 	
-	#homepage .uk-container {
+	#homepage .uk-container,
+	.service-page .uk-container {
 		padding: 0 15px !important;
 		margin: 0 auto;
 	}
