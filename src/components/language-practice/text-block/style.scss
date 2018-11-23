@@ -5,7 +5,7 @@
   flex: 1;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 160px auto;
   align-items: center;
 
   .howWorksText {
@@ -14,11 +14,7 @@
     letter-spacing: -0.3px;
     padding: 15px 0;
     width: 51%;
-    padding-right: 10px;
-
-    @media (max-width: 880px) {
-      margin-bottom: 60px;
-    }
+    padding-right: 20px;
   }
 
   .image {
@@ -47,6 +43,8 @@
     .howWorksText{
       text-align: right;
       width: 40%;
+      padding-right: 0;
+      padding-left: 20px;
 
       [lang="ru"] & {
         width: 48%;
@@ -63,10 +61,10 @@
     }
   }
 
-  @media (max-width: 880px) {
-    margin: 60px auto 0;
+  @media (max-width: 1080px) {
+    margin: 0 auto 100px auto !important;
     padding: 0;
-    width: 80%;
+    //width: 80%;
     max-width: none;
     text-align: center;
     flex-direction: column-reverse;
@@ -82,6 +80,7 @@
       }
     }
 
+    
     .howWorksText, .image {
       width: 100% !important;
       padding-left: 25px;
@@ -91,11 +90,10 @@
       text-align: center;
     }
     .image {
-      margin-bottom: 60px;
+      margin-bottom: 30px;
     }
   }
-
-  @media (max-width: 640px) {
+  @media (max-width: 880px) {
     width: 100%;
   }
 }
