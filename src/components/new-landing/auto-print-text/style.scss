@@ -10,12 +10,12 @@
         height: 48px;
     }
     @media (max-width: 450px) {
-        height: 96px;
+        height: 86px;
+        line-height: 18px;
     }
 }
 .word{
     color: $red;
-    padding-right: 4px;
     
     &::after{
         content: " ";
