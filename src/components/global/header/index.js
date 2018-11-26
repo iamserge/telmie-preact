@@ -3,6 +3,7 @@ import { Link } from 'preact-router/match';
 import * as router from 'preact-router';
 import style from './style.scss';
 import Search from '../search';
+import Select from './select';
 import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import { hideSearchBox } from '../../../actions';
@@ -84,50 +85,18 @@ class Header extends Component {
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
 
-  renderPopoverMenu = (curUrl) => {
-    let item = '',
-      listItem = '';
-    switch (curUrl) {
-      case routes.LANGUAGE_PRACTICE:
-        item = 'Language practice';
-        listItem = [
-          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
-        ];        break;
-      case routes.IMMIGRATION_LAW:
-        item = 'Immigration advice';
-        listItem = [
-          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
-          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
-        ];        break;
-      case routes.LANGUAGE_LEARNERS:
-        item = 'Изучение языка';
-        listItem = [
-          {/*<li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-        <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>*/}
-        ];
-        break;
-      default:
-        return;
-    }
-
-    return (
-          <div class={style.title}>
-            { item }
-            <FontAwesome name='angle-down'/>
-            <ul>
-              { listItem }
-            </ul>
-          </div>
-    )
-  };
+  
 
 	render() {
     const {userData : user  = {}} = this.props;
     const isLogin = Object.keys(user).length !== 0;
-    const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
-    const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
-    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
+    const isAtHome = this.props.currentUrl === routes.HOME
+      || this.props.currentUrl.indexOf('/#') + 1;
+    const isAtBlog = this.props.currentUrl === routes.BLOG
+      || this.props.currentUrl.indexOf('/blog') + 1;
+    const isServicePage = this.props.currentUrl === routes.IMMIGRATION_LAW 
+      || this.props.currentUrl === routes.LANGUAGE_PRACTICE 
+      || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
 
 		return (
 			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
@@ -145,9 +114,9 @@ class Header extends Component {
             </Link>
             { isAtBlog ? <b class={style.title}>Blog</b> : null }
 
-            { this.renderPopoverMenu(this.props.currentUrl) }
+            { isServicePage && <Select curUrl={this.props.currentUrl} /> }
 
-            {!(isTextPage || isAtBlog) ?
+            {!(isServicePage || isAtBlog) ?
                 <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
                 <span></span>
                 <span></span>
@@ -164,7 +133,7 @@ class Header extends Component {
                   <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                   (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
                 ]) : */
-                isTextPage ? null : ([
+                isServicePage ? null : ([
                   <li>{isAtHome ?
                     <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">How it works</ScrollLink> 
                     : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
@@ -191,7 +160,9 @@ class Header extends Component {
             </ul>
           </div>
 
-          {/*<div class={`${style.navbarRight} uk-navbar-right`}>
+          <div class={`${style.navbarRight} uk-navbar-right`}>
+          
+              <Select isLocale={true}/>
             { /*currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 
@@ -241,9 +212,8 @@ class Header extends Component {
                 </div>
 
               </div>
-            )}
+            )}*/}
           </div>
-          */}
           <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
             <Link href={routes.HOME} id={style.logo}>

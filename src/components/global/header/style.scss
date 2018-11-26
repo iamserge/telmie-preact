@@ -10,6 +10,7 @@
 }
 
 #header {
+  display: flex;
   width: 100%;
   background-color: #fff;
   padding: 50px 115px 0 87px;
@@ -132,6 +133,11 @@
         }
       }
     }
+  }
+
+  .localeSelect{
+    border: none;
+    margin-right: 50px;
   }
 
 }
@@ -367,6 +373,11 @@
     .navbarLeft, .navbarRight {
       height: 40px !important;
       line-height: 40px !important;
+    }
+    .navbarRight{
+      .title{
+        display: block;
+      }
     }
   }
   header {
