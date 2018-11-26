@@ -6,9 +6,9 @@
 
 .blockBgInner {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 130px auto;
   text-align: center;
-  padding: 114px 0 127px;
+  padding: 114px 0 127px 0;
 
   h2 {
     font: 300 40px/1.6 'Krub', sans-serif;
@@ -23,11 +23,16 @@
     }
   }
 
-  @media (max-width: 880px) {
+  @media (max-width: 1080px) {
     padding: 80px 0;
+  }
+  @media (max-width: 880px) {
+    margin-bottom: 50px;
+    padding-top: 65px;
 
     h2 {
       font-size: 32px;
+      margin-bottom: 45px;
     }
   }
 }
@@ -43,6 +48,7 @@
 
   @media (max-width: 880px) {
     display: block;
+    margin-top: 0;
   }
 
   .step {

@@ -53,26 +53,33 @@ class LanguagePractice extends Component {
     });
   }
 
+  ga = () => ({
+    downloadApp: () => {
+      gtag('event', 'conversion', { 'send_to': 'AW-820107229/36HzCPn7lJABEN2vh4cD'});
+      window.open(appLink);
+    }
+  })
+
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
       const reviewsData = this.state.reviews;
 
       return (
-        <div id="language-practice">
+        <div id="language-practice" class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} appLink={appLink} />
+          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} appLink={appLink} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} appLink={appLink} />
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
 
-          <HappyUsers content={reviewsData} />
+          {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
-            <AppDetails appLink={appLink} content={pageData.app} />
+            <AppDetails onDownloadApp = {this.ga().downloadApp} content={pageData.app} />
           </div>
 
           <ScrollToTop showUnder={150} style={{zIndex: 1002}}>

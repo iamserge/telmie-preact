@@ -1,11 +1,24 @@
-export function processPostThumbnailData(rawPost){
-    const data = rawPost.data;
-    let newPostData = {
-        id: rawPost.uid,
-        title: data.title[0].text,
-        date: data.date,
-        link: `/blog/${rawPost.uid}`,
-        img: data.thumbnail.url,
+export function processPostThumbnailData(rawPost ={}){
+    const { data={} } = rawPost;
+    let newPostData = {};
+    try {
+        newPostData = {
+            id: rawPost.uid,
+            title: data.title[0].text,
+            date: data.date,
+            link: `/blog/${rawPost.uid}`,
+            img: data.thumbnail.url,
+        }
+    }
+    catch(e){
+        console.log(e);
+        newPostData = {
+            id: '',
+            title: '',
+            date: '',
+            link: `/blog/error`,
+            img: '',
+        }
     }
     if (typeof rawPost.tags != 'undefined' && rawPost.tags[0] && rawPost.tags[0] == 'featured') {
         newPostData.isFeatured = true;
@@ -16,7 +29,6 @@ export function processPostThumbnailData(rawPost){
 export function processRecentPosts(rawPosts){
     let newPosts = [];
     rawPosts.forEach((rawPost)=>{
-        const data = rawPost.data;
         let postData = processPostThumbnailData(rawPost);
         newPosts.push(postData)
     })    
@@ -46,7 +58,24 @@ export function processPostText(postData){
     return nodes;
 }
 
-export function processPostImage(postData){
+function processFAQText(postData){
+    let nodes = [];
+    postData.spans && postData.spans.forEach(el => {
+        switch (el.type){
+            case "hyperlink":
+                nodes.push(postData.text.substring(0, el.start));
+                nodes.push(<a href={el.data.url} target="_blank">{postData.text.substring(el.start, el.end)}</a>);
+                nodes.push(postData.text.substring(el.end));
+                break;
+            default: 
+                nodes.push(postData.text);
+        }
+    })
+    
+    return nodes.length ? nodes : postData.text;
+}
+
+export function processPostImage(postData ={}){
     let imageData = {
         url: postData.primary.image.url
     };
@@ -57,12 +86,19 @@ export function processPostImage(postData){
 }
 
 export function processPostQuote(postData){
-    let quoteData = {
-        text: postData.primary.quote[0].text,
-        author: postData.primary.author[0].text
-    };
-    
-    return quoteData;
+    try{
+        return {
+            text: postData.primary.quote[0].text,
+            author: postData.primary.author[0].text
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            text: '',
+            author: '',
+        }
+    }
 }
 const processDate = (date) => {
     const locale = "en-us";
@@ -71,64 +107,89 @@ const processDate = (date) => {
     return dateObj.toLocaleString(locale, { month: "long", day: 'numeric', year: "numeric" });
 
 }
-export function processPostData(rawData){
-    let postData = {};
-    postData.title = rawData.title[0].text;
-    postData.date = processDate(rawData.date);
-    postData.body = rawData.body;
-
-    return postData;
+export function processPostData(rawData ={}){
+    try{
+        return {
+            title: rawData.title[0].text,
+            date: processDate(rawData.date),
+            body: rawData.body,
+        }
+    } catch(e){
+        console.log(e);
+        return {
+            title: '',
+            date: null,
+            body: [],
+        }
+    }
 }
 const getExperts = (data) => {
     let side1 = [],
         side2 = [];
-        
-    data.featured_experts.forEach((expert, index)=>{
-        let expertData = {
-            id: parseInt(expert.id[0].text),
-            name: expert.name[0].text,
-            img: expert.photo.url,
-            serviceName: expert.proffesion[0].text,
-            price: expert.price[0].text,
-            time: 'min',
+    try{
+        data.featured_experts.forEach((expert, index)=>{
+            let expertData = {
+                id: parseInt(expert.id[0].text),
+                name: expert.name[0].text,
+                img: expert.photo.url,
+                serviceName: expert.proffesion[0].text,
+                price: expert.price[0].text,
+                time: 'min',
+            }
+            if (expert.photo.dimensions.height < 600) {
+                expertData.isSmall = true;
+            }
+            if (index <= 1) {
+                side1.push(expertData);
+            } else {
+                side2.push(expertData);
+            }
+        });
+    
+        side2.splice(1, 0 , {
+            id: 4,
+            isSmall: true,
+            isStat: true,
+            minutes: data.amount_of_minutes,
+        })
+        side2 = [[side2[0], side2[1]],[side2[2], side2[3]]]
+        return  {
+            side1, side2
         }
-        if (expert.photo.dimensions.height < 600) {
-            expertData.isSmall = true;
-        }
-        if (index <= 1) {
-            side1.push(expertData);
-        } else {
-            side2.push(expertData);
-        }
-    });
-    side2.splice(1, 0 , {
-        id: 4,
-        isSmall: true,
-        isStat: true,
-        minutes: data.amount_of_minutes,
-    })
-    side2 = [[side2[0], side2[1]],[side2[2], side2[3]]]
-    return  {
-        side1, side2
+    } catch(e){
+        console.log(e);
+        return {side1: [], side2: []}
     }
 }
 
 const getServices = (data) => {
-    return data.services.map((service) => ({
-        link: service.link[0].text,
-        background: service.image.url,
-        serviceName: service.title1[0].text,
-        description: service.description[0] && service.description[0].text,
-    }));
+    try {
+        return data.services.map((service) => ({
+            link: service.link[0].text,
+            background: service.image.url,
+            serviceName: service.title1[0].text,
+            description: service.description[0] && service.description[0].text,
+        }));
+    } catch(e){
+        console.log(e);
+        return [];
+    }
+    
 };
 
 const getFAQs = (faqData) => {
     let allFaqs = {},
         getFAQ = (name) => {
-            return faqData[name].map((faq) => ({
-                question: faq.question[0].text,
-                answer: faq.answer[0].text
-            }))
+            try {
+                return faqData[name].map((faq) => ({
+                    question: faq.question[0].text,
+                    answer: processFAQText(faq.answer[0]),
+                }))
+            } catch(e){
+                console.log(e);
+                return [];
+            }
+            
         }
 
     allFaqs.generalQuestions = getFAQ('general_faqs');
@@ -142,75 +203,133 @@ const getFAQs = (faqData) => {
 export function processHomepageData(data){
     let processedData = {};
 
-    processedData.mainSection = {
-        title: data.title[0].text,
-        subTitle: data.sub_title[0].text,
-        typedWords: data.typed_words[0].text
-    };
+    try{
+        processedData.mainSection = {
+            title: data.title[0].text,
+            subTitle: data.sub_title[0].text,
+            typedWords: data.typed_words[0].text
+        };
+    } catch(e){
+        console.log(e);
+        processedData.mainSection = {
+            title: "",
+            subTitle: '',
+            typedWords: '',
+        };
+    }
 
     processedData.experts = getExperts(data);
 
-    processedData.howItWorks = {
-        title: data.how_it_works_title[0].text,
-        text: data.how_it_works[0].text,
-        videoID: data.how_it_works_video.video_id
-    };
+    try{
+        processedData.howItWorks = {
+            title: data.how_it_works_title[0].text,
+            text: data.how_it_works[0].text,
+            videoID: data.how_it_works_video.video_id
+        };
+    } catch(e){
+        console.log(e);
+        processedData.howItWorks = {
+            title: '',
+            text: '',
+            videoID: '',
+        };
+    }
+    
 
     processedData.services = getServices(data);
 
-    processedData.app = {
-        title: data.app_title[0].text,
-        text: data.app_text[0].text,
-        img: data.app_image.url,
-    };
+    try{
+        processedData.app = {
+            title: data.app_title[0].text,
+            text: data.app_text[0].text,
+            img: data.app_image.url,
+        };
+    } catch(e){
+        console.log(e);
+        processedData.app = {
+            title: '',
+            text: '',
+            img: '',
+        };
+    }
+    
 
     processedData.faqs = getFAQs(data);
 
-    processedData.becomePro = {
-        title: data.earn_more_title[0].text,
-        text: data.earn_more_text[0].text
-    };
+    try{
+        processedData.becomePro = {
+            title: data.earn_more_title[0].text,
+            text: data.earn_more_text[0].text
+        };
+    } catch(e){
+        console.log(e);
+        processedData.becomePro = {
+            title: '',
+            text: '',
+        };
+    }
 
     return processedData;
 }
 
 const getSteps = (data) => {
-    return data.work_steps.map((step) => ({
-      id: step.id[0].text,
-      title: step.step_title[0].text,
-      text: step.step_text[0].text,
-      icon: step.step_icon.url,
-    }));
+    try{
+        return data.work_steps.map((step) => ({
+            id: step.id[0].text,
+            title: step.step_title[0].text,
+            text: step.step_text[0].text,
+            icon: step.step_icon.url,
+          }));
+    } catch(e){
+        console.log(e);
+        return [];
+    }
+    
 };
 
 const getReasons = (data) => {
-    return data.reasons.map((reason) => ({
-      icon: reason.reason_icon.url,
-      title: reason.reason_title[0].text,
-      text: reason.reason_text[0].text,
-    }));
+    try{
+        return data.reasons.map((reason) => ({
+            icon: reason.reason_icon.url,
+            title: reason.reason_title[0].text,
+            text: reason.reason_text[0].text,
+          }));
+    } catch(e){
+        console.log(e);
+        return [];
+    }
 };
 
 const getReviews = (data) => {
-    return data.reviews.map((review) => ({
-      avatar: review.avatar.url,
-      name: review.name[0].text,
-      title: review.review_title[0].text,
-      text: review.review_text[0].text,
-    }));
+    try{
+        return data.reviews.map((review) => ({
+            avatar: review.avatar.url,
+            name: review.name[0].text,
+            title: review.review_title[0].text,
+            text: review.review_text[0].text,
+          }));
+    } catch(e){
+        console.log(e);
+        return [];
+    }
 };
 
 const getInfo = (data) => {
-    return data.info_section.map((infotext) => ({
-      id: infotext.section_id,
-      img: infotext.section_image.url,
-      img_height: infotext.section_image.dimensions.height,
-      img_width: infotext.section_image.dimensions.width,
-      title: infotext.section_title[0].text,
-      text: infotext.section_text[0].text,
-      right: infotext.is_right_position,
-      animated: infotext.is_animated
-    }));
+    try{
+        return data.info_section.map((infotext) => ({
+            id: infotext.section_id,
+            img: infotext.section_image.url,
+            img_height: infotext.section_image.dimensions.height,
+            img_width: infotext.section_image.dimensions.width,
+            title: infotext.section_title[0].text,
+            text: infotext.section_text[0].text,
+            right: infotext.is_right_position,
+            animated: infotext.is_animated
+          }));
+    } catch(e){
+        console.log(e);
+        return [];
+    }
 };
 
 export function processTextPageData(data){
@@ -218,31 +337,77 @@ export function processTextPageData(data){
 
     processedData = { ...data };
 
-    processedData.becomePro = {
-        img: data.earn_money_image.url,
-        title: data.earn_money_title[0].text,
-        emphasized: data.emphasize_title_part[0].text,
-        text: data.earn_money_text[0].text
-    };
+    try{
+        processedData.becomePro = {
+            img: data.earn_money_image.url,
+            title: data.earn_money_title[0].text,
+            emphasized: data.emphasize_title_part[0].text,
+            text: data.earn_money_text[0].text
+        };
+    } catch(e){
+        console.log(e);
+        processedData.becomePro = {
+            img: '',
+            title: '',
+            emphasized: '',
+            text: '',
+        };
+    }
+    
 
     processedData.info = getInfo(data);
     processedData.steps = getSteps(data);
     processedData.reasons = getReasons(data);
     //processedData.reviews = getReviews(data);
 
-    processedData.titles = {
-      how_works_title: data.how_works_title[0].text,
-      choose_us_title: data.choose_us_title[0].text
-    };
-
-    processedData.app = {
-        title: data.app_title[0].text,
-        text: data.app_text[0].text,
-        img: data.app_image.url,
-    };
+    try{
+        processedData.titles = {
+            how_works_title: data.how_works_title[0].text,
+            choose_us_title: data.choose_us_title[0].text
+          };
+    } catch(e){
+        console.log(e);
+        processedData.titles = {
+            how_works_title: '',
+            choose_us_title: '',
+          };
+    }
+    
+    try{
+        processedData.app = {
+            title: data.app_title[0].text,
+            text: data.app_text[0].text,
+            img: data.app_image.url,
+        };
+    } catch(e){
+        console.log(e);
+        processedData.app = {
+            title: '',
+            text: '',
+            img: '',
+        };
+    }
+    
 
     return processedData;
 }
 export function processReviewsData(data){
     return getReviews(data);
+}
+
+export function processFAQPageData(data){
+    let processedData = {};
+
+    processedData.faqs = getFAQs(data);
+
+    try{
+        processedData.mainQuestion = {
+            question: data.telmie_question[0].text,
+            answer: processFAQText(data.telmie_answer[0]),
+        };
+    } catch(e){
+        console.log(e);
+    }
+
+    return processedData;
 }

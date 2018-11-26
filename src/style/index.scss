@@ -63,7 +63,7 @@ a {
     }
 }
 .uk-container-small {
-	width: 980px;
+	max-width: 980px;
 	h1 {
 		text-align: center;
         margin-top: 40px;
@@ -85,6 +85,9 @@ a {
 }
 #homepage {
 	padding-top: 100px;
+	@media (max-width: 880px) {
+        padding-top: 60px;
+    }
 }
 #homepage .uk-container-small {
     h1,
@@ -102,7 +105,8 @@ a {
 	display: none;
 }
 
-#homepage .uk-container {
+#homepage .uk-container,
+.service-page .uk-container	 {
 	padding: 0 115px 0 145px;	
 }
 #homepage .uk-container-big {
@@ -374,8 +378,18 @@ button.white-btn {
 #app {
 	min-height: 500px;
 }
+.service-page{
+	padding-top: 60px;
+	@media (max-width: 880px) {
+		padding-top: 30px;
+	}
+}
 .mainContainer {
 	height: calc(100% - 80px);
+	margin-top: 130px;
+	@media (max-width: 880px) {
+		margin-top: 64px;
+	}
 }
 
 .new-input{
@@ -448,7 +462,8 @@ button.white-btn {
 		width: 90%;
 	}
 	
-	#homepage .uk-container {
+	#homepage .uk-container,
+	.service-page .uk-container {
 		padding: 0 15px !important;
 		margin: 0 auto;
 	}

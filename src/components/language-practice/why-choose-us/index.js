@@ -2,8 +2,8 @@ import { h } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 
-const WhyChooseUs = ({content = [], title, addClass, appLink = ''}) => {
-  const downloadApp = () => appLink && window.open(appLink);
+const WhyChooseUs = ({content = [], title, addClass, appLink = '', onDownloadApp}) => {
+  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   return (
     <div class={addClass ?  `up-margin ${style.blockBg}` : style.blockBg}>

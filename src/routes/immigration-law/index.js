@@ -58,7 +58,7 @@ class ImmigrationLaw extends Component {
       const reviewsData = this.state.reviews;
 
       return (
-        <div id="language-practice">
+        <div id="language-practice" class="service-page">
 
           <TextBlockMain content={pageData.becomePro} appLink={appLink} />
 
@@ -68,7 +68,7 @@ class ImmigrationLaw extends Component {
 
           <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} />
 
-          <HappyUsers content={reviewsData} />
+          {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
             <AppDetails appLink={appLink} content={pageData.app} />
