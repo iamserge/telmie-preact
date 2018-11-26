@@ -131,6 +131,13 @@ const sendContactMessage = () => ({
 	type: actionTypes.SEND_CONTACT_MESS
 });
 
+export const changeLocale = (code) => dispatch => {
+	dispatch({
+		type: actionTypes.CHANGE_LOCALE,
+		code,
+	})
+}
+
 export const resetPassword = (email, password, code) => async (dispatch) => {
 	const response = await user.resetPassword({email, password, code});
 	if (response.error) {

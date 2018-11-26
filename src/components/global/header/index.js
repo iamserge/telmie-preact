@@ -8,7 +8,7 @@ import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import { hideSearchBox } from '../../../actions';
 import { apiRoot } from '../../../api';
-import { logIn, logOff } from '../../../actions/user';
+import { logIn, logOff, changeLocale } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
@@ -162,7 +162,7 @@ class Header extends Component {
 
           <div class={`${style.navbarRight} uk-navbar-right`}>
           
-              <Select isLocale={true}/>
+              <Select isLocale={true} locale={this.props.locale} changeLocale={this.props.changeLocale}/>
             { /*currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 
@@ -286,14 +286,16 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
 	hiddenSearchBox: state.hiddenSearchBox,
-	userData: state.loggedInUser
+  userData: state.loggedInUser,
+  locale: state.locale,
 });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	hideSearchBox,
 	logIn,
-	logOff
+  logOff,
+  changeLocale,
 }, dispatch);
 
 

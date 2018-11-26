@@ -24,6 +24,14 @@ export const loggedInUser = (state = {}, action) => {
 	}
 };
 
+export const locale = (state = 'en', action) => {
+	switch (action.type) {
+		case actionTypes.CHANGE_LOCALE:
+			return action.code ? action.code : 'en';
+		default:
+			return state;
+	}
+};
 
 export const logInError = (state = {}, action) => {
 	switch (action.type) {

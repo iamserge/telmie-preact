@@ -40,13 +40,14 @@ const renderServices = (props) => {
     return {item, listItems}
 }
 
-const renderLocale = () => {
+const renderLocale = (props) => {
+    const changeLocalization = (code) => () => props.changeLocale(code);
     
-    let item = emoji(langs.en.emoji),
+    let item = emoji(langs[props.locale].emoji),
         listItems = [];
 
-        listItems = renderExcept('en', Object.values(langs), true).map(el => (
-            <li onClick={() => console.log(el.code)} key={el.code}>{emoji(el.emoji)}</li>
+        listItems = renderExcept(props.locale, Object.values(langs), true).map(el => (
+            <li onClick={changeLocalization(el.code)} key={el.code}>{emoji(el.emoji)}</li>
         ));
 
     return { item, listItems }
@@ -55,7 +56,7 @@ const renderLocale = () => {
 const Select = (props) => {
 
     let {item, listItems} = props.isLocale ? 
-        renderLocale() : renderServices(props);
+        renderLocale(props) : renderServices(props);
 
     return (
         <div class={props.isLocale ? `${style.title} ${style.localeSelect}` : style.title }>

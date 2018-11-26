@@ -11,8 +11,4 @@ export const langs = {
     code: 'ru',
     emoji: '🇷🇺',
   },
-  fr:{
-    code: 'fr',
-    emoji: '🇫🇷',
-  }
 };
