@@ -8,6 +8,14 @@ export const langPack = {
         PAYMENTS_QUESTIONS: 'Payments',
         BLOG_TITLE: 'Blog',
         FULL_STORY_BTN: 'Full story',
+        FOOTER: {
+            HOME: 'Home',
+            CONTACT: 'Contact',
+            BLOG: 'Blog',
+            POLICY: 'Privacy Policy',
+            TERMS: 'Terms',
+            FAQ: 'FAQ',
+        }
     },
     ru: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
@@ -18,5 +26,13 @@ export const langPack = {
         PAYMENTS_QUESTIONS: 'Оплата',
         BLOG_TITLE: 'Блог',
         FULL_STORY_BTN: 'Подробнее',
+        FOOTER: {
+            HOME: 'Главная',
+            CONTACT: 'Контакт',
+            BLOG: 'Блог',
+            POLICY: 'Политика приватности',
+            TERMS: 'Условия',
+            FAQ: 'ЧаВо',
+        }
     }
 }

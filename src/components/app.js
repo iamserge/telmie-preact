@@ -130,7 +130,6 @@ class App extends Component {
 	renderDefaultRoutes = () => {
 		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
 		const { locale = 'en' } = this.props;
-		console.log(this.props.locale)
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].HOMEPAGE } />,
@@ -152,11 +151,11 @@ class App extends Component {
 	}
 
 	render() {
-		const {userData : user  = {}} = this.props;
+		const {userData : user  = {}, locale} = this.props;
 
 		return (
 			<div id="app">
-				<Header currentUrl = {this.state.currentUrl}/>
+				<Header locale={locale} currentUrl = {this.state.currentUrl}/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
@@ -165,7 +164,7 @@ class App extends Component {
 						<ErrorRoute default />
 					</Router>
 				</div>
-				<Footer currentUrl = {this.state.currentUrl}/>
+				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
 			</div>
 		);
 	}
