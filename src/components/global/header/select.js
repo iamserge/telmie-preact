@@ -42,13 +42,24 @@ const renderServices = (props) => {
 
 const renderLocale = (props) => {
     const changeLocalization = (code) => () => props.changeLocale(code);
+    const renderLocaleItem = (el) => ([
+        emoji(el.emoji, (code) => (
+            <div class={style.flagContainer} 
+                style={{backgroundImage: `url(https://twemoji.maxcdn.com/2/svg/${code}.svg)`}} />
+        )),
+        el.name
+    ]);
     
-    let item = emoji(langs[props.locale].emoji),
+    let item = '',
         listItems = [];
 
-        listItems = renderExcept(props.locale, Object.values(langs), true).map(el => (
-            <li onClick={changeLocalization(el.code)} key={el.code}>{emoji(el.emoji)}</li>
-        ));
+    item = renderLocaleItem(langs[props.locale]);
+
+    listItems = renderExcept(props.locale, Object.values(langs), true).map(el => (
+        <li onClick={changeLocalization(el.code)} key={el.code}>
+            {renderLocaleItem(el)}
+        </li>
+    ));
 
     return { item, listItems }
 }

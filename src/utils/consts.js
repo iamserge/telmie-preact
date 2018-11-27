@@ -5,10 +5,12 @@ export const consts = {
 export const langs = {
   en: {
     code: 'en',
+    name: 'eng',
     emoji: '🇬🇧',
   },
   ru: {
     code: 'ru',
+    name: 'рус',
     emoji: '🇷🇺',
   },
 };
