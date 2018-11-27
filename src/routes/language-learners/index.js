@@ -33,14 +33,15 @@ class LanguageLearners extends Component {
       this.props.prismicCtx && this.fetchPage(this.props);
   }
   componentWillReceiveProps(nextProps){
-    (this.props.prismicCtx == null 
-      && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
+    ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
+      || this.props.uid !== nextProps.uid) && this.fetchPage(nextProps);
 	}
 
   fetchPage = (props) => {
     let that = this;
+    that.setState({ fetchingPage: true });
     that.props.reviewsUid && this.fetchReviews(props);
-    props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+    props.prismicCtx.api.getByID(props.uid).then((page, err) => {
       window.scrollTo(0, 0);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
@@ -64,17 +65,18 @@ class LanguageLearners extends Component {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
       const reviewsData = this.state.reviews;
+      const { locale } = this.props;
 
       return (
         <div id="language-learners" lang="ru" class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} />
+          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} locale={locale} onDownloadApp = {this.ga().downloadApp} />
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles} locale={locale} onDownloadApp = {this.ga().downloadApp} />
 
           {/*<HappyUsers content={reviewsData} />*/}
 
@@ -98,7 +100,7 @@ class LanguageLearners extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    
+    locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
