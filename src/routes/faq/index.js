@@ -1,4 +1,6 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
+import { bindActionCreators } from 'redux';
 import LandingFAQ from '../../components/new-landing/landing-faq'
 import Spinner from '../../components/global/spinner';
 
@@ -18,14 +20,16 @@ class FAQ extends Component {
 	}
 
 	componentWillReceiveProps(nextProps){
-		(this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+		((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+			|| this.props.uid !== nextProps.uid)
 			&& this.fetchPage(nextProps);
 	}
 
 	fetchPage = (props) => {
 		let that = this;
 		window.scrollTo(0, 0);
-		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+		that.setState({fetchingPage: true,});
+		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
 		  that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
 		});
 	};
@@ -35,7 +39,7 @@ class FAQ extends Component {
 			const pageData = this.state.page;
 
 			return (<div class='uk-container uk-container-small' style={{paddingTop: 50}}>
-				<LandingFAQ {...pageData} />
+				<LandingFAQ {...pageData} locale={this.props.locale}/>
 			</div>)	
 		}
 
@@ -48,4 +52,12 @@ class FAQ extends Component {
 	}
 }
 
-export default FAQ;
+const mapStateToProps = (state) => ({
+	locale: state.locale,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+	
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FAQ);

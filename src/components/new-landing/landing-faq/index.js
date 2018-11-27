@@ -71,7 +71,7 @@ class LandingFAQ extends Component {
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
-                <div class={style.headerFAQ}>{this.props.headerFAQ || 'FAQ'}</div>
+                <div class={style.headerFAQ}>{this.props.headerFAQ || langPack[this.props.locale].FAQ}</div>
                 {nodeBeforeQuestions && <div>{nodeBeforeQuestions}</div>}
                 {mainQuestion && <div class={style.mainQuestionContainer}>
                     <div class={style.question}>{mainQuestion.question}</div>

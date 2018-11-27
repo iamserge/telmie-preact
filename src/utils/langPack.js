@@ -15,7 +15,8 @@ export const langPack = {
             POLICY: 'Privacy Policy',
             TERMS: 'Terms',
             FAQ: 'FAQ',
-        }
+        },
+        FAQ: 'FAQ',
     },
     ru: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
@@ -33,6 +34,7 @@ export const langPack = {
             POLICY: 'Политика приватности',
             TERMS: 'Условия',
             FAQ: 'ЧаВо',
-        }
+        },
+        FAQ: 'ЧаВо',
     }
 }
