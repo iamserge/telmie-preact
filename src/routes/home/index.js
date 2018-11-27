@@ -128,7 +128,7 @@ class HomePage extends Component {
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.at('document.tags', ['featured'])
 		],
-		{ orderings : '[document.first_publication_date desc]' }
+		{ orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 					fetchingFeaturedPost: false,
@@ -140,9 +140,9 @@ class HomePage extends Component {
 		let that = this;
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
-			Prismic.Predicates.not('document.tags', ['featured'])
+			Prismic.Predicates.not('document.tags', ['featured']),
 		],
-		{ pageSize: 4, orderings : '[document.first_publication_date desc]' }
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 					fetchingRecentPosts: false,
@@ -171,7 +171,7 @@ class HomePage extends Component {
 			return (
 				<div id="homepage">
 
-					<div class={style.infoContainer}>	
+				<div class={style.infoContainer}>	
 						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale}/>
 					</div>
 

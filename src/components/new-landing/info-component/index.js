@@ -3,7 +3,7 @@ import AutoPrintText from '../auto-print-text'
 import { langPack } from "../../../utils/langPack";
 import style from './style.scss';
 
-const InfoComponent = ({mainSection, appLink, locale = 'en' }) => {
+const InfoComponent = ({mainSection, appLink, locale = 'en-us' }) => {
     const downloadApp = () => appLink && window.open(appLink);
     const titleObj = mainSection.title.split('{words}');
     const words = mainSection.typedWords.split(',');

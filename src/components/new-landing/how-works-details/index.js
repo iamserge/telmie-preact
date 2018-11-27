@@ -3,7 +3,7 @@ import Video from '../../homepage/video';
 import { langPack } from "../../../utils/langPack";
 import style from './style.scss';
 
-const HowWorksDetails = ({content, appLink = '', locale='en' }) => {
+const HowWorksDetails = ({content, appLink = '', locale='en-us' }) => {
     const downloadApp = () => appLink && window.open(appLink);
 
     return (

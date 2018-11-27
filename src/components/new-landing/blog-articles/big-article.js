@@ -3,7 +3,7 @@ import style from './style.scss';
 import { Link, route } from 'preact-router';
 import { langPack } from "../../../utils/langPack";
 
-const BigArticle = ({title, date,link, img, locale='en'}) => {    
+const BigArticle = ({title, date,link, img, locale='en-us'}) => {    
     const articleStyle =  {background: `url('${img}') no-repeat center`, backgroundSize: "cover"}
     const onClick = () => route(link);
     return (

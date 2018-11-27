@@ -5,7 +5,7 @@ import { langPack } from "../../../utils/langPack";
 import 'rc-collapse/assets/index.css';
 import style from './style.scss';
 
-const tabs = (locale = 'en') => ([{
+const tabs = (locale = 'en-us') => ([{
     text: langPack[locale].GENERAL_QUESTIONS,
     value: 'general',
 },{

@@ -3,8 +3,8 @@ export const consts = {
 };
 
 export const langs = {
-  en: {
-    code: 'en',
+  'en-us': {
+    code: 'en-us',
     name: 'eng',
     emoji: '🇬🇧',
   },

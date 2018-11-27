@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { langPack } from "../../../utils/langPack";
 import style from './style.scss';
 
-const ProDetails = ({content={},appLink='', locale='en'}) => {
+const ProDetails = ({content={},appLink='', locale='en-us'}) => {
     const downloadApp = () => appLink && window.open(appLink);
 
     return (

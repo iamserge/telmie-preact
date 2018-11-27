@@ -1,5 +1,5 @@
 export const langPack = {
-    en: {
+    'en-us': {
         DOWNLOAD_APP_BTN: 'Download app',
         HOMEPAGE_FAQ_TITLE: 'Most popular questions',
         GENERAL_QUESTIONS: 'General Questions',

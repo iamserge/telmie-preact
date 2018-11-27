@@ -129,7 +129,7 @@ class App extends Component {
 
 	renderDefaultRoutes = () => {
 		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
-		const { locale = 'en' } = this.props;
+		const { locale = 'en-us' } = this.props;
 
 		return [
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].HOMEPAGE } />,

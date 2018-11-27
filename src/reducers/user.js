@@ -24,10 +24,10 @@ export const loggedInUser = (state = {}, action) => {
 	}
 };
 
-export const locale = (state = 'en', action) => {
+export const locale = (state = 'en-us', action) => {
 	switch (action.type) {
 		case actionTypes.CHANGE_LOCALE:
-			return action.code ? action.code : 'en';
+			return action.code ? action.code : 'en-us';
 		default:
 			return state;
 	}
