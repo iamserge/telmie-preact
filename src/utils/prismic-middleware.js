@@ -241,7 +241,7 @@ export function processHomepageData(data){
     try{
         processedData.app = {
             title: data.app_title[0].text,
-            text: data.app_text[0].text,
+            text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
         };
     } catch(e){
@@ -376,7 +376,7 @@ export function processTextPageData(data){
     try{
         processedData.app = {
             title: data.app_title[0].text,
-            text: data.app_text[0].text,
+            text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
         };
     } catch(e){
