@@ -1,22 +1,23 @@
 import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
+import { langPack } from "../../../utils/langPack";
 
 import 'rc-collapse/assets/index.css';
 import style from './style.scss';
 
-const tabs = [{
-    text: 'General Questions',
+const tabs = (locale = 'en') => ([{
+    text: langPack[locale].GENERAL_QUESTIONS,
     value: 'general',
 },{
-    text: 'Customers',
+    text: langPack[locale].CUSTOMERS_QUESTIONS,
     value: 'customers',
 },{
-    text: 'Experts',
+    text: langPack[locale].EXPERTS_QUESTIONS,
     value: 'experts',
 },{
-    text: 'Payments',
+    text: langPack[locale].PAYMENTS_QUESTIONS,
     value: 'payments',
-}];
+}]);
 
 const headerProps = (index, active) => ({
     showArrow: false,
@@ -28,7 +29,7 @@ class LandingFAQ extends Component {
         super(props);
 
         this.state = {
-            activeTab: tabs[0].value,
+            activeTab: tabs(props.locale)[0].value,
             activeQuest: '',
         }
     }
@@ -79,7 +80,7 @@ class LandingFAQ extends Component {
                 <div class={style.landingFAQ}>
                     <div class={style.menuContainer}>
                         <ul class={style.faqMenu}>
-                            {tabs.map(({text,value}) => (
+                            {tabs(this.props.locale).map(({text,value}) => (
                                 <li key={value} 
                                     class={activeTab===value ? style.active : '' } 
                                     onClick={this.setActiveTab(value)}> {text} </li>

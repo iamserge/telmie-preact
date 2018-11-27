@@ -200,7 +200,7 @@ const getFAQs = (faqData) => {
     return allFaqs;
 }
 
-export function processHomepageData(data){
+export function processHomepageData(data = {}){
     let processedData = {};
 
     try{
@@ -235,7 +235,14 @@ export function processHomepageData(data){
         };
     }
     
-
+    try {
+        processedData.servicesTitle = data.featured_services_title[0].text;
+    }
+    catch (e){
+        console.log(e);
+        processedData.servicesTitle = '';
+    }
+    
     processedData.services = getServices(data);
 
     try{

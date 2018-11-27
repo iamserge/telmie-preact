@@ -26,6 +26,7 @@ import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { langPack } from '../../utils/langPack';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -103,7 +104,8 @@ class HomePage extends Component {
 		this.scrollToContact();
 	}
 	componentWillReceiveProps(nextProps){
-		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
+		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+			|| (this.props.uid !== nextProps.uid)) {
 			this.fetchPage(nextProps);
 			this.fetchRecentPosts(nextProps);
 			this.fetchFeatuedPost(nextProps);
@@ -155,12 +157,14 @@ class HomePage extends Component {
 
 	fetchPage(props) {
 		let that = this;
+		that.setState({fetchingPage: true});
 		window.scrollTo(0, 0);
-		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
   }
 	render() {
+		const {locale} = this.props
 		if (!this.state.fetchingPage) {
 			const pageData = this.state.page;
 			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
@@ -168,7 +172,7 @@ class HomePage extends Component {
 				<div id="homepage">
 
 					<div class={style.infoContainer}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink}/>
+						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale}/>
 					</div>
 
 					<div class={style.photoContainer}>
@@ -176,9 +180,9 @@ class HomePage extends Component {
 					</div>
 
 					<Element name='howWorksElement'  />
-					<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
+					<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>
 
-					<FeaturedServices services={pageData.services}/>
+					<FeaturedServices services={pageData.services} title={pageData.servicesTitle}/>
 
 					<div class={style.iosAppSection}>
 						<AppDetails appLink={appLink} content={pageData.app}/>
@@ -186,19 +190,19 @@ class HomePage extends Component {
 
 					<div class={style.faqContainer}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ headerFAQ='Most popular questions' faqs={pageData.faqs}/>
+						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} locale={locale} faqs={pageData.faqs}/>
 					</div>
 
 					<div class={style.proWrapper}>
 						<Element name='becomeProElement' />
-						<ProDetails content={pageData.becomePro} appLink={appLink} />
+						<ProDetails content={pageData.becomePro} locale={locale} appLink={appLink} />
 					</div>
 
 					<div class={`${style.blogContainer} uk-container`}>
 						<Element name="blogElement"></Element>
-						<div class={style.header}>Blog</div>
+						<div class={style.header}>{langPack[locale].BLOG_TITLE}</div>
 						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
-							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
+							<BlogArticles locale={locale} articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
 						)}
 						
 						
@@ -231,7 +235,8 @@ const mapStateToProps = (state) => ({
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
-	sendContactMessageInfo: state.sendContactMessage
+	sendContactMessageInfo: state.sendContactMessage,
+	locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

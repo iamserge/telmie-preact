@@ -129,21 +129,23 @@ class App extends Component {
 
 	renderDefaultRoutes = () => {
 		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
+		const { locale = 'en' } = this.props;
+		console.log(this.props.locale)
 
 		return [
-			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
-			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].HOMEPAGE } />,
+			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
-			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
-			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
-			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
-			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>,
+			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].ABOUT_US }/>,
+			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].FAQ } />,
+			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].TERMS }/>,
+			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].PRIVACY }/>,
 			<ContactRoute path = { routes.CONTACT_US }/>,
 
 			<LogIn path = { routes.LOG_IN } />,
-			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
 			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
 		]
@@ -171,6 +173,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
+	locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
