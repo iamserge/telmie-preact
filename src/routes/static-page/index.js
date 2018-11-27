@@ -25,6 +25,7 @@ class StaticPage extends Component {
 
 	fetchPage(props) {
 		window.scrollTo(0, 0);
+		this.setState({ doc: null });
     if (props.prismicCtx) {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
