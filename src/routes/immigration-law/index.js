@@ -32,15 +32,16 @@ class ImmigrationLaw extends Component {
     this.props.prismicCtx && this.fetchPage(this.props);
   }
   componentWillReceiveProps(nextProps){
-    (this.props.prismicCtx == null 
-      && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
+    ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+      || this.props.uid !== nextProps.uid) && this.fetchPage(nextProps);
   }
 
   fetchPage = (props) => {
     let that = this;
     window.scrollTo(0, 0);
+    that.setState({fetchingPage: true});
     that.props.reviewsUid && this.fetchReviews(props);
-    props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
+    props.prismicCtx.api.getByID(props.uid).then((page, err) => {
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   }
@@ -56,17 +57,18 @@ class ImmigrationLaw extends Component {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
       const reviewsData = this.state.reviews;
+      const { locale } = this.props;
 
       return (
         <div id="language-practice" class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} appLink={appLink} />
+          <TextBlockMain content={pageData.becomePro} appLink={appLink} locale={locale}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} appLink={appLink} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} appLink={appLink} locale={locale}/>
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} />
+          <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} locale={locale}/>
 
           {/*<HappyUsers content={reviewsData} />*/}
 
@@ -89,7 +91,9 @@ class ImmigrationLaw extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  locale: state.locale,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
