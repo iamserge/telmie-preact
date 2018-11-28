@@ -24,10 +24,12 @@ export const loggedInUser = (state = {}, action) => {
 	}
 };
 
-export const locale = (state = 'en-us', action) => {
+export const locale = (state = sessionStorage.getItem('telmieLocale') || 'en-us', action) => {
 	switch (action.type) {
 		case actionTypes.CHANGE_LOCALE:
-			return action.code ? action.code : 'en-us';
+			const { code = 'en-us' } = action;
+			sessionStorage.setItem('telmieLocale', code);
+			return code;
 		default:
 			return state;
 	}
