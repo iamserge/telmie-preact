@@ -13,10 +13,11 @@ class ContactPage extends Component {
 	}
     
 	render(){
-		const {sendContactMessageInfo = {}} = this.props;
+		const {sendContactMessageInfo = {}, locale} = this.props;
 		return (
 			<div >				
 				<ContactForm sendData={this.props.sendContactData} 
+					locale = {locale}
 					info={sendContactMessageInfo} 
 					clearContactData={this.props.clearContactData}/>
 			</div>
@@ -25,7 +26,8 @@ class ContactPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	sendContactMessageInfo: state.sendContactMessage
+	sendContactMessageInfo: state.sendContactMessage,
+	locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

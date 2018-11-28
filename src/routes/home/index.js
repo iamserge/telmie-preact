@@ -209,6 +209,7 @@ class HomePage extends Component {
 					</div>
 					<Element name="contactUsElement"></Element>					
 					<ContactForm ref={ref=> this.contactUs = ref} 
+						locale={locale}
 						sendData={this.props.sendContactData} 
 						clearContactData={this.props.clearContactData}
 						info={sendContactMessageInfo}/>
