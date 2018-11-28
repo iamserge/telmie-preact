@@ -2,6 +2,7 @@ import { h } from 'preact';
 
 import { routes } from '../../app'
 import { langs } from '../../../utils/consts'
+import { langPack } from '../../../utils/langPack'
 import { Link } from 'preact-router/match';
 import FontAwesome from 'react-fontawesome';
 import emoji from 'react-easy-emoji';
@@ -19,19 +20,19 @@ const renderServices = (props) => {
         listItems = '';
     switch (props.curUrl) {
         case routes.LANGUAGE_PRACTICE:
-            item = 'Language practice';
+            item = langPack[props.locale].SERVICES.LANGUAGE_PRACTICE;
             listItems = [
-                <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+                <li><Link href={routes.IMMIGRATION_LAW}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
             ];
             break;
         case routes.IMMIGRATION_LAW:
-            item = 'Immigration advice';
+            item = langPack[props.locale].SERVICES.IMMIGRATION_LAW;
             listItems = [
-                <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+                <li><Link href={routes.LANGUAGE_PRACTICE}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
             ];
             break;
         case routes.LANGUAGE_LEARNERS:
-            item = 'Изучение языка';
+            item = langPack[props.locale].SERVICES.LANGUAGE_LEARNERS;
             listItems = [ ];
             break;
         default:

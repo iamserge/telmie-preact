@@ -27,6 +27,11 @@ export const langPack = {
             success: 'Your message has been sent. Thank you!',
             submitBtn: 'Submit',
         },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Language practice',
+            IMMIGRATION_LAW: 'Immigration advice',
+            LANGUAGE_LEARNERS: 'Language learning',
+        },
         FAQ: 'FAQ',
     },
     ru: {
@@ -56,6 +61,11 @@ export const langPack = {
             message: 'Ваше сообщение',
             success: 'Ваше сообщение было отправлено. Спасибо!',
             submitBtn: 'Отправить',
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Практика английского',
+            IMMIGRATION_LAW: 'Советы по иммиграции',
+            LANGUAGE_LEARNERS: 'Изучение языка',
         },
         FAQ: 'ЧаВо',
     }

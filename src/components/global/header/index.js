@@ -14,6 +14,7 @@ import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
 import { getCurrentUrl } from 'preact-router';
 import { routes } from '../../app'
+import { langPack } from '../../../utils/langPack';
 
 
 const getCookie = (name) => {
@@ -88,7 +89,7 @@ class Header extends Component {
   
 
 	render() {
-    const {userData : user  = {}} = this.props;
+    const {userData : user  = {}, locale = "en-us"} = this.props;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME
       || this.props.currentUrl.indexOf('/#') + 1;
@@ -112,9 +113,9 @@ class Header extends Component {
             <Link href={routes.HOME} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
-            { isAtBlog ? <b class={style.title}>Blog</b> : null }
+            { isAtBlog ? <b class={style.title}>{langPack[locale].BLOG_TITLE}</b> : null }
 
-            { isServicePage && <Select curUrl={this.props.currentUrl} /> }
+            { isServicePage && <Select locale={locale} curUrl={this.props.currentUrl} /> }
 
             {!(isServicePage || isAtBlog) ?
                 <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
