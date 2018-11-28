@@ -8,7 +8,8 @@ const InfoComponent = ({mainSection, appLink}) => {
     return (
         <div class={`${style.infoContainer} uk-container-big`}>
             <div class={style.title}>
-              {titleObj[0]}<AutoPrintText mainSection={mainSection}/>{/*titleObj[1]*/}
+              <div>{titleObj[0]}</div>
+              <AutoPrintText mainSection={mainSection}/>{/*titleObj[1]*/}
             </div>
             <div class={style.subTitle}>{mainSection.subTitle}</div>
 

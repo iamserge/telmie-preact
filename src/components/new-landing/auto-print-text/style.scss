@@ -1,6 +1,8 @@
 @import './src/style/variables';
 
 .wordContainer{
+    position: relative;
+    top: -15px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -8,10 +10,12 @@
     height: 84px;
     @media (max-width: 880px) {
         height: 48px;
+        top: -6px;
     }
     @media (max-width: 450px) {
         height: 86px;
         line-height: 18px;
+        top: 0;
     }
 }
 .word{
