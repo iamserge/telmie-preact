@@ -36,8 +36,6 @@ class BlogPage extends Component {
 			fetchingPost: true,
 			fetchingRecentPosts: true
 		}
-		this.fetchPost = this.fetchPost.bind(this);
-		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
@@ -45,27 +43,39 @@ class BlogPage extends Component {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
 		}
+		if(this.props.locale !== nextProps.locale){
+			this.setState({ fetchingPost: true });
+			this.changeBlogLang(nextProps.locale);
+		}
 	}
 	componentDidMount() {
 		window.scrollTo(0,0);
 		this.fetchPost(this.props);
 		this.fetchRecentPosts(this.props);
 	}
-	fetchPost(props) {
+	changeBlogLang = (lang) => {
+		let post = this.state.alternate_languages.find(el => el.lang == lang );
+		route(`/blog/${post.uid}`);
+	}
+	fetchPost = (props) => {
 		let that = this;
-
+		that.setState({ fetchingPost: true });
 		props.prismicCtx && props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
 			scroll.scrollToTop();
-			that.setState({ fetchingPost: false, post: processPostData(post.data) })
-		});
-		
+			that.setState({ 
+				fetchingPost: false, 
+				post: processPostData(post.data),
+				alternate_languages: post.alternate_languages,
+			})
+		});		
 	}
-	fetchRecentPosts(props) {
+	fetchRecentPosts = (props) => {
 		let that = this;
+		that.setState({ fetchingRecentPosts: true });
 		props.prismicCtx && props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post')
 		],
-		{ pageSize: 10, orderings : '[document.first_publication_date desc]' }
+		{ pageSize: 10, orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 				fetchingRecentPosts: false,
@@ -137,7 +147,8 @@ const mapStateToProps = (state) => ({
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
-	sendContactMessageInfo: state.sendContactMessage
+	sendContactMessageInfo: state.sendContactMessage,
+	locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

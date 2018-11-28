@@ -1,7 +1,6 @@
 export const uids = {
 	'en-us': {
 		HOMEPAGE: 'W93_RBEAACsAXn5F',
-		ABOUT_US: 'WoBS0iYAAOw7o08v',
 		//FAQ: 'WoBNBCYAANo4ozWk',
 		TERMS: 'WoRP8igAACIAcojC',
 		PRIVACY: 'WoRQ-SgAACgAco1K',
@@ -15,7 +14,6 @@ export const uids = {
 	},
 	ru: {
 		HOMEPAGE: 'W_0QkREAAC8AF6jE',
-		/*ABOUT_US: 'WoBS0iYAAOw7o08v',*/
 		TERMS: 'W_1UXxEAADEAGNAJ',
 		PRIVACY: 'W_1TdBEAADEAGMv2',
 		/*CONTACT_US: 'WoRRbigAACgAco9L',
