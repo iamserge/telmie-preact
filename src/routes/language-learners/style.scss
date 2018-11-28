@@ -5,16 +5,3 @@
   background-color: rgb(86,95,207);
   margin-bottom: 130px;
 }
-
-:global {
-
-  #language-learners[lang="ru"] {
-    *{
-      font-family: 'Roboto', arial, sans-serif;
-    }
-
-    .fa {
-      font-family: FontAwesome;
-    }
-  }
-}

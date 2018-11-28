@@ -68,7 +68,7 @@ class LanguagePractice extends Component {
       const { locale } = this.props;
 
       return (
-        <div id="language-practice" class="service-page">
+        <div id="language-practice" lang={locale} class="service-page">
 
           <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
 

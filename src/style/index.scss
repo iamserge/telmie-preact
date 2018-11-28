@@ -439,6 +439,17 @@ button.white-btn {
 	}
 }
 
+.service-page{
+	&[lang="ru"]{
+		*{
+			font-family: 'Roboto', arial, sans-serif;
+		}
+		.fa {
+			font-family: FontAwesome;
+		}
+	}
+}
+
 @media (max-width: 1200px) {
     .slick-next{
 		right: 15px !important;
