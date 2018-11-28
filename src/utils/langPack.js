@@ -32,7 +32,7 @@ export const langPack = {
     ru: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
         HOMEPAGE_FAQ_TITLE: 'Популярные вопросы',
-        GENERAL_QUESTIONS: 'Основные вопросы',
+        GENERAL_QUESTIONS: 'Общие вопросы',
         CUSTOMERS_QUESTIONS: 'Клиенты',
         EXPERTS_QUESTIONS: 'Эксперты',
         PAYMENTS_QUESTIONS: 'Оплата',
