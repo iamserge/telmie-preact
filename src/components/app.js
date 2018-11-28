@@ -7,7 +7,6 @@ import Home from '../routes/home';
 import Search from '../routes/search';
 import Pro from '../routes/pro';
 import StaticPage from '../routes/static-page';
-import AboutUs from '../routes/about-us';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
 import LogInOrSignup from '../routes/login-or-signup';
@@ -39,7 +38,6 @@ export const routes = {
 	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
 	PRO_FOR_COMP: '/pro/',
-	ABOUT_US: '/about-us',
 	FAQ: '/help',
 	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
@@ -137,7 +135,6 @@ class App extends Component {
 			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
-			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].FAQ } />,
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].TERMS }/>,
 			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].PRIVACY }/>,
