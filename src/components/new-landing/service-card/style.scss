@@ -52,6 +52,7 @@
         position: relative;
         z-index: 2;
         transition: all .5s ease;
+        margin-bottom: 15px;
 
         @media (max-width: 580px) {
             margin-bottom: 15px;
@@ -89,7 +90,7 @@
     &:hover{
         color: #fff;
         text-decoration: none!important;
-        padding-top: 10px;
+        padding-top: 30px;
         
         &:before{
             background: rgba(2,2,2,.4);
@@ -98,18 +99,26 @@
 
     &Animated {
         &:hover{
+            .serviceDescription{
+                align-items: stretch;
+            }
             .serviceName {
                 animation: slideUp  2s  ease;
                 margin-top: 15px;
+                margin-bottom: 0;
             }
             .serviceInfo {
                 display: block;
-                animation: slideUp  2s  ease;
+                animation: showtext  2s  ease;
                 margin-bottom: 15px;
             }
         }
     }
 
+    @keyframes showtext{
+        0% {opacity: 0;}
+        70% {opacity: 1;}
+    }
     @keyframes slideUp{
         0% {transform: translateY(150%);}
         45%{transform: translateY(0%);}
