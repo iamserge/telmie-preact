@@ -100,18 +100,17 @@ export function processPostQuote(postData){
         }
     }
 }
-const processDate = (date) => {
-    const locale = "en-us";
+const processDate = (date, locale = "en-us") => {
     let dateObj = new Date(date);
     
     return dateObj.toLocaleString(locale, { month: "long", day: 'numeric', year: "numeric" });
 
 }
-export function processPostData(rawData ={}){
+export function processPostData(rawData ={}, locale){
     try{
         return {
             title: rawData.title[0].text,
-            date: processDate(rawData.date),
+            date: processDate(rawData.date, locale),
             body: rawData.body,
         }
     } catch(e){

@@ -65,7 +65,7 @@ class BlogPage extends Component {
 			scroll.scrollToTop();
 			that.setState({ 
 				fetchingPost: false, 
-				post: processPostData(post.data),
+				post: processPostData(post.data, props.locale),
 				alternate_languages: post.alternate_languages,
 			})
 		});		
