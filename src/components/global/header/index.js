@@ -91,7 +91,6 @@ class Header extends Component {
       case routes.LANGUAGE_PRACTICE:
         item = 'Language practice';
         listItem = [
-          <li><Link href={routes.LANGUAGE_LEARNERS}>Language learning</Link></li>,
           <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
           {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
@@ -99,15 +98,11 @@ class Header extends Component {
         item = 'Immigration advice';
         listItem = [
           <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
-          <li><Link href={routes.LANGUAGE_LEARNERS}>Language learning</Link></li>,
           {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
       case routes.LANGUAGE_LEARNERS:
         item = 'Language learning';
-        listItem = [
-          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
-          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-        ];        break;
+        listItem = [ ];        break;
       case routes.LANGUAGE_LEARNERS_RU:
         item = 'Изучение языка';
         listItem = [
