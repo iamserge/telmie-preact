@@ -14,7 +14,7 @@ import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
 import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
-import { EN, langs } from '../../../utils/consts';
+import { EN, RU, langs } from '../../../utils/consts';
 
 
 const getCookie = (name) => {
@@ -91,10 +91,10 @@ class Header extends Component {
 	render() {
     const {userData : user  = {}, locale = EN} = this.props;
     const isLogin = Object.keys(user).length !== 0;
-    const isAtHome = (this.props.currentUrl.toString().indexOf(routes.HOME) + 1)
-      || this.props.currentUrl.indexOf('/#') + 1;
+    const isAtHome = this.props.currentUrl === routes.HOME 
+      || this.props.currentUrl === langRoutes(RU, routes.HOME);
     const isAtBlog = this.props.currentUrl === routes.BLOG
-      || this.props.currentUrl.indexOf('/blog') + 1;
+      || !!this.props.currentUrl.indexOf('/blog') + 1;
     const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
