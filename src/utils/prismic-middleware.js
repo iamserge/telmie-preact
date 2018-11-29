@@ -166,6 +166,7 @@ const getServices = (data) => {
     try {
         return data.services.map((service) => ({
             link: service.link[0].text,
+            linkLearn: service.link_learning[0] ? service.link_learning[0].text : '',
             background: service.image.url,
             serviceName: service.title1[0].text,
             description: service.description[0] && service.description[0].text,
