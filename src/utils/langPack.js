@@ -12,6 +12,13 @@ export const langPack = {
         BLOG_TITLE: 'Blog',
         FULL_STORY_BTN: 'Full story',
         OTHER_POSTS: 'Other posts',
+        HEADER: {
+            HOW_IT_WORKS: 'How it works',
+            BECOME_PRO: 'Become a Pro',
+            BLOG: 'Blog',
+            FAQ: 'FAQ',
+            CONTACT: 'Contact us',
+        },
         FOOTER: {
             HOME: 'Home',
             CONTACT: 'Contact',
@@ -48,6 +55,13 @@ export const langPack = {
         BLOG_TITLE: 'Блог',
         FULL_STORY_BTN: 'Подробнее',
         OTHER_POSTS: 'Другие статьи',
+        HEADER: {
+            HOW_IT_WORKS: 'O нас',
+            BECOME_PRO: '',
+            BLOG: 'Блог',
+            FAQ: 'Часто задаваемые вопросы',
+            CONTACT: 'Связь с нами',
+        },
         FOOTER: {
             HOME: 'Главная',
             CONTACT: 'Контакт',

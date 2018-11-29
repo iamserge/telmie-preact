@@ -136,24 +136,24 @@ class Header extends Component {
                 ]) : */
                 isServicePage ? null : ([
                   <li>{isAtHome ?
-                    <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">How it works</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)}>How it works</Link>}
+                    <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>}
+                  </li>,
+                  langPack[locale].HEADER.BECOME_PRO && <li>{(isAtHome) ? 
+                    <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">{langPack[locale].HEADER.BECOME_PRO}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)}>{langPack[locale].HEADER.BECOME_PRO}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)}>Become a Pro</Link>}
+                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">{langPack[locale].HEADER.BLOG}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>{langPack[locale].HEADER.BLOG}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">Blog</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>Blog</Link>}
+                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">{langPack[locale].HEADER.FAQ}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.FAQ)}>{langPack[locale].HEADER.FAQ}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.FAQ)}>FAQ</Link>}
-                  </li>,
-                  <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>Contact us</Link>}
+                    <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">{langPack[locale].HEADER.CONTACT}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>{langPack[locale].HEADER.CONTACT}</Link>}
                   </li>
                 ])
               }
@@ -228,24 +228,24 @@ class Header extends Component {
             </div>
 
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>How it works</Link>
+              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>
+            }
+            {( isAtHome && langPack[locale].HEADER.BECOME_PRO ) ?
+              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</Link>
             }
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+              <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</Link>
             }
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>Blog</Link>
+                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</ScrollLink>
+                : <Link href={langRoutes(langs[locale].lang, routes.FAQ)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</Link>
             }
             {isAtHome ?
-                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-                : <Link href={langRoutes(langs[locale].lang, routes.FAQ)} onClick={this.toggleMobileMenu}>FAQ</Link>
-            }
-            {isAtHome ?
-              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>Contact us</Link>
+              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
             }
                 
             {/* !isLogin  ? (
