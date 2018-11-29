@@ -228,11 +228,7 @@ export function processHomepageData(data = {}){
         };
     } catch(e){
         console.log(e);
-        processedData.howItWorks = {
-            title: '',
-            text: '',
-            videoID: '',
-        };
+        processedData.howItWorks = null;
     }
     
     try {

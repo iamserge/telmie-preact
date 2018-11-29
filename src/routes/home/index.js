@@ -179,8 +179,10 @@ class HomePage extends Component {
 						<PhotoCards cards = {pageData.experts}/>
 					</div>
 
-					<Element name='howWorksElement'  />
-					<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>
+					{ pageData.howItWorks && [
+						<Element name='howWorksElement'  />,
+						<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>,
+					]}
 
 					<FeaturedServices services={pageData.services} title={pageData.servicesTitle}/>
 
