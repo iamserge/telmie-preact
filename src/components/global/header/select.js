@@ -45,7 +45,6 @@ const renderServices = (props) => {
 const renderLocale = (props) => {
     const changeLocalization = (code) => () => {
         props.changeLocale(code);
-        route(window.location.pathname);
         switch(props.locale){
             case EN:
                 !(window.location.pathname.toString().indexOf('/blog/') + 1)
@@ -53,7 +52,7 @@ const renderLocale = (props) => {
                 break;
             case RU:
                 let _link = `/${window.location.pathname.split('/').slice(2).join('/')}`;
-                !(_link.toString().indexOf('/blog/')) 
+                !(_link.toString().indexOf('/blog/') + 1) 
                     && route(langRoutes(EN, _link));
                 break;
         };
