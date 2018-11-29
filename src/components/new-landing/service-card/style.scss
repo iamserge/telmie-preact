@@ -73,17 +73,25 @@
         }
     }
 
-    button {
-        color: $pinkishRed!important;
+    .buttonArea {
+        width: 95%;
+        display: flex;;
+        flex-wrap: wrap;
+        justify-content: center;
         z-index: 2;
         position: absolute;
-        bottom: 67px;
         left: 50%;
         transform: translateX(-50%);
 
-        &:hover {
-            color: #fff!important;
-            background: $pinkishRed;
+        & > button{
+            &.whitebtn{
+                color: $pinkishRed !important;
+                
+            }
+            &:not(:last-child){
+                margin-right: 15px;
+                margin-bottom: 10px
+            }
         }
     }
 
@@ -130,6 +138,13 @@
         padding-bottom: 85px;
         button{
             bottom: 35px;
+        }
+    }
+}
+@media (max-width: 390px) {
+    .serviceCard{
+        .buttonArea{
+            bottom: 15px;
         }
     }
 }

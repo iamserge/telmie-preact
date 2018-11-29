@@ -165,7 +165,7 @@ button.white-btn {
 	color: $black !important;
 	background-color: white;
 	&:hover{
-		background-color: $red;
+		background-color: darken(white, 10%);
 	}
 }
 
