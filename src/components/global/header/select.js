@@ -16,28 +16,24 @@ const renderExcept = (elem, arr=[], isLocale = false) => {
         : arr.filter(el => { });
 }
 
-const renderServices = (props) => {
+const renderServices = ({curUrl, locale}) => {
     let item = '',
-        listItems = '';
-    switch (props.curUrl) {
-        case routes.LANGUAGE_PRACTICE:
-            item = langPack[props.locale].SERVICES.LANGUAGE_PRACTICE;
-            listItems = [
-                <li><Link href={langRoutes(langs[locale].lang, routes.IMMIGRATION_LAW)}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
-            ];
-            break;
-        case routes.IMMIGRATION_LAW:
-            item = langPack[props.locale].SERVICES.IMMIGRATION_LAW;
-            listItems = [
-                <li><Link href={langRoutes(langs[locale].lang, routes.LANGUAGE_PRACTICE)}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
-            ];
-            break;
-        case routes.LANGUAGE_LEARNERS:
-            item = langPack[props.locale].SERVICES.LANGUAGE_LEARNERS;
-            listItems = [ ];
-            break;
-        default:
-            break;
+        listItems = '',
+        urlStr = curUrl.toString();
+
+    if(urlStr.indexOf(routes.LANGUAGE_PRACTICE) + 1){
+        item = langPack[locale].SERVICES.LANGUAGE_PRACTICE;
+        listItems = [
+            <li><Link href={langRoutes(langs[locale].lang, routes.IMMIGRATION_LAW)}>{langPack[locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
+        ];
+    } else if (urlStr.indexOf(routes.IMMIGRATION_LAW) + 1){
+        item = langPack[locale].SERVICES.IMMIGRATION_LAW;
+        listItems = [
+            <li><Link href={langRoutes(langs[locale].lang, routes.LANGUAGE_PRACTICE)}>{langPack[locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
+        ];
+    } else if (urlStr.indexOf(routes.LANGUAGE_LEARNERS) + 1){
+        item = langPack[locale].SERVICES.LANGUAGE_LEARNERS;
+        listItems = [ ];
     }
     return {item, listItems}
 }

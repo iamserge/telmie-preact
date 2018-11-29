@@ -91,13 +91,13 @@ class Header extends Component {
 	render() {
     const {userData : user  = {}, locale = EN} = this.props;
     const isLogin = Object.keys(user).length !== 0;
-    const isAtHome = this.props.currentUrl === routes.HOME
+    const isAtHome = (this.props.currentUrl.toString().indexOf(routes.HOME) + 1)
       || this.props.currentUrl.indexOf('/#') + 1;
     const isAtBlog = this.props.currentUrl === routes.BLOG
       || this.props.currentUrl.indexOf('/blog') + 1;
-    const isServicePage = this.props.currentUrl === routes.IMMIGRATION_LAW 
-      || this.props.currentUrl === routes.LANGUAGE_PRACTICE 
-      || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
+    const isServicePage = (this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
+      || (this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
+      || (this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
 
 		return (
 			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
