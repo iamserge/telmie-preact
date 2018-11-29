@@ -23,17 +23,22 @@ const renderServices = (props) => {
             item = langPack[props.locale].SERVICES.LANGUAGE_PRACTICE;
             listItems = [
                 <li><Link href={routes.IMMIGRATION_LAW}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
+                <li><Link href={routes.LANGUAGE_LEARNERS}>{langPack[props.locale].SERVICES.LANGUAGE_LEARNERS}</Link></li>,
             ];
             break;
         case routes.IMMIGRATION_LAW:
             item = langPack[props.locale].SERVICES.IMMIGRATION_LAW;
             listItems = [
                 <li><Link href={routes.LANGUAGE_PRACTICE}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
+                <li><Link href={routes.LANGUAGE_LEARNERS}>{langPack[props.locale].SERVICES.LANGUAGE_LEARNERS}</Link></li>,
             ];
             break;
         case routes.LANGUAGE_LEARNERS:
             item = langPack[props.locale].SERVICES.LANGUAGE_LEARNERS;
-            listItems = [ ];
+            listItems = [
+                <li><Link href={routes.IMMIGRATION_LAW}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
+                <li><Link href={routes.LANGUAGE_PRACTICE}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
+            ];
             break;
         default:
             break;
