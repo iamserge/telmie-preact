@@ -64,7 +64,8 @@ export const routes = {
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
 	IMMIGRATION_LAW: '/immigration-advice',
-	LANGUAGE_LEARNERS: '/language-learners'
+	LANGUAGE_LEARNERS: '/language-learners',
+	LANGUAGE_LEARNERS_RU: '/ru/language-learners'
 };
 
 class App extends Component {
@@ -134,7 +135,8 @@ class App extends Component {
 			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
 			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { 'W_vZPBEAADEAEjuB' } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<LanguageLearners path={routes.LANGUAGE_LEARNERS_RU} prismicCtx = { this.state.prismicCtx } uid = { 'W_vZPBEAADEAEjuB' } reviewsUid={ uids.SHORT_REVIEWS }/>,
+			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { 'W-0bnhAAACkAeUZX' } reviewsUid={ uids.SHORT_REVIEWS }/>,
 			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
 			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
 			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,

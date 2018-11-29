@@ -91,6 +91,7 @@ class Header extends Component {
       case routes.LANGUAGE_PRACTICE:
         item = 'Language practice';
         listItem = [
+          <li><Link href={routes.LANGUAGE_LEARNERS}>Language learning</Link></li>,
           <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
           {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
@@ -98,9 +99,16 @@ class Header extends Component {
         item = 'Immigration advice';
         listItem = [
           <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+          <li><Link href={routes.LANGUAGE_LEARNERS}>Language learning</Link></li>,
           {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
         ];        break;
       case routes.LANGUAGE_LEARNERS:
+        item = 'Language learning';
+        listItem = [
+          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
+          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
+        ];        break;
+      case routes.LANGUAGE_LEARNERS_RU:
         item = 'Изучение языка';
         listItem = [
           {/*<li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
@@ -127,7 +135,10 @@ class Header extends Component {
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
     const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
-    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
+    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW 
+      || this.props.currentUrl === routes.LANGUAGE_PRACTICE 
+      || this.props.currentUrl === routes.LANGUAGE_LEARNERS
+      || this.props.currentUrl === routes.LANGUAGE_LEARNERS_RU;
 
 		return (
 			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
