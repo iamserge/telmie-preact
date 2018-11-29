@@ -61,10 +61,10 @@ class Header extends Component {
       })
     });
 
-		let userAuth = getCookie('USER_AUTH');
+		{/*let userAuth = getCookie('USER_AUTH');
 		if (userAuth != null) {
 			this.props.logIn(userAuth)
-		}
+    }*/}
   };
 
   componentWillUnmount(){

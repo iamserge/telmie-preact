@@ -127,6 +127,10 @@ class App extends Component {
 
 	renderDefaultRoutes = () => {
 		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
+		{/*<LogIn path = { routes.LOG_IN } />,
+			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
+			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,*/}
 		const { locale = 'en-us' } = this.props;
 
 		return [
@@ -139,11 +143,6 @@ class App extends Component {
 			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].TERMS }/>,
 			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].PRIVACY }/>,
 			<ContactRoute path = { routes.CONTACT_US }/>,
-
-			<LogIn path = { routes.LOG_IN } />,
-			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
-			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
 		]
 	}
 
