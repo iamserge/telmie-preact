@@ -14,6 +14,7 @@ import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 
 import style from './style.scss';
+import { routes } from "../../components/app";
 
 import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
 
@@ -55,7 +56,8 @@ class LanguageLearners extends Component {
 
   ga = () => ({
     downloadApp: () => {
-      gtag('event', 'conversion', { 'send_to': 'AW-820107229/nZvmCKu8jZABEN2vh4cD'});
+      (this.props.path === routes.LANGUAGE_LEARNERS) 
+        && gtag('event', 'conversion', { 'send_to': 'AW-820107229/nZvmCKu8jZABEN2vh4cD'});
       window.open(appLink);
     }
   })
