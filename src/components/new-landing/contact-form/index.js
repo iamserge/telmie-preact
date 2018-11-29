@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import SimpleReactValidator from 'simple-react-validator';
 import Spinner from '../../global/spinner';
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 
 import style from './style.scss';
 
@@ -52,7 +53,7 @@ export default class ContactForm extends Component {
 
     render(){
         const {name,email,company,subject,body, load} = this.state;
-        const {info = {}, locale='en-us'} = this.props;
+        const {info = {}, locale=EN} = this.props;
         const {errorMsg = '', isSent = false} = info;
         
         return (

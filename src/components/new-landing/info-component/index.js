@@ -1,9 +1,10 @@
 import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 import style from './style.scss';
 
-const InfoComponent = ({mainSection, appLink, locale = 'en-us' }) => {
+const InfoComponent = ({mainSection, appLink, locale = EN }) => {
     const downloadApp = () => appLink && window.open(appLink);
     const titleObj = mainSection.title.split('{words}');
     const words = mainSection.typedWords.split(',');

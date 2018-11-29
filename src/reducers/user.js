@@ -1,6 +1,6 @@
 import { actionTypes } from '../actions';
 import { concat, orderBy, map, without, uniqBy } from 'lodash';
-
+import { EN } from "../utils/consts";
 
 
 export const loggedInUser = (state = {}, action) => {
@@ -24,10 +24,10 @@ export const loggedInUser = (state = {}, action) => {
 	}
 };
 
-export const locale = (state = sessionStorage.getItem('telmieLocale') || 'en-us', action) => {
+export const locale = (state = sessionStorage.getItem('telmieLocale') || EN, action) => {
 	switch (action.type) {
 		case actionTypes.CHANGE_LOCALE:
-			const { code = 'en-us' } = action;
+			const { code = EN } = action;
 			sessionStorage.setItem('telmieLocale', code);
 			return code;
 		default:

@@ -19,7 +19,7 @@ const Blog = ({articles = [], featured, locale}) => {
                         Array.isArray(accum[accum.length - 1]) && accum[accum.length - 1].length === 1 ? (
                             [
                                 ...accum.slice(0,-1), 
-                                <ArticleCol articles={[...accum[accum.length - 1], article]} />
+                                <ArticleCol locale={locale} articles={[...accum[accum.length - 1], article]} />
                             ]
                         ) : (
                             [...accum, [article]]

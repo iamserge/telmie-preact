@@ -1,11 +1,12 @@
 import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 
 import 'rc-collapse/assets/index.css';
 import style from './style.scss';
 
-const tabs = (locale = 'en-us') => ([{
+const tabs = (locale = EN) => ([{
     text: langPack[locale].GENERAL_QUESTIONS,
     value: 'general',
 },{

@@ -1,7 +1,11 @@
 import { h, Component } from 'preact';
-import { Link, route } from 'preact-router';
+import { route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import Slider from "react-slick";
+
+import { langRoutes } from "../../app";
+import { langs } from "../../../utils/consts";
+import { langPack } from "../../../utils/langPack";
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -27,7 +31,7 @@ class BlogPosts extends Component {
     super(props);
   }
 
-  onArticleClick = (link) => () => route(link);
+  onArticleClick = (link) => () => route(langRoutes(langs[this.props.locale].lang, link));
 
   render(){
     const allPosts = this.props.blogPosts;
@@ -67,7 +71,7 @@ class BlogPosts extends Component {
         <div class={style.blogPosts}>
 
           <div class={`${style.blogPostsTitle} uk-container`}>
-            <h3>Other posts</h3>
+            <h3>{langPack[this.props.locale].OTHER_POSTS}</h3>
           </div>
 
           <Slider {...settings} className={style.blogPostsSlider}>
@@ -81,7 +85,7 @@ class BlogPosts extends Component {
                     <div class={style.blogPostDescription}>
                       <p class={style.date}>{post.date}</p>
                       <p class={style.title} onClick={this.onArticleClick(post.link)}>{post.title}</p>
-                      <button class="red-btn" onClick={this.onArticleClick(post.link)}>Full story</button>
+                      <button class="red-btn" onClick={this.onArticleClick(post.link)}>{langPack[this.props.locale].FULL_STORY_BTN}</button>
                     </div>
                   </div>
                 </div>

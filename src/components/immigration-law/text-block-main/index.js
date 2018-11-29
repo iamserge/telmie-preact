@@ -3,8 +3,9 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import { setEmphasizedText } from '../../../utils/index'
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 
-const TextBlockMain = ({content, appLink = '', onDownloadApp, locale = 'en-us'}) => {
+const TextBlockMain = ({content, appLink = '', onDownloadApp, locale = EN}) => {
   const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   return (

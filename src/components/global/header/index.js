@@ -12,9 +12,9 @@ import { logIn, logOff, changeLocale } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
-import { getCurrentUrl } from 'preact-router';
-import { routes } from '../../app'
+import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
+import { EN, langs } from '../../../utils/consts';
 
 
 const getCookie = (name) => {
@@ -89,7 +89,7 @@ class Header extends Component {
   
 
 	render() {
-    const {userData : user  = {}, locale = "en-us"} = this.props;
+    const {userData : user  = {}, locale = EN} = this.props;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME
       || this.props.currentUrl.indexOf('/#') + 1;
@@ -110,7 +110,7 @@ class Header extends Component {
             )}
 
 
-            <Link href={routes.HOME} id={style.logo}>
+            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
             { isAtBlog ? <b class={style.title}>{langPack[locale].BLOG_TITLE}</b> : null }
@@ -137,23 +137,23 @@ class Header extends Component {
                 isServicePage ? null : ([
                   <li>{isAtHome ?
                     <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">How it works</ScrollLink> 
-                    : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+                    : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)}>How it works</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
-                    : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+                    : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)}>Become a Pro</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">Blog</ScrollLink> 
-                    : <Link href={routes.BLOG_LINK}>Blog</Link>}
+                    : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>Blog</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
-                    : <Link href={routes.FAQ}>FAQ</Link>}
+                    : <Link href={langRoutes(langs[locale].lang, routes.FAQ)}>FAQ</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
-                    : <Link href={routes.CONTACT_US}>Contact us</Link>}
+                    : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>Contact us</Link>}
                   </li>
                 ])
               }
@@ -217,7 +217,7 @@ class Header extends Component {
           </div>
           <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
-            <Link href={routes.HOME} id={style.logo}>
+            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
             <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
@@ -229,23 +229,23 @@ class Header extends Component {
 
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
-              : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
+              : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>How it works</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
-              : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+              : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>Become a Pro</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
-              : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+              : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>Blog</Link>
             }
             {isAtHome ?
                 <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
+                : <Link href={langRoutes(langs[locale].lang, routes.FAQ)} onClick={this.toggleMobileMenu}>FAQ</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
-              : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
+              : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>Contact us</Link>
             }
                 
             {/* !isLogin  ? (

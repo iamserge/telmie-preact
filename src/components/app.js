@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { Router, route } from 'preact-router';
 
 import Header from './global/header';
 import Footer from './global/footer';
@@ -31,6 +31,7 @@ import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
+import { RU, EN } from "../utils/consts";
 
 export const routes = {
 	HOME: '/',
@@ -65,6 +66,8 @@ export const routes = {
 	LANGUAGE_LEARNERS: '/language-learners'
 };
 
+export const langRoutes = (lang, route) => lang == EN ? route : `/${lang}${route}`;
+
 class App extends Component {
 
 	constructor(props){
@@ -86,6 +89,7 @@ class App extends Component {
 
 
 	handleRoute = e => {
+		console.log(e.url)		
 		ReactGA.pageview(e.url);
 		this.setState({currentUrl: e.url});
 	};
@@ -131,20 +135,24 @@ class App extends Component {
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
 			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,*/}
-		const { locale = 'en-us' } = this.props;
 
 		return [
-			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].HOMEPAGE } />,
-			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
-			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].FAQ } />,
-			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].TERMS }/>,
-			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].PRIVACY }/>,
-			<ContactRoute path = { routes.CONTACT_US }/>,
+			...this.renderLangRoutes(EN),
+			...this.renderLangRoutes(RU),
 		]
 	}
+
+	renderLangRoutes = (lang) => ([
+		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].HOMEPAGE } />,
+		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_LAW) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguagePractice path={ langRoutes(lang, routes.LANGUAGE_PRACTICE) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguageLearners path={ langRoutes(lang, routes.LANGUAGE_LEARNERS) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<BlogPage path={ langRoutes(lang, routes.BLOG_POST) } prismicCtx = { this.state.prismicCtx } />,
+		<FAQ path={ langRoutes(lang, routes.FAQ) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].FAQ } />,
+		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].TERMS }/>,
+		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].PRIVACY }/>,
+		<ContactRoute path = { langRoutes(lang, routes.CONTACT_US) }/>,
+	])
 
 	render() {
 		const {userData : user  = {}, locale} = this.props;

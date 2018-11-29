@@ -1,10 +1,8 @@
 import { h, Component } from 'preact';
-import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import ScrollToTop from 'react-scroll-up';
 import { animateScroll as scroll } from 'react-scroll'
@@ -19,6 +17,8 @@ import PostText from '../../components/blog/post-text';
 import PostQuote from '../../components/blog/post-quote';
 import PostImage from '../../components/blog/post-image';
 
+import { langRoutes } from "../../components/app";
+import { langs } from "../../utils/consts";
 
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
@@ -55,7 +55,8 @@ class BlogPage extends Component {
 	}
 	changeBlogLang = (lang) => {
 		let post = this.state.alternate_languages.find(el => el.lang == lang );
-		route(`/blog/${post.uid}`);
+		
+		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
 	}
 	fetchPost = (props) => {
 		let that = this;
@@ -118,7 +119,7 @@ class BlogPage extends Component {
 */}
 
 					{ !this.state.fetchingRecentPosts && this.state.recentPosts.length > 0 && (
-						<BlogPosts blogPosts={this.state.recentPosts} />
+						<BlogPosts blogPosts={this.state.recentPosts} locale={this.props.locale}/>
 					)}
 
 {/*

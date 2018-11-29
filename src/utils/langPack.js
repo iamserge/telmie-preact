@@ -1,5 +1,8 @@
+import { EN, RU } from "../utils/consts";
+
+
 export const langPack = {
-    'en-us': {
+    [EN]: {
         DOWNLOAD_APP_BTN: 'Download app',
         HOMEPAGE_FAQ_TITLE: 'Most popular questions',
         GENERAL_QUESTIONS: 'General Questions',
@@ -8,6 +11,7 @@ export const langPack = {
         PAYMENTS_QUESTIONS: 'Payments',
         BLOG_TITLE: 'Blog',
         FULL_STORY_BTN: 'Full story',
+        OTHER_POSTS: 'Other posts',
         FOOTER: {
             HOME: 'Home',
             CONTACT: 'Contact',
@@ -34,7 +38,7 @@ export const langPack = {
         },
         FAQ: 'FAQ',
     },
-    ru: {
+    [RU]: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
         HOMEPAGE_FAQ_TITLE: 'Популярные вопросы',
         GENERAL_QUESTIONS: 'Общие вопросы',
@@ -43,6 +47,7 @@ export const langPack = {
         PAYMENTS_QUESTIONS: 'Оплата',
         BLOG_TITLE: 'Блог',
         FULL_STORY_BTN: 'Подробнее',
+        OTHER_POSTS: 'Другие статьи',
         FOOTER: {
             HOME: 'Главная',
             CONTACT: 'Контакт',

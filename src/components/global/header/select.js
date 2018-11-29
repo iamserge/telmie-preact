@@ -1,11 +1,12 @@
 import { h } from 'preact';
 
-import { routes } from '../../app'
-import { langs } from '../../../utils/consts'
+import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack'
+import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
 import FontAwesome from 'react-fontawesome';
 import emoji from 'react-easy-emoji';
+import { EN, RU, langs } from "../../../utils/consts";
 
 import style from './style.scss';
 
@@ -22,23 +23,18 @@ const renderServices = (props) => {
         case routes.LANGUAGE_PRACTICE:
             item = langPack[props.locale].SERVICES.LANGUAGE_PRACTICE;
             listItems = [
-                <li><Link href={routes.IMMIGRATION_LAW}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
-                <li><Link href={routes.LANGUAGE_LEARNERS}>{langPack[props.locale].SERVICES.LANGUAGE_LEARNERS}</Link></li>,
+                <li><Link href={langRoutes(langs[locale].lang, routes.IMMIGRATION_LAW)}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
             ];
             break;
         case routes.IMMIGRATION_LAW:
             item = langPack[props.locale].SERVICES.IMMIGRATION_LAW;
             listItems = [
-                <li><Link href={routes.LANGUAGE_PRACTICE}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
-                <li><Link href={routes.LANGUAGE_LEARNERS}>{langPack[props.locale].SERVICES.LANGUAGE_LEARNERS}</Link></li>,
+                <li><Link href={langRoutes(langs[locale].lang, routes.LANGUAGE_PRACTICE)}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
             ];
             break;
         case routes.LANGUAGE_LEARNERS:
             item = langPack[props.locale].SERVICES.LANGUAGE_LEARNERS;
-            listItems = [
-                <li><Link href={routes.IMMIGRATION_LAW}>{langPack[props.locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
-                <li><Link href={routes.LANGUAGE_PRACTICE}>{langPack[props.locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
-            ];
+            listItems = [ ];
             break;
         default:
             break;
@@ -47,7 +43,21 @@ const renderServices = (props) => {
 }
 
 const renderLocale = (props) => {
-    const changeLocalization = (code) => () => props.changeLocale(code);
+    const changeLocalization = (code) => () => {
+        props.changeLocale(code);
+        route(window.location.pathname);
+        switch(props.locale){
+            case EN:
+                !(window.location.pathname.toString().indexOf('/blog/') + 1)
+                    && route(langRoutes(RU, window.location.pathname));
+                break;
+            case RU:
+                let _link = `/${window.location.pathname.split('/').slice(2).join('/')}`;
+                !(_link.toString().indexOf('/blog/')) 
+                    && route(langRoutes(EN, _link));
+                break;
+        };
+    };
     const renderLocaleItem = (el) => ([
         emoji(el.emoji, (code) => (
             <div class={style.flagContainer} 

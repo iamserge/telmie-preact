@@ -2,10 +2,11 @@ import { h } from 'preact';
 import { Link } from 'preact-router';
 import StepItem from './step'
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 import style from './style.scss';
 
 
-const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp, locale = 'en-us'}) => {
+const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp, locale = EN}) => {
   const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   const stepsCount = content.length;

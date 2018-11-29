@@ -2,14 +2,19 @@ export const consts = {
   PAGE_SIZE: 20
 };
 
+export const EN = 'en-us',
+  RU = 'ru';
+
 export const langs = {
-  'en-us': {
+  [EN]: {
     code: 'en-us',
+    lang: EN,
     name: 'eng',
     emoji: '🇬🇧',
   },
-  ru: {
+  [RU]: {
     code: 'ru',
+    lang: RU,
     name: 'рус',
     emoji: '🇷🇺',
   },

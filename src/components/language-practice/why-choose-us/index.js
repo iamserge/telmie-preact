@@ -1,9 +1,10 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 import style from './style.scss';
 
-const WhyChooseUs = ({content = [], title, addClass, appLink = '', onDownloadApp, locale= 'en-us'}) => {
+const WhyChooseUs = ({content = [], title, addClass, appLink = '', onDownloadApp, locale= EN}) => {
   const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   return (

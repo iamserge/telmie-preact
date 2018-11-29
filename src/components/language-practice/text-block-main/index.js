@@ -4,6 +4,7 @@ import style from './style.scss';
 import AnimatedImage from '../animated-image'
 import { setEmphasizedText } from '../../../utils'
 import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 
 //const greetings = [ 'Привет', 'Hola', 'Hello', '嗨', 'Oi', 'مرحبا', 'Bonjour' ];
 
@@ -18,7 +19,7 @@ class TextBlockMain extends Component {
     : () => this.props.appLink && window.open(this.props.appLink);
 
   render() {
-    const { content, locale = 'en-us' } = this.props;
+    const { content, locale = EN } = this.props;
 
     return (
       <div class={`${style.TextBlock} uk-container`}>

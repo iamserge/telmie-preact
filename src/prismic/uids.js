@@ -1,5 +1,6 @@
+import { EN, RU } from "../utils/consts";
 export const uids = {
-	'en-us': {
+	[EN]: {
 		HOMEPAGE: 'W93_RBEAACsAXn5F',
 		//FAQ: 'WoBNBCYAANo4ozWk',
 		TERMS: 'WoRP8igAACIAcojC',
@@ -12,7 +13,7 @@ export const uids = {
 		SHORT_REVIEWS: 'W-0TkBAAACkAeSLm',
 		FAQ: 'W_V1PhEAACsAzO48',
 	},
-	ru: {
+	[RU]: {
 		HOMEPAGE: 'W_0QkREAAC8AF6jE',
 		TERMS: 'W_1UXxEAADEAGNAJ',
 		PRIVACY: 'W_1TdBEAADEAGMv2',
