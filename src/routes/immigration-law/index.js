@@ -13,9 +13,10 @@ import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/immigration-law/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
 import style from '../language-practice/style.scss';
+import { route } from 'preact-router';
 
 import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
-import { changeLocaleLangs } from '../../actions/user';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -43,10 +44,14 @@ class ImmigrationLaw extends Component {
     that.setState({fetchingPage: true});
     this.props.changeLocaleLangs([]);
     that.props.reviewsUid && this.fetchReviews(props);
-    props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-      that.props.changeLocaleLangs(page.alternate_languages);
-      that.setState({fetchingPage: false, page: processTextPageData(page.data)})
-    });
+    props.uid ?
+      props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+        that.props.changeLocaleLangs(page.alternate_languages);
+        that.setState({fetchingPage: false, page: processTextPageData(page.data)})
+      }) : (
+				this.props.changeLocale(),
+				route('/error', true)
+			);
   }
 
   fetchReviews = (props) => {
@@ -100,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   changeLocaleLangs,
+  changeLocale,
 }, dispatch);
 
 export default connect(

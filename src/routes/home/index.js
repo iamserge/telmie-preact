@@ -27,7 +27,7 @@ import style from './style.scss';
 
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 import { langPack } from '../../utils/langPack';
-import { changeLocaleLangs } from '../../actions/user';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
@@ -162,10 +162,14 @@ class HomePage extends Component {
 		window.scrollTo(0, 0);
 		this.props.changeLocaleLangs([]);
 		that.setState({fetchingPage: true});
-		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-			that.props.changeLocaleLangs(page.alternate_languages);
-			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
-		});
+		props.uid ? 
+			props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+				that.props.changeLocaleLangs(page.alternate_languages);
+				that.setState({fetchingPage: false, page: processHomepageData(page.data)})
+			}) : (
+				this.props.changeLocale(),
+				route('/error', true)
+			);
   }
 	render() {
 		if (!this.state.fetchingPage) {
@@ -253,6 +257,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	sendContactData,
 	clearContactData,
 	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

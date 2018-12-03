@@ -5,8 +5,9 @@ import { connect } from 'preact-redux';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
+import { route } from 'preact-router';
 
-import { changeLocaleLangs } from '../../actions/user';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 import style from './style.scss';
 
@@ -30,17 +31,22 @@ class StaticPage extends Component {
 		this.setState({ doc: null });
 		this.props.changeLocaleLangs([]);
     if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-					// We put the retrieved content in the state as a doc variable
-					this.props.changeLocaleLangs(doc.alternate_languages);
-          this.setState({ doc });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-				}				
-      });
+			// We are using the function to get a document by its uid
+			console.log(props.uid)
+			props.uid ? 
+				props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
+					if (doc) {
+						// We put the retrieved content in the state as a doc variable
+						this.props.changeLocaleLangs(doc.alternate_languages);
+						this.setState({ doc });
+					} else {
+						// We changed the state to display error not found if no matched doc
+						this.setState({ notFound: !doc });
+					}				
+				}) : (
+					this.props.changeLocale(),
+					route('/error', true)
+				);
 			/*
 			return props.prismicCtx.api.query('').then(function(response) {
 			   console.log(response);
@@ -74,6 +80,7 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

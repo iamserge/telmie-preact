@@ -3,9 +3,10 @@ import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import LandingFAQ from '../../components/new-landing/landing-faq'
 import Spinner from '../../components/global/spinner';
+import { route } from 'preact-router';
 
 import { processFAQPageData } from '../../utils/prismic-middleware';
-import { changeLocaleLangs } from '../../actions/user';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 
 class FAQ extends Component {
@@ -32,10 +33,14 @@ class FAQ extends Component {
 		window.scrollTo(0, 0);
 		this.props.changeLocaleLangs([]);
 		that.setState({fetchingPage: true,});
-		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-			that.props.changeLocaleLangs(page.alternate_languages);
-			that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
-		});
+		props.uid ? 
+			props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+				that.props.changeLocaleLangs(page.alternate_languages);
+				that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
+			}) : (
+				this.props.changeLocale(),
+				route('/error', true)
+			);
 	};
 	
 	render(){
@@ -62,6 +67,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(FAQ);
