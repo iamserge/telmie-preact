@@ -178,7 +178,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
-	locale: state.locale,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

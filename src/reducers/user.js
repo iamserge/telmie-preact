@@ -30,11 +30,19 @@ const localeGet = () => {
 		default: return EN;
 	}
 }
-export const locale = (state = localeGet() || EN, action) => {
+export const locale = (state = { locale: localeGet() || EN  }, action) => {
 	switch (action.type) {
 		case actionTypes.CHANGE_LOCALE:
 			const { code = EN } = action;
-			return code;
+			return {
+				...state,
+				locale: code,
+			};
+		case actionTypes.CHANGE_LOCALE_LANGS:
+			return {
+				...state,
+				languages: action.langs,
+			};
 		default:
 			return state;
 	}

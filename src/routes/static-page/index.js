@@ -6,6 +6,8 @@ import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 
+import { changeLocaleLangs } from '../../actions/user';
+
 import style from './style.scss';
 
 class StaticPage extends Component {
@@ -26,11 +28,13 @@ class StaticPage extends Component {
 	fetchPage(props) {
 		window.scrollTo(0, 0);
 		this.setState({ doc: null });
+		this.props.changeLocaleLangs([]);
     if (props.prismicCtx) {
       // We are using the function to get a document by its uid
       return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
         if (doc) {
 					// We put the retrieved content in the state as a doc variable
+					this.props.changeLocaleLangs(doc.alternate_languages);
           this.setState({ doc });
         } else {
           // We changed the state to display error not found if no matched doc
@@ -68,7 +72,9 @@ class StaticPage extends Component {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	changeLocaleLangs,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

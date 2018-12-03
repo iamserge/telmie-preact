@@ -16,6 +16,7 @@ import AppDetails from '../../components/new-landing/app-details'
 import style from './style.scss';
 
 import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
+import { changeLocaleLangs } from '../../actions/user';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -39,10 +40,12 @@ class LanguageLearners extends Component {
 
   fetchPage = (props) => {
     let that = this;
+    window.scrollTo(0, 0);
     that.setState({ fetchingPage: true });
+    this.props.changeLocaleLangs([]);
     that.props.reviewsUid && this.fetchReviews(props);
     props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-      window.scrollTo(0, 0);
+      that.props.changeLocaleLangs(page.alternate_languages);
       that.setState({fetchingPage: false, page: processTextPageData(page.data)})
     });
   };
@@ -100,11 +103,11 @@ class LanguageLearners extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    locale: state.locale,
+    locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  changeLocaleLangs,
 }, dispatch);
 
 export default connect(

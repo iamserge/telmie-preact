@@ -5,6 +5,8 @@ import LandingFAQ from '../../components/new-landing/landing-faq'
 import Spinner from '../../components/global/spinner';
 
 import { processFAQPageData } from '../../utils/prismic-middleware';
+import { changeLocaleLangs } from '../../actions/user';
+
 
 class FAQ extends Component {
 	constructor(props){
@@ -28,9 +30,11 @@ class FAQ extends Component {
 	fetchPage = (props) => {
 		let that = this;
 		window.scrollTo(0, 0);
+		this.props.changeLocaleLangs([]);
 		that.setState({fetchingPage: true,});
 		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-		  that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
+			that.props.changeLocaleLangs(page.alternate_languages);
+			that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
 		});
 	};
 	
@@ -53,11 +57,11 @@ class FAQ extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	locale: state.locale,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	
+	changeLocaleLangs,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(FAQ);

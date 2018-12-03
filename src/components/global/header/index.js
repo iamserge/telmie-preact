@@ -104,7 +104,8 @@ class Header extends Component {
   
 
 	render() {
-    const {userData : user  = {}, locale = EN} = this.props;
+    const {userData : user  = {}, locale : localeObj} = this.props;
+    const { locale = EN, languages } = localeObj;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME 
       || this.props.currentUrl === langRoutes(RU, routes.HOME);
@@ -179,7 +180,7 @@ class Header extends Component {
 
           <div class={`${style.navbarRight} uk-navbar-right`}>
           
-              <Select isLocale={true} locale={this.props.locale} changeLocale={this.props.changeLocale}/>
+              <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
             { /*currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 

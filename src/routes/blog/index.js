@@ -27,6 +27,7 @@ import style from './style.scss';
 import { blogComments } from './mock-data';
 
 import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
+import { changeLocaleLangs } from '../../actions/user';
 
 
 class BlogPage extends Component {
@@ -60,9 +61,11 @@ class BlogPage extends Component {
 	}
 	fetchPost = (props) => {
 		let that = this;
+		window.scrollTo(0, 0);
+		this.props.changeLocaleLangs([]);
 		that.setState({ fetchingPost: true });
 		props.prismicCtx && props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
-			scroll.scrollToTop();
+			that.props.changeLocaleLangs(post.alternate_languages);
 			that.setState({ 
 				fetchingPost: false, 
 				post: processPostData(post.data, props.locale),
@@ -149,7 +152,7 @@ const mapStateToProps = (state) => ({
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
 	sendContactMessageInfo: state.sendContactMessage,
-	locale: state.locale,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -157,6 +160,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	verify,
 	sendContactData,
 	clearContactData,
+	changeLocaleLangs,
 }, dispatch);
 
 export default connect(

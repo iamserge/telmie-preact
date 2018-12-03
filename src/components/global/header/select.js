@@ -12,7 +12,7 @@ import style from './style.scss';
 
 const renderExcept = (elem, arr=[], isLocale = false) => {
     return  isLocale ? 
-        arr.filter(el => el.code !== elem)
+        arr.filter(el => el !== elem)
         : arr.filter(el => { });
 }
 
@@ -66,9 +66,9 @@ const renderLocale = (props) => {
 
     item = renderLocaleItem(langs[props.locale]);
 
-    listItems = renderExcept(props.locale, Object.values(langs), true).map(el => (
-        <li onClick={changeLocalization(el.code)} key={el.code}>
-            {renderLocaleItem(el)}
+    listItems = renderExcept(props.locale, props.languages, true).map(el => (
+        <li onClick={changeLocalization(langs[el].code)} key={langs[el].code}>
+            {renderLocaleItem(langs[el])}
         </li>
     ));
 
@@ -83,10 +83,14 @@ const Select = (props) => {
     return (
         <div class={props.isLocale ? `${style.title} ${style.localeSelect}` : style.title }>
             { item }
-            <FontAwesome name='angle-down'/>
-            <ul>
-                { listItems }
-            </ul>
+            {
+                listItems.length > 0 && [
+                    <FontAwesome name='angle-down'/>,
+                    <ul>
+                        { listItems }
+                    </ul>
+                ]
+            }
         </div>
     )
 }

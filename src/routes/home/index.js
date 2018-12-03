@@ -27,6 +27,8 @@ import style from './style.scss';
 
 import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
 import { langPack } from '../../utils/langPack';
+import { changeLocaleLangs } from '../../actions/user';
+
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -157,14 +159,15 @@ class HomePage extends Component {
 
 	fetchPage(props) {
 		let that = this;
-		that.setState({fetchingPage: true});
 		window.scrollTo(0, 0);
+		this.props.changeLocaleLangs([]);
+		that.setState({fetchingPage: true});
 		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+			that.props.changeLocaleLangs(page.alternate_languages);
 			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 		});
   }
 	render() {
-		const {locale} = this.props
 		if (!this.state.fetchingPage) {
 			const pageData = this.state.page;
 			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
@@ -241,7 +244,7 @@ const mapStateToProps = (state) => ({
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
 	sendContactMessageInfo: state.sendContactMessage,
-	locale: state.locale,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -249,6 +252,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	verify,
 	sendContactData,
 	clearContactData,
+	changeLocaleLangs,
 }, dispatch);
 
 export default connect(

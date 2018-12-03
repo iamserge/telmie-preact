@@ -138,6 +138,13 @@ export const changeLocale = (code) => dispatch => {
 	})
 }
 
+export const changeLocaleLangs = (langs = []) => dispatch => {
+	dispatch({
+		type: actionTypes.CHANGE_LOCALE_LANGS,
+		langs: langs.map(el => el.lang || el),
+	})
+}
+
 export const resetPassword = (email, password, code) => async (dispatch) => {
 	const response = await user.resetPassword({email, password, code});
 	if (response.error) {
