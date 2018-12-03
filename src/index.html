@@ -25,6 +25,7 @@
 		<% } %>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-820107229"></script>
 		<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)}gtag('js', new Date());gtag('config', 'AW-820107229');</script>
+		<script src="./utils/wow.min.js"></script>
 	</head>
 	<body>
 		<%= htmlWebpackPlugin.options.ssr({
@@ -32,5 +33,6 @@
 		}) %>
 		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
 		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
+		<script>new WOW().init();</script>
 	</body>
 </html>

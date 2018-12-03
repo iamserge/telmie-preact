@@ -33,6 +33,8 @@ import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN } from "../utils/consts";
 
+import 'animate.css'
+
 export const routes = {
 	HOME: '/',
 	SEARCH: '/search/:searchTerm',
