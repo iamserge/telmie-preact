@@ -391,6 +391,12 @@ button.white-btn {
 		margin-top: 64px;
 	}
 }
+.uk-navbar-container.globalMessage ~ .mainContainer{
+	margin-top: 164px;
+	@media (max-width: 880px) {
+		margin-top: 95px;
+	}
+}
 
 .new-input{
 	border: 0;

@@ -58,7 +58,7 @@ export function processPostText(postData){
     return nodes;
 }
 
-function processFAQText(postData){
+function processTagsInText(postData){
     let nodes = [];
     postData.spans && postData.spans.forEach(el => {
         switch (el.type){
@@ -183,7 +183,7 @@ const getFAQs = (faqData) => {
             try {
                 return faqData[name].map((faq) => ({
                     question: faq.question[0].text,
-                    answer: processFAQText(faq.answer[0]),
+                    answer: processTagsInText(faq.answer[0]),
                 }))
             } catch(e){
                 console.log(e);
@@ -406,11 +406,22 @@ export function processFAQPageData(data){
     try{
         processedData.mainQuestion = {
             question: data.telmie_question[0].text,
-            answer: processFAQText(data.telmie_answer[0]),
+            answer: processTagsInText(data.telmie_answer[0]),
         };
     } catch(e){
         console.log(e);
     }
 
     return processedData;
+}
+
+export function processGlobalMessage(data){
+    let mes = '';
+    try{
+        mes = processTagsInText(data.message[0])
+    } catch(e){
+        console.log(e);
+        return '';
+    }
+    return mes;
 }

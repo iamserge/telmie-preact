@@ -163,6 +163,25 @@
 
 }
 
+#subHeader{
+  width: 100%;
+  text-align: center;
+  background-color: rgba($color: $red, $alpha: 0.8);
+  color: white;
+
+  .content{
+    padding: 5px 115px 5px 87px;
+    max-width: 1470px;
+    margin: 0 auto;
+  }
+
+  a {
+    color: white !important;
+    &:hover{
+      color: $blue !important;
+    }
+  }
+}
 .smallHeader{
   position: fixed !important;
   top: 0;
@@ -379,6 +398,13 @@
     }
   }
 
+  #subHeader{
+    .content{
+      padding: 5px 0 5px 0;
+      width: 95%;
+      margin: 0 auto;
+    }
+  }
   #leftNav {
     margin-left: 20px;
   }
@@ -401,11 +427,8 @@
       }
     }
   }
-  header {
-    //height: 30px;
-    /*nav {
-      display: none;
-    }*/
+  #subHeader{
+    font-size: 14px !important;
   }
   .loggedInContainer {
     left: -28px;

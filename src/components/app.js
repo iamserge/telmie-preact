@@ -159,7 +159,7 @@ class App extends Component {
 
 		return (
 			<div id="app">
-				<Header locale={locale} currentUrl = {this.state.currentUrl}/>
+				<Header locale={locale} currentUrl = {this.state.currentUrl} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].MESSAGE }/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 

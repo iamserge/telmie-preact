@@ -12,6 +12,7 @@ export const uids = {
 		IMMIGRATION_ADVICE: 'W-p01BAAACkAbZQ-',
 		SHORT_REVIEWS: 'W-0TkBAAACkAeSLm',
 		FAQ: 'W_V1PhEAACsAzO48',
+		MESSAGE: 'XATS9xAAAEEA1kal',
 	},
 	[RU]: {
 		HOMEPAGE: 'W_0QkREAAC8AF6jE',
@@ -24,6 +25,7 @@ export const uids = {
 		IMMIGRATION_ADVICE: 'W_1Z1hEAAC4AGOiI',
 		/*SHORT_REVIEWS: 'W-0TkBAAACkAeSLm',*/
 		FAQ: 'W_1cjhEAAC4AGPSy',
+		MESSAGE: 'XATouRAAADsA1qY3',
 	}
 	
 };

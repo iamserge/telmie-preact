@@ -15,6 +15,7 @@ import { Link as ScrollLink } from 'react-scroll'
 import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
 import { EN, RU, langs } from '../../../utils/consts';
+import { processGlobalMessage } from '../../../utils/prismic-middleware'
 
 
 const getCookie = (name) => {
@@ -35,6 +36,7 @@ class Header extends Component {
       loggedOff: false,
       mobileMenuOpened: false,
       isTop: true,
+      globalMessage: null,
     }
   };
 
@@ -50,6 +52,10 @@ class Header extends Component {
         })
       }
     }
+
+    ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+			|| this.props.uid !== nextProps.uid)
+			&& this.fetchPage(nextProps);
   };
 
 	componentDidMount(){
@@ -61,11 +67,20 @@ class Header extends Component {
       })
     });
 
+    this.props.prismicCtx && this.fetchPage(this.props);
+
 		{/*let userAuth = getCookie('USER_AUTH');
 		if (userAuth != null) {
 			this.props.logIn(userAuth)
     }*/}
   };
+
+  fetchPage = (props) => {
+		let that = this;
+		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+		  that.setState({ globalMessage: processGlobalMessage(page.data) });
+		});
+	};
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
@@ -100,7 +115,8 @@ class Header extends Component {
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
 
 		return (
-			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
+      <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${this.state.globalMessage && 'globalMessage'}`} 
+          style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0, display: "flex", flexWrap: "wrap"}}>
         <div id={style.header}>
 
           <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
@@ -277,6 +293,12 @@ class Header extends Component {
 
           </div>
         </div>
+
+        { this.state.globalMessage && (
+          <div id={style.subHeader}>
+              <div class={style.content}> { this.state.globalMessage } </div>
+          </div>
+        )}
 			</header>
 		);
 	}
