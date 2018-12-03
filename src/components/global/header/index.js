@@ -108,7 +108,8 @@ class Header extends Component {
     const { locale = EN, languages } = localeObj;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME 
-      || this.props.currentUrl === langRoutes(RU, routes.HOME);
+      || this.props.currentUrl === langRoutes(RU, routes.HOME)
+      || this.props.currentUrl.toString().indexOf('/#') === 0;
     const isAtBlog = this.props.currentUrl === routes.BLOG
       || !!(this.props.currentUrl.indexOf('/blog') + 1);
     const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
