@@ -67,6 +67,7 @@ class BlogPage extends Component {
 		props.prismicCtx && (
 			props.uid ? 
 				props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
+					(post.lang !== props.locale) && this.props.changeLocale(post.lang);
 					that.props.changeLocaleLangs(post.alternate_languages);
 					that.setState({ 
 						fetchingPost: false, 

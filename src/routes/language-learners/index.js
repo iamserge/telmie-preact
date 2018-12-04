@@ -47,6 +47,7 @@ class LanguageLearners extends Component {
     that.props.reviewsUid && this.fetchReviews(props);
     props.uid ? 
       props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+        (page.lang !== props.locale) && this.props.changeLocale(page.lang);
         that.props.changeLocaleLangs(page.alternate_languages);
         that.setState({fetchingPage: false, page: processTextPageData(page.data)})
       }) : (

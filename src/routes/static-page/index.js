@@ -36,6 +36,7 @@ class StaticPage extends Component {
 				props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
 					if (doc) {
 						// We put the retrieved content in the state as a doc variable
+						(doc.lang !== props.locale) && this.props.changeLocale(doc.lang);
 						this.props.changeLocaleLangs(doc.alternate_languages);
 						this.setState({ doc });
 					} else {
@@ -75,7 +76,9 @@ class StaticPage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+	locale: state.locale.locale,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
