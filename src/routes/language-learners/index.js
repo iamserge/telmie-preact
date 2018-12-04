@@ -52,7 +52,7 @@ class LanguageLearners extends Component {
         that.setState({fetchingPage: false, page: processTextPageData(page.data)})
       }) : (
 				this.props.changeLocale(),
-				route('/error', true)
+				route(`/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true)
 			);
   };
 

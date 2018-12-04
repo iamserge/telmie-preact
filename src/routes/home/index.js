@@ -169,7 +169,7 @@ class HomePage extends Component {
 				that.setState({fetchingPage: false, page: processHomepageData(page.data)})
 			}) : (
 				this.props.changeLocale(),
-				route('/error', true)
+				route(`/`, true)
 			);
   }
 	render() {
