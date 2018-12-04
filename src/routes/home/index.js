@@ -178,36 +178,36 @@ class HomePage extends Component {
 			return (
 				<div id="homepage">
 
-					<div class={`${style.infoContainer} wow fadeIn`}>	
+					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
 						<InfoComponent mainSection={pageData.mainSection} appLink={appLink}/>
-					</div>
+					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
 						<PhotoCards cards = {pageData.experts}/>
 					</div>
 
-					<Element name='howWorksElement'  />
+					{ pageData.howItWorks && [<Element name='howWorksElement'  />,
 					<div class="wow slideInLeft" dataWowDuration="2s" dataWowDelay="5s">
 						<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
-					</div>
+					</div> ]}
 
 					<div class="wow bounceInUp" >
-						<FeaturedServices services={pageData.services}/>
+						<FeaturedServices services={pageData.services} title={pageData.servicesTitle}/>
 					</div>
 
-					<div class={`${style.iosAppSection} wow slideInRight`}>
+					{ pageData.app && <div class={`${style.iosAppSection} wow slideInRight`}>
 						<AppDetails appLink={appLink} content={pageData.app}/>
-					</div>
+					</div> }
 
-					<div class={`${style.faqContainer} wow rotateInUpLeft`}>
+					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
 						<Element name="FAQElement"></Element>
 						<LandingFAQ headerFAQ='Most popular questions' faqs={pageData.faqs}/>
-					</div>
+					</div> }
 
-					<div class={`${style.proWrapper} wow rotateInUpRight`}>
+					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
 						<ProDetails content={pageData.becomePro} appLink={appLink} />
-					</div>
+					</div> }
 
 					<div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
 						<Element name="blogElement"></Element>

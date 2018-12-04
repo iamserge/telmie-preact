@@ -32,7 +32,6 @@ class StaticPage extends Component {
 		this.props.changeLocaleLangs([]);
     if (props.prismicCtx) {
 			// We are using the function to get a document by its uid
-			console.log(props.uid)
 			props.uid ? 
 				props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
 					if (doc) {

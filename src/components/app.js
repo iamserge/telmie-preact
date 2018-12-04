@@ -91,7 +91,6 @@ class App extends Component {
 
 
 	handleRoute = e => {
-		console.log(e.url)		
 		ReactGA.pageview(e.url);
 		this.setState({currentUrl: e.url});
 	};

@@ -189,7 +189,6 @@ const getFAQs = (faqData) => {
                 console.log(e);
                 return [];
             }
-            
         }
 
     allFaqs.generalQuestions = getFAQ('general_faqs');
@@ -197,7 +196,10 @@ const getFAQs = (faqData) => {
     allFaqs.expertsQuestions = getFAQ('experts_faqs');
     allFaqs.paymentsQuestions = getFAQ('payments_faqs');
 
-    return allFaqs;
+    return (allFaqs.generalQuestions.length === 0 
+        && allFaqs.customersQuestions.length === 0 
+        && allFaqs.expertsQuestions.length === 0 
+        && allFaqs.paymentsQuestions.length === 0 ) ? null : allFaqs;
 }
 
 export function processHomepageData(data = {}){
@@ -211,11 +213,7 @@ export function processHomepageData(data = {}){
         };
     } catch(e){
         console.log(e);
-        processedData.mainSection = {
-            title: "",
-            subTitle: '',
-            typedWords: '',
-        };
+        processedData.mainSection = null;
     }
 
     processedData.experts = getExperts(data);
@@ -249,11 +247,7 @@ export function processHomepageData(data = {}){
         };
     } catch(e){
         console.log(e);
-        processedData.app = {
-            title: '',
-            text: '',
-            img: '',
-        };
+        processedData.app = null;
     }
     
 
@@ -266,10 +260,7 @@ export function processHomepageData(data = {}){
         };
     } catch(e){
         console.log(e);
-        processedData.becomePro = {
-            title: '',
-            text: '',
-        };
+        processedData.becomePro = null;
     }
 
     return processedData;
