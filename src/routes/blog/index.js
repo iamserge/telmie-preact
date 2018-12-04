@@ -40,7 +40,10 @@ class BlogPage extends Component {
 	}
 	componentWillReceiveProps(nextProps){
 		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
-			|| (this.props.uid !== nextProps.uid)) {
+			|| (this.props.locale !== nextProps.locale)
+			|| (this.props.path !== nextProps.path)
+			|| (this.props.uid !== nextProps.uid)
+		) {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
 		}
@@ -60,16 +63,16 @@ class BlogPage extends Component {
 		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
 	}
 	fetchPost = (props) => {
-		let that = this;
 		window.scrollTo(0, 0);
-		this.props.changeLocaleLangs([]);
-		that.setState({ fetchingPost: true });
+		props.changeLocaleLangs([]);
+		this.setState({ fetchingPost: true });
+
 		props.prismicCtx && (
 			props.uid ? 
 				props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
 					(post.lang !== props.locale) && this.props.changeLocale(post.lang);
-					that.props.changeLocaleLangs(post.alternate_languages);
-					that.setState({ 
+					this.props.changeLocaleLangs(post.alternate_languages);
+					this.setState({ 
 						fetchingPost: false, 
 						post: processPostData(post.data, props.locale),
 						alternate_languages: post.alternate_languages,

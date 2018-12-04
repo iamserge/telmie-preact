@@ -26,7 +26,7 @@ import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
 import PrismicConfig from '../prismic/prismic-configuration';
-import { uids } from '../prismic/uids';
+import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
@@ -131,7 +131,6 @@ class App extends Component {
 	}
 
 	renderDefaultRoutes = () => {
-		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
 		{/*<LogIn path = { routes.LOG_IN } />,
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
 			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
@@ -144,14 +143,14 @@ class App extends Component {
 	}
 
 	renderLangRoutes = (lang) => ([
-		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].HOMEPAGE } />,
-		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_LAW) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-		<LanguagePractice path={ langRoutes(lang, routes.LANGUAGE_PRACTICE) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-		<LanguageLearners path={ langRoutes(lang, routes.LANGUAGE_LEARNERS) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].LANGUAGE_LEARNERS } reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } type={types.HOMEPAGE} />,
+		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_LAW) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.IMMIGRATION_ADVICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguagePractice path={ langRoutes(lang, routes.LANGUAGE_PRACTICE) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_PRACTICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguageLearners path={ langRoutes(lang, routes.LANGUAGE_LEARNERS) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_LEARNERS} reviewsUid={ uids.SHORT_REVIEWS }/>,
 		<BlogPage path={ langRoutes(lang, routes.BLOG_POST) } prismicCtx = { this.state.prismicCtx } />,
-		<FAQ path={ langRoutes(lang, routes.FAQ) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].FAQ } />,
-		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].TERMS }/>,
-		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } uid = { uids[lang].PRIVACY }/>,
+		<FAQ path={ langRoutes(lang, routes.FAQ) } prismicCtx = { this.state.prismicCtx } type={types.FAQ} />,
+		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.TERMS}/>,
+		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.PRIVACY} />,
 		<ContactRoute path = { langRoutes(lang, routes.CONTACT_US) }/>,
 	])
 

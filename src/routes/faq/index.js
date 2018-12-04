@@ -5,7 +5,7 @@ import LandingFAQ from '../../components/new-landing/landing-faq'
 import Spinner from '../../components/global/spinner';
 import { route } from 'preact-router';
 
-import { processFAQPageData } from '../../utils/prismic-middleware';
+import { processFAQPageData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 
@@ -24,24 +24,19 @@ class FAQ extends Component {
 
 	componentWillReceiveProps(nextProps){
 		((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
-			|| this.props.uid !== nextProps.uid)
+			|| this.props.locale !== nextProps.locale
+			|| (this.props.path !== nextProps.path))
 			&& this.fetchPage(nextProps);
 	}
 
-	fetchPage = (props) => {
-		let that = this;
+	fetchPage = async (props) => {
 		window.scrollTo(0, 0);
 		this.props.changeLocaleLangs([]);
-		that.setState({fetchingPage: true,});
-		props.uid ? 
-			props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-				(page.lang !== props.locale) && this.props.changeLocale(page.lang);
-				that.props.changeLocaleLangs(page.alternate_languages);
-				that.setState({fetchingPage: false, page: processFAQPageData(page.data)})
-			}) : (
-				this.props.changeLocale(),
-				route(`/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true)
-			);
+		this.setState({fetchingPage: true,});
+
+		const page = await getPage(props);
+		page && this.setState({fetchingPage: false, page: processFAQPageData(page.data)});
+
 	};
 	
 	render(){

@@ -1,3 +1,43 @@
+import Prismic from 'prismic-javascript';
+import { route } from 'preact-router';
+import { RU, EN } from "./consts";
+
+function compareUrlLocale(props){
+    const urlLocale = props.path.toString().split('/')[1];
+
+    return props.locale === urlLocale ? props.locale : (
+        urlLocale === RU ? 
+            (props.changeLocale(RU), RU) 
+            : props.locale === EN ? props.locale : (props.changeLocale(EN), EN)
+    )
+}
+export function getPage(props ={}, urlEng){
+    const conditions = props.tag ? [
+        Prismic.Predicates.at('document.type', props.type),
+        Prismic.Predicates.at('document.tags', [props.tag])
+    ] : Prismic.Predicates.at('document.type', props.type);
+
+    const lang = compareUrlLocale(props);
+
+    return props.prismicCtx && props.prismicCtx.api.query(
+        conditions,
+        { lang }
+    ).then((response, err) => {
+        if(response.results_size > 0){
+            const page = response.results[0];
+            props.changeLocaleLangs(page.alternate_languages);
+			return page;
+        } else {
+            props.changeLocale();
+            route(urlEng ? urlEng : `/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true);
+            return null;
+        }
+    }).catch(e => {
+        console.log(e);
+        return null;
+    })
+}
+
 export function processPostThumbnailData(rawPost ={}){
     const { data={} } = rawPost;
     let newPostData = {};

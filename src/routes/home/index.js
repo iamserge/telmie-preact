@@ -25,9 +25,10 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage } from '../../utils/prismic-middleware';
 import { langPack } from '../../utils/langPack';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
+import { routes } from '../../components/app';
 
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
@@ -44,9 +45,6 @@ class HomePage extends Component {
 			fetchingRecentPosts: true
 	  }
 		this.contactUs = null;
-		this.fetchPage = this.fetchPage.bind(this);
-		this.fetchFeatuedPost = this.fetchFeatuedPost.bind(this);
-		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	scrollToContact = () => {
 		const {hash} = window.location;
@@ -56,10 +54,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('blogElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -70,
+							spy: true, smooth: true, duration: 500, offset: -70,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -69,10 +64,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('howWorksElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -50,
+							spy: true, smooth: true, duration: 500, offset: -50,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -82,10 +74,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('becomeProElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -110,
+							spy: true, smooth: true, duration: 500, offset: -110,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -107,7 +96,9 @@ class HomePage extends Component {
 	}
 	componentWillReceiveProps(nextProps){
 		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
-			|| (this.props.uid !== nextProps.uid)) {
+			|| (this.props.locale !== nextProps.locale)
+			|| (this.props.path !== nextProps.path)
+		) {
 			this.fetchPage(nextProps);
 			this.fetchRecentPosts(nextProps);
 			this.fetchFeatuedPost(nextProps);
@@ -124,7 +115,7 @@ class HomePage extends Component {
 		}
 
 	}
-	fetchFeatuedPost(props){
+	fetchFeatuedPost = (props) => {
 		let that = this;
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
@@ -138,7 +129,7 @@ class HomePage extends Component {
 				})
 		});
 	}
-	fetchRecentPosts(props){
+	fetchRecentPosts = (props) => {
 		let that = this;
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
@@ -157,20 +148,13 @@ class HomePage extends Component {
 		this.scrollInterval = null;
 	}
 
-	fetchPage(props) {
-		let that = this;
+	fetchPage = async (props) => {
 		window.scrollTo(0, 0);
-		this.props.changeLocaleLangs([]);
-		that.setState({fetchingPage: true});
-		props.uid ? 
-			props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-				(page.lang !== props.locale) && this.props.changeLocale(page.lang);
-				that.props.changeLocaleLangs(page.alternate_languages);
-				that.setState({fetchingPage: false, page: processHomepageData(page.data)})
-			}) : (
-				this.props.changeLocale(),
-				route(`/`, true)
-			);
+		props.changeLocaleLangs([]);
+		this.setState({fetchingPage: true});
+		
+		const page = await getPage(props, routes.HOME);
+		page && this.setState({fetchingPage: false, page: processHomepageData(page.data)});
   }
 	render() {
 		if (!this.state.fetchingPage) {

@@ -16,7 +16,7 @@ import { route } from 'preact-router';
 
 import style from './style.scss';
 
-import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
+import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
@@ -36,24 +36,18 @@ class LanguagePractice extends Component {
   }
   componentWillReceiveProps(nextProps){
     ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
-      || this.props.uid !== nextProps.uid) && this.fetchPage(nextProps);
+      || this.props.locale !== nextProps.locale
+      || (this.props.path !== nextProps.path)) && this.fetchPage(nextProps);
 	}
 
-  fetchPage = (props) => {
-    let that = this;
+  fetchPage = async (props) => {
     window.scrollTo(0, 0);
-    that.setState({fetchingPage: true});
-    this.props.changeLocaleLangs([]);
-    that.props.reviewsUid && this.fetchReviews(props);
-    props.uid ? 
-      props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-        (page.lang !== props.locale) && this.props.changeLocale(page.lang);
-        that.props.changeLocaleLangs(page.alternate_languages);
-        that.setState({fetchingPage: false, page: processTextPageData(page.data)})
-      }) : (
-				this.props.changeLocale(),
-				route(`/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true)
-			);
+    this.setState({fetchingPage: true});
+    props.changeLocaleLangs([]);
+    props.reviewsUid && this.fetchReviews(props);
+
+    const page = await getPage(props);
+		page && this.setState({fetchingPage: false, page: processTextPageData(page.data)});
   };
 
   fetchReviews = (props) => {
