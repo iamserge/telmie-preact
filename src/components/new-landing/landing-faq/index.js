@@ -67,8 +67,8 @@ class LandingFAQ extends Component {
 
     render(){
         const { activeTab } = this.state;
-        const { nodeBeforeQuestions = '', mainQuestion } = this.props;
-        const currentQuestions = this.props.faqs[`${activeTab}Questions`];
+        const { nodeBeforeQuestions = '', mainQuestion, faqs = {} } = this.props;
+        const currentQuestions = faqs[`${activeTab}Questions`];
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
@@ -81,11 +81,11 @@ class LandingFAQ extends Component {
                 <div class={style.landingFAQ}>
                     <div class={style.menuContainer}>
                         <ul class={style.faqMenu}>
-                            {tabs(this.props.locale).map(({text,value}) => (
-                                <li key={value} 
-                                    class={activeTab===value ? style.active : '' } 
-                                    onClick={this.setActiveTab(value)}> {text} </li>
-                            ))}
+                            {tabs(this.props.locale).map(({text,value}) => 
+                                faqs[`${value}Questions`].length > 0 
+                                    && (<li key={value} 
+                                            class={activeTab===value ? style.active : '' } 
+                                            onClick={this.setActiveTab(value)}> {text} </li>))}
                         </ul>
                     </div>
 

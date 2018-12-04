@@ -86,6 +86,6 @@ export const langPack = {
             IMMIGRATION_LAW: 'Советы по иммиграции',
             LANGUAGE_LEARNERS: 'Изучение языка',
         },
-        FAQ: 'ЧаВо',
+        FAQ: 'Часто задаваемые вопросы',
     }
 }
