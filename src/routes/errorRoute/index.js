@@ -1,11 +1,12 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { routes } from "../../components/app";
 
 import style from './style.scss';
 
 const ErrorRoute = (props) => {
 	const goHome = () => {
-		route('/');
+		route(routes.HOME);
 	}
 	
 	return (<div class={style.errorWrapper}>

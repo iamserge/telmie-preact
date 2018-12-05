@@ -1,3 +1,43 @@
+import Prismic from 'prismic-javascript';
+import { route } from 'preact-router';
+import { RU, EN } from "./consts";
+
+function compareUrlLocale(props){
+    const urlLocale = props.path.toString().split('/')[1];
+
+    return props.locale === urlLocale ? props.locale : (
+        urlLocale === RU ? 
+            (props.changeLocale(RU), RU) 
+            : props.locale === EN ? props.locale : (props.changeLocale(EN), EN)
+    )
+}
+export function getPage(props ={}, urlEng){
+    const conditions = props.tag ? [
+        Prismic.Predicates.at('document.type', props.type),
+        Prismic.Predicates.at('document.tags', [props.tag])
+    ] : Prismic.Predicates.at('document.type', props.type);
+
+    const lang = compareUrlLocale(props);
+
+    return props.prismicCtx && props.prismicCtx.api.query(
+        conditions,
+        { lang }
+    ).then((response, err) => {
+        if(response.results_size > 0){
+            const page = response.results[0];
+            props.changeLocaleLangs(page.alternate_languages);
+			return page;
+        } else {
+            props.changeLocale();
+            route(urlEng ? urlEng : `/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true);
+            return null;
+        }
+    }).catch(e => {
+        console.log(e);
+        return null;
+    })
+}
+
 export function processPostThumbnailData(rawPost ={}){
     const { data={} } = rawPost;
     let newPostData = {};
@@ -58,7 +98,7 @@ export function processPostText(postData){
     return nodes;
 }
 
-function processFAQText(postData){
+function processTagsInText(postData){
     let nodes = [];
     postData.spans && postData.spans.forEach(el => {
         switch (el.type){
@@ -100,18 +140,17 @@ export function processPostQuote(postData){
         }
     }
 }
-const processDate = (date) => {
-    const locale = "en-us";
+const processDate = (date, locale = "en-us") => {
     let dateObj = new Date(date);
     
     return dateObj.toLocaleString(locale, { month: "long", day: 'numeric', year: "numeric" });
 
 }
-export function processPostData(rawData ={}){
+export function processPostData(rawData ={}, locale){
     try{
         return {
             title: rawData.title[0].text,
-            date: processDate(rawData.date),
+            date: processDate(rawData.date, locale),
             body: rawData.body,
         }
     } catch(e){
@@ -165,7 +204,8 @@ const getExperts = (data) => {
 const getServices = (data) => {
     try {
         return data.services.map((service) => ({
-            link: service.link[0].text,
+            link: service.link[0] ? service.link[0].text : '',
+            linkLearn: service.link_learning[0] ? service.link_learning[0].text : '',
             background: service.image.url,
             serviceName: service.title1[0].text,
             description: service.description[0] && service.description[0].text,
@@ -183,13 +223,12 @@ const getFAQs = (faqData) => {
             try {
                 return faqData[name].map((faq) => ({
                     question: faq.question[0].text,
-                    answer: processFAQText(faq.answer[0]),
+                    answer: processTagsInText(faq.answer[0]),
                 }))
             } catch(e){
                 console.log(e);
                 return [];
             }
-            
         }
 
     allFaqs.generalQuestions = getFAQ('general_faqs');
@@ -197,10 +236,13 @@ const getFAQs = (faqData) => {
     allFaqs.expertsQuestions = getFAQ('experts_faqs');
     allFaqs.paymentsQuestions = getFAQ('payments_faqs');
 
-    return allFaqs;
+    return (allFaqs.generalQuestions.length === 0 
+        && allFaqs.customersQuestions.length === 0 
+        && allFaqs.expertsQuestions.length === 0 
+        && allFaqs.paymentsQuestions.length === 0 ) ? null : allFaqs;
 }
 
-export function processHomepageData(data){
+export function processHomepageData(data = {}){
     let processedData = {};
 
     try{
@@ -211,11 +253,7 @@ export function processHomepageData(data){
         };
     } catch(e){
         console.log(e);
-        processedData.mainSection = {
-            title: "",
-            subTitle: '',
-            typedWords: '',
-        };
+        processedData.mainSection = null;
     }
 
     processedData.experts = getExperts(data);
@@ -228,14 +266,17 @@ export function processHomepageData(data){
         };
     } catch(e){
         console.log(e);
-        processedData.howItWorks = {
-            title: '',
-            text: '',
-            videoID: '',
-        };
+        processedData.howItWorks = null;
     }
     
-
+    try {
+        processedData.servicesTitle = data.featured_services_title[0].text;
+    }
+    catch (e){
+        console.log(e);
+        processedData.servicesTitle = '';
+    }
+    
     processedData.services = getServices(data);
 
     try{
@@ -246,11 +287,7 @@ export function processHomepageData(data){
         };
     } catch(e){
         console.log(e);
-        processedData.app = {
-            title: '',
-            text: '',
-            img: '',
-        };
+        processedData.app = null;
     }
     
 
@@ -263,10 +300,7 @@ export function processHomepageData(data){
         };
     } catch(e){
         console.log(e);
-        processedData.becomePro = {
-            title: '',
-            text: '',
-        };
+        processedData.becomePro = null;
     }
 
     return processedData;
@@ -375,7 +409,7 @@ export function processTextPageData(data){
     
     try{
         processedData.app = {
-            title: data.app_title[0].text,
+            title: data.app_title[0] ? data.app_title[0].text : '',
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
         };
@@ -403,11 +437,22 @@ export function processFAQPageData(data){
     try{
         processedData.mainQuestion = {
             question: data.telmie_question[0].text,
-            answer: processFAQText(data.telmie_answer[0]),
+            answer: processTagsInText(data.telmie_answer[0]),
         };
     } catch(e){
         console.log(e);
     }
 
     return processedData;
+}
+
+export function processGlobalMessage(data){
+    let mes = '';
+    try{
+        mes = processTagsInText(data.message[0])
+    } catch(e){
+        console.log(e);
+        return '';
+    }
+    return mes;
 }

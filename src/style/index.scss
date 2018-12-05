@@ -165,7 +165,7 @@ button.white-btn {
 	color: $black !important;
 	background-color: white;
 	&:hover{
-		background-color: $red;
+		background-color: darken(white, 10%);
 	}
 }
 
@@ -391,6 +391,12 @@ button.white-btn {
 		margin-top: 64px;
 	}
 }
+.uk-navbar-container.globalMessage ~ .mainContainer{
+	margin-top: 164px;
+	@media (max-width: 880px) {
+		margin-top: 95px;
+	}
+}
 
 .new-input{
 	border: 0;
@@ -436,6 +442,17 @@ button.white-btn {
 		position: absolute;
 		top: calc(50% - 19px);
 		left: calc(50% - 11px);
+	}
+}
+
+.service-page{
+	&[lang="ru"]{
+		*{
+			font-family: 'Roboto', arial, sans-serif;
+		}
+		.fa {
+			font-family: FontAwesome;
+		}
 	}
 }
 

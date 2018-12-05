@@ -3,7 +3,9 @@ import { Link } from 'preact-router';
 import { Link as ScrollLink } from 'react-scroll'
 
 import style from './style.scss';
-import { routes } from '../../app'
+import { routes, langRoutes } from '../../app'
+import { langPack } from "../../../utils/langPack";
+import { langs } from "../../../utils/consts";
 
 const socialNetworksArr = ['facebook','linkedin','twitter','instagram'/*,'medium'*/,'youtube'];
 const socialNetworks = {
@@ -39,34 +41,33 @@ export default class Footer extends Component {
 		alt && window.open(socialNetworks[alt].link);
 	}
 	render() {
+		const { locale } = this.props;
 		return (
 			<footer id={style.footer} className='uk-navbar uk-navbar-container'>
 				<div className="uk-navbar-left" id={style.left}>
-					<Link href={routes.HOME} id={style.logo}>
+					<Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<div class={style.copyright}>Copyright &copy;2018 TELMIE UK LTD., London, UK</div>
 				</div>
-				<div className="uk-navbar-right"  id={style.right}>
+				<div className="uk-navbar-right" id={style.right}>
 					<nav id={style.footerLinks}>
 						<ul className="uk-navbar-nav" >
-							<li><Link href={routes.HOME}>Home</Link></li>
-							{/*<li><Link href={routes.ABOUT_US}>Company</Link></li>*/}
+							<li><Link href={langRoutes(langs[locale].lang, routes.HOME)}>{langPack[locale].FOOTER.HOME}</Link></li>
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
 							<li>{this.props.currentUrl === routes.HOME ? 
-								<ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact</ScrollLink> 
-								: <Link href={routes.CONTACT_US}>Contact</Link>}
+								<ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">{langPack[locale].FOOTER.CONTACT}</ScrollLink> 
+								: <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>{langPack[locale].FOOTER.CONTACT}</Link>}
 							</li>
-							
-							{/*<li><Link href={''}>Blog</Link></li>*/}
-							<li><Link href={routes.TERMS}>Terms</Link></li>
-							{/*<li><Link href={''}>Help</Link></li>*/}
-							<li><Link href={routes.PRIVACY}>Privacy Policy</Link></li>
 							<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
-								<ScrollLink spy={true} smooth={true} duration={500} to="blogElement">Blog</ScrollLink> 
-								: <Link href={routes.BLOG_LINK}>Blog</Link>}
+								<ScrollLink spy={true} smooth={true} duration={500} to="blogElement">{langPack[locale].FOOTER.BLOG}</ScrollLink> 
+								: <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>{langPack[locale].FOOTER.BLOG}</Link>}
 							</li>
-							<li><Link href={routes.FAQ}>FAQ</Link></li>
+							<li><Link href={langRoutes(langs[locale].lang, routes.TERMS)}>{langPack[locale].FOOTER.TERMS}</Link></li>
+							{/*<li><Link href={''}>Help</Link></li>*/}
+							<li><Link href={langRoutes(langs[locale].lang, routes.PRIVACY)}>{langPack[locale].FOOTER.POLICY}</Link></li>
+							
+							<li><Link href={langRoutes(langs[locale].lang, routes.FAQ)}>{langPack[locale].FOOTER.FAQ}</Link></li>
 						</ul>
 					</nav>
 					<div class={style.socialIcons}>

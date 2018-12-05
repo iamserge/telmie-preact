@@ -1,6 +1,6 @@
 import { actionTypes } from '../actions';
 import { concat, orderBy, map, without, uniqBy } from 'lodash';
-
+import { EN, RU } from "../utils/consts";
 
 
 export const loggedInUser = (state = {}, action) => {
@@ -24,6 +24,29 @@ export const loggedInUser = (state = {}, action) => {
 	}
 };
 
+const localeGet = () => {
+	switch (window.location.pathname.split('/')[1]){
+		case RU: return RU;
+		default: return EN;
+	}
+}
+export const locale = (state = { locale: localeGet() || EN  }, action) => {
+	switch (action.type) {
+		case actionTypes.CHANGE_LOCALE:
+			const { code = EN } = action;
+			return {
+				...state,
+				locale: code,
+			};
+		case actionTypes.CHANGE_LOCALE_LANGS:
+			return {
+				...state,
+				languages: action.langs,
+			};
+		default:
+			return state;
+	}
+};
 
 export const logInError = (state = {}, action) => {
 	switch (action.type) {

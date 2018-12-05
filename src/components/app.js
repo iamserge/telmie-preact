@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { Router, route } from 'preact-router';
 
 import Header from './global/header';
 import Footer from './global/footer';
@@ -7,7 +7,6 @@ import Home from '../routes/home';
 import Search from '../routes/search';
 import Pro from '../routes/pro';
 import StaticPage from '../routes/static-page';
-import AboutUs from '../routes/about-us';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
 import LogInOrSignup from '../routes/login-or-signup';
@@ -27,11 +26,14 @@ import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
 import PrismicConfig from '../prismic/prismic-configuration';
-import { uids } from '../prismic/uids';
+import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
+import { RU, EN } from "../utils/consts";
+
+import 'animate.css'
 
 export const routes = {
 	HOME: '/',
@@ -39,7 +41,6 @@ export const routes = {
 	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
 	PRO_FOR_COMP: '/pro/',
-	ABOUT_US: '/about-us',
 	FAQ: '/help',
 	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
@@ -64,8 +65,11 @@ export const routes = {
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
 	IMMIGRATION_LAW: '/immigration-advice',
-	LANGUAGE_LEARNERS: '/language-learners'
+	LANGUAGE_LEARNERS: '/language-learners',
+	LANGUAGE_LEARNERS_RU: '/ru/language-learners'
 };
+
+export const langRoutes = (lang, route) => lang == EN ? route : `/${lang}${route}`;
 
 class App extends Component {
 
@@ -128,19 +132,14 @@ class App extends Component {
 	}
 
 	renderDefaultRoutes = () => {
-		{/*<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>,*/}
+		{/*<LogIn path = { routes.LOG_IN } />,
+			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
+			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,*/}
 
 		return [
-			<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />,
-			<ImmigrationLaw path={routes.IMMIGRATION_LAW} prismicCtx = { this.state.prismicCtx } uid = { uids.IMMIGRATION_ADVICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguagePractice path={routes.LANGUAGE_PRACTICE} prismicCtx = { this.state.prismicCtx } uid = { uids.LANGUAGE_PRACTICE } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<LanguageLearners path={routes.LANGUAGE_LEARNERS} prismicCtx = { this.state.prismicCtx } uid = { 'W_vZPBEAADEAEjuB' } reviewsUid={ uids.SHORT_REVIEWS }/>,
-			<BlogPage path={routes.BLOG_POST} prismicCtx = { this.state.prismicCtx } />,
-			<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>,
-			<FAQ path={routes.FAQ} prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ } />,
-			<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>,
-			<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>,
-			<ContactRoute path = { routes.CONTACT_US }/>,
+			...this.renderLangRoutes(EN),
+			...this.renderLangRoutes(RU),
 
 			<LogIn path = { routes.LOG_IN } />,
 			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
@@ -149,12 +148,24 @@ class App extends Component {
 		]
 	}
 
+	renderLangRoutes = (lang) => ([
+		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } type={types.HOMEPAGE} />,
+		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_LAW) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.IMMIGRATION_ADVICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguagePractice path={ langRoutes(lang, routes.LANGUAGE_PRACTICE) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_PRACTICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<LanguageLearners path={ langRoutes(lang, routes.LANGUAGE_LEARNERS) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_LEARNERS} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<BlogPage path={ langRoutes(lang, routes.BLOG_POST) } prismicCtx = { this.state.prismicCtx } />,
+		<FAQ path={ langRoutes(lang, routes.FAQ) } prismicCtx = { this.state.prismicCtx } type={types.FAQ} />,
+		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.TERMS}/>,
+		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.PRIVACY} />,
+		<ContactRoute path = { langRoutes(lang, routes.CONTACT_US) }/>,
+	])
+
 	render() {
-		const {userData : user  = {}} = this.props;
+		const {userData : user  = {}, locale} = this.props;
 
 		return (
 			<div id="app">
-				<Header currentUrl = {this.state.currentUrl}/>
+				<Header locale={locale} currentUrl = {this.state.currentUrl} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].MESSAGE }/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
@@ -163,7 +174,7 @@ class App extends Component {
 						<ErrorRoute default />
 					</Router>
 				</div>
-				<Footer currentUrl = {this.state.currentUrl}/>
+				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
 			</div>
 		);
 	}
@@ -171,6 +182,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

@@ -5,6 +5,10 @@ import { connect } from 'preact-redux';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
+import { route } from 'preact-router';
+
+import { getPage } from '../../utils/prismic-middleware';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 import style from './style.scss';
 
@@ -23,25 +27,13 @@ class StaticPage extends Component {
 		this.fetchPage(nextProps);
 	}
 
-	fetchPage(props) {
+	fetchPage = async (props) => {
 		window.scrollTo(0, 0);
-    if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-					// We put the retrieved content in the state as a doc variable
-          this.setState({ doc });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-				}				
-      });
-			/*
-			return props.prismicCtx.api.query('').then(function(response) {
-			   console.log(response);
-			});*/
-    }
-    return null;
+		this.setState({ doc: null });
+		props.changeLocaleLangs([]);
+
+		const doc = await getPage(props);
+		doc && this.setState({ doc });
   }
 	render() {
 
@@ -65,9 +57,14 @@ class StaticPage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+	locale: state.locale.locale,
+});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	changeLocaleLangs,
+	changeLocale,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

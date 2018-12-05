@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 
-const _words = ["Sports Coach", "Immigration Adviser", "Dietary Guru", "Fashion Expert", "Growth Hacker", "Career Coach", "Wedding Planner", "GDPR Expert", "Business Adviser", "Language Speaker", "Startup Ninja", "Design Consultant", "Scale-up Hacker", "SEO Rock Star", "Pets Guru", "Marketing Ninja"];
 class AutoPrintText extends Component {
     constructor(props){
         super(props);
@@ -20,8 +19,8 @@ class AutoPrintText extends Component {
     };
 
     tick = () => {
-        let i = this.loopNum % _words.length,
-            fullTxt = _words[i];
+        let i = this.loopNum % this.props.words.length,
+            fullTxt = this.props.words[i];
     
         this.isDeleting ? 
             this.setState(prev => ({txt : fullTxt.substring(0, prev.txt.length - 1)}))

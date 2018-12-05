@@ -1,10 +1,12 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 import StepItem from './step'
+import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 import style from './style.scss';
 
 
-const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp}) => {
+const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp, locale = EN}) => {
   const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
 
   const stepsCount = content.length;
@@ -18,7 +20,7 @@ const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp}) => {
           {content.map((step, index) => <StepItem step={step} isLast={stepsCount === (index + 1)}/>)}
         </div>
 
-        <button class='red-btn' onClick={downloadApp}>Download app</button>
+        <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
 {/*
         <Link href=""><button className="red-btn">Sign up & Become Pro</button></Link>
 */}

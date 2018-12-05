@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
 	verifyCodeFailureMessage: user.verifyCodeFailureMessage,
 	dataFromServer: user.dataFromServer,
 	sendContactMessage: user.sendContactMessage,
-
+	locale: user.locale,
 });
 
 export default rootReducer;

@@ -1,22 +1,24 @@
 import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
+import { langPack } from "../../../utils/langPack";
+import { EN } from "../../../utils/consts";
 
 import 'rc-collapse/assets/index.css';
 import style from './style.scss';
 
-const tabs = [{
-    text: 'General Questions',
+const tabs = (locale = EN) => ([{
+    text: langPack[locale].GENERAL_QUESTIONS,
     value: 'general',
 },{
-    text: 'Customers',
+    text: langPack[locale].CUSTOMERS_QUESTIONS,
     value: 'customers',
 },{
-    text: 'Experts',
+    text: langPack[locale].EXPERTS_QUESTIONS,
     value: 'experts',
 },{
-    text: 'Payments',
+    text: langPack[locale].PAYMENTS_QUESTIONS,
     value: 'payments',
-}];
+}]);
 
 const headerProps = (index, active) => ({
     showArrow: false,
@@ -28,7 +30,7 @@ class LandingFAQ extends Component {
         super(props);
 
         this.state = {
-            activeTab: tabs[0].value,
+            activeTab: tabs(props.locale)[0].value,
             activeQuest: '',
         }
     }
@@ -65,12 +67,12 @@ class LandingFAQ extends Component {
 
     render(){
         const { activeTab } = this.state;
-        const { nodeBeforeQuestions = '', mainQuestion } = this.props;
-        const currentQuestions = this.props.faqs[`${activeTab}Questions`];
+        const { nodeBeforeQuestions = '', mainQuestion, faqs = {} } = this.props;
+        const currentQuestions = faqs[`${activeTab}Questions`];
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
-                <div class={style.headerFAQ}>{this.props.headerFAQ || 'FAQ'}</div>
+                <div class={style.headerFAQ}>{this.props.headerFAQ || langPack[this.props.locale].FAQ}</div>
                 {nodeBeforeQuestions && <div>{nodeBeforeQuestions}</div>}
                 {mainQuestion && <div class={style.mainQuestionContainer}>
                     <div class={style.question}>{mainQuestion.question}</div>
@@ -79,11 +81,11 @@ class LandingFAQ extends Component {
                 <div class={style.landingFAQ}>
                     <div class={style.menuContainer}>
                         <ul class={style.faqMenu}>
-                            {tabs.map(({text,value}) => (
-                                <li key={value} 
-                                    class={activeTab===value ? style.active : '' } 
-                                    onClick={this.setActiveTab(value)}> {text} </li>
-                            ))}
+                            {tabs(this.props.locale).map(({text,value}) => 
+                                faqs[`${value}Questions`].length > 0 
+                                    && (<li key={value} 
+                                            class={activeTab===value ? style.active : '' } 
+                                            onClick={this.setActiveTab(value)}> {text} </li>))}
                         </ul>
                     </div>
 

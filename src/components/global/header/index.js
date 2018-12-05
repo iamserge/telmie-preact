@@ -3,16 +3,19 @@ import { Link } from 'preact-router/match';
 import * as router from 'preact-router';
 import style from './style.scss';
 import Search from '../search';
+import Select from './select';
 import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import { hideSearchBox } from '../../../actions';
 import { apiRoot } from '../../../api';
-import { logIn, logOff } from '../../../actions/user';
+import { logIn, logOff, changeLocale } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
 import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
-import { getCurrentUrl } from 'preact-router';
-import { routes } from '../../app'
+import { routes, langRoutes } from '../../app'
+import { langPack } from '../../../utils/langPack';
+import { EN, RU, langs } from '../../../utils/consts';
+import { processGlobalMessage } from '../../../utils/prismic-middleware'
 
 
 const getCookie = (name) => {
@@ -33,6 +36,7 @@ class Header extends Component {
       loggedOff: false,
       mobileMenuOpened: false,
       isTop: true,
+      globalMessage: null,
     }
   };
 
@@ -48,6 +52,10 @@ class Header extends Component {
         })
       }
     }
+
+    ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+			|| this.props.uid !== nextProps.uid)
+			&& this.fetchPage(nextProps);
   };
 
 	componentDidMount(){
@@ -59,11 +67,20 @@ class Header extends Component {
       })
     });
 
-		let userAuth = getCookie('USER_AUTH');
+    this.props.prismicCtx && this.fetchPage(this.props);
+
+		{/*let userAuth = getCookie('USER_AUTH');
 		if (userAuth != null) {
 			this.props.logIn(userAuth)
-		}
+    }*/}
   };
+
+  fetchPage = (props) => {
+		let that = this;
+		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
+		  that.setState({ globalMessage: processGlobalMessage(page.data) });
+		});
+	};
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
@@ -84,53 +101,22 @@ class Header extends Component {
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
 
-  renderPopoverMenu = (curUrl) => {
-    let item = '',
-      listItem = '';
-    switch (curUrl) {
-      case routes.LANGUAGE_PRACTICE:
-        item = 'Language practice';
-        listItem = [
-          <li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
-        ];        break;
-      case routes.IMMIGRATION_LAW:
-        item = 'Immigration advice';
-        listItem = [
-          <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>,
-          {/*<li><Link href={routes.LANGUAGE_LEARNERS}>Изучение языка</Link></li>,*/}
-        ];        break;
-      case routes.LANGUAGE_LEARNERS:
-        item = 'Изучение языка';
-        listItem = [
-          {/*<li><Link href={routes.IMMIGRATION_LAW}>Immigration advice</Link></li>,
-        <li><Link href={routes.LANGUAGE_PRACTICE}>Language practice</Link></li>*/}
-        ];
-        break;
-      default:
-        return;
-    }
-
-    return (
-          <div class={style.title}>
-            { item }
-            <FontAwesome name='angle-down'/>
-            <ul>
-              { listItem }
-            </ul>
-          </div>
-    )
-  };
-
 	render() {
-    const {userData : user  = {}} = this.props;
+    const {userData : user  = {}, locale : localeObj} = this.props;
+    const { locale = EN, languages } = localeObj;
     const isLogin = Object.keys(user).length !== 0;
-    const isAtHome = this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') + 1;
-    const isAtBlog = this.props.currentUrl === routes.BLOG || this.props.currentUrl.indexOf('/blog') + 1;
-    const isTextPage = this.props.currentUrl === routes.IMMIGRATION_LAW || this.props.currentUrl === routes.LANGUAGE_PRACTICE || this.props.currentUrl === routes.LANGUAGE_LEARNERS;
+    const isAtHome = this.props.currentUrl === routes.HOME 
+      || this.props.currentUrl === langRoutes(RU, routes.HOME)
+      || this.props.currentUrl.toString().indexOf('/#') === 0;
+    const isAtBlog = this.props.currentUrl === routes.BLOG
+      || !!(this.props.currentUrl.indexOf('/blog') + 1);
+    const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
+      || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
+      || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
 
 		return (
-			<header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader}`} style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0,}}>
+      <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${this.state.globalMessage && 'globalMessage'}`} 
+          style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0, display: "flex", flexWrap: "wrap"}}>
         <div id={style.header}>
 
           <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
@@ -140,14 +126,14 @@ class Header extends Component {
             )}
 
 
-            <Link href={routes.HOME} id={style.logo}>
+            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
-            { isAtBlog ? <b class={style.title}>Blog</b> : null }
+            { isAtBlog ? <b class={style.title}>{langPack[locale].BLOG_TITLE}</b> : null }
 
-            { this.renderPopoverMenu(this.props.currentUrl) }
+            { isServicePage && <Select locale={locale} curUrl={this.props.currentUrl} /> }
 
-            {!(isTextPage || isAtBlog) ?
+            {!(isServicePage || isAtBlog) ?
                 <span id={style.expandMobileMenu} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
                 <span></span>
                 <span></span>
@@ -164,26 +150,26 @@ class Header extends Component {
                   <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                   (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
                 ]) : */
-                isTextPage ? null : ([
+                isServicePage ? null : ([
                   <li>{isAtHome ?
-                    <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">How it works</ScrollLink> 
-                    : <Link href={routes.HOW_WORKS_LINK}>How it works</Link>}
+                    <ScrollLink spy={true} smooth={true} offset={-50} duration={500} to="howWorksElement">{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>}
+                  </li>,
+                  langPack[locale].HEADER.BECOME_PRO && <li>{(isAtHome) ? 
+                    <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">{langPack[locale].HEADER.BECOME_PRO}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)}>{langPack[locale].HEADER.BECOME_PRO}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} offset={-110} duration={500} to="becomeProElement">Become a Pro</ScrollLink> 
-                    : <Link href={routes.BECOME_PRO_LINK}>Become a Pro</Link>}
+                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">{langPack[locale].HEADER.BLOG}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>{langPack[locale].HEADER.BLOG}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="blogElement">Blog</ScrollLink> 
-                    : <Link href={routes.BLOG_LINK}>Blog</Link>}
+                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">{langPack[locale].HEADER.FAQ}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.FAQ)}>{langPack[locale].HEADER.FAQ}</Link>}
                   </li>,
                   <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} offset={-70} to="FAQElement">FAQ</ScrollLink> 
-                    : <Link href={routes.FAQ}>FAQ</Link>}
-                  </li>,
-                  <li>{isAtHome ? 
-                    <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">Contact us</ScrollLink> 
-                    : <Link href={routes.CONTACT_US}>Contact us</Link>}
+                    <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">{langPack[locale].HEADER.CONTACT}</ScrollLink> 
+                    : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>{langPack[locale].HEADER.CONTACT}</Link>}
                   </li>
                 ])
               }
@@ -191,7 +177,9 @@ class Header extends Component {
             </ul>
           </div>
 
-          {/*<div class={`${style.navbarRight} uk-navbar-right`}>
+          <div class={`${style.navbarRight} uk-navbar-right`}>
+          
+              <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
             { /*currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 
@@ -241,12 +229,11 @@ class Header extends Component {
                 </div>
 
               </div>
-            )}
+            )}*/}
           </div>
-          */}
           <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
-            <Link href={routes.HOME} id={style.logo}>
+            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
             <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
@@ -257,24 +244,24 @@ class Header extends Component {
             </div>
 
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>How it works</ScrollLink>
-              : <Link href={routes.HOW_WORKS_LINK} onClick={this.toggleMobileMenu}>How it works</Link>
+              <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>
+            }
+            {( isAtHome && langPack[locale].HEADER.BECOME_PRO ) ?
+              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</Link>
             }
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>Become a Pro</ScrollLink>
-              : <Link href={routes.BECOME_PRO_LINK} onClick={this.toggleMobileMenu}>Become a Pro</Link>
+              <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</Link>
             }
             {isAtHome ?
-              <ScrollLink spy={true} smooth={true} offset={-25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>Blog</ScrollLink>
-              : <Link href={routes.BLOG_LINK} onClick={this.toggleMobileMenu}>Blog</Link>
+                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</ScrollLink>
+                : <Link href={langRoutes(langs[locale].lang, routes.FAQ)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</Link>
             }
             {isAtHome ?
-                <ScrollLink spy={true} smooth={true} offset={-30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>FAQ</ScrollLink>
-                : <Link href={routes.FAQ} onClick={this.toggleMobileMenu}>FAQ</Link>
-            }
-            {isAtHome ?
-              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>Contact us</ScrollLink>
-              : <Link href={routes.CONTACT_US} onClick={this.toggleMobileMenu}>Contact us</Link>
+              <ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</ScrollLink>
+              : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
             }
                 
             {/* !isLogin  ? (
@@ -306,6 +293,12 @@ class Header extends Component {
 
           </div>
         </div>
+
+        { this.state.globalMessage && (
+          <div id={style.subHeader}>
+              <div class={style.content}> { this.state.globalMessage } </div>
+          </div>
+        )}
 			</header>
 		);
 	}
@@ -316,14 +309,16 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
 	hiddenSearchBox: state.hiddenSearchBox,
-	userData: state.loggedInUser
+  userData: state.loggedInUser,
+  locale: state.locale,
 });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	hideSearchBox,
 	logIn,
-	logOff
+  logOff,
+  changeLocale,
 }, dispatch);
 
 

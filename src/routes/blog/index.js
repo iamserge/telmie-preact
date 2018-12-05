@@ -1,10 +1,8 @@
 import { h, Component } from 'preact';
-import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
 import ScrollToTop from 'react-scroll-up';
 import { animateScroll as scroll } from 'react-scroll'
@@ -19,6 +17,8 @@ import PostText from '../../components/blog/post-text';
 import PostQuote from '../../components/blog/post-quote';
 import PostImage from '../../components/blog/post-image';
 
+import { langRoutes } from "../../components/app";
+import { langs } from "../../utils/consts";
 
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
@@ -27,6 +27,7 @@ import style from './style.scss';
 import { blogComments } from './mock-data';
 
 import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 
 class BlogPage extends Component {
@@ -36,14 +37,19 @@ class BlogPage extends Component {
 			fetchingPost: true,
 			fetchingRecentPosts: true
 		}
-		this.fetchPost = this.fetchPost.bind(this);
-		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
-			|| (this.props.uid !== nextProps.uid)) {
+			|| (this.props.locale !== nextProps.locale)
+			|| (this.props.path !== nextProps.path)
+			|| (this.props.uid !== nextProps.uid)
+		) {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
+		}
+		if(this.props.locale !== nextProps.locale){
+			this.setState({ fetchingPost: true });
+			this.changeBlogLang(nextProps.locale);
 		}
 	}
 	componentDidMount() {
@@ -51,21 +57,39 @@ class BlogPage extends Component {
 		this.fetchPost(this.props);
 		this.fetchRecentPosts(this.props);
 	}
-	fetchPost(props) {
-		let that = this;
-
-		props.prismicCtx && props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
-			scroll.scrollToTop();
-			that.setState({ fetchingPost: false, post: processPostData(post.data) })
-		});
+	changeBlogLang = (lang) => {
+		let post = this.state.alternate_languages.find(el => el.lang == lang );
 		
+		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
 	}
-	fetchRecentPosts(props) {
+	fetchPost = (props) => {
+		window.scrollTo(0, 0);
+		props.changeLocaleLangs([]);
+		this.setState({ fetchingPost: true });
+
+		props.prismicCtx && (
+			props.uid ? 
+				props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
+					(post.lang !== props.locale) && this.props.changeLocale(post.lang);
+					this.props.changeLocaleLangs(post.alternate_languages);
+					this.setState({ 
+						fetchingPost: false, 
+						post: processPostData(post.data, props.locale),
+						alternate_languages: post.alternate_languages,
+					})
+				}) : (
+					this.props.changeLocale(),
+					route(`/${/\/(.+)/.exec(props.path.substring(1))[1]}`, true)
+				)
+		);		
+	}
+	fetchRecentPosts = (props) => {
 		let that = this;
+		that.setState({ fetchingRecentPosts: true });
 		props.prismicCtx && props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post')
 		],
-		{ pageSize: 10, orderings : '[document.first_publication_date desc]' }
+		{ pageSize: 10, orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 				fetchingRecentPosts: false,
@@ -108,7 +132,7 @@ class BlogPage extends Component {
 */}
 
 					{ !this.state.fetchingRecentPosts && this.state.recentPosts.length > 0 && (
-						<BlogPosts blogPosts={this.state.recentPosts} />
+						<BlogPosts blogPosts={this.state.recentPosts} locale={this.props.locale}/>
 					)}
 
 {/*
@@ -137,7 +161,8 @@ const mapStateToProps = (state) => ({
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
-	sendContactMessageInfo: state.sendContactMessage
+	sendContactMessageInfo: state.sendContactMessage,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -145,6 +170,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	verify,
 	sendContactData,
 	clearContactData,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

@@ -12,10 +12,12 @@ import HappyUsers from '../../components/language-practice/happy-users'
 import TextBlock from '../../components/language-practice/text-block'
 import TextBlockMain from '../../components/language-practice/text-block-main'
 import AppDetails from '../../components/new-landing/app-details'
+import { route } from 'preact-router';
 
 import style from './style.scss';
 
-import { processTextPageData, processReviewsData } from '../../utils/prismic-middleware';
+import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -33,17 +35,19 @@ class LanguagePractice extends Component {
       this.props.prismicCtx && this.fetchPage(this.props);
   }
   componentWillReceiveProps(nextProps){
-    (this.props.prismicCtx == null 
-      && nextProps.prismicCtx != null) && this.fetchPage(nextProps);
+    ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+      || this.props.locale !== nextProps.locale
+      || (this.props.path !== nextProps.path)) && this.fetchPage(nextProps);
 	}
 
-  fetchPage = (props) => {
-    let that = this;
+  fetchPage = async (props) => {
     window.scrollTo(0, 0);
-    that.props.reviewsUid && this.fetchReviews(props);
-    props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-      that.setState({fetchingPage: false, page: processTextPageData(page.data)})
-    });
+    this.setState({fetchingPage: true});
+    props.changeLocaleLangs([]);
+    props.reviewsUid && this.fetchReviews(props);
+
+    const page = await getPage(props);
+		page && this.setState({fetchingPage: false, page: processTextPageData(page.data)});
   };
 
   fetchReviews = (props) => {
@@ -64,17 +68,18 @@ class LanguagePractice extends Component {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
       const reviewsData = this.state.reviews;
+      const { locale } = this.props;
 
       return (
-        <div id="language-practice" class="service-page">
+        <div id="language-practice" lang={locale} class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp}/>
+          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} />
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
 
           {/*<HappyUsers content={reviewsData} />*/}
 
@@ -98,11 +103,12 @@ class LanguagePractice extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    
+    locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  changeLocaleLangs,
+  changeLocale,
 }, dispatch);
 
 export default connect(

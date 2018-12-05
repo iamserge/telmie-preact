@@ -25,7 +25,11 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-import { processRecentPosts, processPostThumbnailData, processHomepageData } from '../../utils/prismic-middleware';
+import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage } from '../../utils/prismic-middleware';
+import { langPack } from '../../utils/langPack';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
+import { routes } from '../../components/app';
+
 
 const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
@@ -41,9 +45,6 @@ class HomePage extends Component {
 			fetchingRecentPosts: true
 	  }
 		this.contactUs = null;
-		this.fetchPage = this.fetchPage.bind(this);
-		this.fetchFeatuedPost = this.fetchFeatuedPost.bind(this);
-		this.fetchRecentPosts = this.fetchRecentPosts.bind(this);
 	}
 	scrollToContact = () => {
 		const {hash} = window.location;
@@ -53,10 +54,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('blogElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -70,
+							spy: true, smooth: true, duration: 500, offset: -70,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -66,10 +64,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('howWorksElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -50,
+							spy: true, smooth: true, duration: 500, offset: -50,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -79,10 +74,7 @@ class HomePage extends Component {
 				(this.scrollInterval = setInterval(() => {
 					this.contactUs !== null && (
 						scroller.scrollTo('becomeProElement', {
-							spy: true,
-							smooth: true,
-							duration: 500,
-							offset: -110,
+							spy: true, smooth: true, duration: 500, offset: -110,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -103,7 +95,10 @@ class HomePage extends Component {
 		this.scrollToContact();
 	}
 	componentWillReceiveProps(nextProps){
-		if (this.props.prismicCtx == null && nextProps.prismicCtx != null) {
+		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null) 
+			|| (this.props.locale !== nextProps.locale)
+			|| (this.props.path !== nextProps.path)
+		) {
 			this.fetchPage(nextProps);
 			this.fetchRecentPosts(nextProps);
 			this.fetchFeatuedPost(nextProps);
@@ -120,13 +115,13 @@ class HomePage extends Component {
 		}
 
 	}
-	fetchFeatuedPost(props){
+	fetchFeatuedPost = (props) => {
 		let that = this;
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.at('document.tags', ['featured'])
 		],
-		{ orderings : '[document.first_publication_date desc]' }
+		{ orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 					fetchingFeaturedPost: false,
@@ -134,13 +129,13 @@ class HomePage extends Component {
 				})
 		});
 	}
-	fetchRecentPosts(props){
+	fetchRecentPosts = (props) => {
 		let that = this;
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
-			Prismic.Predicates.not('document.tags', ['featured'])
+			Prismic.Predicates.not('document.tags', ['featured']),
 		],
-		{ pageSize: 4, orderings : '[document.first_publication_date desc]' }
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang: props.locale }
 		).then(function(response) {
 			that.setState({
 					fetchingRecentPosts: false,
@@ -153,12 +148,13 @@ class HomePage extends Component {
 		this.scrollInterval = null;
 	}
 
-	fetchPage(props) {
-		let that = this;
+	fetchPage = async (props) => {
 		window.scrollTo(0, 0);
-		props.prismicCtx.api.getByID(that.props.uid).then((page, err) => {
-			that.setState({fetchingPage: false, page: processHomepageData(page.data)})
-		});
+		props.changeLocaleLangs([]);
+		this.setState({fetchingPage: true});
+		
+		const page = await getPage(props, routes.HOME);
+		page && this.setState({fetchingPage: false, page: processHomepageData(page.data)});
   }
 	render() {
 		if (!this.state.fetchingPage) {
@@ -167,47 +163,52 @@ class HomePage extends Component {
 			return (
 				<div id="homepage">
 
-					<div class={style.infoContainer}>	
+					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
 						<InfoComponent mainSection={pageData.mainSection} appLink={appLink}/>
-					</div>
+					</div> }
 
-					<div class={style.photoContainer}>
+					<div class={`${style.photoContainer} wow zoomIn`}>
 						<PhotoCards cards = {pageData.experts}/>
 					</div>
 
-					<Element name='howWorksElement'  />
-					<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
+					{ pageData.howItWorks && [<Element name='howWorksElement'  />,
+					<div class="wow slideInLeft" dataWowDuration="2s" dataWowDelay="5s">
+						<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
+					</div> ]}
 
-					<FeaturedServices services={pageData.services}/>
-
-					<div class={style.iosAppSection}>
-						<AppDetails appLink={appLink} content={pageData.app}/>
+					<div class="wow bounceInUp" >
+						<FeaturedServices services={pageData.services} title={pageData.servicesTitle}/>
 					</div>
 
-					<div class={style.faqContainer}>
+					{ pageData.app && <div class={`${style.iosAppSection} wow slideInRight`}>
+						<AppDetails appLink={appLink} content={pageData.app}/>
+					</div> }
+
+					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
 						<Element name="FAQElement"></Element>
 						<LandingFAQ headerFAQ='Most popular questions' faqs={pageData.faqs}/>
-					</div>
+					</div> }
 
-					<div class={style.proWrapper}>
+					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
 						<ProDetails content={pageData.becomePro} appLink={appLink} />
-					</div>
+					</div> }
 
-					<div class={`${style.blogContainer} uk-container`}>
+					<div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
 						<Element name="blogElement"></Element>
 						<div class={style.header}>Blog</div>
 						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
 							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
 						)}
-						
-						
 					</div>
-					<Element name="contactUsElement"></Element>					
+					
+					<Element name="contactUsElement"></Element>		
+					<div class={`wow zoomIn`} data-wow-offset="100">			
 					<ContactForm ref={ref=> this.contactUs = ref} 
 						sendData={this.props.sendContactData} 
 						clearContactData={this.props.clearContactData}
 						info={sendContactMessageInfo}/>
+					</div>
 
 					<ScrollToTop showUnder={150} style={{zIndex: 1002}}>
 						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
@@ -231,7 +232,8 @@ const mapStateToProps = (state) => ({
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
-	sendContactMessageInfo: state.sendContactMessage
+	sendContactMessageInfo: state.sendContactMessage,
+	locale: state.locale.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -239,6 +241,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	verify,
 	sendContactData,
 	clearContactData,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(
