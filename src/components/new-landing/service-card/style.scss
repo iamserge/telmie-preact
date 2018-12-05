@@ -84,12 +84,11 @@
         transform: translateX(-50%);
 
         & > button{
+            margin: 0 10px;
             &.whitebtn{
                 color: $pinkishRed !important;
-                
             }
             &:not(:last-child){
-                margin-right: 15px;
                 margin-bottom: 10px
             }
         }
@@ -136,8 +135,11 @@
 @media (max-width: 580px) {
     .serviceCard{
         padding-bottom: 85px;
-        button{
-            bottom: 35px;
+        .buttonArea{
+            & > button{
+                padding: 0 25px !important;
+                height: 45px !important;
+            }
         }
     }
 }

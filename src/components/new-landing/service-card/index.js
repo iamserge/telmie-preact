@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { route } from 'preact-router';
 import style from './style.scss';
 
-const ServiceCard = ({background, serviceName, description, link, linkLearn}) => {
+const ServiceCard = ({background, serviceName, description, link, linkLearn, earnBtnText, learnBtnText}) => {
     const cardStyle = {background: `url('${background}') no-repeat center`, backgroundSize: "cover"};
     const btnClick = (_link) => () => route(_link);
     
@@ -16,8 +16,8 @@ const ServiceCard = ({background, serviceName, description, link, linkLearn}) =>
               </div>}
             </div>
             <div class={style.buttonArea}>
-              { linkLearn && <button class={`red-btn`} onClick={btnClick(linkLearn)}>Start learning</button> }
-              { link && <button class={`white-btn ${style.whitebtn}`} onClick={btnClick(link)}>Start earning</button> }
+              { linkLearn && <button class={`white-btn ${style.whitebtn}`} onClick={btnClick(linkLearn)}>{learnBtnText}</button> }
+              { link && <button class={`red-btn`} onClick={btnClick(link)}>{earnBtnText}</button> }
             </div>
           </div>
 	)
