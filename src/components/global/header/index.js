@@ -101,8 +101,6 @@ class Header extends Component {
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
 
-  
-
 	render() {
     const {userData : user  = {}, locale : localeObj} = this.props;
     const { locale = EN, languages } = localeObj;

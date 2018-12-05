@@ -65,7 +65,8 @@ export const routes = {
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
 	IMMIGRATION_LAW: '/immigration-advice',
-	LANGUAGE_LEARNERS: '/language-learners'
+	LANGUAGE_LEARNERS: '/language-learners',
+	LANGUAGE_LEARNERS_RU: '/ru/language-learners'
 };
 
 export const langRoutes = (lang, route) => lang == EN ? route : `/${lang}${route}`;
@@ -139,6 +140,11 @@ class App extends Component {
 		return [
 			...this.renderLangRoutes(EN),
 			...this.renderLangRoutes(RU),
+
+			<LogIn path = { routes.LOG_IN } />,
+			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
 		]
 	}
 

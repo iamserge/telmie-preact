@@ -204,7 +204,7 @@ const getExperts = (data) => {
 const getServices = (data) => {
     try {
         return data.services.map((service) => ({
-            link: service.link[0].text,
+            link: service.link[0] ? service.link[0].text : '',
             linkLearn: service.link_learning[0] ? service.link_learning[0].text : '',
             background: service.image.url,
             serviceName: service.title1[0].text,
@@ -282,7 +282,7 @@ export function processHomepageData(data = {}){
     try{
         processedData.app = {
             title: data.app_title[0].text,
-            text: data.app_text[0].text,
+            text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
         };
     } catch(e){

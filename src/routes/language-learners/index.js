@@ -15,6 +15,7 @@ import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
 
 import style from './style.scss';
+import { routes } from "../../components/app";
 
 import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
@@ -59,7 +60,8 @@ class LanguageLearners extends Component {
 
   ga = () => ({
     downloadApp: () => {
-      gtag('event', 'conversion', { 'send_to': 'AW-820107229/nZvmCKu8jZABEN2vh4cD'});
+      (this.props.path === routes.LANGUAGE_LEARNERS) 
+        && gtag('event', 'conversion', { 'send_to': 'AW-820107229/nZvmCKu8jZABEN2vh4cD'});
       window.open(appLink);
     }
   })

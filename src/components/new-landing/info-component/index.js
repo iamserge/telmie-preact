@@ -12,6 +12,7 @@ const InfoComponent = ({mainSection, appLink, locale = EN }) => {
         <div class={`${style.infoContainer} uk-container-big`}>
             <div class={style.title}>
               {titleObj[0]}<AutoPrintText words={words}/>{/*titleObj[1]*/}
+
             </div>
             <div class={style.subTitle}>{mainSection.subTitle}</div>
 
