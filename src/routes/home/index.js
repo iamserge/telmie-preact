@@ -159,12 +159,12 @@ class HomePage extends Component {
 	render() {
 		if (!this.state.fetchingPage) {
 			const pageData = this.state.page;
-			const {userData : user  = {}, sendContactMessageInfo = {}} = this.props;
+			const {userData : user  = {}, sendContactMessageInfo = {}, locale} = this.props;
 			return (
 				<div id="homepage">
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink}/>
+						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale}/>
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
@@ -173,20 +173,20 @@ class HomePage extends Component {
 
 					{ pageData.howItWorks && [<Element name='howWorksElement'  />,
 					<div class="wow slideInLeft" dataWowDuration="2s" dataWowDelay="5s">
-						<HowWorksDetails content={pageData.howItWorks} appLink={appLink}/>
+						<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>
 					</div> ]}
 
 					<div class="wow bounceInUp" >
-						<FeaturedServices services={pageData.services} title={pageData.servicesTitle}/>
+						<FeaturedServices services={pageData.services} title={pageData.servicesTitle} locale={locale}/>
 					</div>
 
 					{ pageData.app && <div class={`${style.iosAppSection} wow slideInRight`}>
-						<AppDetails appLink={appLink} content={pageData.app}/>
+						<AppDetails appLink={appLink} content={pageData.app} locale={locale}/>
 					</div> }
 
 					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ headerFAQ='Most popular questions' faqs={pageData.faqs}/>
+						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} faqs={pageData.faqs} locale={locale}/>
 					</div> }
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
@@ -196,15 +196,16 @@ class HomePage extends Component {
 
 					<div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
 						<Element name="blogElement"></Element>
-						<div class={style.header}>Blog</div>
+						<div class={style.header}>{langPack[locale].BLOG_TITLE}</div>
 						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
-							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} />
+							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} locale={locale}/>
 						)}
 					</div>
 					
 					<Element name="contactUsElement"></Element>		
 					<div class={`wow zoomIn`} data-wow-offset="100">			
 					<ContactForm ref={ref=> this.contactUs = ref} 
+						locale={locale}
 						sendData={this.props.sendContactData} 
 						clearContactData={this.props.clearContactData}
 						info={sendContactMessageInfo}/>
