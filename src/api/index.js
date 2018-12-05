@@ -1,7 +1,7 @@
 import { api } from "prismic-javascript";
 
-export const apiRoot = 'http://sr461.2dayhost.com/api/'; // for dev server
-//export const apiRoot = 'https://telmie.com/api/'; // for prod server
+//export const apiRoot = 'http://sr461.2dayhost.com/api/'; // for dev server
+export const apiRoot = 'https://telmie.com/api/'; // for prod server
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
