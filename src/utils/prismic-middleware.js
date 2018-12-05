@@ -52,13 +52,7 @@ export function processPostThumbnailData(rawPost ={}){
     }
     catch(e){
         console.log(e);
-        newPostData = {
-            id: '',
-            title: '',
-            date: '',
-            link: `/blog/error`,
-            img: '',
-        }
+        newPostData = null;
     }
     if (typeof rawPost.tags != 'undefined' && rawPost.tags[0] && rawPost.tags[0] == 'featured') {
         newPostData.isFeatured = true;

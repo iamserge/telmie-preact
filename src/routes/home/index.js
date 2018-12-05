@@ -158,7 +158,7 @@ class HomePage extends Component {
   }
 	render() {
 		if (!this.state.fetchingPage) {
-			const pageData = this.state.page;
+			const { featuredPost, recentPosts, page : pageData } = this.state;
 			const {userData : user  = {}, sendContactMessageInfo = {}, locale} = this.props;
 			return (
 				<div id="homepage">
@@ -194,13 +194,14 @@ class HomePage extends Component {
 						<ProDetails content={pageData.becomePro} appLink={appLink} />
 					</div> }
 
-					<div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
-						<Element name="blogElement"></Element>
-						<div class={style.header}>{langPack[locale].BLOG_TITLE}</div>
-						{ !this.state.fetchingFeaturedPost && !this.state.fetchingRecentPosts && (
-							<BlogArticles articles = {this.state.recentPosts} featured = {this.state.featuredPost} locale={locale}/>
-						)}
-					</div>
+					{ !this.state.fetchingFeaturedPost 
+						&& !this.state.fetchingRecentPosts 
+						&& (featuredPost || (recentPosts && recentPosts.length > 0) )
+						&& <div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
+							<Element name="blogElement"></Element>
+							<div class={style.header}>{langPack[locale].BLOG_TITLE}</div>
+							<BlogArticles articles = {recentPosts} featured = {featuredPost} locale={locale}/>
+						</div> }
 					
 					<Element name="contactUsElement"></Element>		
 					<div class={`wow zoomIn`} data-wow-offset="100">			

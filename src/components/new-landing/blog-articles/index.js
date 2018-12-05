@@ -11,7 +11,7 @@ const Blog = ({articles = [], featured, locale}) => {
 
     return (
         <div class={style.blogConteiner}>
-            <BigArticle key={featured.uid} {...featured} locale={locale}/>
+            { featured && <BigArticle key={featured.uid} {...featured} locale={locale}/> }
             <div class={style.smallArticlesContainer}>
             {
                 articles.reduce((accum, article) => {
