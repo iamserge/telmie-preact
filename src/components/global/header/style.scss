@@ -227,6 +227,7 @@
     @extend %linkStyle;
     margin-bottom: 10px;
     display: block;
+    line-height: 30px !important;
   }
   #expandMobileMenu {
     display: inline-block;
