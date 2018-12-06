@@ -106,47 +106,33 @@ class App extends Component {
 		}));
 	}
 
-	renderProRoutes = () => {
+	renderProRoutes = () => [
+		...this.renderUserRoutes(),
+		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
+	];
 
-		return [
-			...this.renderUserRoutes(),
-			<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
-		]
-	}
+	renderUserRoutes = () => [
+		...this.renderDefaultRoutes(),
+		<Search path={routes.SEARCH} />, 
+		<Activity path={routes.MY_PROS} isProCalls = { false } />,
+		<AllTransactions path={routes.TRANSACTIONS} />,
+		<Pro path={routes.PRO} />,
+		<Shortlist path={routes.MY_SHORTLIST} />,
+		<Profile path = { routes.PROFILE } />,
+		<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+		<RegisterPro path = { routes.REGISTER_PRO } />,
+		<SettingsPage path = { routes.SETTINGS }/>
+	];
 
-	renderUserRoutes = () => {
+	renderDefaultRoutes = () => [
+		...this.renderLangRoutes(EN),
+		...this.renderLangRoutes(RU),
 
-		return [
-			...this.renderDefaultRoutes(),
-			<Search path={routes.SEARCH} />, 
-			<Activity path={routes.MY_PROS} isProCalls = { false } />,
-			<AllTransactions path={routes.TRANSACTIONS} />,
-			<Pro path={routes.PRO} />,
-			<Shortlist path={routes.MY_SHORTLIST} />,
-			//<Shortlist path={routes.MY_SHORTLIST} />,
-			<Profile path = { routes.PROFILE } />,
-			<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-			<RegisterPro path = { routes.REGISTER_PRO } />,
-			<SettingsPage path = { routes.SETTINGS }/>			
-		]
-	}
-
-	renderDefaultRoutes = () => {
-		{/*<LogIn path = { routes.LOG_IN } />,
-			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids[locale].REGISTRATION }/>,
-			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,*/}
-
-		return [
-			...this.renderLangRoutes(EN),
-			...this.renderLangRoutes(RU),
-
-			<LogIn path = { routes.LOG_IN } />,
-			<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-			<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-			<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
-		]
-	}
+		<LogIn path = { routes.LOG_IN } />,
+		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+		<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+		<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
+	];
 
 	renderLangRoutes = (lang) => ([
 		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } type={types.HOMEPAGE} />,

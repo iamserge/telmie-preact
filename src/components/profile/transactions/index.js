@@ -8,7 +8,10 @@ import { routes } from '../../app'
 export default class Transactions extends Component {
 
 	render({transactions}) {
-		if (typeof this.props.limit != 'undefined') {
+		if(!Array.isArray(this.state.cutTransactions)){
+			transactions = [];
+		}
+		else if (typeof this.props.limit != 'undefined') {
 			transactions = transactions.slice(0, this.props.limit);
 		}
 
