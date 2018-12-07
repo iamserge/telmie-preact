@@ -61,12 +61,7 @@ export function processPostThumbnailData(rawPost ={}){
 }
 
 export function processRecentPosts(rawPosts){
-    let newPosts = [];
-    rawPosts.forEach((rawPost)=>{
-        let postData = processPostThumbnailData(rawPost);
-        newPosts.push(postData)
-    })    
-    return newPosts;
+    return rawPosts.map((rawPost)=> processPostThumbnailData(rawPost));
 }
 
 function compliteTextWithTags(tags, text){
@@ -145,6 +140,20 @@ export function processPostQuote(postData){
             text: '',
             author: '',
         }
+    }
+}
+export function processAuthorInfo(postData){
+    try{
+        return {
+            title: postData.primary.section_title[0].text,
+            aName: postData.primary.author_name[0].text,
+            aDescription: postData.primary.author_description[0].text,
+            aAvatar: postData.primary.author_avatar.url,
+        }
+    }
+    catch(e){
+        console.log(e);
+        return null;
     }
 }
 const processDate = (date, locale = "en-us") => {
