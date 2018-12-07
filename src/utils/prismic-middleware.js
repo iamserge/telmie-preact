@@ -69,9 +69,37 @@ export function processRecentPosts(rawPosts){
     return newPosts;
 }
 
+function compliteTextWithTags(tags, text){
+    let nodes = [];
+    (tags && tags.length) && tags.forEach(el => {
+        switch (el.type){
+            case "hyperlink":
+                nodes.push(text.substring(0, el.start));
+                nodes.push(<a href={el.data.url} target="_blank">{text.substring(el.start, el.end)}</a>);
+                nodes.push(text.substring(el.end));
+                break;
+            case 'strong':
+                nodes.push(text.substring(0, el.start));
+                nodes.push(<strong>{text.substring(el.start, el.end)}</strong>);
+                nodes.push(text.substring(el.end));
+                break;
+            default: 
+                nodes.push(text);
+        }
+    });
+
+    return nodes.length ? nodes : text;
+}
+
+function processContent(content, tags){
+    return compliteTextWithTags(tags, content);
+}
+function processTagsInText(postData){
+    return compliteTextWithTags(postData.spans, postData.text);
+}
+
 export function processPostText(postData){
     let serialiseText = (type, content, tags) => {
-
         switch (type) {
             case 'list-item':
                 return (<li>{content}</li>);
@@ -80,7 +108,7 @@ export function processPostText(postData){
             case 'heading3':
                 return (<h3>{content}</h3>);
             default:
-                return (<p>{content}</p>);
+                return (<p>{processContent(content, tags)}</p>);
         }
         },
         nodes = [];
@@ -92,22 +120,7 @@ export function processPostText(postData){
     return nodes;
 }
 
-function processTagsInText(postData){
-    let nodes = [];
-    postData.spans && postData.spans.forEach(el => {
-        switch (el.type){
-            case "hyperlink":
-                nodes.push(postData.text.substring(0, el.start));
-                nodes.push(<a href={el.data.url} target="_blank">{postData.text.substring(el.start, el.end)}</a>);
-                nodes.push(postData.text.substring(el.end));
-                break;
-            default: 
-                nodes.push(postData.text);
-        }
-    })
-    
-    return nodes.length ? nodes : postData.text;
-}
+
 
 export function processPostImage(postData ={}){
     let imageData = {
