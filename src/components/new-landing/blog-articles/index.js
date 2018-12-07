@@ -4,7 +4,7 @@ import BigArticle from './big-article.js'
 import style from './style.scss';
 
 const Blog = ({articles = [], featured, locale}) => {
-
+    let aLen = articles.length;
     Date.prototype.customParse = function(){
         return `${this.getDate()}.${this.getMonth() + 1}.${this.getFullYear()}`;
     };
@@ -14,18 +14,11 @@ const Blog = ({articles = [], featured, locale}) => {
             { featured && <BigArticle key={featured.uid} {...featured} locale={locale}/> }
             <div class={style.smallArticlesContainer}>
             {
-                articles.reduce((accum, article) => {
-                    return (
-                        Array.isArray(accum[accum.length - 1]) && accum[accum.length - 1].length === 1 ? (
-                            [
-                                ...accum.slice(0,-1), 
-                                <ArticleCol locale={locale} articles={[...accum[accum.length - 1], article]} />
-                            ]
-                        ) : (
-                            [...accum, [article]]
-                        )
-                    )
-                }, [])
+                articles.map((article, i) => (
+                    (i%2) ? 
+                        <ArticleCol locale={locale} articles={articles.slice(i-1,i+1)} /> 
+                        : ((i + 1) === aLen) && <ArticleCol locale={locale} articles={[article]} /> 
+                ))
             }
             </div>
         </div>

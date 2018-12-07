@@ -78,7 +78,7 @@ class Header extends Component {
   fetchPage = (props) => {
 		let that = this;
 		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-		  that.setState({ globalMessage: processGlobalMessage(page.data) });
+		  page && that.setState({ globalMessage: processGlobalMessage(page.data) });
 		});
 	};
 
