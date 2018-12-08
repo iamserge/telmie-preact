@@ -23,9 +23,6 @@ import { langs } from "../../utils/consts";
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-// mock-data
-import { blogComments } from './mock-data';
-
 import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
