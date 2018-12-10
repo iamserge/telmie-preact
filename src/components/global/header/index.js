@@ -211,7 +211,8 @@ class Header extends Component {
                 </div>
                 <div class={style.dropdown + ' uk-dropdown'}>
                     <ul class="uk-nav uk-dropdown-nav">
-                        {/*<li><Link href="/profile">My Account</Link></li>
+                        <li><Link href="/profile">My Account</Link></li>
+                        <li class="uk-nav-divider"></li>
                         <li><Link href="/my-pros">My Pros</Link></li>
                         {(user.pro != null) && (
                             <li><Link href="/my-clients">My Clients</Link></li>
@@ -221,8 +222,6 @@ class Header extends Component {
                         <li><Link href="/edit-profile">Edit Profile</Link></li>
                         <li><Link href="/register-pro">Register as Pro</Link></li>
                         <li class="uk-nav-divider"></li>
-                        <li><Link href="/edit-profile">Edit Profile</Link></li>
-                      <li class="uk-nav-divider"></li>*/}
                         <li><Link href={routes.SETTINGS}>Settings</Link></li>
                         <li><a onClick={()=>this.logOff()}>Log out</a></li>
                     </ul>
