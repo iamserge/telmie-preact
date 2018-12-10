@@ -82,6 +82,9 @@ class HomePage extends Component {
 				}, 100))
 		)
 	}
+
+	getVideo = (video) => this.video = video;
+
 	componentDidMount(){
 		if (this.props.prismicCtx) {
 			this.fetchPage(this.props);
@@ -103,6 +106,16 @@ class HomePage extends Component {
 			this.fetchRecentPosts(nextProps);
 			this.fetchFeatuedPost(nextProps);
 		}
+
+		(this.props.locale !== nextProps.locale) && (
+			this.videoInterval = setInterval(() => {
+				this.video && (
+					this.video.play(),
+					clearInterval(this.videoInterval),
+					this.videoInterval = null
+				)
+			}, 100)
+		)
 
 		if (nextProps.verifySuccess) {
 			route('/log-in');
@@ -168,7 +181,7 @@ class HomePage extends Component {
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
-						<PhotoCards cards = {pageData.experts}/>
+						<PhotoCards cards = {pageData.experts} getVideo={this.getVideo}/>
 					</div>
 
 					{ pageData.howItWorks && [<Element name='howWorksElement'  />,

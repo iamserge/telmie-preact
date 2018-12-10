@@ -18,12 +18,11 @@
 
   a {
     color: $cherryRedTwo;
-    text-decoration: underline;
-
+    text-decoration: none;
+    
     &:hover,
-    &:focus,
-    &:active {
-      text-decoration: none;
+    &:focus {
+      text-decoration: underline;
     }
   }
 

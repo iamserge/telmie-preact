@@ -77,7 +77,7 @@ class Header extends Component {
   fetchPage = (props) => {
 		let that = this;
 		props.prismicCtx.api.getByID(props.uid).then((page, err) => {
-		  that.setState({ globalMessage: processGlobalMessage(page.data) });
+		  page && that.setState({ globalMessage: processGlobalMessage(page.data) });
 		});
 	};
 
@@ -116,7 +116,7 @@ class Header extends Component {
 
 		return (
       <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${globalMessage && 'globalMessage'}`} 
-          style={{width: "100%", position: 'fixed', zIndex: 100, margin: '0 auto', top: 0, display: "flex", flexWrap: "wrap"}}>
+          style={{width: "100%", position: 'fixed', zIndex: 200, margin: '0 auto', top: 0, display: "flex", flexWrap: "wrap"}}>
         <div id={style.header}>
 
           <div id={style.mobileShadow} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>

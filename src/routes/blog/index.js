@@ -9,7 +9,7 @@ import { animateScroll as scroll } from 'react-scroll'
 import FontAwesome from 'react-fontawesome';
 import { route } from 'preact-router';
 import BlogPosts from '../../components/blog/blog-posts';
-import BestComment from '../../components/blog/blog-best-comment';
+import AuthorInfo from '../../components/blog/author-info';
 import BlogComments from '../../components/blog/blog-comments';
 
 import PostDecorationText from '../../components/blog/post-decoration-text';
@@ -22,9 +22,6 @@ import { langs } from "../../utils/consts";
 
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
-
-// mock-data
-import { blogComments } from './mock-data';
 
 import { processPostData, processRecentPosts } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
@@ -112,7 +109,7 @@ class BlogPage extends Component {
 						<div class={style.date}>{ post.date }</div>
 					</div>
 
-          <div class={style.blogArticle}>
+          			<div class={style.blogArticle}>
 					{postBody.map((content)=>{
 						switch (content.slice_type) {
 							case 'text':
@@ -123,13 +120,11 @@ class BlogPage extends Component {
 								return (<PostQuote content={content} />)
 							case 'text1':
 								return (<PostDecorationText content={content} />)
+							case 'about_an_author':
+								return (<AuthorInfo content={content}/>)
 						}
 					})}
 					</div>
-
-{/*
-          <BestComment />
-*/}
 
 					{ !this.state.fetchingRecentPosts && this.state.recentPosts.length > 0 && (
 						<BlogPosts blogPosts={this.state.recentPosts} locale={this.props.locale}/>

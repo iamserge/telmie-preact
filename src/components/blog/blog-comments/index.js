@@ -57,7 +57,7 @@ const BlogComments = ({blogComments = []}) => {
           <form action="">
             <div class={style.blogAuthorInner}>
               <div class={style.blogAuthorAvatar}>
-                <img src="/assets/experts/expert2.png" alt="" />
+                <img src='' alt="" />
               </div>
               <div class={style.blogCommentType}>
                 <textarea rows="12" />
