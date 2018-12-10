@@ -180,7 +180,7 @@ class Header extends Component {
           <div class={`${style.navbarRight} uk-navbar-right`}>
           
               <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
-            { /*currentUrl != '/' && (
+            { /*this.props.currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 
                   isLogin = {isLogin} 
