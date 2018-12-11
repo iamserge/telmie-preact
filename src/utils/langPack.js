@@ -44,6 +44,7 @@ export const langPack = {
             LANGUAGE_LEARNERS: 'Language learning',
         },
         FAQ: 'FAQ',
+        MORE_FAQ: 'More FAQ',
     },
     [RU]: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
@@ -87,5 +88,6 @@ export const langPack = {
             LANGUAGE_LEARNERS: 'Изучение языка',
         },
         FAQ: 'Часто задаваемые вопросы',
+        MORE_FAQ: 'Больше вопросов',
     }
 }

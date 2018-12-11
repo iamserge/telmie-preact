@@ -199,7 +199,7 @@ class HomePage extends Component {
 
 					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} faqs={pageData.faqs} locale={locale}/>
+						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} faqs={pageData.faqs} locale={locale} isHome={true}/>
 					</div> }
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
