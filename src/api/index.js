@@ -7,6 +7,7 @@ export const apiUrls = {
   EDIT_DETAILS: apiRoot + 'users/',
   SEARCH_USERS: apiRoot + 'users/pro?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
+  GET_PRO_USER_DETAILS: (proId) => apiRoot + 'users/pro/' + proId,
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'users/activity?isConsultant=true&size=9999&page=',
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isConsultant=false&size=9999&page=',

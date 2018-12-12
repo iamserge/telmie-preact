@@ -11,6 +11,8 @@ import SideBar from '../../components/search/sidebar';
 import Pagination from '../../components/search/pagination';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
+import { changeLocale, changeLocaleLangs } from '../../actions/user';
+
 class Search extends Component {
 	constructor(props){
 		super(props);
@@ -18,7 +20,7 @@ class Search extends Component {
 			pros: [],
 			searchTerm: this.props.searchTerm || '',
 			loading: true,
-			sortBy: 'rate',
+			sortBy: 'rating',
 			page: 1
 		}
 		this.sortToggleSwitched = this.sortToggleSwitched.bind(this);
@@ -30,10 +32,14 @@ class Search extends Component {
 			route('/login-or-signup');
 			return;
 		}
-		const that = this;
+		this.fetchPage(this.props);
 		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page);
 	}
 
+	fetchPage= (props) => {
+		props.changeLocale();
+		props.changeLocaleLangs([]);
+	}
 
 	fetchPros(searchTerm, sortBy, page){
 		let that = this;
@@ -112,7 +118,10 @@ const mapStateToProps = (state) => ({
 	userData: state.loggedInUser
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	changeLocaleLangs,
+	changeLocale,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

@@ -21,15 +21,11 @@ export  function getPros(searchTerm, sortBy, page, authData){
 }
 
 
-export  function getProDetails(userId){
-	return fetch(apiUrls.GET_USER_DETAILS + userId, { method: 'GET'}).then(response => {
-    if (response.status === 404){
-			return {};
-		}
-		return response.json().then(json => {
-			return json;
-		});
-
+export  function getProDetails(userId, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+	return fetch(apiUrls.GET_PRO_USER_DETAILS(userId), { method: 'GET', headers }).then(response => {
+		return (response.status === 404) ? {} : response.json().then(json => json);
 	}, error => {
 		throw new Error(error.message);
 	});

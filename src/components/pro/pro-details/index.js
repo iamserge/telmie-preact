@@ -53,6 +53,7 @@ export default class Pro extends Component {
 					)}
 
 				</div>
+
 				<div className={style.info}>
 					<div className={style.nameAndTitle}>
 						<span className={style.proRoundel}>PRO</span>
@@ -68,6 +69,7 @@ export default class Pro extends Component {
 						{pro.professionDescription}
 					</p>
 				</div>
+				
 				<div className={style.priceContainer}>
 					<div className={style.price}>
 						&pound;{pro.costPerMinute} /<span>min</span>

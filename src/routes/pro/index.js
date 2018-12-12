@@ -8,8 +8,9 @@ import { addToShortlist } from '../../api/pros'
 import style from './style.scss';
 import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
-import Redirect from '../../components/global/redirect';
 import { checkIfLoggedIn } from '../../utils';
+import { routes } from '../../components/app'
+import { changeLocale, changeLocaleLangs } from '../../actions/user';
 
 class Pro extends Component {
 	constructor(props){
@@ -24,15 +25,19 @@ class Pro extends Component {
 
 	componentDidMount(){
 		if (!checkIfLoggedIn()) {
-			route('/login-or-signup');
+			route(routes.LOGIN_OR_SIGNUP);
 			return;
 		}
+		this.fetchPage(this.props);
 		const that = this;
 		window.scrollTo(0,0);
-		getProDetails(this.props.userId)
-	  .then(function(data) {
-	    that.setState({ pro: data, loading: false });
+		getProDetails(this.props.userId, this.props.userData.userAuth).then(function(data) {
+	    	that.setState({ pro: data, loading: false });
 		});
+	}
+	fetchPage= (props) => {
+		props.changeLocale();
+		props.changeLocaleLangs([]);
 	}
 	isShortlisted(){
 		let shortlisted = this.state.shortlisted;
@@ -84,7 +89,10 @@ const mapStateToProps = (state) => ({
 
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	changeLocaleLangs,
+	changeLocale,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,
