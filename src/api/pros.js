@@ -35,10 +35,12 @@ export function addToShortlist(userId, authData){
 
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
-	headers.append("Content-Type", "application/json ");
 
-	return fetch(apiUrls.ADD_TO_SHORTLIST, { method: 'POST', headers: headers, body: JSON.stringify( { id: userId } )}).then(response => {
-    if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
+	return fetch(apiUrls.ADD_TO_SHORTLIST(userId), { method: 'POST', headers, }).then(response => {
+		if (response.status === 401 
+				|| response.status === 400 
+				|| response.status === 415 
+				|| response.status === 500){
 			return {shortlisted: 'failure'}
 		}
 		return response.text().then(text => {

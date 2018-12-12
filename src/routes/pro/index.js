@@ -3,8 +3,7 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { route } from 'preact-router';
 import { connect } from 'preact-redux';
-import { getProDetails } from '../../api/pros';
-import { addToShortlist } from '../../api/pros'
+import { getProDetails, addToShortlist } from '../../api/pros';
 import style from './style.scss';
 import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
@@ -52,13 +51,10 @@ class Pro extends Component {
 	}
 
 	shortlist(userId){
-		let that = this;
-		addToShortlist(userId, this.props.userData.userAuth).then(function(data) {
-			that.setState({
-				isShortlisted: true
-			})
-		}).catch(function(error) {
-
+		addToShortlist(userId, this.props.userData.userAuth).then((data) => {
+			this.setState({ isShortlisted: true });
+		}).catch((error) => {
+			console.log("Error: ",error)
 		});
 	}
 

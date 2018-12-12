@@ -44,9 +44,7 @@ export default class Pro extends Component {
 					</div>
 					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
 
-
-
-					{this.props.isShortlisted ? (
+					{person.inShortlistForCurrent ? (
 						<span className={style.success}><span aria-hidden="true" class="fa fa-check"></span> Shortlisted</span>
 					) : (
 						<button  id={style.callPro} className="uk-button" onClick={() => {this.props.addToShortlist(person.id)}}>Shortlist</button>
@@ -69,7 +67,7 @@ export default class Pro extends Component {
 						{pro.professionDescription}
 					</p>
 				</div>
-				
+
 				<div className={style.priceContainer}>
 					<div className={style.price}>
 						&pound;{pro.costPerMinute} /<span>min</span>

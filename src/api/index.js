@@ -13,7 +13,7 @@ export const apiUrls = {
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isConsultant=false&size=9999&page=',
   GET_TRANSACTIONS: apiRoot + 'cards/history',
   VERIFY_USER: apiRoot + 'users/signup',
-  ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist',
+  ADD_TO_SHORTLIST: (id) => apiRoot + 'shortlist/' + id,
   RESET_PASSWORD: apiRoot  + 'security/reset',
   UPLOAD_PHOTO: apiRoot + 'image',
   SEND_CODE: apiRoot + 'code',

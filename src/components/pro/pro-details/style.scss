@@ -5,7 +5,9 @@
 .person {
 	margin-top: 90px;
     position: relative;
-    min-height: 450px;
+	min-height: 450px;
+	display: flex;
+	flex-wrap: wrap;
 	> div {
 		overflow: hidden;
 		display: inline-block;
@@ -14,7 +16,6 @@
 }
 .imageContainer {
 	width: 250px;
-	position: absolute;
     top:0;
 	z-index: 2;
     left: 0;
@@ -52,30 +53,30 @@
 }
 .proRoundel {
 	display: block;
-  width: 70px;
-  height: 70px;
-  background-color: $red;
-  border-radius: 100%;
-  text-align: center;
-  color: white;
-  line-height: 70px;
-  font-weight: bold;
-  font-size: 22px;
-  position: absolute;
-  left: 0;
-  top: 4px;
+  	width: 70px;
+  	height: 70px;
+  	background-color: $red;
+  	border-radius: 100%;
+  	text-align: center;
+  	color: white;
+  	line-height: 70px;
+  	font-weight: bold;
+  	font-size: 22px;
+  	position: absolute;
+  	left: 0;
+  	top: 4px;
 }
 #callPro {
 	width: 100%;
-  font-size: 20px;
-  font-weight: bold;
-  height: 50px;
-  margin-top: 30px;
+  	font-size: 20px;
+  	font-weight: bold;
+  	height: 50px;
+  	margin-top: 30px;
 }
 .info {
-	width: 100%;
+	width: calc(100% - 250px - 170px);
     box-sizing: border-box;
-	padding-left: 290px;
+	padding: 0 20px 0 40px;
     position: relative;
 	h2 {
         margin-bottom: 0;
@@ -105,9 +106,6 @@
 			display: inline-block;
 		}
 	}
-    & > div, & > p {
-        width: 70%;
-    }
 }
 .note {
   display: block;
@@ -122,10 +120,9 @@
 	}
 }
 .priceContainer {
-	width: 20%;
+	width: 170px;
 	font-size: 22px;
 	text-align: center;
-    position: absolute;
     top: 0px;
     right: 0;
 	.price {
@@ -167,12 +164,14 @@
 	position: relative;
 	padding-left: 88px;
 }
+
 @media (max-width: 880px) {
     .imageContainer {
         position: relative;
     }
 	.person {
 		text-align: center;
+		justify-content: center;
 		padding-top: 80px;
 		margin-top: 20px;
 		position: relative;
@@ -199,18 +198,17 @@
             margin-bottom: 40px;
         }
         p {
-            width: 60%;
+            width: 70%;
             text-align: center;
-            display: block;
-            margin: 0 auto;
-            margin-bottom: 40px;
+            margin: 0 auto 40px auto;
         }
 	}
 	.nameAndTitle {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    left: 0;
+    	position: absolute;
+    	top: 0;
+    	width: 100%;
+		left: 0;
+		text-align: center;
 		padding:0;
 	}
 	.priceContainer {
