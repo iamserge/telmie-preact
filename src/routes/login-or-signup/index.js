@@ -2,14 +2,21 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import LogInForm from '../../components/log-in/log-in-form';
 import style from './style.scss';
-import { logIn, getProCalls, getPersonalCalls, getTransactions } from '../../actions/user';
+import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { route, Link } from 'preact-router';
-import Redirect from '../../components/global/redirect';
 import { routes } from '../../components/app'
 
 class LogInOrSignup extends Component {
+
+	componentDidMount(){
+		this.fetchPage(this.props);
+	}
+
+	fetchPage= (props) => {
+		props.changeLocale();
+		props.changeLocaleLangs([]);
+	}
 
 	render() {
 		return (
@@ -31,9 +38,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(
-
+	mapStateToProps, mapDispatchToProps
 )(LogInOrSignup);
