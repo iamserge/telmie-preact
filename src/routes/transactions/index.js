@@ -22,12 +22,6 @@ class AllTransactions extends Component {
 			currentPage: 1,
 			loading: false
 		}
-
-		this.nextPage = this.nextPage.bind(this);
-		this.previousPage = this.previousPage.bind(this);
-		this.changePage = this.changePage.bind(this);
-		this.changeTransactionsPage = this.changeTransactionsPage.bind(this);
-
 	}
 	componentDidMount(){
 		if (typeof this.props.userData.userAuth != 'undefined') {
@@ -39,25 +33,25 @@ class AllTransactions extends Component {
 
 }
 
-	nextPage(){
+	nextPage= () => {
 		this.setState({
 			 currentPage: this.state.currentPage + 1
 		});
 		this.changeTransactionsPage(this.state.currentPage );
 	}
-	previousPage(){
+	previousPage = () => {
 		this.setState({
 			currentPage: this.state.currentPage - 1
 		});
 		this.changeTransactionsPage(this.state.currentPage );
 	}
-	changePage(page) {
+	changePage = (page) => {
 		this.setState({
 			currentPage: page
 		});
 		this.changeTransactionsPage(page);
 	}
-	changeTransactionsPage(page){
+	changeTransactionsPage = (page) => {
 		this.setState({
 			cutTransactions: this.props.transactions.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
 		})

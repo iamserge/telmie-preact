@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import LogInForm from '../../components/log-in/log-in-form';
 import style from './style.scss';
-import { logIn, getProCalls, getPersonalCalls, getTransactions } from '../../actions/user';
+import { logIn, getProCalls, getPersonalCalls, getTransactions, changeLocale, changeLocaleLangs } from '../../actions/user';
 import { route } from 'preact-router';
 import Redirect from '../../components/global/redirect';
 
@@ -16,7 +16,11 @@ class LogIn extends Component {
 		}
 	}
 	componentDidMount(){
-
+		this.fetchPage(this.props);
+	}
+	fetchPage= (props) => {
+		props.changeLocale();
+		props.changeLocaleLangs([]);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (Object.keys(this.props.userData).length === 0 && Object.keys(nextProps.userData).length != 0) {
@@ -54,7 +58,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	logIn,
 	getProCalls,
 	getPersonalCalls,
-	getTransactions
+	getTransactions,
+	changeLocale,
+	changeLocaleLangs
 }, dispatch);
 
 export default connect(

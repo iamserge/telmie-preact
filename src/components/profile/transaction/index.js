@@ -4,13 +4,15 @@ import Spinner from '../../global/spinner';
 import { Link, route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import { apiRoot } from '../../../api';
+import { routes } from "../../app";
 import { convertDate, convertDuration } from '../../../utils';
 export default class transaction extends Component {
 	goToPro(id){
-		route('/pro/' + id);
+		route(routes.PRO_FOR_COMP + id);
 	}
 	render({transaction}) {
-		const contact = transaction.contact;
+		const { contact = {} } = transaction;
+		const { pro ={} } = contact;
 		return (
 			<div className={style.transaction + ' ' + ( transaction.moneyCame > 0 && style.profit )}>
 				<div className={style.contact}  onClick={()=>{this.goToPro(contact.id)}} >
@@ -30,16 +32,16 @@ export default class transaction extends Component {
 								</div>
 							): (
 								<div>
-									{contact.pro.profession} <span className={style.profession}>{contact.pro.category}</span>
+									{pro.profession} <span className={style.profession}>{pro.category}</span>
 								</div>
 							)}
 					</div>
 				</div>
-				<div className={style.date}> { convertDate(transaction.date) }</div>
+				<div className={style.date}> { transaction.date && convertDate(transaction.date) }</div>
 				<div>
 					{transaction.duration != null ? (
 						<span>
-							{convertDuration(transaction.duration)}
+							{transaction.duration && convertDuration(transaction.duration)}
 						</span>
 					) : (
 						<span>00:00</span>
@@ -51,19 +53,20 @@ export default class transaction extends Component {
 
 								transaction.fee > 0 ? (
 									<span>
-								 		+&pound;{parseFloat(transaction.moneyCame - transaction.fee).toFixed(2)}
-										<span className={style.fee}>&pound;{transaction.moneyCame.toFixed(2)} - &pound;{transaction.fee.toFixed(2)} Telmie fee</span>
+										 +&pound;{(transaction.moneyCame && transaction.fee) 
+											&& parseFloat(transaction.moneyCame - transaction.fee).toFixed(2)}
+										<span className={style.fee}>&pound;{transaction.moneyCame && transaction.moneyCame.toFixed(2)} - &pound;{transaction.fee.toFixed(2)} Telmie fee</span>
 									</span>
 								) : (
 									<span>
-								 		+&pound;{transaction.moneyCame.toFixed(2)}
+								 		+&pound;{transaction.moneyCame && transaction.moneyCame.toFixed(2)}
 									</span>
 								)
 
 
 						) : (
 							<span>
-							 -&pound;{transaction.moneyGone.toFixed(2)}
+							 -&pound;{transaction.moneyGone && transaction.moneyGone.toFixed(2)}
 							</span>
 						)}
 
