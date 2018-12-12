@@ -78,7 +78,7 @@ class ImmigrationLaw extends Component {
             <AppDetails appLink={appLink} content={pageData.app} />
           </div>
 
-          <ScrollToTop showUnder={150} style={{zIndex: 1002}}>
+          <ScrollToTop showUnder={150} style={{zIndex: 1002, bottom: 100}}>
             <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
           </ScrollToTop>
         </div>
