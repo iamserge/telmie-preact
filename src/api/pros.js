@@ -31,20 +31,18 @@ export  function getProDetails(userId, authData){
 	});
 }
 
-export function addToShortlist(userId, authData){
+export function addToShortlist(userId, authData, isForDelete){
 
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.ADD_TO_SHORTLIST(userId), { method: 'POST', headers, }).then(response => {
-		if (response.status === 401 
-				|| response.status === 400 
-				|| response.status === 415 
-				|| response.status === 500){
-			return {shortlisted: 'failure'}
+	return fetch(apiUrls.ADD_TO_SHORTLIST(userId), { method: isForDelete ? "DELETE" : 'POST', headers, }).then(response => {
+		if (response.status === 401 || response.status === 400 ){
+			return { message: 'shortlisted failure' , error: true }
 		}
-		return response.text().then(text => {
-			return {shortlisted: 'success'}
+		
+		return response.json().then(obj => {
+			return obj
 
 		}, error => {
 			throw new Error(error.message);

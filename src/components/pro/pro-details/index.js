@@ -24,16 +24,6 @@ export default class Pro extends Component {
 	}
 	render({person}) {
 		const { pro = {} } = person;
-		let youtubeOptions = {
-			width: '100%',
-			height: '387px'
-		}
-		if (window.innerWidth < 880) {
-		 	youtubeOptions = {
-				width: '100%',
-				height: '200px'
-			}
-		}
 		return (
 			<div class={style.person}>
 				<div className={style.imageContainer}>
@@ -47,12 +37,20 @@ export default class Pro extends Component {
 					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>TEXT PRO</button>
 					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
 
-					{person.inShortlistForCurrent ? (
-						<span className={style.success}><span aria-hidden="true" class="fa fa-check"></span> Shortlisted</span>
+					{this.props.isShortlisted ? (
+						<span className={style.success}>
+							<span class={style.txt}><span aria-hidden="true" class="fa fa-check"/> Shortlisted</span>
+							<button id={style.callPro} disabled={this.props.shortlistLoading} class={`uk-button ${style.btn}`} onClick={() => {this.props.cnageShortlist(person.id, true)}}>Remove</button>
+						</span>
 					) : (
-						<button  id={style.callPro} className="uk-button" onClick={() => {this.props.addToShortlist(person.id)}}>Shortlist</button>
+						<button  id={style.callPro} disabled={this.props.shortlistLoading} className="uk-button" onClick={() => {this.props.cnageShortlist(person.id)}}>Shortlist</button>
 					)}
 
+					{
+						<div class={style.actionsInfo}> 
+							{this.props.shortlistLoading ? <p class={style.loading}>Loading</p> : this.props.shortlistMessage }
+						</div>
+					}
 				</div>
 
 				<div className={style.info}>
@@ -72,7 +70,7 @@ export default class Pro extends Component {
 							{pro.professionDescription}
 							{pro.video && pro.video.length > 0 && (
 								<div class={style.videoContainer}>
-									<YouTube videoId={ pro.video } opts = {youtubeOptions} />
+									<YouTube videoId={ pro.video } />
 								</div>
 							)}
 						</Collapse.Panel>
