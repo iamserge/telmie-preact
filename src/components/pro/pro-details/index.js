@@ -6,6 +6,8 @@ import { apiRoot } from '../../../api'
 import { route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import YouTube from 'react-youtube';
+import Collapse from 'rc-collapse'
+import 'rc-collapse/assets/index.css';
 import {routes} from '../../app'
 
 export default class Pro extends Component {
@@ -23,13 +25,13 @@ export default class Pro extends Component {
 	render({person}) {
 		const { pro = {} } = person;
 		let youtubeOptions = {
-			width: '1200',
-			height: '600'
+			width: '100%',
+			height: '387px'
 		}
 		if (window.innerWidth < 880) {
 		 	youtubeOptions = {
 				width: '100%',
-				height: '300px'
+				height: '200px'
 			}
 		}
 		return (
@@ -42,6 +44,7 @@ export default class Pro extends Component {
 							<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 						)}
 					</div>
+					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>TEXT PRO</button>
 					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
 
 					{person.inShortlistForCurrent ? (
@@ -63,9 +66,25 @@ export default class Pro extends Component {
 						<FontAwesome name="angle-right"/>
 						<Link href={routes.SEARCH_FOR_COMP + pro.subCategory} >{pro.subCategory}</Link>
 					</div>
-					<p className="description">
-						{pro.professionDescription}
-					</p>
+
+					<Collapse accordion={false} defaultActiveKey = "info" className={style.description}>
+						<Collapse.Panel header={'Info'} key='info'>
+							{pro.professionDescription}
+							{pro.video && pro.video.length > 0 && (
+								<div class={style.videoContainer}>
+									<YouTube videoId={ pro.video } opts = {youtubeOptions} />
+								</div>
+							)}
+						</Collapse.Panel>
+
+						<Collapse.Panel header={'Chat'} key='chat'>
+							Chat
+						</Collapse.Panel>
+
+						<Collapse.Panel header={'Call history'} key='call-history'>
+							Call history
+						</Collapse.Panel>
+					</Collapse>
 				</div>
 
 				<div className={style.priceContainer}>
@@ -82,12 +101,7 @@ export default class Pro extends Component {
 							edit={false}
 							size={25} />
 					</div>
-				</div>
-				{pro.video && pro.video.length > 0 && (
-					<div className={style.videoContainer}>
-						<YouTube videoId={ pro.video } opts = {youtubeOptions} />
-					</div>
-				)}
+				</div>			
 				{ this.state.showCallProPopup && (
 					<div>
 						<div className="modal" onClick={()=>{this.setState({showCallProPopup: false})}}>
