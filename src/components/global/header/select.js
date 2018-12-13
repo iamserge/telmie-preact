@@ -67,8 +67,8 @@ const renderLocale = (props) => {
     item = renderLocaleItem(langs[props.locale]);
 
     listItems = renderExcept(props.locale, props.languages, true).map(el => (
-        <li onClick={changeLocalization(langs[el].code)} key={langs[el].code}>
-            {renderLocaleItem(langs[el])}
+        <li onClick={changeLocalization(langs[el] && langs[el].code)} key={langs[el] && langs[el].code}>
+            {langs[el] && renderLocaleItem(langs[el])}
         </li>
     ));
 
