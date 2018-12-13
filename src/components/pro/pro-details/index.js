@@ -21,6 +21,7 @@ export default class Pro extends Component {
 		})
 	}
 	render({person}) {
+		const { pro = {} } = person;
 		let youtubeOptions = {
 			width: '1200',
 			height: '600'
@@ -56,35 +57,35 @@ export default class Pro extends Component {
 					<div className={style.nameAndTitle}>
 						<span className={style.proRoundel}>PRO</span>
 						<h2>{person.name} {person.lastName}</h2>
-						<h3>{person.pro.profession}</h3>
+						<h3>{pro.profession}</h3>
 					</div>
 					<div className={style.prof}>
-						<Link href={routes.SEARCH_FOR_COMP + person.pro.category} >{person.pro.category}</Link>
+						<Link href={routes.SEARCH_FOR_COMP + pro.category} >{pro.category}</Link>
 						<FontAwesome name="angle-right"/>
-						<Link href={routes.SEARCH_FOR_COMP + person.pro.subCategory} >{person.pro.subCategory}</Link>
+						<Link href={routes.SEARCH_FOR_COMP + pro.subCategory} >{pro.subCategory}</Link>
 					</div>
 					<p className="description">
-						{person.pro.professionDescription}
+						{pro.professionDescription}
 					</p>
 				</div>
 				<div className={style.priceContainer}>
 					<div className={style.price}>
-						&pound;{person.pro.costPerMinute} /<span>min</span>
+						&pound;{pro.costPerMinute} /<span>min</span>
 					</div>
 					<div className={style.raiting}>
 						<span>
-							{(person.pro.review != null) ? person.pro.review.count : 0} sessions
+							{(pro.review != null) ? pro.review.count : 0} sessions
 						</span>
 						<ReactStars
 						  count={5}
-						  value={(person.pro.review != null) ? person.pro.review.rating : 0}
+						  value={(pro.review != null) ? pro.review.rating : 0}
 							edit={false}
 							size={25} />
 					</div>
 				</div>
-				{person.pro.video && person.pro.video.length > 0 && (
+				{pro.video && pro.video.length > 0 && (
 					<div className={style.videoContainer}>
-						<YouTube videoId={ person.pro.video } opts = {youtubeOptions} />
+						<YouTube videoId={ pro.video } opts = {youtubeOptions} />
 					</div>
 				)}
 				{ this.state.showCallProPopup && (

@@ -135,7 +135,7 @@ class BlogPage extends Component {
 */}
 
 
-					<ScrollToTop showUnder={150} style={{ zIndex: 1002 }}>
+					<ScrollToTop showUnder={150} style={{ zIndex: 1002, bottom: 100, right: 38 }}>
 						<div class="top-btn">
 							<FontAwesome name="angle-up" size="2x" />
 						</div>

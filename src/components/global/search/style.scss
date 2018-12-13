@@ -2,7 +2,8 @@
 @import './src/style/images';
 #searchContainer {
 	margin-right: 40px;
-    padding-bottom: 40px;
+	//padding-bottom: 40px;
+	padding-top: 40px;
 	&.home {
 		&.collapsed {
 			#searchModal {
@@ -46,7 +47,9 @@
 	    overflow: hidden;
 	    left: 50%;
 	    transform: translate(-50%,0);
-	    position: absolute;
+		//position: absolute;
+		position: relative;
+		z-index: 20;
 			> div {
 				form {
 					width: 100%;

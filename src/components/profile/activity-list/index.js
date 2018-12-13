@@ -13,7 +13,7 @@ export default class ActivityList extends Component {
 			<div className={style.activityList}>
 				<h2>
 					{ this.props.title }
-					<Link href='/activity'>View all</Link>
+					<Link href={routes.MY_PROS}>View all</Link>
 					{/*NO SUCH ROUTE*/}
 				</h2>
 				<div className={style.inner}>

@@ -4,6 +4,7 @@ import * as router from 'preact-router';
 import style from './style.scss';
 import Search from '../search';
 import Select from './select';
+import Hr from '../../hr';
 import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import { hideSearchBox } from '../../../actions';
@@ -69,10 +70,8 @@ class Header extends Component {
 
     this.props.prismicCtx && this.fetchPage(this.props);
 
-		{/*let userAuth = getCookie('USER_AUTH');
-		if (userAuth != null) {
-			this.props.logIn(userAuth)
-    }*/}
+		let userAuth = getCookie('USER_AUTH');
+		userAuth != null && this.props.logIn(userAuth);
   };
 
   fetchPage = (props) => {
@@ -120,7 +119,7 @@ class Header extends Component {
           style={{width: "100%", position: 'fixed', zIndex: 200, margin: '0 auto', top: 0, display: "flex", flexWrap: "wrap"}}>
         <div id={style.header}>
 
-          <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
+          <div id={style.mobileShadow} class={this.state.mobileMenuOpened ? style.opened : ''} onClick = {this.toggleMobileMenu}></div>
           <div class={`${style.navbarLeft} uk-navbar-left`} >
             { this.state.loggedOff && (
               <Redirect to='/' />
@@ -143,14 +142,14 @@ class Header extends Component {
               : null
             }
 
-            <ul className="uk-navbar-nav" id={style.leftNav}>
+            <ul class="uk-navbar-nav" id={style.leftNav}>
               {
-                /*isLogin ? ([
+                isLogin ? ([
                   (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
                   <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
                   <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                   (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
-                ]) : */
+                ]) :
                 isServicePage ? null : ([
                   <li>{isAtHome ?
                     <ScrollLink spy={true} smooth={true} offset={globalMessage ? -120 : -50} duration={500} to="howWorksElement">{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink> 
@@ -181,7 +180,7 @@ class Header extends Component {
           <div class={`${style.navbarRight} uk-navbar-right`}>
           
               <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
-            { /*currentUrl != '/' && (
+            { /*this.props.currentUrl != '/' && (
                 <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
                   hideSearchBox = { this.props.hideSearchBox } 
                   isLogin = {isLogin} 
@@ -190,18 +189,18 @@ class Header extends Component {
 
             {/* !isLogin  ? (
               <nav>
-                <ul className="uk-navbar-nav" >
+                <ul class="uk-navbar-nav" >
                   <li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
                   <li><Link href={routes.LOG_IN}>Login</Link></li>
                 </ul>
               </nav>
             ) : (
-              <div className={style.loggedInContainer}>
-                <div className="mobile-hide">
+              <div class={style.loggedInContainer}>
+                <div class="mobile-hide">
                   { user.name } { user.lastName }
                 </div>
                 <FontAwesome name='caret-down' />
-                <div className={style.avatar}>
+                <div class={style.avatar}>
 
                   {(user.avatar != null) ? (
                     <img src={apiRoot + 'image/' + user.avatar.id} alt={user.name + ' ' + user.lastName} />
@@ -210,9 +209,10 @@ class Header extends Component {
                   )}
 
                 </div>
-                <div className={style.dropdown + ' uk-dropdown'}>
-                    <ul className="uk-nav uk-dropdown-nav">
-                        {/*<li><Link href="/profile">My Account</Link></li>
+                <div class={style.dropdown + ' uk-dropdown'}>
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li><Link href="/profile">My Account</Link></li>
+                        <li class="uk-nav-divider"></li>
                         <li><Link href="/my-pros">My Pros</Link></li>
                         {(user.pro != null) && (
                             <li><Link href="/my-clients">My Clients</Link></li>
@@ -221,26 +221,22 @@ class Header extends Component {
                         <li><Link href="/transactions">Money</Link></li>
                         <li><Link href="/edit-profile">Edit Profile</Link></li>
                         <li><Link href="/register-pro">Register as Pro</Link></li>
-                        <li className="uk-nav-divider"></li>
-                        <li><Link href="/edit-profile">Edit Profile</Link></li>
-                        <li className="uk-nav-divider"></li>*/}
-                        {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><Link href={routes.SETTINGS}>Settings</Link></li>
                         <li><a onClick={()=>this.logOff()}>Log out</a></li>
                     </ul>
                 </div>
 
               </div>
-            )}*/}
+            )*/}
           </div>
-          <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
+          <div id={style.mobileNav} class={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
             <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
-            <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
-              <span></span>
-              <span></span>
-              <span></span>
+            <span id={style.expandMobileMenu}  class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
+              <span/><span/><span/>
             </span>
             </div>
 
@@ -267,12 +263,13 @@ class Header extends Component {
                 
             {/* !isLogin  ? (
               <div>
-                <h3>My account</h3>
+                <Hr color={'#5C636E'} height={1}/>
                 <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
                 <Link href={routes.LOG_IN}>Login</Link>
               </div>
             ) : (
               <div>
+                <Hr color={'#5C636E'} height={1}/>
                 {/*<Link href="/profile">My Account</Link>
                 <Link href="/my-pros">My Pros</Link>
                 {(user.pro != null) && (
@@ -283,14 +280,14 @@ class Header extends Component {
                 <Link href="/edit-profile">Edit Profile</Link>
                 <Link href="/register-pro">Register as Pro</Link>
                 <Link href="/edit-profile">Edit Profile</Link>*/}
-                {/*{(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+                {/*(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
                 <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
                 <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
                 {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
                 <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
                 <a onClick={()=>this.logOff()}>Log out</a>
               </div>
-            )}*/}
+            )*/}
 
           </div>
         </div>
