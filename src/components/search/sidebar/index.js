@@ -7,7 +7,7 @@ export default class SideBar extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			switched: 'rate'
+			switched: props.sortBy
 		}
 		this.toggleSwitch = this.toggleSwitch.bind(this);
 	}

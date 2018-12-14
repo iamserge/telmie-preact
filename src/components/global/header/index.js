@@ -187,7 +187,7 @@ class Header extends Component {
                   home= { false }/>
             )*/}
 
-            {/* !isLogin  ? (
+            { !isLogin  ? (
               <nav>
                 <ul class="uk-navbar-nav" >
                   <li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
@@ -228,7 +228,7 @@ class Header extends Component {
                 </div>
 
               </div>
-            )*/}
+            )}
           </div>
           <div id={style.mobileNav} class={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
@@ -261,7 +261,7 @@ class Header extends Component {
               : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
             }
                 
-            {/* !isLogin  ? (
+            { !isLogin  ? (
               <div>
                 <Hr color={'#5C636E'} height={1}/>
                 <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
@@ -280,14 +280,14 @@ class Header extends Component {
                 <Link href="/edit-profile">Edit Profile</Link>
                 <Link href="/register-pro">Register as Pro</Link>
                 <Link href="/edit-profile">Edit Profile</Link>*/}
-                {/*(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+                {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
                 <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
                 <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
                 {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
                 <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
                 <a onClick={()=>this.logOff()}>Log out</a>
               </div>
-            )*/}
+            )}
 
           </div>
         </div>

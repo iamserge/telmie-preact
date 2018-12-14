@@ -21,32 +21,28 @@ export  function getPros(searchTerm, sortBy, page, authData){
 }
 
 
-export  function getProDetails(userId){
-	return fetch(apiUrls.GET_USER_DETAILS + userId, { method: 'GET'}).then(response => {
-    if (response.status === 404){
-			return {};
-		}
-		return response.json().then(json => {
-			return json;
-		});
-
+export  function getProDetails(userId, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+	return fetch(apiUrls.GET_PRO_USER_DETAILS(userId), { method: 'GET', headers }).then(response => {
+		return (response.status === 404) ? {} : response.json().then(json => json);
 	}, error => {
 		throw new Error(error.message);
 	});
 }
 
-export function addToShortlist(userId, authData){
+export function addToShortlist(userId, authData, isForDelete){
 
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
-	headers.append("Content-Type", "application/json ");
 
-	return fetch(apiUrls.ADD_TO_SHORTLIST, { method: 'POST', headers: headers, body: JSON.stringify( { id: userId } )}).then(response => {
-    if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
-			return {shortlisted: 'failure'}
+	return fetch(apiUrls.ADD_TO_SHORTLIST(userId), { method: isForDelete ? "DELETE" : 'POST', headers, }).then(response => {
+		if (response.status === 401 || response.status === 400 ){
+			return { message: 'shortlisted failure' , error: true }
 		}
-		return response.text().then(text => {
-			return {shortlisted: 'success'}
+		
+		return response.json().then(obj => {
+			return obj
 
 		}, error => {
 			throw new Error(error.message);
