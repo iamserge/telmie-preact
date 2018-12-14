@@ -10,7 +10,6 @@ import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
-
 import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
 import FeaturedServices from '../../components/new-landing/featured-services'
@@ -177,7 +176,8 @@ class HomePage extends Component {
 				<div id="homepage">
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale}/>
+						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale} 
+							hiddenSearchBox={this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin = { Object.keys(user).length !== 0 } />
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
