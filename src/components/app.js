@@ -8,6 +8,7 @@ import Search from '../routes/search';
 import Pro from '../routes/pro';
 import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
+import LogOut from '../routes/log-in/log-out';
 import SignUp from '../routes/sign-up';
 import LogInOrSignup from '../routes/login-or-signup';
 import Profile from '../routes/profile';
@@ -144,6 +145,7 @@ class App extends Component {
 		...this.renderLangRoutes(RU),
 
 		<LogIn path = { routes.LOG_IN } />,
+		<LogOut path = '/log-out' />
 	];
 
 	renderLangRoutes = (lang) => ([
