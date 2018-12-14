@@ -43,7 +43,7 @@ class LogIn extends Component {
 
 			);
 		} else {
-			return (<Redirect to='/profile' />)
+			return (<Redirect to='/' />)
 		}
 
 	}

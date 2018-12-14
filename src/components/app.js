@@ -111,7 +111,7 @@ class App extends Component {
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
 	];
 
-	renderUserRoutes = () => [
+	/*renderUserRoutes = () => [
 		...this.renderDefaultRoutes(),
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
@@ -122,9 +122,14 @@ class App extends Component {
 		<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>
+	];*/
+	renderUserRoutes = () => [
+		...this.renderDefaultRoutes(),
+		<Search path={routes.SEARCH} />, 
+		<Pro path={routes.PRO} />,
 	];
 
-	renderDefaultRoutes = () => [
+	/*renderDefaultRoutes = () => [
 		...this.renderLangRoutes(EN),
 		...this.renderLangRoutes(RU),
 
@@ -132,6 +137,13 @@ class App extends Component {
 		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
 		<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
 		<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
+	];*/
+
+	renderDefaultRoutes = () => [
+		...this.renderLangRoutes(EN),
+		...this.renderLangRoutes(RU),
+
+		<LogIn path = { routes.LOG_IN } />,
 	];
 
 	renderLangRoutes = (lang) => ([
