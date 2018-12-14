@@ -18,10 +18,10 @@ const InfoComponent = ({mainSection, appLink, locale = EN, ...props }) => {
             </div>
             <div class={style.subTitle}>{mainSection.subTitle}</div>
 
-            <Search hiddenSearchBox = {props.hiddenSearchBox} 
+            { props.isLogin && <Search hiddenSearchBox = {props.hiddenSearchBox} 
 						hideSearchBox = { props.hideSearchBox } 
 						isLogin = { props.isLogin } 
-						home= { true }/>
+                        home= { true }/> }
 
             <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
             {/*<button class='white-btn'>Sign up free</button>*/}
