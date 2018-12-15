@@ -156,6 +156,20 @@ export function processAuthorInfo(postData){
         return null;
     }
 }
+export function processBlogBtn(postData){
+    try{
+        let link = postData.primary.button_link;
+        return {
+            text: postData.primary.button_text[0].text,
+            link,
+            isExternal: (link.indexOf('http://') === 0) || (link.indexOf('https://') === 0),
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {};
+    }
+}
 const processDate = (date, locale = "en-us") => {
     let dateObj = new Date(date);
     

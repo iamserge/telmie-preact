@@ -10,6 +10,7 @@ import FontAwesome from 'react-fontawesome';
 import { route } from 'preact-router';
 import BlogPosts from '../../components/blog/blog-posts';
 import AuthorInfo from '../../components/blog/author-info';
+import BlogButton from '../../components/blog/blog-button';
 import BlogComments from '../../components/blog/blog-comments';
 
 import PostDecorationText from '../../components/blog/post-decoration-text';
@@ -122,6 +123,8 @@ class BlogPage extends Component {
 								return (<PostDecorationText content={content} />)
 							case 'about_an_author':
 								return (<AuthorInfo content={content}/>)
+							case 'button_section':
+								return <BlogButton content={content}/>
 						}
 					})}
 					</div>

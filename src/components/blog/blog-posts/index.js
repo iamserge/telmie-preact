@@ -67,7 +67,7 @@ class BlogPosts extends Component {
     };
 
     return (
-      <div>
+      <div class='articlesList'>
         <div class={style.blogPosts}>
 
           <div class={`${style.blogPostsTitle} uk-container`}>
