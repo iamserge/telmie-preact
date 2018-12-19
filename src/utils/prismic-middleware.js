@@ -150,7 +150,7 @@ export function processPostQuote(postData){
     try{
         return {
             text: postData.primary.quote[0].text,
-            author: postData.primary.author[0].text
+            author: postData.primary.author[0] ? postData.primary.author[0].text : '',
         }
     }
     catch(e){
