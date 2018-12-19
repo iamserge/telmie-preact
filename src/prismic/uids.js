@@ -1,4 +1,4 @@
-import { EN, RU } from "../utils/consts";
+import { EN, RU, IT } from "../utils/consts";
 export const uids = {
 	[EN]: {
 		CONTACT_US: 'WoRRbigAACgAco9L',
@@ -14,6 +14,9 @@ export const uids = {
 		//IMMIGRATION_ADVICE: 'W_1Z1hEAAC4AGOiI',
 		/*SHORT_REVIEWS: 'W-0TkBAAACkAeSLm',*/
 		MESSAGE: 'XATouRAAADsA1qY3',
+	},
+	[IT]: {
+		MESSAGE: 'XBpjiBEAACcAYCHS',
 	}
 };
 

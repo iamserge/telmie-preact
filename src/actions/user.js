@@ -131,10 +131,10 @@ const sendContactMessage = () => ({
 	type: actionTypes.SEND_CONTACT_MESS
 });
 
-export const changeLocale = (code) => dispatch => {
+export const changeLocale = (lang) => dispatch => {
 	dispatch({
 		type: actionTypes.CHANGE_LOCALE,
-		code,
+		lang,
 	})
 }
 

@@ -57,7 +57,7 @@ class BlogPage extends Component {
 	changeBlogLang = (lang) => {
 		let post = this.state.alternate_languages.find(el => el.lang == lang );
 		
-		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
+		route( langRoutes(langs[lang].code, `/blog/${post.uid}`) );
 	}
 	fetchPost = (props) => {
 		window.scrollTo(0, 0);
@@ -135,7 +135,7 @@ class BlogPage extends Component {
 */}
 
 
-					<ScrollToTop showUnder={150} style={{ zIndex: 1002 }}>
+					<ScrollToTop showUnder={150} style={{ zIndex: 1002, bottom: 100, right: 38 }}>
 						<div class="top-btn">
 							<FontAwesome name="angle-up" size="2x" />
 						</div>

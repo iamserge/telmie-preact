@@ -45,7 +45,7 @@ export default class Footer extends Component {
 		return (
 			<footer id={style.footer} className='uk-navbar uk-navbar-container'>
 				<div className="uk-navbar-left" id={style.left}>
-					<Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
+					<Link href={langRoutes(langs[locale].code, routes.HOME)} id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<div class={style.copyright}>Copyright &copy;2018 TELMIE UK LTD., London, UK</div>
@@ -53,21 +53,21 @@ export default class Footer extends Component {
 				<div className="uk-navbar-right" id={style.right}>
 					<nav id={style.footerLinks}>
 						<ul className="uk-navbar-nav" >
-							<li><Link href={langRoutes(langs[locale].lang, routes.HOME)}>{langPack[locale].FOOTER.HOME}</Link></li>
+							<li><Link href={langRoutes(langs[locale].code, routes.HOME)}>{langPack[locale].FOOTER.HOME}</Link></li>
 							{/*<li><Link href={''}>Testimonials</Link></li>*/}
 							<li>{this.props.currentUrl === routes.HOME ? 
 								<ScrollLink spy={true} smooth={true} duration={500} to="contactUsElement">{langPack[locale].FOOTER.CONTACT}</ScrollLink> 
-								: <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>{langPack[locale].FOOTER.CONTACT}</Link>}
+								: <Link href={langRoutes(langs[locale].code, routes.CONTACT_US)}>{langPack[locale].FOOTER.CONTACT}</Link>}
 							</li>
 							<li>{this.props.currentUrl === routes.HOME || this.props.currentUrl.indexOf('/#') +1 ? 
 								<ScrollLink spy={true} smooth={true} duration={500} to="blogElement">{langPack[locale].FOOTER.BLOG}</ScrollLink> 
-								: <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>{langPack[locale].FOOTER.BLOG}</Link>}
+								: <Link href={langRoutes(langs[locale].code, routes.BLOG_LINK)}>{langPack[locale].FOOTER.BLOG}</Link>}
 							</li>
-							<li><Link href={langRoutes(langs[locale].lang, routes.TERMS)}>{langPack[locale].FOOTER.TERMS}</Link></li>
+							<li><Link href={langRoutes(langs[locale].code, routes.TERMS)}>{langPack[locale].FOOTER.TERMS}</Link></li>
 							{/*<li><Link href={''}>Help</Link></li>*/}
-							<li><Link href={langRoutes(langs[locale].lang, routes.PRIVACY)}>{langPack[locale].FOOTER.POLICY}</Link></li>
+							<li><Link href={langRoutes(langs[locale].code, routes.PRIVACY)}>{langPack[locale].FOOTER.POLICY}</Link></li>
 							
-							<li><Link href={langRoutes(langs[locale].lang, routes.FAQ)}>{langPack[locale].FOOTER.FAQ}</Link></li>
+							<li><Link href={langRoutes(langs[locale].code, routes.FAQ)}>{langPack[locale].FOOTER.FAQ}</Link></li>
 						</ul>
 					</nav>
 					<div class={style.socialIcons}>
