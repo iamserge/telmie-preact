@@ -1,14 +1,16 @@
 import Prismic from 'prismic-javascript';
 import { route } from 'preact-router';
-import { RU, EN } from "./consts";
+import { RU, EN, langs } from "./consts";
 
 function compareUrlLocale(props){
     const urlLocale = props.path.toString().split('/')[1];
+    let _lang = '';
 
-    return props.locale === urlLocale ? props.locale : (
-        urlLocale === RU ? 
-            (props.changeLocale(RU), RU) 
-            : props.locale === EN ? props.locale : (props.changeLocale(EN), EN)
+    return langs[props.locale].code === urlLocale ? props.locale : (
+        Object.keys(langs).some(el => {
+            return (langs[el].code === urlLocale) ? (_lang = el, true) : false
+        }) ? 
+            (props.changeLocale(_lang), _lang) : (props.changeLocale(EN), EN)
     )
 }
 export function getPage(props ={}, urlEng){

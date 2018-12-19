@@ -31,7 +31,7 @@ class BlogPosts extends Component {
     super(props);
   }
 
-  onArticleClick = (link) => () => route(langRoutes(langs[this.props.locale].lang, link));
+  onArticleClick = (link) => () => route(langRoutes(langs[this.props.locale].code, link));
 
   render(){
     const allPosts = this.props.blogPosts;

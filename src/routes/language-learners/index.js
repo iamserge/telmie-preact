@@ -48,6 +48,7 @@ class LanguageLearners extends Component {
     props.reviewsUid && this.fetchReviews(props);
     
     const page = await getPage(props);
+    console.log(page);
 		page && this.setState({fetchingPage: false, page: processTextPageData(page.data)});
   };
 

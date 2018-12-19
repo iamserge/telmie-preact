@@ -7,7 +7,7 @@ import { langs, EN } from "../../../utils/consts";
 const Article = ({id, title, date, link, locale = EN }) => {
     return (
         <div class={style.article}>
-            <Link href={langRoutes(langs[locale].lang,link)} class={style.title}>{title}</Link>
+            <Link href={langRoutes(langs[locale].code,link)} class={style.title}>{title}</Link>
             <div class={style.date}>{new Date(date).customParse()}</div>
         </div>
 	)
