@@ -94,25 +94,44 @@ function processTagsInText(postData){
 }
 
 export function processPostText(postData){
-    let serialiseText = (type, content, tags) => {
+    let prevType = null,
+        tmpContent = [],
+        _content = null,
+        isForClear = false;
+    
+    const textLen = postData.primary.text.length;
+
+    let serialiseText = (type, content, tags, i) => {
+        isForClear && (
+            tmpContent = [],
+            _content = null,
+            isForClear = false
+        )
+        isForClear = ( prevType == 'o-list-item' && type != 'o-list-item' );
+        isForClear && ( _content = (<ol>{[...tmpContent]}</ol>) );
+        prevType = type;
+
         switch (type) {
             case 'list-item':
-                return (<li>{content}</li>);
+                return [_content, <li>{content}</li>];
+            case 'o-list-item':
+                return (i + 1 === textLen) ? (
+                    <ol>{[...tmpContent, <li key={i}>{content}</li>]}</ol>
+                ) : (
+                    tmpContent.push(<li key={i}>{content}</li>), null 
+                )
             case 'heading2':
-                return (<h2>{content}</h2>);
+                return [_content, <h2>{content}</h2>];
             case 'heading3':
-                return (<h3>{content}</h3>);
+                return [_content, <h3>{content}</h3>];
             default:
-                return (<p>{processContent(content, tags)}</p>);
+                return [_content, <p>{processContent(content, tags)}</p>];
         }
-        },
-        nodes = [];
+        };
 
-    postData.primary.text.forEach((text)=>{
-        nodes.push(serialiseText(text.type, text.text,text.spans))
+    return postData.primary.text.map((text, i)=>{
+        return serialiseText(text.type, text.text, text.spans, i)
     });
-    
-    return nodes;
 }
 
 
