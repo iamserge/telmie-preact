@@ -19,3 +19,13 @@ export const langs = {
     emoji: '🇷🇺',
   },
 };
+
+export const activityTypes = {
+  'c': 'CALLED',
+  'mc': 'MISSED CALL',
+  'fc': 'FAILED CALL',
+  'im': 'READ message',
+  'uim': 'NEW message',
+  'om': 'OUTGOING message',
+  's': 'SHORTLISTED',
+}

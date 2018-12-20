@@ -108,7 +108,7 @@ export const resetFailure = (state = "", action) => {
 	}
 };
 
-export const proCalls = (state = [], action) => {
+/*export const proCalls = (state = [], action) => {
 	switch (action.type) {
 
 		case actionTypes.PRO_CALLS_RECEIVED:
@@ -128,13 +128,13 @@ export const personalCalls = (state = [], action) => {
 		default:
 			return state;
 	}
-};
+};*/
 
-export const activity = (state = [], action) => {
-	let activity;
+export const activity = (state = {}, action) => {
+	
 	switch (action.type) {
 		case actionTypes.PERSONAL_CALLS_RECEIVED:
-			let personalCalls = action.calls.results.map((activity)=>{
+			/*let personalCalls = action.calls.results.map((activity)=>{
 				let newActivity = activity;
 				newActivity.type = "PERSONAL"
 				return newActivity;
@@ -145,12 +145,15 @@ export const activity = (state = [], action) => {
 			activity = map(activity, (entry) => {
 				if (entry.status != 'SHORTLIST') return entry;
 			});
-			activity = without(activity, undefined);
-			return activity.slice(0, 10);
+			activity = without(activity, undefined);*/
+			return {
+				...state,
+				personCalls: action.calls.slice(0, 10)
+			};
 
 
 		case actionTypes.PRO_CALLS_RECEIVED:
-			let proCalls = action.calls.results.map((activity)=>{
+			/*let proCalls = action.calls.results.map((activity)=>{
 				let newActivity = activity;
 				newActivity.type = "PRO"
 				return newActivity;
@@ -162,9 +165,12 @@ export const activity = (state = [], action) => {
 			activity = map(activity, (entry) => {
 				if (entry.status != 'SHORTLIST') return entry;
 			});
-			activity = without(activity, undefined);
+			activity = without(activity, undefined);*/
 
-			return activity.slice(0, 10);
+			return {
+				...state,
+				proCalls: action.calls.slice(0, 10)
+			};
 
 		default:
 			return state;

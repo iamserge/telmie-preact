@@ -13,11 +13,7 @@ import Details from '../../components/profile/details';
 import ActivityList from '../../components/profile/activity-list';
 import Transactions from '../../components/profile/transactions';
 
-
-const getActivity = (proCalls, personalCalls) => {
-
-
-}
+import { routes } from "../../components/app";
 
 
 class Profile extends Component {
@@ -27,19 +23,22 @@ class Profile extends Component {
 
 	}
 	componentDidMount(){
-
+		!!this.props.userData.pro && this.props.getProCalls(this.props.userData.userAuth, 2);
+		this.props.getPersonalCalls(this.props.userData.userAuth, 2);
+		/*this.props.getTransactions(this.props.userData.userAuth);
+		this.props.getShortlist(this.props.userData.userAuth)*/
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
-			this.props.getProCalls(nextProps.userData.userAuth);
-			this.props.getPersonalCalls(nextProps.userData.userAuth);
-			this.props.getTransactions(nextProps.userData.userAuth);
-			this.props.getShortlist(nextProps.userData.userAuth)
+			!!nextProps.userData.pro && this.props.getProCalls(nextProps.userData.userAuth, 2);
+			this.props.getPersonalCalls(nextProps.userData.userAuth, 2);
+			/*this.props.getTransactions(nextProps.userData.userAuth);
+			this.props.getShortlist(nextProps.userData.userAuth)*/
 		}
 
 	}
 	render() {
-		const user = this.props.userData;
+		const { userData : user ={}, activity = {} } = this.props;
 		const isLogin = Object.keys(user).length !== 0;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
@@ -49,7 +48,8 @@ class Profile extends Component {
 					home= { false }/>
 				<h1>Hello, <span>{user.name}</span>!</h1>
 				<Details user = { user }/>
-				<ActivityList recentActivity = { this.props.activity } title = "Recent activity" />
+				<ActivityList recentActivity = { activity.personCalls } title = "Recent pros" link={routes.MY_PROS}/>
+				{ !!user.pro && <ActivityList recentActivity = { activity.proCalls } title = "Recent clients" link={routes.MY_CLIENTS}/> }
 				<Transactions transactions = { this.props.transactions } title = "Recent transactions"  limit = {5} />
 			</div>
 		);
@@ -59,8 +59,8 @@ class Profile extends Component {
 const mapStateToProps = (state) => ({
 	hiddenSearchBox: state.hiddenSearchBox,
 	userData: state.loggedInUser,
-	proCalls: state.loggedInUserProCalls,
-	personalCalls: state.loggedInUserPersonalCalls,
+	/*proCalls: state.loggedInUserProCalls,
+	personalCalls: state.loggedInUserPersonalCalls,*/
 	activity: state.loggedInUserActivity,
 	transactions: state.loggedInUserTransactions
 });

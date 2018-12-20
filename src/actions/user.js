@@ -230,21 +230,23 @@ export const getShortlist = (authData) => async (dispatch) => {
 	}
 };
 
-export const getProCalls = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, true);
+export const getProCalls = (authData, num) => async (dispatch) => {
+	dispatch(proCallsReceived([]));
+	const response = await user.getCalls(authData, num, true);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
-		dispatch(proCallsReceived(response));
+		dispatch(proCallsReceived(response.results));
 	}
 };
 
-export const getPersonalCalls = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, false);
+export const getPersonalCalls = (authData, num) => async (dispatch) => {
+	dispatch(personalCallsReceived([]));
+	const response = await user.getCalls(authData, num, false);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
-		dispatch(personalCallsReceived(response));
+		dispatch(personalCallsReceived(response.results));
 	}
 };
 

@@ -46,7 +46,7 @@ export function checkIfLoggedIn(){
   return /(^|;)\s*USER_AUTH=/.test(document.cookie);
 }
 
-export function convertDate(date) {
+export function convertDate(date = '') {
 	let oldDate = new Date(date.split('.')[0]),
 			newDate;
 	newDate = (oldDate.getMonth() + 1) + '/' + oldDate.getDate() + '/' +  oldDate.getFullYear() + ' ' + oldDate.getHours() + ':' + oldDate.getMinutes();

@@ -20,8 +20,8 @@ const rootReducer = combineReducers({
 	hiddenSearchBox: hiddenSearchBoxReduxer,
 	loggedInUser: user.loggedInUser,
 	logInFailure: user.logInError,
-	loggedInUserProCalls: user.proCalls,
-	loggedInUserPersonalCalls: user.personalCalls,
+	/*loggedInUserProCalls: user.proCalls,
+	loggedInUserPersonalCalls: user.personalCalls,*/
 	loggedInUserActivity: user.activity,
 	loggedInUserTransactions: user.transactions,
 	registerSuccess: user.registerSuccess,

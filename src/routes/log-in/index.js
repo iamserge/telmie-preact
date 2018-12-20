@@ -27,9 +27,6 @@ class LogIn extends Component {
 			this.setState({
 				loggedIn: true
 			});
-			this.props.getProCalls(nextProps.userData.userAuth);
-			this.props.getPersonalCalls(nextProps.userData.userAuth);
-			this.props.getTransactions(nextProps.userData.userAuth);
 		}
 	}
 	render() {

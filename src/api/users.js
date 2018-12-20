@@ -18,17 +18,19 @@ export function logIn(authData){
 	});
 }
 
-export function getCalls(authData, isProCalls){
+export function getCalls(authData, num, isProCalls){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers}).then(response => {
-    if (response.status === 401){
+	const additionalQuery = num ? `&size=${num}` : '';
+	return fetch(
+		(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS) + additionalQuery,
+		{ method: 'GET', headers}
+	).then(response => {
+		if (response.status === 401){
 			return {};
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json().then(json =>  json);
 
 	}, error => {
 		throw new Error(error.message);
