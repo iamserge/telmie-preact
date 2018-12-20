@@ -18,97 +18,67 @@ class Activity extends Component {
 		super(props);
 		this.state = {
 			proCalls: [],
-			isProCalls: this.props.isProCalls,
 			activity: [],
 			cutActivity: [],
 			currentPage: 1,
 			loading: false,
 		}
-		this.showConsultedMe = this.showConsultedMe.bind(this);
-		this.showConsulted = this.showConsulted.bind(this);
-		this.nextPage = this.nextPage.bind(this);
-		this.previousPage = this.previousPage.bind(this);
-		this.changePage = this.changePage.bind(this);
-		this.changeActivityPage = this.changeActivityPage.bind(this);
+	}
+
+	getData = (props) => {
+		this.setState({ loading: true, activity: [], cutActivity: [] });
+		getCalls(props.userData.userAuth, null, props.isProCalls).then((data) => {
+			const { results  = []} = data;
+		   	this.setState({
+				loading: false,
+				activity: results,
+				cutActivity: results.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
+			});
+		}).catch((error) => {
+			console.log(error);
+			this.setState({
+				activity: [],
+				loading: false
+			})
+		});
+		
 	}
 	componentDidMount(){
-		if (this.props.userData.userAuth) {
-			let that = this;
-			this.setState({
-				loading: true
-			})
-			getCalls(this.props.userData.userAuth, this.state.isProCalls).then(function(data) {
-				let processed = processActivities(data);
-		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
-				});
-			}).catch(function(error) {
-					that.setState({
-						activity: [],
-						loading: false
-					})
-			});
-		}
+		(this.props.userData.userAuth) && this.getData(this.props);
 	}
-	nextPage(){
-		this.setState({
-			currentPage: this.state.currentPage++
-		});
-		this.changeActivityPage(this.state.currentPage++);
+	nextPage = () => {
+		const currentPage = this.state.currentPage + 1;
+		this.setState({ currentPage });
+		this.changeActivityPage(currentPage);
 	}
-	previousPage(){
-		this.setState({
-			currentPage: this.state.currentPage--
-		});
-		this.changeActivityPage(this.state.currentPage--);
+	previousPage = () => {
+		const currentPage = this.state.currentPage - 1;
+		this.setState({ currentPage });
+		this.changeActivityPage(currentPage);
 	}
-	changePage(page) {
-		this.setState({
-			currentPage: page
-		});
+	changePage = (page) => {
+		this.setState({ currentPage: page });
 		this.changeActivityPage(page);
 	}
-	changeActivityPage(page){
+	changeActivityPage = (page) => {
+		window.scrollTo(0,0);
 		this.setState({
 			cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
 		})
 	}
 
-	showConsulted(){
-		this.setState({
-			proCalls: false
-		})
-	}
-	showConsultedMe(){
-		this.setState({
-			proCalls: true
-		})
-	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.userData.userAuth != this.props.userData.userAuth || this.props.isProCalls != nextProps.isProCalls) {
-			let that = this;
+	showConsulted = () => this.setState({ proCalls: false });
 
-			getCalls(nextProps.userData.userAuth, nextProps.isProCalls).then(function(data) {
-				let processed = processActivities(data);
-		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
-				});
-			}).catch(function(error) {
-					that.setState({
-						activity: [],
-						loading: false
-					})
-			});
-		} else {
-			this.setState({
-				loading: false
-			})
-		}
+	showConsultedMe = () => this.setState({ proCalls: true });
+
+	componentWillReceiveProps(nextProps) {
+		(nextProps.userData.userAuth != this.props.userData.userAuth 
+			|| this.props.isProCalls != nextProps.isProCalls) &&
+			this.getData(nextProps);
 	}
+
 	render() {
-		const user = this.props.userData;
+		const { userData : user = {} } = this.props;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>

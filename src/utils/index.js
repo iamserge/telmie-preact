@@ -1,7 +1,7 @@
 import { map, without } from 'lodash';
 import emoji from 'react-easy-emoji'
 
-export function processActivities(activities){
+/*export function processActivities(activities){
   let collapsedActivities = [],
       currentActivity = {
         contact:{}
@@ -26,7 +26,7 @@ export function processActivities(activities){
 
   withoutShortlist = without(withoutShortlist, undefined);
   return withoutShortlist;
-}
+}*/
 
 
 export function generateProfessionsArray(professions){

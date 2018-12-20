@@ -14,9 +14,8 @@ export default class AllActivity extends Component {
 					<div className={style.header}>
 						<div className={style.contact}>Contact</div>
 						<div className={style.date}>Date</div>
-						<div>Duration</div>
-						<div>Price</div>
-						<div>Status</div>
+						<div class={style.type}>Type</div>
+						<div class={style.count}>Count</div>
 					</div>
 					{ activity.length > 0 && activity.map(activity => (
 						<Activity key={ activity.id } activity={ activity } client = {this.props.client}/>
