@@ -6,7 +6,7 @@ import { route } from 'preact-router';
 import { Link } from 'preact-router/match';
 import FontAwesome from 'react-fontawesome';
 import emoji from 'react-easy-emoji';
-import { EN, RU, langs } from "../../../utils/consts";
+import { EN, RU, IT, langs } from "../../../utils/consts";
 
 import style from './style.scss';
 
@@ -24,12 +24,12 @@ const renderServices = ({curUrl, locale}) => {
     if(urlStr.indexOf(routes.LANGUAGE_PRACTICE) + 1){
         item = langPack[locale].SERVICES.LANGUAGE_PRACTICE;
         listItems = [
-            <li><Link href={langRoutes(langs[locale].lang, routes.IMMIGRATION_LAW)}>{langPack[locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
+            <li><Link href={langRoutes(langs[locale].code, routes.IMMIGRATION_LAW)}>{langPack[locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
         ];
     } else if (urlStr.indexOf(routes.IMMIGRATION_LAW) + 1){
         item = langPack[locale].SERVICES.IMMIGRATION_LAW;
         listItems = [
-            <li><Link href={langRoutes(langs[locale].lang, routes.LANGUAGE_PRACTICE)}>{langPack[locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
+            <li><Link href={langRoutes(langs[locale].code, routes.LANGUAGE_PRACTICE)}>{langPack[locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
         ];
     } else if (urlStr.indexOf(routes.LANGUAGE_LEARNERS) + 1){
         item = langPack[locale].SERVICES.LANGUAGE_LEARNERS;
@@ -39,17 +39,17 @@ const renderServices = ({curUrl, locale}) => {
 }
 
 const renderLocale = (props) => {
-    const changeLocalization = (code) => () => {
-        props.changeLocale(code);
+    const changeLocalization = (lang) => () => {
+        props.changeLocale(lang);
         switch(props.locale){
             case EN:
                 !(window.location.pathname.toString().indexOf('/blog/') + 1)
-                    && route(langRoutes(RU, window.location.pathname));
+                    && route(langRoutes(langs[lang].code, window.location.pathname));
                 break;
-            case RU:
+            default:
                 let _link = `/${window.location.pathname.split('/').slice(2).join('/')}`;
                 !(_link.toString().indexOf('/blog/') + 1) 
-                    && route(langRoutes(EN, _link));
+                    && route(langRoutes(langs[lang].code, _link));
                 break;
         };
     };
@@ -67,7 +67,7 @@ const renderLocale = (props) => {
     item = renderLocaleItem(langs[props.locale]);
 
     listItems = renderExcept(props.locale, props.languages, true).map(el => (
-        <li onClick={changeLocalization(langs[el] && langs[el].code)} key={langs[el] && langs[el].code}>
+        <li onClick={changeLocalization(langs[el] && langs[el].lang)} key={langs[el] && langs[el].code}>
             {langs[el] && renderLocaleItem(langs[el])}
         </li>
     ));

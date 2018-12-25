@@ -105,8 +105,9 @@ class Header extends Component {
     const { locale = EN, languages } = localeObj;
     const isLogin = Object.keys(user).length !== 0;
     const isAtHome = this.props.currentUrl === routes.HOME 
-      || this.props.currentUrl === langRoutes(RU, routes.HOME)
+      || Object.keys(langs).some(el => this.props.currentUrl === langRoutes(langs[el].code, routes.HOME))
       || this.props.currentUrl.toString().indexOf('/#') === 0;
+
     const isAtBlog = this.props.currentUrl === routes.BLOG
       || !!(this.props.currentUrl.indexOf('/blog') + 1);
     const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
@@ -126,7 +127,7 @@ class Header extends Component {
             )}
 
 
-            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
+            <Link href={langRoutes(langs[locale].code, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
             { isAtBlog ? <b class={style.title}>{langPack[locale].BLOG_TITLE}</b> : null }
@@ -153,23 +154,23 @@ class Header extends Component {
                 isServicePage ? null : ([
                   <li>{isAtHome ?
                     <ScrollLink spy={true} smooth={true} offset={globalMessage ? -120 : -50} duration={500} to="howWorksElement">{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>}
+                    : <Link href={langRoutes(langs[locale].code, routes.HOW_WORKS_LINK)}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>}
                   </li>,
                   langPack[locale].HEADER.BECOME_PRO && <li>{(isAtHome) ? 
                     <ScrollLink spy={true} smooth={true} offset={globalMessage ? -180 : -110} duration={500} to="becomeProElement">{langPack[locale].HEADER.BECOME_PRO}</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)}>{langPack[locale].HEADER.BECOME_PRO}</Link>}
+                    : <Link href={langRoutes(langs[locale].code, routes.BECOME_PRO_LINK)}>{langPack[locale].HEADER.BECOME_PRO}</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} offset={globalMessage ? -120 : -70} duration={500} to="blogElement">{langPack[locale].HEADER.BLOG}</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)}>{langPack[locale].HEADER.BLOG}</Link>}
+                    : <Link href={langRoutes(langs[locale].code, routes.BLOG_LINK)}>{langPack[locale].HEADER.BLOG}</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} duration={500} offset={globalMessage ? -120 : -70} to="FAQElement">{langPack[locale].HEADER.FAQ}</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.FAQ)}>{langPack[locale].HEADER.FAQ}</Link>}
+                    : <Link href={langRoutes(langs[locale].code, routes.FAQ)}>{langPack[locale].HEADER.FAQ}</Link>}
                   </li>,
                   <li>{isAtHome ? 
                     <ScrollLink spy={true} smooth={true} duration={500} offset={globalMessage ? -50 : 0} to="contactUsElement">{langPack[locale].HEADER.CONTACT}</ScrollLink> 
-                    : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)}>{langPack[locale].HEADER.CONTACT}</Link>}
+                    : <Link href={langRoutes(langs[locale].code, routes.CONTACT_US)}>{langPack[locale].HEADER.CONTACT}</Link>}
                   </li>
                 ])
               }
@@ -232,7 +233,7 @@ class Header extends Component {
           </div>
           <div id={style.mobileNav} class={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
-            <Link href={langRoutes(langs[locale].lang, routes.HOME)} id={style.logo}>
+            <Link href={langRoutes(langs[locale].code, routes.HOME)} id={style.logo}>
               <img src="/assets/logo.png" alt="Telmie App"/>
             </Link>
             <span id={style.expandMobileMenu}  class={this.state.mobileMenuOpened ? style.opened : ''} onClick = { this.toggleMobileMenu }>
@@ -242,23 +243,23 @@ class Header extends Component {
 
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={globalMessage ? -90 : -30} duration={500} to="howWorksElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>
+              : <Link href={langRoutes(langs[locale].code, routes.HOW_WORKS_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.HOW_IT_WORKS}</Link>
             }
             {( isAtHome && langPack[locale].HEADER.BECOME_PRO ) ?
               <ScrollLink spy={true} smooth={true} offset={globalMessage ? -130 : -70} duration={500} to="becomeProElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</Link>
+              : <Link href={langRoutes(langs[locale].code, routes.BECOME_PRO_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BECOME_PRO}</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={globalMessage ? -100 : -25} duration={500} to="blogElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</Link>
+              : <Link href={langRoutes(langs[locale].code, routes.BLOG_LINK)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.BLOG}</Link>
             }
             {isAtHome ?
                 <ScrollLink spy={true} smooth={true} offset={globalMessage ? -100 : -30} duration={500} to="FAQElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</ScrollLink>
-                : <Link href={langRoutes(langs[locale].lang, routes.FAQ)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</Link>
+                : <Link href={langRoutes(langs[locale].code, routes.FAQ)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.FAQ}</Link>
             }
             {isAtHome ?
               <ScrollLink spy={true} smooth={true} offset={globalMessage ? -60 : 0} duration={500} to="contactUsElement" onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</ScrollLink>
-              : <Link href={langRoutes(langs[locale].lang, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
+              : <Link href={langRoutes(langs[locale].code, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
             }
                 
             {/* !isLogin  ? (

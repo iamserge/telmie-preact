@@ -58,7 +58,7 @@ class BlogPage extends Component {
 	changeBlogLang = (lang) => {
 		let post = this.state.alternate_languages.find(el => el.lang == lang );
 		
-		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
+		route( langRoutes(langs[lang].code, `/blog/${post.uid}`) );
 	}
 	fetchPost = (props) => {
 		window.scrollTo(0, 0);

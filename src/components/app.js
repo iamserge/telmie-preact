@@ -32,7 +32,7 @@ import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
-import { RU, EN } from "../utils/consts";
+import { RU, EN, IT, langs } from "../utils/consts";
 
 import 'animate.css'
 
@@ -67,10 +67,9 @@ export const routes = {
 	LANGUAGE_PRACTICE: '/language-practice',
 	IMMIGRATION_LAW: '/immigration-advice',
 	LANGUAGE_LEARNERS: '/language-learners',
-	LANGUAGE_LEARNERS_RU: '/ru/language-learners'
 };
 
-export const langRoutes = (lang, route) => lang == EN ? route : `/${lang}${route}`;
+export const langRoutes = (lang, route) => lang == langs[EN].code ? route : `/${lang}${route}`;
 
 class App extends Component {
 
@@ -141,8 +140,9 @@ class App extends Component {
 	];*/
 
 	renderDefaultRoutes = () => [
-		...this.renderLangRoutes(EN),
-		...this.renderLangRoutes(RU),
+		...this.renderLangRoutes(langs[EN].code),
+		...this.renderLangRoutes(langs[RU].code),
+		...this.renderLangRoutes(langs[IT].code),
 
 		<LogIn path = { routes.LOG_IN } />,
 		<LogOut path = '/log-out' />

@@ -3,11 +3,12 @@ export const consts = {
 };
 
 export const EN = 'en-us',
-  RU = 'ru';
+  RU = 'ru',
+  IT = 'it-it';
 
 export const langs = {
   [EN]: {
-    code: 'en-us',
+    code: 'en',
     lang: EN,
     name: 'eng',
     emoji: '🇬🇧',
@@ -17,5 +18,11 @@ export const langs = {
     lang: RU,
     name: 'рус',
     emoji: '🇷🇺',
+  },
+  [IT]: {
+    code: 'it',
+    lang: IT,
+    name: 'ita',
+    emoji: '🇮🇹',
   },
 };

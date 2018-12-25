@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
 import { route } from 'preact-router';
 import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import { EN, langs } from "../../../utils/consts";
 import { langRoutes, routes } from "../../app";
 
 import 'rc-collapse/assets/index.css';
@@ -37,7 +37,7 @@ class LandingFAQ extends Component {
         }
     }
 
-    getMoreFaq = () => route(langRoutes(this.props.locale, routes.FAQ));
+    getMoreFaq = () => route(langRoutes(langs[this.props.locale].code, routes.FAQ));
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
