@@ -204,7 +204,7 @@ class HomePage extends Component {
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
-						<ProDetails content={pageData.becomePro} appLink={appLink} />
+						<ProDetails content={pageData.becomePro} locale={locale} appLink={appLink} />
 					</div> }
 
 					{ !this.state.fetchingFeaturedPost 
