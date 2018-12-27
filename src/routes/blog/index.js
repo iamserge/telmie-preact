@@ -65,9 +65,13 @@ class BlogPage extends Component {
 		props.changeLocaleLangs([]);
 		this.setState({ fetchingPost: true });
 
+		const {alternate_languages = [] } = this.state;
+		const uid = alternate_languages.length ? 
+			(alternate_languages.find(el => el.lang == props.locale )).uid : props.uid;
+
 		props.prismicCtx && (
-			props.uid ? 
-				props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
+			uid ? 
+				props.prismicCtx.api.getByUID('blog_post', uid).then((post, err) => {
 					(post.lang !== props.locale) && this.props.changeLocale(post.lang);
 					this.props.changeLocaleLangs(post.alternate_languages);
 					this.setState({ 
