@@ -92,14 +92,23 @@ export const langPack = {
     },
     [IT]: {
         DOWNLOAD_APP_BTN: 'Scarica la App',
+<<<<<<< HEAD
         HOMEPAGE_FAQ_TITLE: '"Most popular questions"',
+=======
+        HOMEPAGE_FAQ_TITLE: 'Domande più popolari',
+>>>>>>> test/prod
         GENERAL_QUESTIONS: 'Domande frequenti',
         CUSTOMERS_QUESTIONS: '"Customers"',
         EXPERTS_QUESTIONS: 'Domande frequenti per specialisti',
         PAYMENTS_QUESTIONS: 'Domande frequenti sui pagamenti',
         BLOG_TITLE: 'Blog',
+<<<<<<< HEAD
         FULL_STORY_BTN: '"Full story"',
         OTHER_POSTS: '"Other posts"',
+=======
+        FULL_STORY_BTN: 'La storia completa',
+        OTHER_POSTS: 'Altri post',
+>>>>>>> test/prod
         HEADER: {
             HOW_IT_WORKS: 'Come funziona',
             BECOME_PRO: 'Diventa Pro',

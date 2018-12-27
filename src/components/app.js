@@ -130,8 +130,9 @@ class App extends Component {
 	];
 
 	/*renderDefaultRoutes = () => [
-		...this.renderLangRoutes(EN),
-		...this.renderLangRoutes(RU),
+		...this.renderLangRoutes(langs[EN].code),
+		...this.renderLangRoutes(langs[RU].code),
+		...this.renderLangRoutes(langs[IT].code),
 
 		<LogIn path = { routes.LOG_IN } />,
 		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
