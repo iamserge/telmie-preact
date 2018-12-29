@@ -16,19 +16,8 @@ import { Link as ScrollLink } from 'react-scroll'
 import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
 import { EN, RU, langs } from '../../../utils/consts';
+import { getCookie } from '../../../utils';
 import { processGlobalMessage } from '../../../utils/prismic-middleware'
-
-
-const getCookie = (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
 
 class Header extends Component {
   constructor(props){
