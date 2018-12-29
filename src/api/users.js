@@ -56,18 +56,21 @@ export function getTransactions(authData, pageNumber){
 	});
 }
 
-export function editDetails(data){
+export function editDetails(data, userAuth){
 
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
-	headers.append("Authorization", "Basic " + data.userAuth);
-	return fetch(apiUrls.EDIT_DETAILS + data.id, { method: 'PUT', headers: headers, body: JSON.stringify( data )}).then(response => {
+	headers.append("Authorization", "Basic " + userAuth);
+	return fetch(apiUrls.EDIT_DETAILS + data.id, { method: 'PUT', headers, body: JSON.stringify( data )}).then(response => {
     if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
-			return {};
+			return { error: true };
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json()
+			.then(json => json)
+			.catch(err => {
+				console.log(err);
+				return { error: true };
+			});
 
 	}, error => {
 		throw new Error(error.message);

@@ -15,6 +15,12 @@ export const loggedInUser = (state = {}, action) => {
 			user = action.userData;
 			user.userAuth = action.userAuth;
 			return user;
+			
+		case actionTypes.EDIT_FAILURE:
+			return {
+				...state,
+				errorInUpdate: true
+			};
 
 		case actionTypes.LOGGED_OFF:
 			return {};

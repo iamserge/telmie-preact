@@ -208,15 +208,11 @@ export const verify = (token) => async (dispatch) => {
 	}
 };
 
-export const editDetails = (data) => async (dispatch) => {
-	const response = await user.editDetails(data);
-	if (Object.keys(response).length === 0) {
-		dispatch(editFailure());
-	} else {
-
-		dispatch(editSuccess(response, data.userAuth));
-
-	}
+export const editDetails = (data, userAuth) => async (dispatch) => {
+	const response = await user.editDetails(data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, data.userAuth));
 };
 export const fetchRegistration = () => (dispatch) => {
 	dispatch(fetchingRegistration());
@@ -261,9 +257,7 @@ export const getTransactions = (authData) => async (dispatch) => {
 
 export const uploadPhoto = (authData, photo) => async (dispatch) => {
 	const photoUrl = await user.uploadPhoto(authData, photo);
-
 	dispatch(photoUploaded(photoUrl));
-
 };
 
 

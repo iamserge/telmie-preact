@@ -7,6 +7,7 @@ import style from './style.scss';
 import { editDetails, uploadPhoto,
 	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
+import { getCookie } from "../../utils";
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import { route } from 'preact-router';
@@ -18,55 +19,21 @@ class EditProfile extends Component {
 		this.state = {
 			regData: null
 		}
-		this.editDetails = this.editDetails.bind(this);
 	}
 	componentDidMount(){
-		this.fetchPage(this.props);
 		this.props.changeLocaleLangs([]);
 		this.props.changeLocale();
 	}
-	fetchPage(props) {
-		if (props.prismicCtx) {
-		// We are using the function to get a document by its uid
-		return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-			if (doc) {
-			// We put the retrieved content in the state as a doc variable
-			this.setState({ regData: doc.data });
-			} else {
-			// We changed the state to display error not found if no matched doc
-			this.setState({ notFound: !doc });
-			}
-		});
-				/*
-				return props.prismicCtx.api.query('').then(function(response) {
-				console.log(response);
-				});*/
-		}
-		return null;
-	}
-	componentWillReceiveProps(nextProps){
-		this.fetchPage(nextProps);
-	}
 
-	editDetails(data){
-		let newDetails = this.props.userData;
-		newDetails.name = data.name,
-		newDetails.lastName = data.lastName;
-		newDetails.mobile = data.mobile;
-		newDetails.dateOfBirth = data.dateOfBirth;
-		newDetails.location = data.location
-		if (data.pro) {
-			newDetails.pro = {
-				profession: data.profession,
-				professionDescription: data.professionDescription,
-				category: data.sector,
-				subCategory: data.sectorCategory,
-				costPerMinute: data.rate
-			}
-		} else {
-			newDetails.pro = null
-		}
-		this.props.editDetails(newDetails);
+	editDetails = (data) => {
+		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+
+		let newDetails = {
+			...data,
+			id: this.props.userData.id
+		};
+		
+		this.props.editDetails(newDetails, userAuth);
 	}
 	render() {
 		return (

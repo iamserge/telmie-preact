@@ -118,7 +118,7 @@ class App extends Component {
 		<Pro path={routes.PRO} />,
 		<Shortlist path={routes.MY_SHORTLIST} />,
 		<Profile path = { routes.PROFILE } />,
-		<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>
 	];
