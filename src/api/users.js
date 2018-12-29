@@ -117,13 +117,13 @@ export function register(data){
 	});
 }
 
-export function registerPro(data, authData){
+export function registerPro(data, id, authData){
 
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
@@ -149,13 +149,13 @@ export function registerPro(data, authData){
 	})
 }
 
-export function updatePro(data, authData){
+export function updatePro(data, id, authData){
 
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,

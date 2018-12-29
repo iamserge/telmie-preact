@@ -75,10 +75,10 @@ class RegisterPro extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	userData: state.loggedInUser,
-	registerFailureMessage: state.registerFailureMessage,
-	dataFromServer: state.dataFromServer,
+const mapStateToProps = ({loggedInUser = {}, registerFailureMessage, dataFromServer = {}}) => ({
+	userData: loggedInUser,
+	registerFailureMessage: registerFailureMessage,
+	dataFromServer: dataFromServer,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
