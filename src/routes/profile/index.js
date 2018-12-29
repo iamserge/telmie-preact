@@ -26,8 +26,8 @@ class Profile extends Component {
 	componentDidMount(){
 		!!this.props.userData.pro && this.props.getProCalls(this.props.userData.userAuth, 2);
 		this.props.getPersonalCalls(this.props.userData.userAuth, 2);
-		/*this.props.getTransactions(this.props.userData.userAuth);
-		this.props.getShortlist(this.props.userData.userAuth)*/
+		this.props.getTransactions(this.props.userData.userAuth, 5);
+		/*this.props.getShortlist(this.props.userData.userAuth)*/
 		this.props.changeLocaleLangs([]);
 		this.props.changeLocale();
 	}
@@ -35,8 +35,8 @@ class Profile extends Component {
 		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
 			!!nextProps.userData.pro && this.props.getProCalls(nextProps.userData.userAuth, 2);
 			this.props.getPersonalCalls(nextProps.userData.userAuth, 2);
-			/*this.props.getTransactions(nextProps.userData.userAuth);
-			this.props.getShortlist(nextProps.userData.userAuth)*/
+			this.props.getTransactions(nextProps.userData.userAuth, 5);
+			/*this.props.getShortlist(nextProps.userData.userAuth)*/
 		}
 
 	}
@@ -53,7 +53,7 @@ class Profile extends Component {
 				<Details user = { user }/>
 				<ActivityList recentActivity = { activity.personCalls } title = "Recent pros" link={routes.MY_PROS}/>
 				{ !!user.pro && <ActivityList recentActivity = { activity.proCalls } title = "Recent clients" link={routes.MY_CLIENTS}/> }
-				<Transactions transactions = { this.props.transactions } title = "Recent transactions"  limit = {5} />
+				<Transactions { ...this.props.transactions } title = "Recent transactions"  withoutBalance = {true}/>
 			</div>
 		);
 	}

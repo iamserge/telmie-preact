@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import style from './style.scss';
-import { logIn } from '../../actions/user';
-import { route } from 'preact-router';
 import { getTransactions,
 	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Transactions from '../../components/profile/transactions';
@@ -55,7 +53,7 @@ class AllTransactions extends Component {
 	}
 	changeTransactionsPage = (page) => {
 		this.setState({
-			cutTransactions: this.props.transactions.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			cutTransactions: this.props.transactions.results.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
 		})
 	}
 
@@ -71,23 +69,25 @@ class AllTransactions extends Component {
 			})
 		}
 
-		if (nextProps.transactions.length  > 0) {
+		const { results = []} = nextProps.transactions
+		if (results.length  > 0) {
 			this.setState({
 				loading: false
 			})
 			this.setState({
-				cutTransactions: nextProps.transactions.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
+				cutTransactions: results.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
 			})
 		}
 
 	}
 	render() {
+		const { results = []} = this.props.transactions;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>Money</h1>
-				<Transactions transactions = { this.state.cutTransactions } loading = { this.state.loading }/>
+				<Transactions {...this.props.transactions} results = { this.state.cutTransactions } loading = { this.state.loading }/>
 				<Pagination
-					list = { this.props.transactions }
+					list = { results }
 					changePage = { this.changePage }
 					nextPage = { this.nextPage }
 					previousPage = { this.previousPage }

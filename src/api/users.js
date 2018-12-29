@@ -39,17 +39,22 @@ export function getCalls(authData, num, isProCalls){
 
 
 
-export function getTransactions(authData, pageNumber){
+export function getTransactions(authData, num){
 	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.GET_TRANSACTIONS, { method: 'GET', headers: headers}).then(response => {
+	const additionalQuery = num ? `?size=${num}` : '';
+	return fetch(apiUrls.GET_TRANSACTIONS + additionalQuery, { method: 'POST', headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json()
+			.then(json => json)
+			.catch(err => {
+				console.log(err);
+				return {error: true}
+			});
 
 	}, error => {
 		throw new Error(error.message);

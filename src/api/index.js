@@ -11,7 +11,7 @@ export const apiUrls = {
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'users/activity?isPro=true',
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isPro=false',
-  GET_TRANSACTIONS: apiRoot + 'cards/history',
+  GET_TRANSACTIONS: apiRoot + 'wallet',
   VERIFY_USER: apiRoot + 'users/signup',
   ADD_TO_SHORTLIST: (id) => apiRoot + 'shortlist/' + id,
   RESET_PASSWORD: apiRoot  + 'security/reset',

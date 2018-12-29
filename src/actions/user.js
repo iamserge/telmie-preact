@@ -247,9 +247,8 @@ export const getPersonalCalls = (authData, num) => async (dispatch) => {
 };
 
 
-export const getTransactions = (authData) => async (dispatch) => {
-	const response = await user.getTransactions(authData);
-
+export const getTransactions = (authData, num) => async (dispatch) => {
+	const response = await user.getTransactions(authData, num);
 	dispatch(transactionsReceived(response));
 
 };
