@@ -5,13 +5,18 @@ import { connect } from 'preact-redux';
 import ContactForm from '../../components/new-landing/contact-form'
 
 import { langs } from '../../utils/consts'
-import { sendContactData, clearContactData, changeLocaleLangs } from '../../actions/user';
+import { localeGet } from '../../reducers/user'
+import { sendContactData, clearContactData, changeLocaleLangs, changeLocale } from '../../actions/user';
 
 class ContactPage extends Component {
 	
 	componentDidMount(){
 		window.scrollTo(0, 0);
 		this.props.changeLocaleLangs(Object.keys(langs));
+	}
+	componentDidMount(){
+		const _lang = localeGet();
+		_lang !== this.props.locale && this.props.changeLocale(_lang);
 	}
     
 	render(){
@@ -36,6 +41,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	sendContactData,
 	clearContactData,
 	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

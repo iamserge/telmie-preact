@@ -1,7 +1,9 @@
 import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
+import { route } from 'preact-router';
 import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import { EN, langs } from "../../../utils/consts";
+import { langRoutes, routes } from "../../app";
 
 import 'rc-collapse/assets/index.css';
 import style from './style.scss';
@@ -35,10 +37,7 @@ class LandingFAQ extends Component {
         }
     }
 
-    shouldComponentUpdate(){
-
-    }
-
+    getMoreFaq = () => route(langRoutes(langs[this.props.locale].code, routes.FAQ));
     setActiveTab = (tab) =>  () => this.setState({ activeTab: tab, activeQuest: ''});
     setActiveQuest = (quest) => this.setState({ activeQuest: quest});
 
@@ -86,6 +85,7 @@ class LandingFAQ extends Component {
                                     && (<li key={value} 
                                             class={activeTab===value ? style.active : '' } 
                                             onClick={this.setActiveTab(value)}> {text} </li>))}
+                            { this.props.isHome && <li style={{textTransform: 'none'}} onClick={this.getMoreFaq}>{langPack[this.props.locale].MORE_FAQ}</li> }
                         </ul>
                     </div>
 

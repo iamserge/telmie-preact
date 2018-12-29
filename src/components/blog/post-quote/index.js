@@ -8,7 +8,7 @@ const PostQuote = ({content = {}}) => {
   return (
     <div class={`${style.blogQuote} uk-container`}>
       <blockquote>{quoteData.text}</blockquote>
-      <p class={style.blogAuthorName}>{quoteData.author}</p>
+      {quoteData.author && <p class={style.blogAuthorName}>{quoteData.author}</p>}
     </div>
   )
 }

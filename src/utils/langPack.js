@@ -1,4 +1,4 @@
-import { EN, RU } from "../utils/consts";
+import { EN, RU, IT } from "../utils/consts";
 
 
 export const langPack = {
@@ -44,6 +44,7 @@ export const langPack = {
             LANGUAGE_LEARNERS: 'Language learning',
         },
         FAQ: 'FAQ',
+        MORE_FAQ: 'More FAQ',
     },
     [RU]: {
         DOWNLOAD_APP_BTN: 'Скачать приложение',
@@ -87,5 +88,50 @@ export const langPack = {
             LANGUAGE_LEARNERS: 'Изучение языка',
         },
         FAQ: 'Часто задаваемые вопросы',
-    }
+        MORE_FAQ: 'Больше вопросов',
+    },
+    [IT]: {
+        DOWNLOAD_APP_BTN: 'Scarica la App',
+        HOMEPAGE_FAQ_TITLE: 'Domande più popolari',
+        GENERAL_QUESTIONS: 'Domande frequenti',
+        CUSTOMERS_QUESTIONS: '"Customers"',
+        EXPERTS_QUESTIONS: 'Domande frequenti per specialisti',
+        PAYMENTS_QUESTIONS: 'Domande frequenti sui pagamenti',
+        BLOG_TITLE: 'Blog',
+        FULL_STORY_BTN: 'La storia completa',
+        OTHER_POSTS: 'Altri post',
+        HEADER: {
+            HOW_IT_WORKS: 'Come funziona',
+            BECOME_PRO: 'Diventa Pro',
+            BLOG: 'Blog',
+            FAQ: 'Domande frequenti',
+            CONTACT: 'Contatti',
+        },
+        FOOTER: {
+            HOME: 'Home',
+            CONTACT: 'Contatti',
+            BLOG: 'Blog',
+            POLICY: 'Privacy Policy',
+            TERMS: 'Termini e condizioni',
+            FAQ: 'Domande frequenti',
+        },
+        CONTACT_US: {
+            title: 'Contatti',
+            subTitle: 'Hai qualche domanda? ',
+            name: 'Nome',
+            email: 'E-mail',
+            company: 'Azienda',
+            subject: 'Oggetto',
+            message: 'Scrivi qui il tuo messaggio',
+            success: 'Grazie per averci contattato ',
+            submitBtn: 'Invia',
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Esercizio delle lingue straniere',
+            IMMIGRATION_LAW: 'Consulenza immigrazione',
+            LANGUAGE_LEARNERS: 'Impara la lingua',
+        },
+        FAQ: 'Domande frequenti',
+        MORE_FAQ: 'Altre domande',
+    },
 }

@@ -10,7 +10,6 @@ import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 import ScrollToTop from'react-scroll-up'
 import FontAwesome from 'react-fontawesome';
 
-
 import InfoComponent from '../../components/new-landing/info-component'
 import PhotoCards from '../../components/new-landing/photo-cards'
 import FeaturedServices from '../../components/new-landing/featured-services'
@@ -177,7 +176,8 @@ class HomePage extends Component {
 				<div id="homepage">
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale}/>
+						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale} 
+							hiddenSearchBox={this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin = { Object.keys(user).length !== 0 } />
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
@@ -199,12 +199,12 @@ class HomePage extends Component {
 
 					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
 						<Element name="FAQElement"></Element>
-						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} faqs={pageData.faqs} locale={locale}/>
+						<LandingFAQ headerFAQ={langPack[locale].HOMEPAGE_FAQ_TITLE} faqs={pageData.faqs} locale={locale} isHome={true}/>
 					</div> }
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
-						<ProDetails content={pageData.becomePro} appLink={appLink} />
+						<ProDetails content={pageData.becomePro} locale={locale} appLink={appLink} />
 					</div> }
 
 					{ !this.state.fetchingFeaturedPost 
@@ -225,7 +225,7 @@ class HomePage extends Component {
 						info={sendContactMessageInfo}/>
 					</div>
 
-					<ScrollToTop showUnder={150} style={{zIndex: 1002}}>
+					<ScrollToTop showUnder={150} style={{zIndex: 1002, bottom: 100, right: 38}}>
 						<div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
 					</ScrollToTop>
 				</div>

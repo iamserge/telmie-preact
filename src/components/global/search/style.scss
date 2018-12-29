@@ -8,7 +8,7 @@
 		&.collapsed {
 			#searchModal {
 				    position: static !important;
-				  margin: -40px auto 120px auto;
+				  margin: -70px auto 40px auto;
 				  width: 700px;
 					transform: translate(0,0);
 					> div {
@@ -16,6 +16,7 @@
 							input {
 								font-size: 26px;
 								height: 60px;
+								text-align: center;
 							}
 							a {
 								top: 8px;

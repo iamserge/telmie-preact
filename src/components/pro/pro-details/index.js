@@ -24,6 +24,7 @@ export default class Pro extends Component {
 	}
 	render({person}) {
 		const { pro = {} } = person;
+
 		return (
 			<div class={style.person}>
 				<div className={style.imageContainer}>

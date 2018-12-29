@@ -31,7 +31,7 @@ class BlogPosts extends Component {
     super(props);
   }
 
-  onArticleClick = (link) => () => route(langRoutes(langs[this.props.locale].lang, link));
+  onArticleClick = (link) => () => route(langRoutes(langs[this.props.locale].code, link));
 
   render(){
     const allPosts = this.props.blogPosts;
@@ -67,7 +67,7 @@ class BlogPosts extends Component {
     };
 
     return (
-      <div>
+      <div class='articlesList'>
         <div class={style.blogPosts}>
 
           <div class={`${style.blogPostsTitle} uk-container`}>

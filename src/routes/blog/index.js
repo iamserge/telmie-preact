@@ -10,6 +10,7 @@ import FontAwesome from 'react-fontawesome';
 import { route } from 'preact-router';
 import BlogPosts from '../../components/blog/blog-posts';
 import AuthorInfo from '../../components/blog/author-info';
+import BlogButton from '../../components/blog/blog-button';
 import BlogComments from '../../components/blog/blog-comments';
 
 import PostDecorationText from '../../components/blog/post-decoration-text';
@@ -57,16 +58,20 @@ class BlogPage extends Component {
 	changeBlogLang = (lang) => {
 		let post = this.state.alternate_languages.find(el => el.lang == lang );
 		
-		route( langRoutes(langs[lang].lang, `/blog/${post.uid}`) );
+		route( langRoutes(langs[lang].code, `/blog/${post.uid}`) );
 	}
 	fetchPost = (props) => {
 		window.scrollTo(0, 0);
 		props.changeLocaleLangs([]);
 		this.setState({ fetchingPost: true });
 
+		const {alternate_languages = [] } = this.state;
+		const uid = alternate_languages.length ? 
+			(alternate_languages.find(el => el.lang == props.locale )).uid : props.uid;
+
 		props.prismicCtx && (
-			props.uid ? 
-				props.prismicCtx.api.getByUID('blog_post', props.uid).then((post, err) => {
+			uid ? 
+				props.prismicCtx.api.getByUID('blog_post', uid).then((post, err) => {
 					(post.lang !== props.locale) && this.props.changeLocale(post.lang);
 					this.props.changeLocaleLangs(post.alternate_languages);
 					this.setState({ 
@@ -122,6 +127,8 @@ class BlogPage extends Component {
 								return (<PostDecorationText content={content} />)
 							case 'about_an_author':
 								return (<AuthorInfo content={content}/>)
+							case 'button_section':
+								return <BlogButton content={content}/>
 						}
 					})}
 					</div>
@@ -135,7 +142,7 @@ class BlogPage extends Component {
 */}
 
 
-					<ScrollToTop showUnder={150} style={{ zIndex: 1002 }}>
+					<ScrollToTop showUnder={150} style={{ zIndex: 1002, bottom: 100, right: 38 }}>
 						<div class="top-btn">
 							<FontAwesome name="angle-up" size="2x" />
 						</div>
