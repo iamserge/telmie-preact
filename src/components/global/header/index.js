@@ -217,7 +217,7 @@ class Header extends Component {
                           { user.pro ? 'Edit Pro details' : 'Register as Pro'}
                           </Link></li>
                         <li class="uk-nav-divider"></li>
-                        <li><Link href={routes.SETTINGS}>Settings</Link></li>
+                        {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>*/}
                         <li><a onClick={this.logOff}>Log out</a></li>
                     </ul>
                 </div>
@@ -281,7 +281,7 @@ class Header extends Component {
                 <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
                 <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
                 {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
-                <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
+                {/*<Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>*/}
                 <a onClick={()=>this.logOff()}>Log out</a>
               </div>
             )}
