@@ -146,10 +146,6 @@ export default class SearchComponent extends Component {
 			searchSuggestions: [],
       expanded: false
 		}
-		this.closeModal = this.closeModal.bind(this);
-    this.performSearch = this.performSearch.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.onFocus = this.onFocus.bind(this);
 	}
 	animateIn (modal, dialog) {
     this.setState({showModal: true});
@@ -177,7 +173,7 @@ export default class SearchComponent extends Component {
 		//velocity(dialog, {scale: 0.95},{display: 'none'}, 20);
   }
 
-	closeModal(){
+	closeModal = () => {
 		this.setState({showModal: false, expanded: false})
 	}
 
@@ -202,7 +198,7 @@ export default class SearchComponent extends Component {
       this.routeHandler(searchTerm);
     }
   }
-  performSearch(e){
+  performSearch = (e) => {
     e.stopPropagation();
     if (!this.state.expanded) {
       this.setState({
@@ -224,7 +220,7 @@ export default class SearchComponent extends Component {
     );
   }
 
-  onFocus(){
+  onFocus = () => {
     this.setState({
       expanded: true,
       showModal: true

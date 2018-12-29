@@ -8,8 +8,9 @@
 		&.collapsed {
 			#searchModal {
 				    position: static !important;
-				  margin: -70px auto 40px auto;
-				  width: 700px;
+				  	margin: -70px auto 40px auto;
+					  width: 100%;
+					  max-width: 700px;
 					transform: translate(0,0);
 					> div {
 						form {
@@ -176,12 +177,16 @@
 }
 
 @media (max-width: 880px) {
-	#searchContainer {
+	#searchModal{
+		width: 90%;
+		max-width: 500px !important;
+	}
+	/*#searchContainer {
 		&.collapsed {
 			#searchModal {
 				width: 46px;
-		    top: 0;
-		    right: 66px;
+		    	top: 0;
+		    	right: 66px;
 				> div {
 					form {
 						input {
@@ -206,5 +211,5 @@
 			}
 		}
 	}
-    
+    */
 }
