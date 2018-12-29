@@ -9,6 +9,11 @@ import { routes } from '../../app'
 
 export default class Details extends Component {
 
+	convertLocation = (location) => {
+		const {country, city, line1, postCode} = location ? JSON.parse(location) : {};
+		return `${country}, ${city}, ${line1} (${postCode})`;
+	}
+
 	render({user}) {
 		const dateOfBirth = (user.dateOfBirth != null) ? changeDateISOFormat(user.dateOfBirth) : 'TBC';
 
@@ -37,7 +42,7 @@ export default class Details extends Component {
 					</div>
 					<div>
 						<span className={style.key}>Location:</span>
-						<span className={style.value}>{(user.location != null) ? user.location : 'TBC'}</span>
+						<span className={style.value}>{(user.location != null) ? this.convertLocation(user.location) : 'TBC'}</span>
 					</div>
 					<div>
 						<span className={style.key}>Mobile:</span>
