@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import style from './style.scss';
-import { getProCalls, getPersonalCalls, getTransactions, getShortlist } from '../../actions/user';
+import { getProCalls, getPersonalCalls, getTransactions, getShortlist, 
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import { hideSearchBox } from '../../actions';
 
 import { route } from 'preact-router';
@@ -27,6 +28,8 @@ class Profile extends Component {
 		this.props.getPersonalCalls(this.props.userData.userAuth, 2);
 		/*this.props.getTransactions(this.props.userData.userAuth);
 		this.props.getShortlist(this.props.userData.userAuth)*/
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
@@ -70,7 +73,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getProCalls,
 	getPersonalCalls,
 	getTransactions,
-	getShortlist
+	getShortlist,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

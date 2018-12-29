@@ -5,13 +5,19 @@ import style from './style.scss';
 
 import Settings from '../../components/settings';
 
-import { uploadPhoto, editDetails } from '../../actions/user';
+import { uploadPhoto, editDetails,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
 
 
 class SettingsPage extends Component {
 	constructor(props){
 		super(props);
+	}
+
+	componentDidMount(){
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 
 	render() {
@@ -41,7 +47,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     uploadPhoto,
-    editDetails
+	editDetails,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

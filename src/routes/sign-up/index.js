@@ -20,9 +20,6 @@ class SignUp extends Component {
 		props.changeLocale();
 		props.changeLocaleLangs([]);
 	}
-	componentWillReceiveProps(nextProps){
-		
-	}
 	render() {
 
 		if (!this.state.loggedIn) {

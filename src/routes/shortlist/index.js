@@ -3,7 +3,8 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import style from './style.scss';
-import { logIn, getShortlist } from '../../actions/user';
+import { logIn, getShortlist,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import { route } from 'preact-router';
 import ProList from '../../components/search/pros-list';
 import Spinner from '../../components/global/spinner';
@@ -20,12 +21,13 @@ class Activity extends Component {
 	}
 	componentDidMount(){
 		if (this.props.userData.userAuth && this.props.shortlistPros.length == 0) {
-			let that = this;
 			this.setState({
 				loading: true
 			})
 			this.props.getShortlist(this.props.userData.userAuth);
 		}
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.userData.userAuth != this.props.userData.userAuth){
@@ -54,8 +56,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	getShortlist
-
+	getShortlist,
+	changeLocaleLangs,
+	changeLocale
 }, dispatch);
 
 export default connect(

@@ -4,7 +4,8 @@ import { connect } from 'preact-redux';
 import style from './style.scss';
 import {  } from '../../actions/user';
 import { route } from 'preact-router';
-import { registerPro, getCategories } from '../../actions/user';
+import { registerPro, getCategories,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 
 import Spinner from '../../components/global/spinner';
 
@@ -33,6 +34,8 @@ class RegisterPro extends Component {
 		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
 		this.props.getCategories(userAuth);
 		this.fetchPage(this.props);
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 
 	fetchPage(props) {
@@ -84,6 +87,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 	registerPro,
 	getCategories,
+	changeLocaleLangs,
+	changeLocale
 }, dispatch);
 
 export default connect(

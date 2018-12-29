@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import EditProfileForm from '../../components/edit-profile/edit-profile-form';
 import style from './style.scss';
-import { editDetails, uploadPhoto } from '../../actions/user';
+import { editDetails, uploadPhoto,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
@@ -21,6 +22,8 @@ class EditProfile extends Component {
 	}
 	componentDidMount(){
 		this.fetchPage(this.props);
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 	fetchPage(props) {
 		if (props.prismicCtx) {
@@ -88,7 +91,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	editDetails,
-	uploadPhoto
+	uploadPhoto,
+	changeLocaleLangs,
+	changeLocale
 }, dispatch);
 
 export default connect(

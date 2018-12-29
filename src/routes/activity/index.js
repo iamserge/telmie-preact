@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { getCalls } from '../../api/users'
 import style from './style.scss';
-import { logIn } from '../../actions/user';
+import { logIn,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import { route } from 'preact-router';
 import AllActivity from '../../components/profile/all-activity';
 import Spinner from '../../components/global/spinner';
@@ -45,6 +46,8 @@ class Activity extends Component {
 	}
 	componentDidMount(){
 		(this.props.userData.userAuth) && this.getData(this.props);
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 	nextPage = () => {
 		const currentPage = this.state.currentPage + 1;
@@ -111,8 +114,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	getCalls
-
+	getCalls,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

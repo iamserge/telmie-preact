@@ -6,7 +6,8 @@ import { connect } from 'preact-redux';
 import style from './style.scss';
 import { logIn } from '../../actions/user';
 import { route } from 'preact-router';
-import { getTransactions } from '../../actions/user';
+import { getTransactions,
+	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Transactions from '../../components/profile/transactions';
 import Pagination from '../../components/profile/pagination';
 const MAX_ITEMS = 10;
@@ -30,7 +31,8 @@ class AllTransactions extends Component {
 			})
 			this.props.getTransactions(this.props.userData.userAuth);
 		}
-
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 }
 
 	nextPage= () => {
@@ -80,7 +82,6 @@ class AllTransactions extends Component {
 
 	}
 	render() {
-		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>Money</h1>
@@ -105,7 +106,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	getTransactions
+	getTransactions,
+	changeLocaleLangs,
+	changeLocale
 }, dispatch);
 
 export default connect(
