@@ -80,11 +80,13 @@ class Header extends Component {
       : !this.state.isTop && this.setState({isTop: true});
   }
   
-  logOff(){
+  logOff = () => {
     this.setState({
       loggedOff: true
     });
     this.props.logOff();
+    router.route(routes.HOME);
+
   };
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
@@ -216,7 +218,7 @@ class Header extends Component {
                           </Link></li>
                         <li class="uk-nav-divider"></li>
                         <li><Link href={routes.SETTINGS}>Settings</Link></li>
-                        <li><a onClick={()=>this.logOff()}>Log out</a></li>
+                        <li><a onClick={this.logOff}>Log out</a></li>
                     </ul>
                 </div>
 
