@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import SimpleReactValidator from 'simple-react-validator';
 import ToggleItem from "./toggle-item"
 import ImageUploader from 'react-images-upload';
+import { apiRoot } from "../../api";
 
 
 import { changeDateISOFormat, getCookie } from '../../utils/index'
