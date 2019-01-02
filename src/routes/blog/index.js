@@ -39,12 +39,18 @@ class BlogPage extends Component {
 	componentWillReceiveProps(nextProps){
 		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
 			|| (this.props.locale !== nextProps.locale)
+		) {
+			this.fetchPost(nextProps, true);
+			this.fetchRecentPosts(nextProps, true);
+		}
+		if ((this.props.prismicCtx == null && nextProps.prismicCtx != null)
 			|| (this.props.path !== nextProps.path)
 			|| (this.props.uid !== nextProps.uid)
 		) {
 			this.fetchPost(nextProps);
 			this.fetchRecentPosts(nextProps);
 		}
+
 		if(this.props.locale !== nextProps.locale){
 			this.setState({ fetchingPost: true });
 			this.changeBlogLang(nextProps.locale);
@@ -60,14 +66,15 @@ class BlogPage extends Component {
 		
 		route( langRoutes(langs[lang].code, `/blog/${post.uid}`) );
 	}
-	fetchPost = (props) => {
+	fetchPost = (props, isLocaleChanged = false) => {
 		window.scrollTo(0, 0);
 		props.changeLocaleLangs([]);
 		this.setState({ fetchingPost: true });
 
 		const {alternate_languages = [] } = this.state;
-		const uid = alternate_languages.length ? 
-			(alternate_languages.find(el => el.lang == props.locale )).uid : props.uid;
+
+		const uid = isLocaleChanged ? alternate_languages.length ? 
+			(alternate_languages.find(el => el.lang == props.locale )).uid : props.uid : props.uid;
 
 		props.prismicCtx && (
 			uid ? 
