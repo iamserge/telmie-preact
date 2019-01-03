@@ -87,6 +87,7 @@
     "react-autosuggest": "^9.3.3",
     "react-cookie": "^2.1.4",
     "react-cookies": "^0.1.0",
+    "react-cropper": "^1.0.1",
     "react-easy-emoji": "^1.2.0",
     "react-fontawesome": "^1.6.1",
     "react-ga": "^2.5.3",

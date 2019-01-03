@@ -11,6 +11,8 @@ import 'react-rangeslider/lib/index.css';
 import ImageUploader from 'react-images-upload';
 import { routes } from "../../app";
 
+import ImageUpload from '../image-upload'
+
 const setUserInfo = (user) => {
 	return {
 		name: user.name,
@@ -38,7 +40,7 @@ export default class EditProfileForm extends Component {
 		this.setState({loading: false, isModify: false, userInfo: setUserInfo(nextProps.userData)})
 	}
 	onDrop = (picture) => {
-		this.props.uploadPhoto(this.props.userData.userAuth, picture[0]);
+		this.props.uploadPhoto(this.props.userData.userAuth, picture);
 	}
 	onChange = (e) => {
 		const {name, value} = e.target;
@@ -77,13 +79,16 @@ export default class EditProfileForm extends Component {
 						</div>
 						<div className={style.upload}>
 
-							<ImageUploader
+							{/*<ImageUploader
 								withIcon={false}
 								buttonText='Upload new'
 								onChange={this.onDrop}
 								imgExtension={['.jpg', '.png', '.gif']}
 								maxFileSize={5242880}
-							/>
+							/>*/}
+
+							<ImageUpload onDrop={this.onDrop}/>
+							
 							
 						</div>
 

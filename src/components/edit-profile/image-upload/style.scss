@@ -1,0 +1,101 @@
+@import './src/style/variables';
+
+.modal{
+    width: 900px;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    .test{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+        .cropperWrapper{
+            display: inline-block;
+            width: calc(100% - 260px);
+            margin-right: 10px;
+        }
+    
+        .preview{
+            width: 250px;
+            text-align: center;
+            display: inline-block;
+            position: relative;
+    
+            .imgPreview{
+                width: 250px;
+                height: 250px;
+                overflow: hidden;
+
+                &:after {
+                    content: "";
+                    background-image: url('/assets/avatar_mask_xlarge.png');
+                    width: 250px;
+                    height: 250px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background-size: 100%;
+                    z-index: 100;
+                }
+            }
+        }
+    }
+}
+
+.chooseFileButton{
+    display: inline-block;
+    cursor: pointer;
+
+    color: white;
+    padding: 0 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0;
+    background-color: $red;
+
+    height: 60px;
+    line-height: 60px;
+	font-size: 18px;
+	width: 100%;
+}
+
+
+@media (max-width: 960px) {
+    .modal{
+        width: 90%;
+        max-width: 800px;
+        .test{
+    
+            .cropperWrapper{
+                width: 100%;
+                max-width: 540px;
+                margin: 0 auto;
+            }
+        
+            .preview{
+                width: 100%;
+                
+                max-width: 540px;
+                display: flex;
+                margin: 0 auto;
+
+                .btnsWrapper{
+                    width: calc(100% - 250px);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    .modal{
+        .test{
+            .preview{               
+                flex-wrap: wrap;
+                .btnsWrapper{
+                    width: 100%;
+                }                
+            }
+        }
+    }
+}
