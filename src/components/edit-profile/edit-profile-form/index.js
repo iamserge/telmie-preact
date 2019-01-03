@@ -144,7 +144,7 @@ export default class EditProfileForm extends Component {
 						</div>*/}
 
 						<div className="switchContainer" id={style.proSwitch}>
-						{ (this.state.pro) ? 
+						{ (this.props.userData.pro) ? 
 							<Link href={routes.REGISTER_PRO}>Edit Pro details</Link> 
 							: <Link href={routes.REGISTER_PRO}>Register as pro</Link>}
 						</div>
