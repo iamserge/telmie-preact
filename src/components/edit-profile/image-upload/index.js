@@ -3,6 +3,7 @@ import Modal from '../../modal';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import style from './style.scss';
+import { bytesToSize } from '../../../utils'
 
 export default class ImageUpload extends Component {
 
@@ -22,12 +23,16 @@ export default class ImageUpload extends Component {
             files = e.dataTransfer.files;
 		} else if (e.target) {
 		    files = e.target.files;
-		}
-		const reader = new FileReader();
-		reader.onload = () => {
-		    this.setState({ file: reader.result, isVisible: true });
-		};
-		reader.readAsDataURL(files[0]);
+        }
+
+        if(files[0].size < this.props.maxFileSize 
+            && this.props.imgExtension.some(el => (files[0].type.indexOf(el) + 1))){
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.setState({ file: reader.result, isVisible: true });
+            };
+            reader.readAsDataURL(files[0]);
+        }
     }
     
     onCancel = () => {
@@ -52,7 +57,9 @@ export default class ImageUpload extends Component {
 
         return (
             <div>
-                <p style={{fontSize: 12, textAlign: 'center'}}>Max file size: 5mb, accepted: jpg|gif|png</p>
+                <p style={{fontSize: 12, textAlign: 'center'}}>
+                    Max file size: {bytesToSize(this.props.maxFileSize)}, accepted: {this.props.imgExtension.join('|')}
+                </p>
                 <label for="file-upload" class={style.chooseFileButton}>
 					Upload new
 				</label>

@@ -87,7 +87,7 @@ export default class EditProfileForm extends Component {
 								maxFileSize={5242880}
 							/>*/}
 
-							<ImageUpload onDrop={this.onDrop}/>
+							<ImageUpload onDrop={this.onDrop} imgExtension={['jpg', 'png', 'gif']} maxFileSize={5242880}/>
 							
 							
 						</div>
