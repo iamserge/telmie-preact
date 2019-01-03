@@ -31,7 +31,12 @@ export default class EditProfileForm extends Component {
 			loadingSettings: false,
 			isModify: false,
 		}
-		this.validator = new SimpleReactValidator();
+		this.validator = new SimpleReactValidator({
+			name: {
+				message: "The name isn't valid.",
+				rule: (val, params, validator) => /^[A-Za-z\s\-]+$/.test(val)
+			}  
+		});
 		
 	}
 	
@@ -54,8 +59,13 @@ export default class EditProfileForm extends Component {
 	}
 
 	onSave = () => {
-		this.setState({loading: true});
-		this.props.editDetails(this.state.userInfo);
+		if (this.validator.allValid()) {
+			this.setState({loading: true});
+			this.props.editDetails(this.state.userInfo);
+		} else {
+			this.validator.showMessages();
+			this.forceUpdate();
+		}
 	}
 
 	onSwitchEmail = () => {
@@ -107,13 +117,13 @@ export default class EditProfileForm extends Component {
 								<label for="firstName">First name</label>
 								<input type="text" name="name" value={name} onChange={this.onChange} className="uk-input" id="name"/>
 
-								{this.validator.message('firstName', name, 'required', 'validation-tooltip', {required: 'Please enter first name'})}
+								{this.validator.message('firstName', name, 'required|name', 'validation-tooltip', {required: 'Please enter first name'})}
 							</div>
 							<div className="input-container">
 								<label for="password">Last name</label>
 								<input type="text" name="lastName" value={lastName} onChange={this.onChange} className="uk-input"	id="lastName" />
 
-								{this.validator.message('lastName', lastName, 'required', 'validation-tooltip right', {required: 'Please enter last name'})}
+								{this.validator.message('lastName', lastName, 'required|name', 'validation-tooltip right', {required: 'Please enter last name'})}
 							</div>
 						</div>
 						{/*<div className="double-input-container">

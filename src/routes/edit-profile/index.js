@@ -30,7 +30,8 @@ class EditProfile extends Component {
 
 		let newDetails = {
 			...data,
-			id: this.props.userData.id
+			id: this.props.userData.id,
+			email: this.props.userData.email,
 		};
 		
 		this.props.editDetails(newDetails, userAuth);
