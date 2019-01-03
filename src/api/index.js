@@ -20,4 +20,5 @@ export const apiUrls = {
   REGISTER_PRO: apiRoot + 'users/pro',
   GET_CATEGORIES: apiRoot + 'categories',
   SEND_CONTACT_DATA: apiRoot + 'help/contact',
+  EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',
 }

@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import Card from "./card"
+import Card from "../card"
 import FontAwesome from 'react-fontawesome';
 import SimpleReactValidator from 'simple-react-validator';
-import ToggleItem from "./toggle-item"
+import ToggleItem from "../toggle-item"
 import ImageUploader from 'react-images-upload';
 import { apiRoot } from "../../api";
 

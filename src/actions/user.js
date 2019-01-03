@@ -214,6 +214,12 @@ export const editDetails = (data, userAuth) => async (dispatch) => {
 		dispatch(editFailure())
 		: dispatch(editSuccess(response, data.userAuth));
 };
+export const switchEmailNotif = (data, userAuth) => async (dispatch) => {
+	const response = await user.switchEmailNotif(data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, data.userAuth));
+};
 export const fetchRegistration = () => (dispatch) => {
 	dispatch(fetchingRegistration());
 };

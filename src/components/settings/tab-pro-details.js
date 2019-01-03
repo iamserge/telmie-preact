@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import Card from "./card"
+import Card from "../card"
 import { route } from 'preact-router';
 
 import {routes} from '../app'

@@ -4,7 +4,7 @@ import style from './style.scss';
 const Card = props =>  {
 
     return (
-        <div class={`${style.cardContainder}`}>
+        <div class={`${style.cardContainder} ${props.cardClass}`}>
 
             {props.headerText && <div class = {style.cardHeader}>
                 {props.headerText}

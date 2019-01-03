@@ -82,6 +82,21 @@ export function editDetails(data, userAuth){
 	});
 }
 
+export function switchEmailNotif(isOn, userAuth){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + userAuth);
+	return fetch(apiUrls.EMAIL_NOTIFICATIONS, { method: isOn ? 'POST' : 'DELETE', headers, }).then(response => {
+		return response.status !== 200 ?
+			{ error: true } 
+			: response.json().then(json => json)
+				.catch(err => {
+					console.log(err);
+					return { error: true };
+				});
+	}, error => {
+		throw new Error(error.message);
+	});
+}
 
 
 export function verify(token){

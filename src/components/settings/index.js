@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import Card from "./card"
+import Card from "../card"
 
 import ProDetailsTab from './tab-pro-details'
 import GeneralTab from './tab-general'
