@@ -17,9 +17,6 @@ const setUserInfo = (user) => {
 	return {
 		name: user.name,
 		lastName: user.lastName,
-		mobile: (user.mobile != 'TBC') ? user.mobile : '' ,
-		dateOfBirth: (user.dateOfBirth != 'TBC') ? user.dateOfBirth : '' ,
-		location: (user.location != 'TBC') ? user.location : '' ,
 	}
 }
 
@@ -108,7 +105,7 @@ export default class EditProfileForm extends Component {
 								{this.validator.message('lastName', lastName, 'required', 'validation-tooltip right', {required: 'Please enter last name'})}
 							</div>
 						</div>
-						<div className="double-input-container">
+						{/*<div className="double-input-container">
 							<div className="input-container">
 								<label for="firstName">Mobile phone</label>
 								<input type="text" name="mobile" value={mobile} onChange={this.onChange} className="uk-input" id="mobile"/>
@@ -123,7 +120,7 @@ export default class EditProfileForm extends Component {
 						<div className="input-container">
 							<label for="dateOfBirth">Date of birth</label>
 							<input type="date" name="dateOfBirth" value={dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
-						</div>
+						</div>*/}
 
 						<div className="switchContainer" id={style.proSwitch}>
 						{ (this.state.pro) ? 
