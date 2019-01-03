@@ -62,6 +62,10 @@ export default class EditProfileForm extends Component {
 		this.setState({loadingSettings: true});
 		this.props.switchEmailNotif();
 	}
+	onSwitchWorkPro = () => {
+		this.setState({loadingSettings: true});
+		this.props.switchWorkingPro();
+	}
 
 	render() {
 		const userData  = this.props.userData;
@@ -137,7 +141,10 @@ export default class EditProfileForm extends Component {
 
 						<button className="uk-button" onClick={this.onSave}>Save</button>
 
-						<AccSettings userData = { this.props.userData } isLoading = {this.state.loadingSettings} switchEmailNotif={this.onSwitchEmail}/>
+						<AccSettings userData = { this.props.userData } 
+							isLoading = {this.state.loadingSettings} 
+							switchEmailNotif={this.onSwitchEmail} 
+							switchWorkingPro = {this.onSwitchWorkPro}/>
 					</div>
 
 

@@ -1,4 +1,5 @@
 import * as user from '../api/users';
+import { apiUrls } from "../api";
 import { actionTypes } from './index';
 const setCookie = (name,value,days) => {
     var expires = "";
@@ -215,7 +216,13 @@ export const editDetails = (data, userAuth) => async (dispatch) => {
 		: dispatch(editSuccess(response, data.userAuth));
 };
 export const switchEmailNotif = (data, userAuth) => async (dispatch) => {
-	const response = await user.switchEmailNotif(data, userAuth);
+	const response = await user.switchData(apiUrls.EMAIL_NOTIFICATIONS, data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, data.userAuth));
+};
+export const switchWorkingPro = (data, userAuth) => async (dispatch) => {
+	const response = await user.switchData(apiUrls.WORKING_PRO, data, userAuth);
 	(Object.keys(response).length === 0 || response.error) ?
 		dispatch(editFailure())
 		: dispatch(editSuccess(response, data.userAuth));

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import EditProfileForm from '../../components/edit-profile/edit-profile-form';
 import style from './style.scss';
-import { editDetails, uploadPhoto, switchEmailNotif,
+import { editDetails, uploadPhoto, switchEmailNotif, switchWorkingPro,
 	changeLocaleLangs, changeLocale } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
 import { getCookie } from "../../utils";
@@ -42,6 +42,12 @@ class EditProfile extends Component {
 		
 		this.props.switchEmailNotif(!emailNotifications, _userAuth);
 	}
+	switchWorkingPro = () => {
+		const {userAuth, pro = {}} = this.props.userData
+		let _userAuth = userAuth || getCookie('USER_AUTH'); 
+		
+		this.props.switchWorkingPro(!pro.workPro, _userAuth);
+	}
 
 	render() {
 		return (
@@ -52,7 +58,8 @@ class EditProfile extends Component {
 						userData = { this.props.userData } 
 						editDetails = { this.editDetails } 
 						uploadPhoto = { this.props.uploadPhoto }
-						switchEmailNotif = { this.switchEmailNotif }/>
+						switchEmailNotif = { this.switchEmailNotif }
+						switchWorkingPro={ this.switchWorkingPro }/>
 				) : (
 					<Spinner />
 				)}
@@ -74,6 +81,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
 	changeLocale,
 	switchEmailNotif,
+	switchWorkingPro,
 }, dispatch);
 
 export default connect(

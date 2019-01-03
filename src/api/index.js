@@ -21,4 +21,5 @@ export const apiUrls = {
   GET_CATEGORIES: apiRoot + 'categories',
   SEND_CONTACT_DATA: apiRoot + 'help/contact',
   EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',
+  WORKING_PRO: apiRoot + 'users/pro/work',
 }

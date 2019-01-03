@@ -82,10 +82,10 @@ export function editDetails(data, userAuth){
 	});
 }
 
-export function switchEmailNotif(isOn, userAuth){
+export function switchData(url, isOn, userAuth){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + userAuth);
-	return fetch(apiUrls.EMAIL_NOTIFICATIONS, { method: isOn ? 'POST' : 'DELETE', headers, }).then(response => {
+	return fetch(url, { method: isOn ? 'POST' : 'DELETE', headers, }).then(response => {
 		return response.status !== 200 ?
 			{ error: true } 
 			: response.json().then(json => json)
@@ -97,7 +97,6 @@ export function switchEmailNotif(isOn, userAuth){
 		throw new Error(error.message);
 	});
 }
-
 
 export function verify(token){
 
