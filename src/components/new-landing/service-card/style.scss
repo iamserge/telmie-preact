@@ -112,6 +112,7 @@
                 animation: slideUp  2s  ease;
                 margin-top: 15px;
                 margin-bottom: 0;
+                line-height: 36px;
             }
             .serviceInfo {
                 display: block;
@@ -128,6 +129,12 @@
     @keyframes slideUp{
         0% {transform: translateY(150%);}
         45%{transform: translateY(0%);}
+    }
+}
+
+@media (max-width: 1300px) {
+    .serviceCard{
+        padding-bottom: 95px;
     }
 }
 
