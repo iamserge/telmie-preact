@@ -85,7 +85,7 @@ class LandingFAQ extends Component {
                                     && (<li key={value} 
                                             class={activeTab===value ? style.active : '' } 
                                             onClick={this.setActiveTab(value)}> {text} </li>))}
-                            { this.props.isHome && <li style={{textTransform: 'none'}} onClick={this.getMoreFaq}>{langPack[this.props.locale].MORE_FAQ}</li> }
+                            { this.props.isHome && <li onClick={this.getMoreFaq}>{langPack[this.props.locale].MORE_FAQ}</li> }
                         </ul>
                     </div>
 
