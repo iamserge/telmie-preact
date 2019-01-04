@@ -24,7 +24,7 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage } from '../../utils/prismic-middleware';
+import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage, compareUrlLocale } from '../../utils/prismic-middleware';
 import { langPack } from '../../utils/langPack';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import { routes } from '../../components/app';
@@ -129,11 +129,12 @@ class HomePage extends Component {
 	}
 	fetchFeatuedPost = (props) => {
 		let that = this;
+		const lang = compareUrlLocale(props);
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.at('document.tags', ['featured'])
 		],
-		{ orderings : '[document.first_publication_date desc]', lang: props.locale }
+		{ orderings : '[document.first_publication_date desc]', lang }
 		).then(function(response) {
 			that.setState({
 					fetchingFeaturedPost: false,
@@ -143,11 +144,12 @@ class HomePage extends Component {
 	}
 	fetchRecentPosts = (props) => {
 		let that = this;
+		const lang = compareUrlLocale(props);
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.not('document.tags', ['featured']),
 		],
-		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang: props.locale }
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang }
 		).then(function(response) {
 			that.setState({
 					fetchingRecentPosts: false,

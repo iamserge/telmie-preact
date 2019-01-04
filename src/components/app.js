@@ -32,7 +32,7 @@ import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
-import { RU, EN, IT, langs } from "../utils/consts";
+import { RU, EN, IT, ES, langs } from "../utils/consts";
 
 import 'animate.css'
 
@@ -144,6 +144,7 @@ class App extends Component {
 		...this.renderLangRoutes(langs[EN].code),
 		...this.renderLangRoutes(langs[RU].code),
 		...this.renderLangRoutes(langs[IT].code),
+		...this.renderLangRoutes(langs[ES].code),
 
 		<LogIn path = { routes.LOG_IN } />,
 		<LogOut path = '/log-out' />

@@ -2,7 +2,7 @@ import Prismic from 'prismic-javascript';
 import { route } from 'preact-router';
 import { RU, EN, langs } from "./consts";
 
-function compareUrlLocale(props){
+export function compareUrlLocale(props){
     const urlLocale = props.path.toString().split('/')[1];
     let _lang = '';
 

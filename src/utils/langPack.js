@@ -1,4 +1,4 @@
-import { EN, RU, IT } from "../utils/consts";
+import { EN, RU, IT, ES } from "../utils/consts";
 
 
 export const langPack = {
@@ -133,5 +133,49 @@ export const langPack = {
         },
         FAQ: 'Domande frequenti',
         MORE_FAQ: 'Altre domande',
+    },
+    [ES]: {
+        DOWNLOAD_APP_BTN: 'Descarga nuestra app',
+        HOMEPAGE_FAQ_TITLE: 'Preguntas más populares',
+        GENERAL_QUESTIONS: 'Preguntas Frecuentes',
+        CUSTOMERS_QUESTIONS: 'Clientes',
+        EXPERTS_QUESTIONS: 'Preguntas Frecuentes sobre Expertos',
+        PAYMENTS_QUESTIONS: 'Preguntas sobre Pagos',
+        BLOG_TITLE: 'Blog',
+        FULL_STORY_BTN: 'Leer Más',
+        OTHER_POSTS: 'Otros articulos',
+        HEADER: {
+            HOW_IT_WORKS: 'Cómo funciona',
+            BECOME_PRO: 'Conviértete en Pro',
+            BLOG: 'Blog',
+            FAQ: 'FAQs',
+            CONTACT: 'Contacto',
+        },
+        FOOTER: {
+            HOME: 'Inicio',
+            CONTACT: 'Contacto',
+            BLOG: 'Blog',
+            POLICY: 'Política de Privacidad',
+            TERMS: 'Términos de Uso',
+            FAQ: 'FAQs',
+        },
+        CONTACT_US: {
+            title: 'Contacto',
+            subTitle: '¿Tienes dudas? Escríbenos',
+            name: 'Nombre',
+            email: 'Correo electrónico',
+            company: 'Empresa',
+            subject: 'Asunto',
+            message: 'Escribe tu mensaje',
+            success: 'Gracias por contactarnos',
+            submitBtn: 'Enviar',
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Practicar Idiomas',
+            IMMIGRATION_LAW: 'Trámites de Inmigración',
+            LANGUAGE_LEARNERS: 'Aprender idiomas',
+        },
+        FAQ: 'FAQs',
+        MORE_FAQ: 'Más Preguntas Frecuentes',
     },
 }
