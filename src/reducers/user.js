@@ -198,18 +198,11 @@ export const transactions = (state = [], action) => {
 };
 
 
-export const shortlistPros = (state = [], action) => {
+export const shortlistPros = (state = {}, action) => {
 	switch (action.type) {
 
 		case actionTypes.SHORTLIST_RECEIVED:
-			let shortlist = map(action.shortlist, (entry) => {
-				if (entry.status == 'SHORTLIST') return entry.contact;
-			});
-			shortlist = without(shortlist, undefined);
-			shortlist = uniqBy(shortlist, (pro)=> {
-				return pro.id;
-			})
-			return shortlist;
+			return action.shortlist;
 
 		default:
 			return state;
