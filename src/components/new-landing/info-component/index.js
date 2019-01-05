@@ -2,14 +2,16 @@ import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
 import Search from '../../global/search';
 
-import { langPack } from "../../../utils/langPack";
 import { EN } from "../../../utils/consts";
 import style from './style.scss';
 
-const InfoComponent = ({mainSection, appLink, locale = EN, ...props }) => {
-    const downloadApp = () => appLink && window.open(appLink);
+const InfoComponent = ({mainSection, locale = EN, ...props }) => {
     const titleObj = mainSection.title.split('{words}');
     const words = mainSection.typedWords.split(',');
+    const { btnText, btnLink } = mainSection;
+
+    const downloadApp = () => btnLink && window.open(btnLink);
+    
     return (
         <div class={`${style.infoContainer} uk-container-big`}>
             <div class={style.title}>
@@ -23,7 +25,8 @@ const InfoComponent = ({mainSection, appLink, locale = EN, ...props }) => {
 						isLogin = { props.isLogin } 
                         home= { true }/> }
 
-            <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
+            {btnText && btnLink && 
+                <button class='red-btn' onClick={downloadApp}>{btnText}</button> }
             {/*<button class='white-btn'>Sign up free</button>*/}
         </div>
 	)

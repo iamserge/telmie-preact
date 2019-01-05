@@ -302,7 +302,9 @@ export function processHomepageData(data = {}){
         processedData.mainSection = {
             title: data.title[0].text,
             subTitle: data.sub_title[0].text,
-            typedWords: data.typed_words[0].text
+            typedWords: data.typed_words[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -315,7 +317,9 @@ export function processHomepageData(data = {}){
         processedData.howItWorks = {
             title: data.how_it_works_title[0].text,
             text: data.how_it_works[0].text,
-            videoID: data.how_it_works_video.video_id
+            videoID: data.how_it_works_video.video_id,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -337,6 +341,7 @@ export function processHomepageData(data = {}){
             title: data.app_title[0].text,
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -349,7 +354,9 @@ export function processHomepageData(data = {}){
     try{
         processedData.becomePro = {
             title: data.earn_more_title[0].text,
-            text: data.earn_more_text[0].text
+            text: data.earn_more_text[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);

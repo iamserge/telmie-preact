@@ -1,8 +1,9 @@
 import { h } from 'preact';
 import style from './style.scss';
 
-const AppDetails = ({content = {}, appLink='', onDownloadApp}) => {
-    const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
+const AppDetails = ({content = {}, onDownloadApp}) => {
+    const { btnLink } = content;
+    const downloadApp = onDownloadApp ? onDownloadApp : () => btnLink && window.open(btnLink);
 
     return (
         <div class={`uk-container ${style.iosAppContainer}`}>

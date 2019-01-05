@@ -178,7 +178,7 @@ class HomePage extends Component {
 				<div id="homepage">
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale} 
+						<InfoComponent mainSection={pageData.mainSection} locale={locale} 
 							hiddenSearchBox={this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin = { Object.keys(user).length !== 0 } />
 					</div> }
 
@@ -188,7 +188,7 @@ class HomePage extends Component {
 
 					{ pageData.howItWorks && [<Element name='howWorksElement'  />,
 					<div class="wow slideInLeft" dataWowDuration="2s" dataWowDelay="5s">
-						<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>
+						<HowWorksDetails content={pageData.howItWorks}/>
 					</div> ]}
 
 					<div class="wow bounceInUp" >
@@ -196,7 +196,7 @@ class HomePage extends Component {
 					</div>
 
 					{ pageData.app && <div class={`${style.iosAppSection} wow slideInRight`}>
-						<AppDetails appLink={appLink} content={pageData.app} locale={locale}/>
+						<AppDetails content={pageData.app}/>
 					</div> }
 
 					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
@@ -206,7 +206,7 @@ class HomePage extends Component {
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
-						<ProDetails content={pageData.becomePro} locale={locale} appLink={appLink} />
+						<ProDetails content={pageData.becomePro} />
 					</div> }
 
 					{ !this.state.fetchingFeaturedPost 
