@@ -25,6 +25,7 @@ import BlogPage from '../routes/blog';
 import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
+import Call from "./communication/call"
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -87,8 +88,7 @@ class App extends Component {
 		}).catch((e) => {
 			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
 		});
-  	}
-
+	  }
 
 	handleRoute = e => {
 		ReactGA.pageview(e.url);
@@ -161,6 +161,7 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
+				<Call />
 			</div>
 		);
 	}
