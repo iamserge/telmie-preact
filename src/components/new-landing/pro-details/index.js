@@ -1,11 +1,13 @@
 import { h } from 'preact';
-import { EN } from "../../../utils/consts";
+import ReactGA from 'react-ga';
 import style from './style.scss';
 
 const ProDetails = ({content={}}) => {
     const { btnText, btnLink } = content;
 
-    const downloadApp = () => btnLink && window.open(btnLink);
+    const downloadApp = () => ReactGA.outboundLink({
+        label: 'Clicked Download App'
+    }, () => btnLink && window.open(btnLink));
 
     return (
         <div class={`uk-container ${style.proContainer}`}>

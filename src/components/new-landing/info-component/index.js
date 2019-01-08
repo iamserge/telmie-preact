@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
 import Search from '../../global/search';
+import ReactGA from 'react-ga';
 
 import { EN } from "../../../utils/consts";
 import style from './style.scss';
@@ -10,7 +11,9 @@ const InfoComponent = ({mainSection, locale = EN, ...props }) => {
     const words = mainSection.typedWords.split(',');
     const { btnText, btnLink } = mainSection;
 
-    const downloadApp = () => btnLink && window.open(btnLink);
+    const downloadApp = () => ReactGA.outboundLink({
+        label: 'Clicked Download App'
+    }, () => btnLink && window.open(btnLink));
     
     return (
         <div class={`${style.infoContainer} uk-container-big`}>

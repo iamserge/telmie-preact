@@ -1,9 +1,16 @@
 import { h } from 'preact';
+import ReactGA from 'react-ga';
+
 import style from './style.scss';
 
 const AppDetails = ({content = {}, onDownloadApp}) => {
     const { btnLink } = content;
-    const downloadApp = onDownloadApp ? onDownloadApp : () => btnLink && window.open(btnLink);
+
+    const downloadApp = onDownloadApp ? 
+        onDownloadApp 
+        : () => ReactGA.outboundLink({
+            label: 'Clicked Download App'
+        }, () => btnLink && window.open(btnLink));
 
     return (
         <div class={`uk-container ${style.iosAppContainer}`}>
