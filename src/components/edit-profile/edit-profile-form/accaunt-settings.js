@@ -6,7 +6,7 @@ import Hr from '../../hr'
 import Spinner from '../../global/spinner';
 
 const AccauntSettings = (props) => {
-    const { userData } = props;
+    const { userData = {} } = props;
     const { pro = {} } = userData;
 
 
@@ -15,7 +15,7 @@ const AccauntSettings = (props) => {
             <Spinner/> 
             : [
                 <ToggleItem onToggle={props.switchEmailNotif} isSwitched={userData.emailNotifications}>Important via email</ToggleItem>,
-                Object.keys(pro).length !== 0 && [
+                pro && Object.keys(pro).length !== 0 && [
                     <Hr margin = {10} color={'rgba(0, 0, 0, 0.3'}/>,
                     <ToggleItem onToggle={props.switchWorkingPro} isSwitched={pro.workPro}>Working as Pro</ToggleItem>,
                 ]
