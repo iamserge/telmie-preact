@@ -30,8 +30,6 @@ import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import { routes } from '../../components/app';
 
 
-const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
-
 class HomePage extends Component {
 	constructor(props){
 		super(props);

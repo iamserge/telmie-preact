@@ -428,15 +428,28 @@ const getInfo = (data) => {
 
 export function processTextPageData(data){
     let processedData = {};
+    let btnLink, btnText;
 
-    processedData = { ...data };
+    try{
+        btnLink = data.button_link.url;
+        btnText = data.button_title[0] && data.button_title[0].text;
+    } catch(e){
+        console.log(e);
+        btnLink = '';
+        btnTetxt = '';
+    }
+    //processedData = { ...data };
+    processedData.downloadBtn = {
+        btnLink,
+        btnText,
+    };
 
     try{
         processedData.becomePro = {
             img: data.earn_money_image.url,
             title: data.earn_money_title[0].text,
             emphasized: data.emphasize_title_part[0].text,
-            text: data.earn_money_text[0].text
+            text: data.earn_money_text[0].text,
         };
     } catch(e){
         console.log(e);
@@ -472,6 +485,7 @@ export function processTextPageData(data){
             title: data.app_title[0] ? data.app_title[0].text : '',
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink,
         };
     } catch(e){
         console.log(e);
@@ -482,6 +496,7 @@ export function processTextPageData(data){
         };
     }
     
+    console.log(processedData)
 
     return processedData;
 }

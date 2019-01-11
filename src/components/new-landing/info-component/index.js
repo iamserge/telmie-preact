@@ -3,7 +3,7 @@ import AutoPrintText from '../auto-print-text'
 import Search from '../../global/search';
 import ReactGA from 'react-ga';
 
-import { EN } from "../../../utils/consts";
+import { EN, labelsGA } from "../../../utils/consts";
 import style from './style.scss';
 
 const InfoComponent = ({mainSection, locale = EN, ...props }) => {
@@ -12,7 +12,7 @@ const InfoComponent = ({mainSection, locale = EN, ...props }) => {
     const { btnText, btnLink } = mainSection;
 
     const downloadApp = () => ReactGA.outboundLink({
-        label: 'Clicked Download App'
+        label: labelsGA.downloadAppClick
     }, () => btnLink && window.open(btnLink));
     
     return (

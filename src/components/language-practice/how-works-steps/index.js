@@ -1,13 +1,16 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 import StepItem from './step'
-import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import ReactGA from 'react-ga';
+import { labelsGA } from "../../../utils/consts";
 import style from './style.scss';
 
 
-const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp, locale = EN}) => {
-  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
+const HowWorksSteps = ({content = [], dBtn = {}, title}) => {
+  const { btnText, btnLink } = dBtn;
+  const downloadApp = () => ReactGA.outboundLink({
+    label: labelsGA.downloadAppClick
+  }, () => btnLink && window.open(btnLink));
 
   const stepsCount = content.length;
 
@@ -20,7 +23,8 @@ const HowWorksSteps = ({content = [], title, appLink = '', onDownloadApp, locale
           {content.map((step, index) => <StepItem step={step} isLast={stepsCount === (index + 1)}/>)}
         </div>
 
-        <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
+        { btnText && btnLink && 
+          <button class='red-btn' onClick={downloadApp}>{btnText}</button> }
 {/*
         <Link href=""><button className="red-btn">Sign up & Become Pro</button></Link>
 */}

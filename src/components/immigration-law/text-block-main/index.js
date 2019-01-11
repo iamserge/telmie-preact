@@ -1,19 +1,25 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
-import style from './style.scss';
+import ReactGA from 'react-ga';
 import { setEmphasizedText } from '../../../utils/index'
-import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import { labelsGA } from "../../../utils/consts";
 
-const TextBlockMain = ({content, appLink = '', onDownloadApp, locale = EN}) => {
-  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
+import style from './style.scss';
+
+const TextBlockMain = ({content, dBtn = {}}) => {
+  const { btnText, btnLink } = dBtn;
+  
+  const downloadApp = () => ReactGA.outboundLink({
+    label: labelsGA.downloadAppClick
+  }, () => btnLink && window.open(btnLink));
 
   return (
       <div class={`${style.TextBlock} uk-container`}>
           <div class={style.howWorksText}>
             {setEmphasizedText(content, style.header)}
             {content.text ? <div class={style.text}>{content.text}</div> : null}
-            <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
+            { btnText && btnLink && 
+              <button class='red-btn' onClick={downloadApp}>{btnText}</button> }
 {/*
               <div class={style.buttons}>
                 <Link href=""><button class='red-btn main-btn'>Sign up <span>free</span> <span>& Become Pro</span></button></Link>

@@ -1,11 +1,14 @@
 import { h } from 'preact';
-import { Link } from 'preact-router';
-import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import ReactGA from 'react-ga';
+import { labelsGA } from "../../../utils/consts";
 import style from './style.scss';
 
-const WhyChooseUs = ({content = [], title, addClass, appLink = '', onDownloadApp, locale= EN}) => {
-  const downloadApp = onDownloadApp ? onDownloadApp : () => appLink && window.open(appLink);
+const WhyChooseUs = ({content = [], dBtn = {}, title, addClass}) => {
+  const { btnText, btnLink } = dBtn;
+
+  const downloadApp = () => ReactGA.outboundLink({
+    label: labelsGA.downloadAppClick
+  }, () => btnLink && window.open(btnLink));
 
   return (
     <div class={addClass ?  `up-margin ${style.blockBg}` : style.blockBg}>
@@ -23,7 +26,8 @@ const WhyChooseUs = ({content = [], title, addClass, appLink = '', onDownloadApp
               </div>
             ))}
         </div>
-        <button class='red-btn' onClick={downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
+        { btnLink && btnText && 
+          <button class='red-btn' onClick={downloadApp}>{btnText}</button> }
 {/*
         <Link href=""><button className="red-btn">Sign up & Become Pro</button></Link>
 */}

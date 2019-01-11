@@ -33,3 +33,7 @@ export const langs = {
     emoji: '🇪🇸',
   },
 };
+
+export const labelsGA = {
+  downloadAppClick: 'Clicked Download App'
+}

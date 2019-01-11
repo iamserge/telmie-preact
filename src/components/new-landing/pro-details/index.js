@@ -1,12 +1,14 @@
 import { h } from 'preact';
 import ReactGA from 'react-ga';
 import style from './style.scss';
+import { labelsGA } from "../../../utils/consts";
+
 
 const ProDetails = ({content={}}) => {
     const { btnText, btnLink } = content;
 
     const downloadApp = () => ReactGA.outboundLink({
-        label: 'Clicked Download App'
+        label: labelsGA.downloadAppClick
     }, () => btnLink && window.open(btnLink));
 
     return (
