@@ -9,7 +9,7 @@ import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
 import { routes } from '../../components/app'
-import { changeLocale, changeLocaleLangs } from '../../actions/user';
+import { changeLocale, changeLocaleLangs, openComModal } from '../../actions/user';
 
 class Pro extends Component {
 	constructor(props){
@@ -78,6 +78,7 @@ class Pro extends Component {
 								shortlistLoading={this.state.shortlistLoading}
 								shortlistMessage={this.state.shortlistMessage}
 								person = { this.state.pro } 
+								openComModal = { this.props.openComModal }
 								cnageShortlist = { this.shortlist }  />
 				)}
 
@@ -91,13 +92,13 @@ class Pro extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
-	shortlistPros: state.shortlistPros
-
+	shortlistPros: state.shortlistPros,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
 	changeLocale,
+	openComModal,
 }, dispatch);
 
 export default connect(

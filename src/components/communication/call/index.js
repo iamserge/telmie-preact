@@ -40,7 +40,7 @@ class Call extends Component {
 		(Object.keys(user).length !== 0 && Object.keys(prevUser).length === 0) 
 			&& this.initializeConnection(user.id);
 
-		!nextProps.communicateVisible && this.props.communicateVisible && document.body.classList.remove("communicate-active");
+		!nextProps.communicateVisible.type && this.props.communicateVisible.type && document.body.classList.remove("communicate-active");
 	}
 
 	onConnect = (status) => {
@@ -105,10 +105,11 @@ class Call extends Component {
 	}
 
   	render(){
-		this.props.communicateVisible && document.body.classList.add("communicate-active");
+		const { type: modalType } = this.props.communicateVisible;
+		modalType && document.body.classList.add("communicate-active");
 		
-		return this.props.communicateVisible && (<div class={style.callAreaBackground}>
-			{(this.props.communicateVisible === consts.CHAT) && (
+		return modalType && (<div class={style.callAreaBackground}>
+			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
 					<Chat messages={this.state.messages} onSend={this.sendMessage}/>
 				</div>

@@ -318,3 +318,9 @@ export const clearContactData = () => (dispatch) => dispatch(sendContactMessage(
 export const closeComModal = () => (dispatch) => dispatch({
 	type: actionTypes.CLOSE_COMMUNICATE_MODAL,
 });
+
+export const openComModal = (type, person) => (dispatch) => dispatch({
+	type: actionTypes.OPEN_COMMUNICATE_MODAL,
+	modalType: type,
+	person,
+});

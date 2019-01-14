@@ -1,9 +1,12 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import { apiRoot } from '../../../api'
+import { consts } from '../../../utils/consts'
 
 
 export default class ProVerticalInfo extends Component {
+
+	openChat = () => this.props.openComModal(consts.CHAT, this.props.person);
   
 	render({person}) {
 
@@ -16,7 +19,7 @@ export default class ProVerticalInfo extends Component {
 						<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 					)}
 				</div>
-				<button  id={style.callPro} className="uk-button" onClick={this.props.showCallProPopup}>TEXT PRO</button>
+				<button  id={style.callPro} className="uk-button" onClick={this.openChat}>TEXT PRO</button>
 				<button  id={style.callPro} className="uk-button" onClick={this.props.showCallProPopup}>CALL PRO</button>
 
 				{this.props.isShortlisted ? (
