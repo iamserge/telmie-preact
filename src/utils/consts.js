@@ -1,5 +1,7 @@
 export const consts = {
-  PAGE_SIZE: 20
+  PAGE_SIZE: 20,
+  CHAT: 'CHAT',
+  CALL: 'CALL',
 };
 
 export const EN = 'en-us',

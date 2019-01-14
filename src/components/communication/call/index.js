@@ -4,6 +4,7 @@ import style from './style.scss';
 
 import Chat from "../chat";
 import { host } from "../../../api/index";
+import { consts } from "../../../utils/consts";
 
 const generateJID = (id) => `${id}@${host}/web`;
 
@@ -38,6 +39,8 @@ class Call extends Component {
 		const {user : prevUser = {}} = this.props;
 		(Object.keys(user).length !== 0 && Object.keys(prevUser).length === 0) 
 			&& this.initializeConnection(user.id);
+
+		!nextProps.communicateVisible && this.props.communicateVisible && document.body.classList.remove("communicate-active");
 	}
 
 	onConnect = (status) => {
@@ -102,12 +105,15 @@ class Call extends Component {
 	}
 
   	render(){
-		document.body.classList.add("communicate-active");
+		this.props.communicateVisible && document.body.classList.add("communicate-active");
 		
-		return (<div class={style.callAreaBackground}>
-			<div class={style.callArea}>
-				<Chat messages={this.state.messages} onSend={this.sendMessage}/>
-			</div>
+		return this.props.communicateVisible && (<div class={style.callAreaBackground}>
+			{(this.props.communicateVisible === consts.CHAT) && (
+				<div class={style.callArea}>
+					<Chat messages={this.state.messages} onSend={this.sendMessage}/>
+				</div>
+			)}
+			<div class={style.closeBtn} onClick={this.props.onClose}/>
 		</div>)
   	}
 }

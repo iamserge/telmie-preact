@@ -33,6 +33,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, langs } from "../utils/consts";
+import { closeComModal } from '../actions/user'
 
 import 'animate.css'
 
@@ -147,7 +148,7 @@ class App extends Component {
 	])
 
 	render() {
-		const {userData : user  = {}, locale} = this.props;
+		const {userData : user  = {}, locale, communicateVisible, closeComModal} = this.props;
 
 		return (
 			<div id="app">
@@ -161,7 +162,7 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
-				<Call user={this.props.userData}/>
+				<Call user={this.props.userData} communicateVisible={communicateVisible} onClose={closeComModal}/>
 			</div>
 		);
 	}
@@ -170,9 +171,12 @@ class App extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	locale: state.locale.locale,
+	communicateVisible: state.comModalVisible,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	closeComModal,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

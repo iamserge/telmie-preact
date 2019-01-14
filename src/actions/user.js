@@ -314,3 +314,7 @@ export const sendContactData = (data) => async (dispatch) => {
 }
 
 export const clearContactData = () => (dispatch) => dispatch(sendContactMessage());
+
+export const closeComModal = () => (dispatch) => dispatch({
+	type: actionTypes.CLOSE_COMMUNICATE_MODAL,
+});

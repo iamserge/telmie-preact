@@ -1,6 +1,6 @@
 import { actionTypes } from '../actions';
 import { concat, orderBy, map, without, uniqBy } from 'lodash';
-import { EN, RU, langs } from "../utils/consts";
+import { EN, RU, langs, consts } from "../utils/consts";
 
 
 export const loggedInUser = (state = {}, action) => {
@@ -325,6 +325,21 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 				errorMsg: '',
 			}
 
+		default:
+			return state;
+	}
+};
+
+
+export const communicateVisible = (state = null, action) => {
+	switch (action.type) {
+
+		case actionTypes.CLOSE_COMMUNICATE_MODAL:
+			return null;
+		case actionTypes.OPEN_CALL_MODAL:
+			return consts.CALL;
+		case actionTypes.OPEN_CHAT_MODAL:
+			return consts.CHAT;
 		default:
 			return state;
 	}
