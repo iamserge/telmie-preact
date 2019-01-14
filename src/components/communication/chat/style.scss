@@ -1,0 +1,46 @@
+.chatComponent{
+    height: 100%;
+}
+
+.title{
+    height: 20%;
+    background-color: aqua;
+}
+
+.chatArea{
+    height: 60%;
+    overflow-y: auto;
+    background-color: burlywood;
+
+    ul{
+        padding: 10px 15px;
+        list-style: none;
+        margin: 0;
+        height: 100%;
+    }
+}
+
+.msg{
+    max-width: 80%;
+    padding: 7px 15px;
+    margin-bottom: 3px;
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    background-color: rgb(229, 230, 234);
+    color: rgb(0, 0, 0);
+    clear: both;
+    float: left;
+
+    &.myMsg{
+        background-color: rgb(13, 133, 254);
+        color: rgb(255, 255, 255);
+        float: right;
+        border-radius: 10px;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.sendForm{
+    height: 20%;
+    background-color: chartreuse;
+}

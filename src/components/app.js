@@ -161,7 +161,7 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
-				<Call />
+				<Call user={this.props.userData}/>
 			</div>
 		);
 	}

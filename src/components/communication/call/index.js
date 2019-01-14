@@ -1,43 +1,115 @@
 import { h, Component } from 'preact';
+import Strophe from 'npm-strophe'
 import style from './style.scss';
 
+import Chat from "../chat";
+import { host } from "../../../api/index";
+
+const generateJID = (id) => `${id}@${host}/web`;
 
 class Call extends Component {
+	constructor(props){
+		super(props);
+		this.state= {
+			messages: [],
+		};
+		this.connection = new Strophe.Strophe.Connection('ws://sr461.2dayhost.com:5280/websocket', {});
+		
+	}		
 
-    componentDidMount() {
-		this.socket = new WebSocket("ws://sr461.2dayhost.com:5280/websocket");
-
-		this.socket.onopen = () => {
-			console.log("Соединение установлено.");
-			console.log(this.socket);
-		  };
-		  
-		  this.socket.onclose = function(event) {
-			if (event.wasClean) {
-			  console.log('Соединение закрыто чисто');
-			} else {
-			  console.log('Обрыв соединения'); // например, "убит" процесс сервера
-			}
-			console.log('Код: ' + event.code + ' причина: ', event);
-		  };
-		  
-		  this.socket.onmessage = function(event) {
-			console.log("Получены данные ", event.data);
-		  };
-		  
-		  this.socket.onerror = function(error) {
-			console.log("Ошибка ", error.message);
-		  };
+	initializeConnection(id){
+		this.connection.connect(generateJID(id),'', this.onConnect);
+		this.connection.rawInput = (data) => {
+			console.log('rawInput:', data);
+		};
+		this.connection.rawOutput = (data) => {
+			console.log('rawOutput:', data);
+		};
 	}
-    
-    render(){
 
-        document.body.classList.add("home");
+	componentDidMount(){
+		const {user = {}} = this.props;
+		(Object.keys(user).length !== 0)
+			&& this.initializeConnection(user.id);
+	}
 
-        return (<div class={style.callArea}>
-            Call
-        </div>)
-    }
+	componentWillReceiveProps(nextProps){
+		const {user = {}} = nextProps;
+		const {user : prevUser = {}} = this.props;
+		(Object.keys(user).length !== 0 && Object.keys(prevUser).length === 0) 
+			&& this.initializeConnection(user.id);
+	}
+
+	onConnect = (status) => {
+		console.log('-------=========--------');
+		console.log('Status: ' + status);
+		console.log(this.connection);
+
+		console.log(Strophe.Strophe.Status);
+		
+		
+		if (status == Strophe.Strophe.Status.CONNECTING) {
+			console.log('Strophe is connecting.');
+		} else if (status == Strophe.Strophe.Status.CONNFAIL) {
+			console.log('Strophe failed to connect.');
+		} else if (status == Strophe.Strophe.Status.DISCONNECTING) {
+			console.log('Strophe is disconnecting.');
+		} else if (status == Strophe.Strophe.Status.DISCONNECTED) {
+			console.log('Strophe is disconnected.');
+		} else if (status == Strophe.Strophe.Status.CONNECTED) {
+			console.log('Strophe is connected.');
+
+			this.connection.addHandler(this.onMessage, null, 'message', null, null, null);
+		}
+
+		  
+	}
+
+	onMessage = (msg) => {
+		var to = msg.getAttribute('to');
+		var from = msg.getAttribute('from');
+		var type = msg.getAttribute('type');
+		var elems = msg.getElementsByTagName('body');
+
+		if (type == "chat" && elems.length > 0) {
+			var body = elems[0];
+			console.log('CHAT: I got a message from ', from, ': ', Strophe.Strophe.getText(body));
+
+			this.setState(prev => ({ messages: [
+				...prev.messages, 
+				{ text: Strophe.Strophe.getText(body), from }
+			]}))
+		}
+
+		return true;
+	}
+
+	sendMessage = (msg) => {
+		console.log('CHAT: Send a message: ' + msg);
+	  
+		var m = Strophe.$msg({
+			from: `${5943}@${host}/web`,
+			to: `${5946}@${host}/web`,
+			type: 'chat'
+		}).c("body").t(msg);
+		
+		this.setState(prev => ({ messages: [
+			...prev.messages, 
+			{ text: msg, isMy: true }
+		]}))
+
+		this.connection.send(m);
+	}
+
+  	render(){
+		document.body.classList.add("communicate-active");
+		
+		return (<div class={style.callAreaBackground}>
+			<div class={style.callArea}>
+				<Chat messages={this.state.messages} onSend={this.sendMessage}/>
+			</div>
+		</div>)
+  	}
 }
 
 export default Call;
