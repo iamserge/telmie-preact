@@ -6,10 +6,10 @@ import Msg from './Message'
 import SendForm from './SendForm'
 
 const Chat = (props) => {
-    const {messages = []} = props;
+    const {messages = [], communicateModal = {}} = props;
 
     return (<div class={style.chatComponent}>
-        <Title />
+        <Title person={communicateModal.person}/>
         <div class={style.chatArea}>
             <ul class={style.chatArea}>
                 {messages.map((el, i) => <Msg {...el} key={i}/>)}

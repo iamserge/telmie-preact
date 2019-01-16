@@ -113,7 +113,7 @@ class Call extends Component {
 		return modalType && (<div class={style.callAreaBackground}>
 			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
-					<Chat messages={this.state.messages} onSend={this.sendMessage}/>
+					<Chat messages={this.state.messages} communicateModal={this.props.communicateModal} onSend={this.sendMessage}/>
 				</div>
 			)}
 			<div class={style.closeBtn} onClick={this.props.onClose}/>
