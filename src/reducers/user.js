@@ -331,7 +331,7 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 };
 
 
-export const communicateVisible = (state = { type: null }, action) => {
+export const communicateModal = (state = { type: null }, action) => {
 	switch (action.type) {
 
 		case actionTypes.CLOSE_COMMUNICATE_MODAL:

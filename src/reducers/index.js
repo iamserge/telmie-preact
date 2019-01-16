@@ -38,7 +38,7 @@ const rootReducer = combineReducers({
 	dataFromServer: user.dataFromServer,
 	sendContactMessage: user.sendContactMessage,
 	locale: user.locale,
-	comModalVisible: user.communicateVisible,
+	communicateModal: user.communicateModal,
 });
 
 export default rootReducer;

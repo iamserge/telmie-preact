@@ -148,7 +148,7 @@ class App extends Component {
 	])
 
 	render() {
-		const {userData : user  = {}, locale, communicateVisible, closeComModal} = this.props;
+		const {userData : user  = {}, locale, communicateModal, closeComModal} = this.props;
 
 		return (
 			<div id="app">
@@ -162,7 +162,7 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
-				<Call user={this.props.userData} communicateVisible={communicateVisible} onClose={closeComModal}/>
+				<Call user={this.props.userData} communicateModal={communicateModal} onClose={closeComModal}/>
 			</div>
 		);
 	}
@@ -171,7 +171,7 @@ class App extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	locale: state.locale.locale,
-	communicateVisible: state.comModalVisible,
+	communicateModal: state.communicateModal,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

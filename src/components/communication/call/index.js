@@ -40,15 +40,15 @@ class Call extends Component {
 		(Object.keys(user).length !== 0 && Object.keys(prevUser).length === 0) 
 			&& this.initializeConnection(user.id);
 
-		!nextProps.communicateVisible.type && this.props.communicateVisible.type && document.body.classList.remove("communicate-active");
+		!nextProps.communicateModal.type && this.props.communicateModal.type && document.body.classList.remove("communicate-active");
 	}
 
 	onConnect = (status) => {
-		console.log('-------=========--------');
+		/*console.log('-------=========--------');
 		console.log('Status: ' + status);
 		console.log(this.connection);
 
-		console.log(Strophe.Strophe.Status);
+		console.log(Strophe.Strophe.Status);*/
 		
 		
 		if (status == Strophe.Strophe.Status.CONNECTING) {
@@ -89,10 +89,11 @@ class Call extends Component {
 
 	sendMessage = (msg) => {
 		console.log('CHAT: Send a message: ' + msg);
+		const { user, communicateModal} = this.props;
 	  
 		var m = Strophe.$msg({
-			from: `${5943}@${host}/web`,
-			to: `${5946}@${host}/web`,
+			from: `${user.id}@${host}/web`,
+			to: `${communicateModal.person.id}@${host}/web`,
 			type: 'chat'
 		}).c("body").t(msg);
 		
@@ -105,7 +106,8 @@ class Call extends Component {
 	}
 
   	render(){
-		const { type: modalType } = this.props.communicateVisible;
+		const { type: modalType } = this.props.communicateModal;
+
 		modalType && document.body.classList.add("communicate-active");
 		
 		return modalType && (<div class={style.callAreaBackground}>
