@@ -9,7 +9,7 @@ const Chat = (props) => {
     const {messages = [], communicateModal = {}} = props;
 
     return (<div class={style.chatComponent}>
-        <Title person={communicateModal.person}/>
+        { communicateModal.person && <Title person={communicateModal.person}/> }
         <div class={style.chatArea}>
             <ul class={style.chatArea}>
                 {messages.map((el, i) => <Msg {...el} key={i}/>)}

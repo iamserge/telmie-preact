@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import FontAwesome from 'react-fontawesome';
 import style from './style.scss';
 
 class SendForm extends Component {
@@ -19,7 +20,7 @@ class SendForm extends Component {
     render(){
         return (<div class={style.sendForm}>
             <textarea onChange={this.changeHandler} value={this.state.value}/>
-            <button onClick={this.sendHandler}>Send</button>
+            <FontAwesome name="arrow-circle-right" size="3x" onClick={this.sendHandler}/>
         </div>)
     }
 };

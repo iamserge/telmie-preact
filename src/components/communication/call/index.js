@@ -78,10 +78,14 @@ class Call extends Component {
 			var body = elems[0];
 			console.log('CHAT: I got a message from ', from, ': ', Strophe.Strophe.getText(body));
 
-			this.setState(prev => ({ messages: [
-				...prev.messages, 
-				{ text: Strophe.Strophe.getText(body), from }
-			]}))
+			this.props.communicateModal.type ?(
+				this.setState(prev => ({ messages: [
+					...prev.messages, 
+					{ text: Strophe.Strophe.getText(body), from }
+				]})) 
+			) : (
+				null
+			)
 		}
 
 		return true;
