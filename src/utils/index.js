@@ -1,4 +1,5 @@
 import { map, without } from 'lodash';
+import { host } from "../api/index";
 import emoji from 'react-easy-emoji'
 
 /*export function processActivities(activities){
@@ -27,7 +28,7 @@ import emoji from 'react-easy-emoji'
   withoutShortlist = without(withoutShortlist, undefined);
   return withoutShortlist;
 }*/
-
+export const generateJID = (id) => `${id}@${host}/web`;
 
 export function generateProfessionsArray(professions){
   let Services = [];

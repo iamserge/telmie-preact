@@ -35,6 +35,9 @@ export const actionTypes = {
 
 	CLOSE_COMMUNICATE_MODAL: 'CLOSE_COMMUNICATE_MODAL',
 	OPEN_COMMUNICATE_MODAL: 'OPEN_COMMUNICATE_MODAL',
+	SET_CHAT_PERSON: 'SET_CHAT_PERSON',
+
+	CHANGE_UNREAD_MSG: 'CHANGE_UNREAD_MSG',
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

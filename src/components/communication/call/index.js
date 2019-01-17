@@ -3,16 +3,14 @@ import Strophe from 'npm-strophe'
 import style from './style.scss';
 
 import Chat from "../chat";
-import { host } from "../../../api/index";
 import { consts } from "../../../utils/consts";
-
-const generateJID = (id) => `${id}@${host}/web`;
+import { generateJID } from "../../../utils";
 
 class Call extends Component {
 	constructor(props){
 		super(props);
 		this.state= {
-			messages: [],
+			chats: {},
 		};
 		this.connection = new Strophe.Strophe.Connection('ws://sr461.2dayhost.com:5280/websocket', {});
 		
@@ -76,48 +74,55 @@ class Call extends Component {
 
 		if (type == "chat" && elems.length > 0) {
 			var body = elems[0];
-			console.log('CHAT: I got a message from ', from, ': ', Strophe.Strophe.getText(body));
 
-			this.props.communicateModal.type ?(
-				this.setState(prev => ({ messages: [
-					...prev.messages, 
-					{ text: Strophe.Strophe.getText(body), from }
-				]})) 
-			) : (
-				null
-			)
+			const { person={} } = this.props.communicateModal
+
+			from.indexOf(person.id) !== 0 && this.props.changeUnreadNum(from);
+			this.setState(prev => ({ chats: {
+				...prev.chats, 
+				[from]: prev.chats[from] ? [ 
+					...prev.chats[from], 
+					{ text: Strophe.Strophe.getText(body) } 
+				] : [ { text: Strophe.Strophe.getText(body) } ],
+			}}));
 		}
 
 		return true;
 	}
 
 	sendMessage = (msg) => {
-		console.log('CHAT: Send a message: ' + msg);
 		const { user, communicateModal} = this.props;
+		const to = generateJID(communicateModal.person.id);;
 	  
-		var m = Strophe.$msg({
-			from: `${user.id}@${host}/web`,
-			to: `${communicateModal.person.id}@${host}/web`,
+		let m = Strophe.$msg({
+			from: generateJID(user.id),
+			to,
 			type: 'chat'
 		}).c("body").t(msg);
 		
-		this.setState(prev => ({ messages: [
-			...prev.messages, 
-			{ text: msg, isMy: true }
-		]}))
+		this.setState(prev => ({ chats: {
+			...prev.chats, 
+			[to]: prev.chats[to] ? [
+				...prev.chats[to], 
+				{ text: msg, isMy: true } 
+			] : [ { text: msg, isMy: true } ],
+		}}));
 
 		this.connection.send(m);
 	}
 
   	render(){
-		const { type: modalType } = this.props.communicateModal;
+		const { type: modalType, person = {} } = this.props.communicateModal;
 
 		modalType && document.body.classList.add("communicate-active");
 		
 		return modalType && (<div class={style.callAreaBackground}>
 			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
-					<Chat messages={this.state.messages} communicateModal={this.props.communicateModal} onSend={this.sendMessage}/>
+					<Chat messages={this.state.chats[generateJID(person.id)]} 
+						communicateModal={this.props.communicateModal} 
+						setChatPerson={this.props.setChatPerson}
+						onSend={this.sendMessage}/>
 				</div>
 			)}
 			<div class={style.closeBtn} onClick={this.props.onClose}/>

@@ -324,3 +324,14 @@ export const openComModal = (type, person) => (dispatch) => dispatch({
 	modalType: type,
 	person,
 });
+
+export const setChatPerson = (person) => (dispatch) => dispatch({
+	type: actionTypes.SET_CHAT_PERSON,
+	person,
+});
+
+export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({
+	type: actionTypes.CHANGE_UNREAD_MSG,
+	from,
+	num,
+})

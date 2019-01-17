@@ -67,12 +67,20 @@
     height: calc(100% - 105px - 50px);
     overflow-y: auto;
     background-color: rgb(168, 168, 168);
+    display: flex;
 
     ul{
         padding: 10px 15px;
         list-style: none;
         margin: 0;
         height: 100%;
+    }
+    .users{
+        width: 80px;
+        background-color: aqua;
+    }
+    .messages{
+        width: 100%;
     }
 }
 
@@ -99,7 +107,7 @@
 .sendForm{
     display: flex;
     height: 50px;
-    background-color: chartreuse;
+    background-color: white;
 
     textarea{
         height: 100%;
