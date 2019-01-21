@@ -142,12 +142,11 @@ export function register(data){
 }
 
 export function registerPro(data, authData){
-
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(data.id), { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
@@ -168,40 +167,47 @@ export function registerPro(data, authData){
 					} 
 			)
 		})
-		
-		
 	})
 }
 
-export function updatePro(data, authData){
-
+export function getProRegistrationInfo(id, authData){
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'GET', headers }).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
-				message: json.message
 			} : json;
 		})
 		.catch(err => {
-			return response.status === 403 ? (
-				{ 
-					error: true,
-					message: 'User is not registered as pro'
-				}
-			) : (
-				response.status === 401 && 
-					{
-						error: true, 
-						message: 'Full authentication is required to access this resource'
-					} 
-			)
+			console.log(err);
+			return { 
+				error: true,
+				gettingError: true,
+			}
 		})
-		
-		
+	})
+}
+
+export function cancelProPending(id, authData){
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'DELETE', headers }).then(response => {
+		return response.json().then(json => {
+			return json.status === 400 ? {
+				error: true,
+			} : json;
+		})
+		.catch(err => {
+			console.log(err);
+			return { 
+				error: true,
+			}
+		})
 	})
 }
 

@@ -17,7 +17,7 @@ export const apiUrls = {
   RESET_PASSWORD: apiRoot  + 'security/reset',
   UPLOAD_PHOTO: apiRoot + 'image',
   SEND_CODE: apiRoot + 'code',
-  REGISTER_PRO: apiRoot + 'users/pro',
+  REGISTER_PRO: (id) => apiRoot + 'users/'+ id + '/pro',
   GET_CATEGORIES: apiRoot + 'categories',
   SEND_CONTACT_DATA: apiRoot + 'help/contact',
   EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',

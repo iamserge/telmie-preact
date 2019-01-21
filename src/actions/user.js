@@ -180,16 +180,11 @@ export const register = (data) => async (dispatch) => {
 	}
 };
 
-export const registerPro = (data, authData, isForUpdate = false) => async (dispatch) => {
-	let response = isForUpdate ? 
-		await user.updatePro(data, authData)
-		: await user.registerPro(data, authData);
+export const registerPro = (data, authData) => async (dispatch) => {
+	let response = await user.registerPro(data, authData);
 
-	if (response.error) {
-		dispatch(registerFailure(response.message));
-	} else {
-		dispatch(logInSuccess(response, authData));
-	}
+	(response.error) ? 
+		dispatch(registerFailure(response.message)) : dispatch(logInSuccess(response, authData));
 }
 
 export const getCategories = (authData) => async (dispatch) => {

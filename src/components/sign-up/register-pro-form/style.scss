@@ -148,7 +148,11 @@ $font-size: 18px;
             }
             .applyBtn {
                 width: auto;
-            }
+			}
+			
+			button:not(:last-child){
+				margin-right: 15px;
+			}
 		}
 		
 		.generalInfo{
