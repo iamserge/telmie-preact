@@ -10,16 +10,26 @@ class SendForm extends Component {
         }
     }
 
-    changeHandler = e => this.setState({ value: e.target.value });
+    changeHandler = e => {
+        this.setState({ value: e.target.value });
+    };
 
-    sendHandler = () => {
-        this.props.onSend(this.state.value);
+    keyHandler = e => {
+        (e.keyCode == 13 && e.shiftKey == false) && (
+            e.preventDefault(),
+            this.sendHandler(_, e.target.value)
+        )
+    }
+
+    sendHandler = (_, value) => {
+        let val = value ? value : this.state.value;
+        val && this.props.onSend(val);
         this.setState({ value: '' });
     }
 
     render(){
         return (<div class={style.sendForm}>
-            <textarea onChange={this.changeHandler} value={this.state.value}/>
+            <textarea onKeyDown={this.keyHandler} onChange={this.changeHandler} value={this.state.value}/>
             <FontAwesome name="arrow-circle-right" size="3x" onClick={this.sendHandler}/>
         </div>)
     }
