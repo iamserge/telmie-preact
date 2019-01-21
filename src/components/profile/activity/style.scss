@@ -38,10 +38,11 @@
 			margin: 0;
 		}
 		> div {
-	    margin-top: 3px;
-    	font-size: 14px;
-    	font-weight: 500;
-    	color: $red;
+			margin-top: 3px;
+			font-size: 14px;
+			font-weight: 500;
+			color: $red;
+			overflow: hidden;
             &.info {
                 margin-left: 10px;
             }

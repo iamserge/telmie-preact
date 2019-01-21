@@ -71,6 +71,7 @@
   "dependencies": {
     "animate.css": "^3.7.0",
     "jquery": "^3.3.1",
+    "npm-strophe": "0.0.4",
     "nuka-carousel": "^4.0.0",
     "preact": "^8.1.0",
     "preact-cli-sw-precache": "^1.0.3",

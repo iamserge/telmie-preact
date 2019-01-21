@@ -1,7 +1,7 @@
 import { actionTypes } from '../actions';
 import { concat, orderBy, map, without, uniqBy } from 'lodash';
 import { EN, RU, langs } from "../utils/consts";
-
+import { generateJID } from "../utils";
 
 export const loggedInUser = (state = {}, action) => {
 	let user;
@@ -325,6 +325,45 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 				errorMsg: '',
 			}
 
+		default:
+			return state;
+	}
+};
+
+
+export const communicateModal = (state = { type: null, unread: {} }, action) => {
+	switch (action.type) {
+
+		case actionTypes.CLOSE_COMMUNICATE_MODAL:
+			return { 
+				...state,
+				type: null,
+				person: {},
+			 };
+		case actionTypes.OPEN_COMMUNICATE_MODAL:
+			return { 
+				...state,
+				type: action.modalType,
+				person: action.person,
+			};
+		case actionTypes.SET_CHAT_PERSON:
+			const { person } = action;
+			const chats = { ...state.unread };
+			delete chats[generateJID(person.id)];
+			return { 
+				...state,
+				person,
+				unread: chats,
+			};
+		case actionTypes.CHANGE_UNREAD_MSG:
+			const {from, num} = action;
+			return {
+				...state,
+				unread: {
+					...state.unread,
+					[from]: state.unread[from] ? state.unread[from] + num : num,
+				},
+			}
 		default:
 			return state;
 	}

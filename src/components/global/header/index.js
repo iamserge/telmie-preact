@@ -15,7 +15,7 @@ import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
 import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
-import { EN, RU, langs } from '../../../utils/consts';
+import { EN, RU, langs, consts } from '../../../utils/consts';
 import { getCookie } from '../../../utils';
 import { processGlobalMessage } from '../../../utils/prismic-middleware'
 
@@ -91,6 +91,8 @@ class Header extends Component {
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
 
+  openComModal = () => this.props.openComModal(consts.CHAT);
+
 	render() {
     const {userData : user  = {}, locale : localeObj} = this.props;
     const { locale = EN, languages } = localeObj;
@@ -105,6 +107,8 @@ class Header extends Component {
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
     const { globalMessage } = this.state;
+
+    const newChats = Object.keys(this.props.newChats).length || '';
 
 		return (
       <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${globalMessage && 'globalMessage'}`} 
@@ -200,7 +204,7 @@ class Header extends Component {
                   ) : (
                     <img src="/assets/nouserimage.jpg" alt={user.name + ' ' + user.lastName} />
                   )}
-
+                  {newChats && <div class={style.newChats}>{newChats}</div>}
                 </div>
                 <div class={style.dropdown + ' uk-dropdown'}>
                     <ul class="uk-nav uk-dropdown-nav">
@@ -216,6 +220,7 @@ class Header extends Component {
                         <li><Link href={routes.REGISTER_PRO}>
                           { user.pro ? 'Edit Pro details' : 'Register as Pro'}
                           </Link></li>
+                        { newChats && <li class={style.chats} onClick={this.openComModal}>New Chats: {newChats}</li>}
                         <li class="uk-nav-divider"></li>
                         {/*<li><Link href={routes.SETTINGS}>Settings</Link></li>*/}
                         <li><a onClick={this.logOff}>Log out</a></li>

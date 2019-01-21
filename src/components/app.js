@@ -25,6 +25,7 @@ import BlogPage from '../routes/blog';
 import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
+import Call from "./communication/call"
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -32,6 +33,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, langs } from "../utils/consts";
+import { openComModal, closeComModal, setChatPerson, changeUnreadNum } from '../actions/user'
 
 import 'animate.css'
 
@@ -87,8 +89,7 @@ class App extends Component {
 		}).catch((e) => {
 			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
 		});
-  	}
-
+	  }
 
 	handleRoute = e => {
 		ReactGA.pageview(e.url);
@@ -147,11 +148,17 @@ class App extends Component {
 	])
 
 	render() {
-		const {userData : user  = {}, locale} = this.props;
+		const {userData : user  = {}, locale, communicateModal, openComModal, closeComModal, changeUnreadNum, setChatPerson} = this.props;
+		const { unread : newChats } = communicateModal;
 
 		return (
 			<div id="app">
-				<Header locale={locale} currentUrl = {this.state.currentUrl} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].MESSAGE }/>
+				<Header locale={locale}
+					currentUrl = {this.state.currentUrl}
+					prismicCtx = { this.state.prismicCtx }
+					uid = { uids[locale].MESSAGE }
+					openComModal={openComModal}
+					newChats={newChats}/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
@@ -161,6 +168,11 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
+				<Call user={this.props.userData} 
+					communicateModal={communicateModal} 
+					onClose={closeComModal} 
+					setChatPerson={setChatPerson} 
+					changeUnreadNum={changeUnreadNum}/>
 			</div>
 		);
 	}
@@ -169,9 +181,15 @@ class App extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	locale: state.locale.locale,
+	communicateModal: state.communicateModal,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	closeComModal,
+	openComModal,
+	changeUnreadNum,
+	setChatPerson,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

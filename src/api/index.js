@@ -1,13 +1,16 @@
 import { api } from "prismic-javascript";
 
-export const apiRoot = 'http://sr461.2dayhost.com/api/'; // for dev server
-//export const apiRoot = 'https://telmie.com/api/'; // for prod server
+export const host = 'sr461.2dayhost.com';
+//export const host = 'telmie.com';
+
+export const apiRoot = 'http://'+host+'/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
   SEARCH_USERS: apiRoot + 'users/pro?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   GET_PRO_USER_DETAILS: (proId) => apiRoot + 'users/pro/' + proId,
+  GET_CLIENT_USER_DETAILS: (proId) => apiRoot + 'users/client/' + proId,
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'users/activity?isPro=true',
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isPro=false',

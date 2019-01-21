@@ -309,3 +309,24 @@ export const sendContactData = (data) => async (dispatch) => {
 }
 
 export const clearContactData = () => (dispatch) => dispatch(sendContactMessage());
+
+export const closeComModal = () => (dispatch) => dispatch({
+	type: actionTypes.CLOSE_COMMUNICATE_MODAL,
+});
+
+export const openComModal = (type, person) => (dispatch) => dispatch({
+	type: actionTypes.OPEN_COMMUNICATE_MODAL,
+	modalType: type,
+	person,
+});
+
+export const setChatPerson = (person) => (dispatch) => dispatch({
+	type: actionTypes.SET_CHAT_PERSON,
+	person,
+});
+
+export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({
+	type: actionTypes.CHANGE_UNREAD_MSG,
+	from,
+	num,
+})

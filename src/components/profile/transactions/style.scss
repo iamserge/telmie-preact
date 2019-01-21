@@ -85,14 +85,13 @@
     display: flex;
     justify-content: center;
 	margin-bottom: 30px;
-	
-	.balanceItem{
-		display: inline-block;
-		text-align: center;
-		color: #444;
-		&:not(:last-child){
-			margin-right: 150px;
-		}
+}
+.balanceItem{
+	display: inline-block;
+	text-align: center;
+	color: #444;
+	&:not(:last-child){
+		margin-right: 150px;
 	}
 	.balanceAmount{
 		font-size: 24px;
