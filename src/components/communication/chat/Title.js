@@ -5,8 +5,8 @@ import callBtn from '../../../assets/callButton.png'
 import style from './style.scss';
 
 const Title = (props) => {
-    const { name = '', lastName = '', pro = {}, avatar } = props.person;
-    const { costPerMinute = '', professionDescription = '' } = pro;
+    const { name = '', lastName = '', pro, avatar } = props.person;
+    const { costPerMinute = '', professionDescription = '' } = pro ? pro : {};
 
     return (<div class={style.title}>
         <div class={style.image}>
@@ -21,7 +21,7 @@ const Title = (props) => {
             <div class={style.profession}>{professionDescription}</div>
             <div></div>
         </div>
-        <PriceItem balance={costPerMinute} text='min' className={style.priceItem}/>
+        { costPerMinute && <PriceItem balance={costPerMinute} text='min' className={style.priceItem}/> }
         <div class={style.callBtn}>
             <img src={callBtn} />
         </div>

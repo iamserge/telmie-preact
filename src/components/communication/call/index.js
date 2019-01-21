@@ -4,13 +4,16 @@ import style from './style.scss';
 
 import Chat from "../chat";
 import { consts } from "../../../utils/consts";
+import { getCookie } from "../../../utils/index";
 import { generateJID } from "../../../utils";
+import { getClientDetails, getProDetails } from "../../../api/pros";
 
 class Call extends Component {
 	constructor(props){
 		super(props);
 		this.state= {
 			chats: {},
+			users: {},
 		};
 		this.connection = new Strophe.Strophe.Connection('ws://sr461.2dayhost.com:5280/websocket', {});
 		
@@ -62,29 +65,48 @@ class Call extends Component {
 
 			this.connection.addHandler(this.onMessage, null, 'message', null, null, null);
 		}
-
-		  
 	}
 
-	onMessage = (msg) => {
-		var to = msg.getAttribute('to');
-		var from = msg.getAttribute('from');
-		var type = msg.getAttribute('type');
-		var elems = msg.getElementsByTagName('body');
+	setMsg = (id, text, isMy = false) => this.setState(prev => ({ chats: {
+		...prev.chats, 
+		[id]: prev.chats[id] ? [ 
+			...prev.chats[id], 
+			{ text, isMy } 
+		] : [ { text, isMy } ],
+	}}));
+	setUsr = (user) => this.setState(prev => ({ users: {
+		...prev.users, 
+		[user.id]: { ...user },
+	}}));
+
+	getUserInfo = async (id) => {
+		const { pro={}, userAuth } = this.props.user;
+		const _userAuth = userAuth || getCookie('USER_AUTH');
+		const _id = id.split('@')[0];
+		
+		return await ((Object.keys(pro).length === 0) ? 
+			getProDetails(_id, _userAuth) : getClientDetails(_id, _userAuth));
+	}
+
+	onMessage = async (msg) => {
+		const to = msg.getAttribute('to'),
+			from = msg.getAttribute('from'),
+			type = msg.getAttribute('type'),
+			elems = msg.getElementsByTagName('body');
 
 		if (type == "chat" && elems.length > 0) {
-			var body = elems[0];
+			let body = elems[0];
+			let userInfo = null;
 
 			const { person={} } = this.props.communicateModal
 
-			from.indexOf(person.id) !== 0 && this.props.changeUnreadNum(from);
-			this.setState(prev => ({ chats: {
-				...prev.chats, 
-				[from]: prev.chats[from] ? [ 
-					...prev.chats[from], 
-					{ text: Strophe.Strophe.getText(body) } 
-				] : [ { text: Strophe.Strophe.getText(body) } ],
-			}}));
+			from.indexOf(person.id) !== 0 && (
+				this.props.changeUnreadNum(from),
+				userInfo = await this.getUserInfo(from)
+			)
+
+			this.setMsg(from, Strophe.Strophe.getText(body));
+			this.setUsr(userInfo);
 		}
 
 		return true;
@@ -100,13 +122,7 @@ class Call extends Component {
 			type: 'chat'
 		}).c("body").t(msg);
 		
-		this.setState(prev => ({ chats: {
-			...prev.chats, 
-			[to]: prev.chats[to] ? [
-				...prev.chats[to], 
-				{ text: msg, isMy: true } 
-			] : [ { text: msg, isMy: true } ],
-		}}));
+		this.setMsg(to, msg, true);
 
 		this.connection.send(m);
 	}
@@ -120,6 +136,7 @@ class Call extends Component {
 			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
 					<Chat messages={this.state.chats[generateJID(person.id)]} 
+						users = {this.state.users}
 						communicateModal={this.props.communicateModal} 
 						setChatPerson={this.props.setChatPerson}
 						onSend={this.sendMessage}/>

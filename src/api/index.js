@@ -10,6 +10,7 @@ export const apiUrls = {
   SEARCH_USERS: apiRoot + 'users/pro?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   GET_PRO_USER_DETAILS: (proId) => apiRoot + 'users/pro/' + proId,
+  GET_CLIENT_USER_DETAILS: (proId) => apiRoot + 'users/client/' + proId,
   LOG_IN: apiRoot + 'auth',
   GET_PRO_CALLS: apiRoot + 'users/activity?isPro=true',
   GET_PERSONAL_CALLS: apiRoot + 'users/activity?isPro=false',
