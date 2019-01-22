@@ -91,7 +91,6 @@ class Pro extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
-	shortlistPros: state.shortlistPros
 
 });
 

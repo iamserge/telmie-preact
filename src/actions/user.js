@@ -100,12 +100,6 @@ const proCallsReceived = (response) => ({
 	calls: response
 });
 
-const shortlistReceived = (response) => ({
-	type: actionTypes.SHORTLIST_RECEIVED,
-	shortlist: response
-});
-
-
 const personalCallsReceived = (response) => ({
 	type: actionTypes.PERSONAL_CALLS_RECEIVED,
 	calls: response
@@ -224,14 +218,6 @@ export const switchWorkingPro = (data, userAuth) => async (dispatch) => {
 };
 export const fetchRegistration = () => (dispatch) => {
 	dispatch(fetchingRegistration());
-};
-export const getShortlist = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, false);
-	if (Object.keys(response).length === 0) {
-		dispatch(authFailure());
-	} else {
-		dispatch(shortlistReceived(response));
-	}
 };
 
 export const getProCalls = (authData, num) => async (dispatch) => {

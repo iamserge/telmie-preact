@@ -14,7 +14,6 @@ import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
-import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro';
@@ -54,7 +53,6 @@ export const routes = {
 	PROFILE: '/profile',
 	MY_PROS: '/my-pros',
 	MY_CLIENTS: '/my-clients',
-	MY_SHORTLIST: '/my-shortlist',
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
@@ -116,7 +114,6 @@ class App extends Component {
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
 		<Pro path={routes.PRO} />,
-		<Shortlist path={routes.MY_SHORTLIST} />,
 		<Profile path = { routes.PROFILE } />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
