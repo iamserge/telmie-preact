@@ -8,7 +8,7 @@ const WhyChooseUs = ({content = [], dBtn = {}, title, addClass}) => {
 
   const downloadApp = () => ReactGA.outboundLink({
     label: labelsGA.downloadAppClick
-  }, () => btnLink && window.open(btnLink));
+  }, () => btnLink && window.location.assign(btnLink));
 
   return (
     <div class={addClass ?  `up-margin ${style.blockBg}` : style.blockBg}>

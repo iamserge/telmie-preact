@@ -10,7 +10,7 @@ const HowWorksSteps = ({content = [], dBtn = {}, title}) => {
   const { btnText, btnLink } = dBtn;
   const downloadApp = () => ReactGA.outboundLink({
     label: labelsGA.downloadAppClick
-  }, () => btnLink && window.open(btnLink));
+  }, () => btnLink && window.location.assign(btnLink));
 
   const stepsCount = content.length;
 

@@ -8,7 +8,7 @@ const HowWorksDetails = ({content={} }) => {
     const { btnText, btnLink } = content;
     const downloadApp = () => ReactGA.outboundLink({
         label: labelsGA.downloadAppClick
-    }, () => btnLink && window.open(btnLink));
+    }, () => btnLink && window.location.assign(btnLink));
 
     return (
         <div class={`${style.howWorksContainer} uk-container`}>

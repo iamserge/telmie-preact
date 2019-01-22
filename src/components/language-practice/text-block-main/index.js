@@ -16,7 +16,7 @@ class TextBlockMain extends Component {
 
   downloadApp = () => ReactGA.outboundLink({
       label: labelsGA.downloadAppClick
-    }, () => this.props.dBtn.btnLink && window.open(this.props.dBtn.btnLink));
+    }, () => this.props.dBtn.btnLink && window.location.assign(this.props.dBtn.btnLink));
 
   render() {
     const { content, locale = EN } = this.props;

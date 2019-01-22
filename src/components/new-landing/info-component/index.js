@@ -13,7 +13,7 @@ const InfoComponent = ({mainSection, locale = EN, ...props }) => {
 
     const downloadApp = () => ReactGA.outboundLink({
         label: labelsGA.downloadAppClick
-    }, () => btnLink && window.open(btnLink));
+    }, () => btnLink && window.location.assign(btnLink));
     
     return (
         <div class={`${style.infoContainer} uk-container-big`}>

@@ -11,7 +11,7 @@ const TextBlockMain = ({content, dBtn = {}}) => {
   
   const downloadApp = () => ReactGA.outboundLink({
     label: labelsGA.downloadAppClick
-  }, () => btnLink && window.open(btnLink));
+  }, () => btnLink && window.location.assign(btnLink));
 
   return (
       <div class={`${style.TextBlock} uk-container`}>

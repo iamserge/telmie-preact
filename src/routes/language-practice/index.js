@@ -58,7 +58,7 @@ class LanguagePractice extends Component {
   ga = () => ({
     downloadApp: () => {
       gtag('event', 'conversion', { 'send_to': 'AW-820107229/36HzCPn7lJABEN2vh4cD'});
-      window.open(appLink);
+      window.location.assign(appLink);
     }
   })
 
