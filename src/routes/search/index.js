@@ -12,6 +12,7 @@ import Pagination from '../../components/search/pagination';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
 import { changeLocale, changeLocaleLangs } from '../../actions/user';
+import { routes } from "../../components/app";
 
 class Search extends Component {
 	constructor(props){
@@ -29,7 +30,7 @@ class Search extends Component {
 
 	componentDidMount(){
 		if (!checkIfLoggedIn()) {
-			route('/login-or-signup');
+			route(routes.LOGIN_OR_SIGNUP);
 			return;
 		}
 		this.fetchPage(this.props);
@@ -44,7 +45,7 @@ class Search extends Component {
 	fetchPros(searchTerm, sortBy, page){
 		let that = this;
 		getPros(searchTerm, sortBy, page,this.props.userData.userAuth).then(function(data) {
-	    that.setState({
+	    	that.setState({
 				pros: data.results ? data.results : [],
 				searchTerm: that.props.searchTerm,
 				loading: false
