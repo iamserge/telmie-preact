@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import Hr from '../../../hr'
 import TrackVisibility from 'react-on-screen';
+import { AE } from "../../../../utils/consts";
 
 import style from './style.scss';
 
@@ -12,7 +13,7 @@ const StatCard = (props) => {
     }
     minutesArr.push(minutes);
     return (
-        <div class={`${style.photoCard} ${style.statCard}`} style={cardStyle}>
+        <div class={`${style.photoCard} ${style.statCard} ${props.locale===AE && 'arabic-text'}`} style={cardStyle}>
             <div class={style.minWrapper}>
                 <div class={`${style.minutes} ${props.isVisible && style.animateMinutes}`}>
                     {minutesArr.map(el => (<div>{Number(el).toLocaleString()}</div>))}
@@ -26,7 +27,7 @@ const StatCard = (props) => {
 }
 
 const PhotoCard = props => {
-    const {isStat, name, img, serviceName, price, time, cardStyle = {}} = props;
+    const {isStat, name, img, serviceName, price, time, cardStyle = {}, locale} = props;
     
     return isStat ? (
         <TrackVisibility once>
@@ -35,7 +36,7 @@ const PhotoCard = props => {
 	) : (
         <div class={style.photoCard} style={cardStyle}>
 			<img src={img}/>
-            <div class={style.proDetails}>
+            <div class={`${style.proDetails} ${locale===AE && 'arabic-text'}`}>
                 <div class={style.proName}>{name}</div>
                 <div class={style.proService}>{serviceName}</div>
                 <div class={style.charge}>£{price}/{time}</div>

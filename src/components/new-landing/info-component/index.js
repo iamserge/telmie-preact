@@ -3,7 +3,7 @@ import AutoPrintText from '../auto-print-text'
 import Search from '../../global/search';
 import ReactGA from 'react-ga';
 
-import { EN, labelsGA } from "../../../utils/consts";
+import { EN, AE, labelsGA } from "../../../utils/consts";
 import style from './style.scss';
 
 const InfoComponent = ({mainSection, locale = EN, ...props }) => {
@@ -16,8 +16,8 @@ const InfoComponent = ({mainSection, locale = EN, ...props }) => {
     }, () => btnLink && window.location.assign(btnLink));
     
     return (
-        <div class={`${style.infoContainer} uk-container-big`}>
-            <div class={style.title}>
+        <div class={`${style.infoContainer} uk-container-big ${locale===AE && 'arabic-text'}`}>
+            <div class={`${style.title}`}>
               {titleObj[0]}<AutoPrintText words={words}/>{/*titleObj[1]*/}
 
             </div>

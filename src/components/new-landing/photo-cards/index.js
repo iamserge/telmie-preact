@@ -11,8 +11,12 @@ class PhotoCards extends Component{
 		this.randomArr = [0, 129, 78, 0];
 		return cards.map((card, index) => (
 			Array.isArray(card) ? 
-				<PhotoCardsCol cards={card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/> 
-				: <PhotoCard key={card.id} {...card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/>
+				<PhotoCardsCol cards={card} 
+					cardStyle={{marginTop: this.randomArr[index + startIndex]}}
+					locale={this.props.locale}/> 
+				: <PhotoCard key={card.id} {...card} 
+					cardStyle={{marginTop: this.randomArr[index + startIndex]}}
+					locale={this.props.locale}/>
 		))
 	}
 

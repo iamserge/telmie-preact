@@ -1,4 +1,4 @@
-import { EN, RU, IT, ES } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE } from "../utils/consts";
 
 
 export const langPack = {
@@ -177,5 +177,93 @@ export const langPack = {
         },
         FAQ: 'FAQs',
         MORE_FAQ: 'Más Preguntas Frecuentes',
+    },
+    [PL]: {
+        DOWNLOAD_APP_BTN: 'Ściągnij aplikację',//
+        HOMEPAGE_FAQ_TITLE: 'Najpopularniejsze pytania',
+        GENERAL_QUESTIONS: 'Ogólne pytania',//
+        CUSTOMERS_QUESTIONS: 'Klienci',//
+        EXPERTS_QUESTIONS: 'Ekspert',//
+        PAYMENTS_QUESTIONS: 'Płatności',//
+        BLOG_TITLE: 'Blog',//
+        FULL_STORY_BTN: 'Pełna historia',
+        OTHER_POSTS: 'Inne',//
+        HEADER: {
+            HOW_IT_WORKS: 'Jak to działa', //
+            BECOME_PRO: 'Zostań ekspertem', //
+            BLOG: 'Blog', //
+            FAQ: 'FAQ', //
+            CONTACT: 'Kontakt', //
+        },
+        FOOTER: {
+            HOME: 'Strona domowa',//
+            CONTACT: 'Kontakt',//
+            BLOG: 'Blog',//
+            POLICY: 'Polityka prywatności',//
+            TERMS: 'Warunki',//
+            FAQ: 'FAQ',//
+        },
+        CONTACT_US: {
+            title: 'Kontakt',//
+            subTitle: 'Masz pytania? Napisz do nas',//
+            name: 'Imię',//
+            email: 'E-mail',//
+            company: 'Firma',//
+            subject: 'Temat',//
+            message: 'Wpisz swoją wiadomość',//
+            success: 'Dziękujemy za Twoją wiadomość',//
+            submitBtn: 'Wyślij',//
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Ćwiczenie umiejętności językowych',//
+            IMMIGRATION_LAW: 'Porady dotyczące imigracji',//
+            LANGUAGE_LEARNERS: 'Nauka języków',//
+        },
+        FAQ: 'FAQ', //
+        MORE_FAQ: 'Więcej pytania',//
+    },
+    [AE]: {
+        DOWNLOAD_APP_BTN: 'تحميل التطبيق',//
+        HOMEPAGE_FAQ_TITLE: 'الأسئلة الأكثر شيوعًا',
+        GENERAL_QUESTIONS: 'شائع',//
+        CUSTOMERS_QUESTIONS: 'العملاء',//
+        EXPERTS_QUESTIONS: 'خبير',//
+        PAYMENTS_QUESTIONS: 'المدفوعات',//
+        BLOG_TITLE: 'مدونة',//
+        FULL_STORY_BTN: 'قصه كامله',
+        OTHER_POSTS: 'وظيفة أخرى',//
+        HEADER: {
+            HOW_IT_WORKS: 'كيف يعمل',//
+            BECOME_PRO: 'إحترف',//
+            BLOG: 'مدونة',//
+            FAQ: 'الأسئلة الشائعة',//
+            CONTACT: 'إتصل بنا',//
+        },
+        FOOTER: {
+            HOME: 'الرئيسية',//
+            CONTACT: 'إتصل بنا',//
+            BLOG: 'مدونة',//
+            POLICY: 'سياسة الخصوصية',//
+            TERMS: 'البنود',//
+            FAQ: 'الأسئلة الشائعة',//
+        },
+        CONTACT_US: {
+            title: 'إتصل بنا',//
+            subTitle: 'أى أسئلة ؟ إكتب لنا ',//
+            name: 'إسم',//
+            email: 'بريد إلكترونى ',//
+            company: 'شركة',//
+            subject: 'الموضوع',//
+            message: 'إكتب رسالتك',//
+            success: 'نشكرك على إتصالك بنا',//
+            submitBtn: 'أرسل',//
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'تدريب اللغة',//
+            IMMIGRATION_LAW: 'إستشارات الهجرة',//
+            LANGUAGE_LEARNERS: 'تعلم اللغة',//
+        },
+        FAQ: 'الأسئلة الشائعة',//
+        MORE_FAQ: 'المزيد من الأسئلة',//
     },
 }

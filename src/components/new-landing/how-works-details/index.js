@@ -1,10 +1,10 @@
 import { h } from 'preact';
 import Video from '../../homepage/video';
 import ReactGA from 'react-ga';
-import { labelsGA } from "../../../utils/consts";
+import { labelsGA, AE } from "../../../utils/consts";
 import style from './style.scss';
 
-const HowWorksDetails = ({content={} }) => {
+const HowWorksDetails = ({content={}, locale }) => {
     const { btnText, btnLink } = content;
     const downloadApp = () => ReactGA.outboundLink({
         label: labelsGA.downloadAppClick
@@ -12,7 +12,7 @@ const HowWorksDetails = ({content={} }) => {
 
     return (
         <div class={`${style.howWorksContainer} uk-container`}>
-            <div class={style.howWorksText}>
+            <div class={`${style.howWorksText} ${locale===AE && 'arabic-text'}`}>
                 <div class={style.header}>{content.title}</div>
                 <div style={{marginBottom: 40}}>{content.text}</div>
                 {btnLink && btnText && 

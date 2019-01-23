@@ -1,10 +1,10 @@
 import { h } from 'preact';
 import ReactGA from 'react-ga';
 import style from './style.scss';
-import { labelsGA } from "../../../utils/consts";
+import { labelsGA, AE } from "../../../utils/consts";
 
 
-const ProDetails = ({content={}}) => {
+const ProDetails = ({content={}, locale}) => {
     const { btnText, btnLink } = content;
 
     const downloadApp = () => ReactGA.outboundLink({
@@ -13,7 +13,7 @@ const ProDetails = ({content={}}) => {
 
     return (
         <div class={`uk-container ${style.proContainer}`}>
-            <div class={style.textContent}>
+            <div class={`${style.textContent} ${locale===AE && 'arabic-text'}`}>
                 <div class={style.header}>{content.title}</div>
                 <div class={style.content}>{content.text}</div>
                 {/*<button class='red-btn'>Sign up & Become Pro</button>*/}

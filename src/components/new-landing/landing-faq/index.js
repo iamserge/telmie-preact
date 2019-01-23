@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import Collapse from 'rc-collapse'
 import { route } from 'preact-router';
 import { langPack } from "../../../utils/langPack";
-import { EN, langs } from "../../../utils/consts";
+import { EN, langs, AE } from "../../../utils/consts";
 import { langRoutes, routes } from "../../app";
 
 import 'rc-collapse/assets/index.css';
@@ -66,18 +66,20 @@ class LandingFAQ extends Component {
 
     render(){
         const { activeTab } = this.state;
-        const { nodeBeforeQuestions = '', mainQuestion, faqs = {} } = this.props;
+        const { nodeBeforeQuestions = '', mainQuestion, faqs = {}, locale } = this.props;
         const currentQuestions = faqs[`${activeTab}Questions`];
 
         return (
             <div class={`uk-container`} style={this.props.styles}>
-                <div class={style.headerFAQ}>{this.props.headerFAQ || langPack[this.props.locale].FAQ}</div>
+                <div class={`${style.headerFAQ} ${locale===AE && 'arabic-text'}`}>
+                    {this.props.headerFAQ || langPack[this.props.locale].FAQ}
+                </div>
                 {nodeBeforeQuestions && <div>{nodeBeforeQuestions}</div>}
-                {mainQuestion && <div class={style.mainQuestionContainer}>
+                {mainQuestion && <div class={`${style.mainQuestionContainer} ${locale===AE && 'arabic-text'}`}>
                     <div class={style.question}>{mainQuestion.question}</div>
                     <div class={style.answer}>{mainQuestion.answer}</div>
                 </div>}
-                <div class={style.landingFAQ}>
+                <div class={`${style.landingFAQ} ${locale===AE && 'arabic-text'}`}>
                     <div class={style.menuContainer}>
                         <ul class={style.faqMenu}>
                             {tabs(this.props.locale).map(({text,value}) => 

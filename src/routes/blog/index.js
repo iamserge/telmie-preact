@@ -125,17 +125,17 @@ class BlogPage extends Component {
 					{postBody.map((content)=>{
 						switch (content.slice_type) {
 							case 'text':
-								return (<PostText content={content} />)
+								return (<PostText content={content} locale={this.props.locale}/>)
 							case 'image_with_caption':
-								return (<PostImage content={content} />)
+								return (<PostImage content={content} locale={this.props.locale}/>)
 							case 'quote':
-								return (<PostQuote content={content} />)
+								return (<PostQuote content={content} locale={this.props.locale}/>)
 							case 'text1':
-								return (<PostDecorationText content={content} />)
+								return (<PostDecorationText content={content} locale={this.props.locale}/>)
 							case 'about_an_author':
-								return (<AuthorInfo content={content}/>)
+								return (<AuthorInfo content={content} locale={this.props.locale}/>)
 							case 'button_section':
-								return <BlogButton content={content}/>
+								return <BlogButton content={content} locale={this.props.locale}/>
 						}
 					})}
 					</div>

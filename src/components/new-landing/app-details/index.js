@@ -1,11 +1,11 @@
 import { h } from 'preact';
 import ReactGA from 'react-ga';
-import { labelsGA } from "../../../utils/consts";
+import { labelsGA, AE } from "../../../utils/consts";
 
 
 import style from './style.scss';
 
-const AppDetails = ({content = {}}) => {
+const AppDetails = ({content = {}, locale}) => {
     const { btnLink } = content;
 
     const downloadApp = () => ReactGA.outboundLink({
@@ -14,11 +14,11 @@ const AppDetails = ({content = {}}) => {
 
     return (
         <div class={`uk-container ${style.iosAppContainer}`}>
-            <div class={style.textContent}>
+            <div class={`${style.textContent} ${locale===AE && 'arabic-text'}`}>
                 <div class={style.header}>{content.title}</div>
                 {content.text ? <div class={style.subHeader}>{content.text}</div> : null}
                 
-                <div class={style.btn} onClick={downloadApp}>
+                <div class={style.btn} style={{direction: 'ltr'}} onClick={downloadApp}>
 
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Badges" x="0px" y="0px" viewBox="44.2 19 128 40" enable-background="new 44.2 19 128 40" space="preserve">
                 <g>
