@@ -146,8 +146,8 @@ class App extends Component {
 		...this.renderLangRoutes(langs[RU].code),
 		...this.renderLangRoutes(langs[IT].code),
 		...this.renderLangRoutes(langs[ES].code),
-		...this.renderLangRoutes(langs[PL].code),
-		...this.renderLangRoutes(langs[AE].code),
+		/*...this.renderLangRoutes(langs[PL].code),
+		...this.renderLangRoutes(langs[AE].code),*/
 
 		<LogIn path = { routes.LOG_IN } />,
 		<LogOut path = '/log-out' />
