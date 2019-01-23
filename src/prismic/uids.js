@@ -40,6 +40,7 @@ export const tags = {
 	PRIVACY: 'Privacy',
 	TERMS: 'Terms',
 	IMMIGRATION_ADVICE: 'ImmigrationAdvice',
+	IMMIGRATION_CLIENTS: 'ImmigrationAdviceClients',
 	LANGUAGE_PRACTICE: 'LanguagePractice',
 	LANGUAGE_LEARNERS: 'LanguageLearners',
 }

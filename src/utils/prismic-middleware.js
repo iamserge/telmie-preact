@@ -1,6 +1,7 @@
 import Prismic from 'prismic-javascript';
 import { route } from 'preact-router';
 import { RU, EN, langs } from "./consts";
+import { routes } from '../components/app'
 
 export function compareUrlLocale(props){
     const urlLocale = props.path.toString().split('/')[1];
@@ -36,6 +37,7 @@ export function getPage(props ={}, urlEng){
         }
     }).catch(e => {
         console.log(e);
+        route(routes.HOME, true);
         return null;
     })
 }

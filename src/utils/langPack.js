@@ -40,7 +40,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Language practice',
-            IMMIGRATION_LAW: 'Immigration advice',
+            IMMIGRATION_CONSULTANT: 'Immigration consultant',
+            IMMIGRATION_ADVICE: 'Immigration advice',
             LANGUAGE_LEARNERS: 'Language learning',
         },
         FAQ: 'FAQ',
@@ -84,7 +85,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Практика английского',
-            IMMIGRATION_LAW: 'Советы по иммиграции',
+            IMMIGRATION_ADVICE: 'Советы по иммиграции',
+            IMMIGRATION_CONSULTANT: 'Иммиграционная помощь',
             LANGUAGE_LEARNERS: 'Изучение языка',
         },
         FAQ: 'Часто задаваемые вопросы',
@@ -128,7 +130,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Esercizio delle lingue straniere',
-            IMMIGRATION_LAW: 'Consulenza immigrazione',
+            IMMIGRATION_ADVICE: 'Consulenza immigrazione',
+            IMMIGRATION_CONSULTANT: 'Consulente in immigrazione',
             LANGUAGE_LEARNERS: 'Impara la lingua',
         },
         FAQ: 'Domande frequenti',
@@ -172,7 +175,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Practicar Idiomas',
-            IMMIGRATION_LAW: 'Trámites de Inmigración',
+            IMMIGRATION_ADVICE: 'Trámites de Inmigración',
+            IMMIGRATION_CONSULTANT: 'Trámites de Inmigración',
             LANGUAGE_LEARNERS: 'Aprender idiomas',
         },
         FAQ: 'FAQs',
@@ -216,7 +220,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Ćwiczenie umiejętności językowych',//
-            IMMIGRATION_LAW: 'Porady dotyczące imigracji',//
+            IMMIGRATION_ADVICE: 'Porady dotyczące imigracji',//
+            IMMIGRATION_CONSULTANT: 'Doradca do spraw imigracji',
             LANGUAGE_LEARNERS: 'Nauka języków',//
         },
         FAQ: 'FAQ', //
@@ -260,7 +265,8 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'تدريب اللغة',//
-            IMMIGRATION_LAW: 'إستشارات الهجرة',//
+            IMMIGRATION_ADVICE: 'إستشارات الهجرة',//
+            IMMIGRATION_CONSULTANT: 'مستشار هجرة',
             LANGUAGE_LEARNERS: 'تعلم اللغة',//
         },
         FAQ: 'الأسئلة الشائعة',//

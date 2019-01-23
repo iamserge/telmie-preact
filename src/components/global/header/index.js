@@ -110,7 +110,8 @@ class Header extends Component {
 
     const isAtBlog = this.props.currentUrl === routes.BLOG
       || !!(this.props.currentUrl.indexOf('/blog') + 1);
-    const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_LAW) + 1)
+    const isServicePage = !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_CONSULTANT) + 1)
+      || !!(this.props.currentUrl.toString().indexOf(routes.IMMIGRATION_ADVICE) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
     const { globalMessage } = this.state;

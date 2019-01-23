@@ -24,16 +24,23 @@ const renderServices = ({curUrl, locale}) => {
     if(urlStr.indexOf(routes.LANGUAGE_PRACTICE) + 1){
         item = langPack[locale].SERVICES.LANGUAGE_PRACTICE;
         listItems = [
-            <li><Link href={langRoutes(langs[locale].code, routes.IMMIGRATION_LAW)}>{langPack[locale].SERVICES.IMMIGRATION_LAW}</Link></li>,
+            <li><Link href={langRoutes(langs[locale].code, routes.IMMIGRATION_CONSULTANT)}>{langPack[locale].SERVICES.IMMIGRATION_CONSULTANT}</Link></li>,
         ];
-    } else if (urlStr.indexOf(routes.IMMIGRATION_LAW) + 1){
-        item = langPack[locale].SERVICES.IMMIGRATION_LAW;
+    } else if (urlStr.indexOf(routes.IMMIGRATION_CONSULTANT) + 1){
+        item = langPack[locale].SERVICES.IMMIGRATION_CONSULTANT;
         listItems = [
             <li><Link href={langRoutes(langs[locale].code, routes.LANGUAGE_PRACTICE)}>{langPack[locale].SERVICES.LANGUAGE_PRACTICE}</Link></li>,
         ];
     } else if (urlStr.indexOf(routes.LANGUAGE_LEARNERS) + 1){
         item = langPack[locale].SERVICES.LANGUAGE_LEARNERS;
-        listItems = [ ];
+        listItems = [ 
+            <li><Link href={langRoutes(langs[locale].code, routes.IMMIGRATION_ADVICE)}>{langPack[locale].SERVICES.IMMIGRATION_ADVICE}</Link></li>,
+        ];
+    } else if (urlStr.indexOf(routes.IMMIGRATION_ADVICE) + 1){
+        item = langPack[locale].SERVICES.IMMIGRATION_ADVICE;
+        listItems = [ 
+            <li><Link href={langRoutes(langs[locale].code, routes.LANGUAGE_LEARNERS)}>{langPack[locale].SERVICES.LANGUAGE_LEARNERS}</Link></li>,
+        ];
     }
     return {item, listItems}
 }
