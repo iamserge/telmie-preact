@@ -30,7 +30,6 @@ const rootReducer = combineReducers({
 	verifyFailure: user.verifyFailure,
 	resetSuccess: user.resetSuccess,
 	resetFailure: user.resetFailure,
-	shortlistPros: user.shortlistPros,
 	sendCodeSuccess: user.sendCodeSuccess,
 	sendCodeFailureMessage: user.sendCodeFailureMessage,
 	verifyCodeSuccess: user.verifyCodeSuccess,

@@ -214,7 +214,6 @@ class Header extends Component {
                         {(user.pro != null) && (
                             <li><Link href={routes.MY_CLIENTS}>My Clients</Link></li>
                         )}
-                        <li><Link href={routes.MY_SHORTLIST}>My Shortlist</Link></li>
                         <li><Link href={routes.TRANSACTIONS}>Money</Link></li>
                         <li><Link href={routes.EDIT_PROFILE}>Edit Profile</Link></li>
                         <li><Link href={routes.REGISTER_PRO}>
@@ -276,7 +275,6 @@ class Header extends Component {
                 {(user.pro != null) && (
                     <Link href="/my-clients">My Clients</Link>
                 )}
-                <Link href="/my-shortlist">My Shortlist</Link>
                 <Link href="/transactions">Money</Link>
                 <Link href="/edit-profile">Edit Profile</Link>
                 <Link href="/register-pro">Register as Pro</Link>

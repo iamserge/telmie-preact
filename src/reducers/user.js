@@ -141,18 +141,6 @@ export const activity = (state = {}, action) => {
 	
 	switch (action.type) {
 		case actionTypes.PERSONAL_CALLS_RECEIVED:
-			/*let personalCalls = action.calls.results.map((activity)=>{
-				let newActivity = activity;
-				newActivity.type = "PERSONAL"
-				return newActivity;
-			});
-
-			activity = state.concat(personalCalls);
-			activity = orderBy(activity, 'date', 'desc');
-			activity = map(activity, (entry) => {
-				if (entry.status != 'SHORTLIST') return entry;
-			});
-			activity = without(activity, undefined);*/
 			return {
 				...state,
 				personCalls: action.calls.slice(0, 10)
@@ -160,20 +148,6 @@ export const activity = (state = {}, action) => {
 
 
 		case actionTypes.PRO_CALLS_RECEIVED:
-			/*let proCalls = action.calls.results.map((activity)=>{
-				let newActivity = activity;
-				newActivity.type = "PRO"
-				return newActivity;
-			});
-
-			activity = state.concat(proCalls);
-			activity = orderBy(activity, 'date', 'desc');
-
-			activity = map(activity, (entry) => {
-				if (entry.status != 'SHORTLIST') return entry;
-			});
-			activity = without(activity, undefined);*/
-
 			return {
 				...state,
 				proCalls: action.calls.slice(0, 10)
@@ -196,21 +170,6 @@ export const transactions = (state = [], action) => {
 			return state;
 	}
 };
-
-
-export const shortlistPros = (state = {}, action) => {
-	switch (action.type) {
-
-		case actionTypes.SHORTLIST_RECEIVED:
-			return action.shortlist;
-
-		default:
-			return state;
-	}
-};
-
-
-
 
 export const verifySuccess = (state = {}, action) => {
 	switch (action.type) {
