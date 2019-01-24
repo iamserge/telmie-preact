@@ -40,7 +40,7 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Language practice',
-            IMMIGRATION_CONSULTANT: 'Immigration consultant',
+            IMMIGRATION_CONSULTANT: 'Immigration Pro',
             IMMIGRATION_ADVICE: 'Immigration advice',
             LANGUAGE_LEARNERS: 'Language learning',
         },
@@ -85,7 +85,7 @@ export const langPack = {
         },
         SERVICES: {
             LANGUAGE_PRACTICE: 'Практика английского',
-            IMMIGRATION_ADVICE: 'Советы по иммиграции',
+            IMMIGRATION_ADVICE: 'Иммиграционные консультации',
             IMMIGRATION_CONSULTANT: 'Иммиграционная помощь',
             LANGUAGE_LEARNERS: 'Изучение языка',
         },

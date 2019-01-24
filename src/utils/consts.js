@@ -34,7 +34,7 @@ export const langs = {
     name: 'esp',
     emoji: '🇪🇸',
   },
-  /*[PL]: {
+  [PL]: {
     code: 'pl',
     lang: PL,
     name: 'pol',
@@ -45,7 +45,7 @@ export const langs = {
     lang: AE,
     name: 'ar',
     emoji: '🇦🇪',
-  },*/
+  },
 };
 
 export const labelsGA = {

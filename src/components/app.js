@@ -66,7 +66,7 @@ export const routes = {
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
 	IMMIGRATION_ADVICE: '/immigration-advice',
-	IMMIGRATION_CONSULTANT: '/immigration-consultant',
+	IMMIGRATION_CONSULTANT: '/immigration-pro',
 	LANGUAGE_LEARNERS: '/language-learners',
 };
 
@@ -146,8 +146,8 @@ class App extends Component {
 		...this.renderLangRoutes(langs[RU].code),
 		...this.renderLangRoutes(langs[IT].code),
 		...this.renderLangRoutes(langs[ES].code),
-		/*...this.renderLangRoutes(langs[PL].code),
-		...this.renderLangRoutes(langs[AE].code),*/
+		...this.renderLangRoutes(langs[PL].code),
+		...this.renderLangRoutes(langs[AE].code),
 
 		<LogIn path = { routes.LOG_IN } />,
 		<LogOut path = '/log-out' />
