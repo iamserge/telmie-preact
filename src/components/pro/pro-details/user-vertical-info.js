@@ -23,7 +23,6 @@ export default class UserVerticalInfo extends Component {
 	]
   
 	render({person, isPro}) {
-		console.log('isPro', isPro);
 
 		return (
 			<div className={style.imageContainer}>
