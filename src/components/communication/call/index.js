@@ -6,7 +6,7 @@ import Chat from "../chat";
 import { consts } from "../../../utils/consts";
 import { getCookie } from "../../../utils/index";
 import { generateJID } from "../../../utils";
-import { getClientDetails, getProDetails } from "../../../api/pros";
+import { getUserDetails } from "../../../api/pros";
 
 class Call extends Component {
 	constructor(props){
@@ -19,7 +19,7 @@ class Call extends Component {
 		
 	}		
 
-	initializeConnection(id){
+	initializeConnection = (id) => {
 		this.connection.connect(generateJID(id),'', this.onConnect);
 		this.connection.rawInput = (data) => {
 			console.log('rawInput:', data);
@@ -83,9 +83,8 @@ class Call extends Component {
 		const { pro={}, userAuth } = this.props.user;
 		const _userAuth = userAuth || getCookie('USER_AUTH');
 		const _id = id.split('@')[0];
-		
-		return await ((Object.keys(pro).length === 0) ? 
-			getProDetails(_id, _userAuth) : getClientDetails(_id, _userAuth));
+
+		return await getUserDetails(_id, _userAuth, (Object.keys(pro).length === 0));
 	}
 
 	onMessage = async (msg) => {

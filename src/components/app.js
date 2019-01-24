@@ -6,6 +6,7 @@ import Footer from './global/footer';
 import Home from '../routes/home';
 import Search from '../routes/search';
 import Pro from '../routes/pro';
+import Client from '../routes/client';
 import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
@@ -14,7 +15,6 @@ import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
-import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro';
@@ -43,6 +43,8 @@ export const routes = {
 	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
 	PRO_FOR_COMP: '/pro/',
+	CLIENT: '/client/:userId',
+	CLIENT_FOR_COMP: '/client/',
 	FAQ: '/help',
 	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
@@ -56,7 +58,6 @@ export const routes = {
 	PROFILE: '/profile',
 	MY_PROS: '/my-pros',
 	MY_CLIENTS: '/my-clients',
-	MY_SHORTLIST: '/my-shortlist',
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
@@ -89,7 +90,7 @@ class App extends Component {
 		}).catch((e) => {
 			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
 		});
-	  }
+  	}
 
 	handleRoute = e => {
 		ReactGA.pageview(e.url);
@@ -109,6 +110,7 @@ class App extends Component {
 	renderProRoutes = () => [
 		...this.renderUserRoutes(),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
+		<Client path={routes.CLIENT} />,
 	];
 
 	renderUserRoutes = () => [
@@ -117,7 +119,6 @@ class App extends Component {
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
 		<Pro path={routes.PRO} />,
-		<Shortlist path={routes.MY_SHORTLIST} />,
 		<Profile path = { routes.PROFILE } />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,

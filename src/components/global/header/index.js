@@ -108,7 +108,7 @@ class Header extends Component {
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
     const { globalMessage } = this.state;
 
-    const newChats = Object.keys(this.props.newChats).length || '';
+    const newChats = (this.props.newChats && Object.keys(this.props.newChats).length) || '';
 
 		return (
       <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${globalMessage && 'globalMessage'}`} 

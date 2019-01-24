@@ -6,20 +6,22 @@ import FontAwesome from 'react-fontawesome';
 import { apiRoot } from '../../../api';
 import { convertDate } from '../../../utils';
 import { activityTypes } from "../../../utils/consts";
+import { routes } from "../../app";
 
 
 export default class Activity extends Component {
 	state = {
 		expanded: false
 	}
-	goToPro(id){
-		route('/pro/' + id);
-	}
+	
+	gotoHandler = (id) => () => this.props.client ? 
+		route(routes.CLIENT_FOR_COMP + id) : route(routes.PRO_FOR_COMP + id);
+
 	render({activity = {}}) {
 		return (
 			<div className={style.activity}>
 
-				<div className={style.contact}  onClick={()=>{this.goToPro(activity.id)}} >
+				<div className={style.contact}  onClick={this.gotoHandler(activity.id)} >
 					<div className={style.avatar}>
 						{(activity.avatar != null) ? (
 							<img src={apiRoot + 'image/' + activity.avatar.id} alt={activity.name + ' ' + activity.lastName} />
