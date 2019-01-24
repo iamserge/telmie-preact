@@ -21,7 +21,9 @@ const Title = (props) => {
             <div class={style.profession}>{professionDescription}</div>
             <div></div>
         </div>
-        { costPerMinute && <PriceItem balance={costPerMinute} text='min' className={style.priceItem}/> }
+
+        <PriceItem balance={costPerMinute} text='min' className={style.priceItem}/>
+        
         <div class={style.callBtn}>
             <img src={callBtn} />
         </div>

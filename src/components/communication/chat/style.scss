@@ -17,6 +17,7 @@
         height: 100px;
         position: relative;
         overflow: hidden;
+        margin-right: 5px;
         &:after {
             content: "";
             background-image: url('/assets/avatar_mask_xlarge.png');
@@ -39,6 +40,9 @@
     }
 
     .info{
+        max-width: calc(100% - 220px);
+        max-height: 100%;
+        overflow: auto;
         .name{
             font-size: 20px;
         }
@@ -48,7 +52,7 @@
     }
 
     .priceItem {
-        margin-right: 0 !important;
+        margin-right: 5px !important;
 
         & div, & span{
             font-size: 18px !important;
@@ -57,6 +61,8 @@
 
     .callBtn{
         border-radius: 50%;
+        min-width: 50px;
+        max-width: 80px;
         cursor: pointer;
         user-select: none;
         & > img {

@@ -6,6 +6,7 @@ import Footer from './global/footer';
 import Home from '../routes/home';
 import Search from '../routes/search';
 import Pro from '../routes/pro';
+import Client from '../routes/client';
 import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
@@ -42,6 +43,8 @@ export const routes = {
 	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
 	PRO_FOR_COMP: '/pro/',
+	CLIENT: '/client/:userId',
+	CLIENT_FOR_COMP: '/client/',
 	FAQ: '/help',
 	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
@@ -87,7 +90,7 @@ class App extends Component {
 		}).catch((e) => {
 			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
 		});
-	  }
+  	}
 
 	handleRoute = e => {
 		ReactGA.pageview(e.url);
@@ -107,6 +110,7 @@ class App extends Component {
 	renderProRoutes = () => [
 		...this.renderUserRoutes(),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
+		<Client path={routes.CLIENT} />,
 	];
 
 	renderUserRoutes = () => [

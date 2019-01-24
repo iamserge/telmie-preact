@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import ProVerticalInfo from './pro-vertical-info';
+import UserVerticalInfo from './user-vertical-info';
 import ProTopInfo from './pro-top-info';
 import PriceInfo from './price-info';
 import { route } from 'preact-router';
@@ -20,37 +20,32 @@ export default class Pro extends Component {
 			showCallProPopup: true
 		})
 	}
-	render({person}) {
+	render({person, isPro}) {
 		const { pro = {} } = person;
 
 		return (
 			<div class={style.person}>
-				<ProVerticalInfo {...this.props} showCallProPopup={this.showCallProPopup}/>
+				<UserVerticalInfo {...this.props} showCallProPopup={this.showCallProPopup}/>
 
 				<div className={style.info}>
-					<ProTopInfo person={person} pro={pro}/>
+					<ProTopInfo person={person} pro={pro} isPro={isPro}/>
 
-					<Collapse accordion={false} defaultActiveKey = "info" className={style.description}>
-						<Collapse.Panel header={'Info'} key='info'>
+					<Collapse accordion={false} defaultActiveKey = {['info', 'call-history']} className={style.description}>
+						{ isPro && <Collapse.Panel header={'Info'} key='info'>
 							{pro.professionDescription}
 							{pro.video && pro.video.length > 0 && (
 								<div class={style.videoContainer}>
 									<YouTube videoId={ pro.video } />
 								</div>
 							)}
-						</Collapse.Panel>
-
-						<Collapse.Panel header={'Chat'} key='chat'>
-							Chat
-						</Collapse.Panel>
-
+						</Collapse.Panel> }
 						<Collapse.Panel header={'Call history'} key='call-history'>
 							Call history
 						</Collapse.Panel>
 					</Collapse>
 				</div>
 
-				<PriceInfo pro={pro}/>
+				{ isPro && <PriceInfo pro={pro}/> }
 
 				{ this.state.showCallProPopup && (
 					<div>

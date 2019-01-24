@@ -7,19 +7,26 @@ import {routes} from '../../app'
 
 export default class ProTopInfo extends Component {
   
-	render({person, pro}) {
+	render({person, pro, isPro}) {
 
-		return (<div>
+		return isPro ? (
+			<div>
+				<div className={style.nameAndTitle}>
+					<span className={style.proRoundel}>PRO</span>
+					<h2>{person.name} {person.lastName}</h2>
+					<h3>{pro.profession}</h3>
+				</div>
+				<div className={style.prof}>
+					<Link href={routes.SEARCH_FOR_COMP + pro.category} >{pro.category}</Link>
+					<FontAwesome name="angle-right"/>
+					<Link href={routes.SEARCH_FOR_COMP + pro.subCategory} >{pro.subCategory}</Link>
+				</div>
+			</div>
+		) :(
 			<div className={style.nameAndTitle}>
-				<span className={style.proRoundel}>PRO</span>
 				<h2>{person.name} {person.lastName}</h2>
-				<h3>{pro.profession}</h3>
+				<h3>Telmie Client</h3>
 			</div>
-			<div className={style.prof}>
-				<Link href={routes.SEARCH_FOR_COMP + pro.category} >{pro.category}</Link>
-				<FontAwesome name="angle-right"/>
-				<Link href={routes.SEARCH_FOR_COMP + pro.subCategory} >{pro.subCategory}</Link>
-			</div>
-        </div>)
+		)
 	}
 }

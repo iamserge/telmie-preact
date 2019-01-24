@@ -3,7 +3,7 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { route } from 'preact-router';
 import { connect } from 'preact-redux';
-import { getProDetails, addToShortlist } from '../../api/pros';
+import { getUserDetails, addToShortlist } from '../../api/pros';
 import style from './style.scss';
 import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
@@ -19,7 +19,6 @@ class Pro extends Component {
 			loading: false,
 			shortlisted: false
 		}
-		this.shortlist = this.shortlist.bind(this);
 	}
 
 	componentDidMount(){
@@ -28,10 +27,9 @@ class Pro extends Component {
 			return;
 		}
 		this.fetchPage(this.props);
-		const that = this;
 		window.scrollTo(0,0);
-		getProDetails(this.props.userId, this.props.userData.userAuth).then(function(data) {
-	    	that.setState({ pro: data, loading: false, isShortlisted: data.inShortlistForCurrent });
+		getUserDetails(this.props.userId, this.props.userData.userAuth, true).then((data) => {
+	    	this.setState({ pro: data, loading: false, isShortlisted: data.inShortlistForCurrent });
 		});
 	}
 	componentWillUnmount(){
@@ -43,11 +41,8 @@ class Pro extends Component {
 		props.changeLocale();
 		props.changeLocaleLangs([]);
 	}
-	componentWillReceiveProps(nextProps){
 
-	}
-
-	shortlist(userId, isForRemove){
+	shortlist = (userId, isForRemove) => {
 		this.setState({ shortlistLoading: true })
 		clearTimeout(this.clearMsgTimeout);
 		this.clearMsgTimeout = null;
@@ -78,6 +73,7 @@ class Pro extends Component {
 								shortlistLoading={this.state.shortlistLoading}
 								shortlistMessage={this.state.shortlistMessage}
 								person = { this.state.pro } 
+								isPro = { true }
 								openComModal = { this.props.openComModal }
 								cnageShortlist = { this.shortlist }  />
 				)}
