@@ -96,7 +96,7 @@ export const langPack = {
         DOWNLOAD_APP_BTN: 'Scarica la App',
         HOMEPAGE_FAQ_TITLE: 'Domande più popolari',
         GENERAL_QUESTIONS: 'Domande frequenti',
-        CUSTOMERS_QUESTIONS: '"Customers"',
+        CUSTOMERS_QUESTIONS: 'Clienti',
         EXPERTS_QUESTIONS: 'Domande frequenti per specialisti',
         PAYMENTS_QUESTIONS: 'Domande frequenti sui pagamenti',
         BLOG_TITLE: 'Blog',
