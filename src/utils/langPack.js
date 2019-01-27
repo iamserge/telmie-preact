@@ -1,4 +1,4 @@
-import { EN, RU, IT, ES, PL, AE } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE, PT } from "../utils/consts";
 
 
 export const langPack = {
@@ -271,5 +271,50 @@ export const langPack = {
         },
         FAQ: 'الأسئلة الشائعة',//
         MORE_FAQ: 'المزيد من الأسئلة',//
+    },
+    [PT]: {
+        DOWNLOAD_APP_BTN: 'Baixar o App', //
+        HOMEPAGE_FAQ_TITLE: 'Perguntas mais populares', //
+        GENERAL_QUESTIONS: 'General Questions',
+        CUSTOMERS_QUESTIONS: 'Customers',
+        EXPERTS_QUESTIONS: 'Especialistas', //
+        PAYMENTS_QUESTIONS: 'Payments',
+        BLOG_TITLE: 'Blog',
+        FULL_STORY_BTN: 'História completa', //
+        OTHER_POSTS: 'Outros posts', //
+        HEADER: {
+            HOW_IT_WORKS: 'Como funciona',//
+            BECOME_PRO: 'Torne-se um pro',
+            BLOG: 'Blog',
+            FAQ: 'Perguntas frequentes',
+            CONTACT: 'Fale conosco',
+        },
+        FOOTER: {
+            HOME: 'Página inicial', //
+            CONTACT: 'Fale conosco',
+            BLOG: 'Blog',
+            POLICY: 'Política de Privacidade', //
+            TERMS: 'Termos', //
+            FAQ: 'FAQ',
+        },
+        CONTACT_US: {
+            title: 'Fale conosco',
+            subTitle: 'Alguma pergunta? Manda uma mensagem.', //
+            name: 'Nome', //
+            email: 'Email', //
+            company: 'Empresa', //
+            subject: 'Assunto', //
+            message: 'Digite sua mensagem', //
+            success: 'Obrigado por nos contatar', //
+            submitBtn: 'Enviar', //
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: 'Prática de idiomas',
+            IMMIGRATION_CONSULTANT: 'Assessor de imigração',
+            IMMIGRATION_ADVICE: 'Aconselhamento sobre imigração',
+            LANGUAGE_LEARNERS: 'Aprendizado de idiomas', //
+        },
+        FAQ: 'Perguntas frequentes', //
+        MORE_FAQ: 'Mais Perguntas Frequentes', //
     },
 }

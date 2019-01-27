@@ -7,7 +7,8 @@ export const EN = 'en-us',
   IT = 'it-it',
   ES = 'es-es',
   PL = 'pl',
-  AE = 'ar-ae';
+  AE = 'ar-ae',
+  PT = 'pt-br';
 
 export const langs = {
   [EN]: {
@@ -45,6 +46,12 @@ export const langs = {
     lang: AE,
     name: 'ar',
     emoji: '🇦🇪',
+  },
+  [PT]: {
+    code: 'pt',
+    lang: PT,
+    name: 'pt',
+    emoji: '🇵🇹',
   },
 };
 

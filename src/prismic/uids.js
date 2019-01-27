@@ -1,4 +1,4 @@
-import { EN, RU, IT, ES, PL, AE } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE, PT } from "../utils/consts";
 export const uids = {
 	[EN]: {
 		CONTACT_US: 'WoRRbigAACgAco9L',
@@ -27,6 +27,9 @@ export const uids = {
 	[AE]: {
 		MESSAGE: 'XEhgmRUAACUAvYoL',
 	},
+	[PT]: {
+		MESSAGE: 'XE22fxQAACEALIfu',
+	}
 };
 
 export const types = {
