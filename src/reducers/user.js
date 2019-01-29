@@ -298,12 +298,24 @@ export const communicateModal = (state = { type: null, unread: {} }, action) => 
 				...state,
 				type: null,
 				person: {},
+				isOutcoming: false,
+				isIncoming: false,
 			 };
 		case actionTypes.OPEN_COMMUNICATE_MODAL:
 			return { 
 				...state,
 				type: action.modalType,
 				person: action.person,
+				isOutcoming: action.isOutcoming,
+				isIncoming: action.isIncoming,
+			};
+		case actionTypes.CREATE_CALL:
+			return { 
+				...state,
+				callInfo: {
+					avTime: action.avTime,
+					callId: action.callId,
+				},
 			};
 		case actionTypes.SET_CHAT_PERSON:
 			const { person } = action;

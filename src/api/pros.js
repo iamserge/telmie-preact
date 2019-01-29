@@ -31,6 +31,16 @@ export  function getUserDetails(userId, authData, isPro = true){
 	});
 }
 
+export  function getCallDetails(callId, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+	return fetch(apiUrls.CALLS + `/${callId}`, { method: 'GET', headers }).then(response => {
+		return (response.status === 404) ? {} : response.json().then(json => json);
+	}, error => {
+		throw new Error(error.message);
+	});
+}
+
 export  function getClientDetails(userId, authData){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);

@@ -37,6 +37,7 @@ export const actionTypes = {
 	SET_CHAT_PERSON: 'SET_CHAT_PERSON',
 
 	CHANGE_UNREAD_MSG: 'CHANGE_UNREAD_MSG',
+	CREATE_CALL: 'CREATE_CALL',
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

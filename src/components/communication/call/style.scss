@@ -1,51 +1,32 @@
-
-
-.callAreaBackground{
-    position: fixed;
-    top: 0;
-    z-index: 2000;
-    width: 100%;
+.callComponent{
+    background-color: aqua;
     height: 100%;
-    background-color: rgba($color: #000000, $alpha: .7);
-}
 
-.callArea{
-    position: absolute;
-    width: 90%;
-    max-width: 800px;
-    height: 90%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, - 50%);
-    background-color: transparent;
-    //overflow: auto;
-}
-
-.closeBtn{
-    position: absolute;
-    right: 32px;
-    top: 32px;
-    width: 32px;
-    height: 32px;
-    opacity: 0.4;
-    cursor: pointer;
-
-    &:hover{
-        opacity: 1;
+    .avatar {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        margin-right: 5px;
+        &:after {
+            content: "";
+            background-image: url('/assets/avatar_mask_xlarge.png');
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: 100%;
+            z-index: 100;
+        }
+        img {
+            width: 198px;
+            height: 198px;
+            object-fit: cover;
+            position: relative;
+            top: 1px;
+            left: 1px;
+        }
     }
-
-    &:before, &:after {
-        position: absolute;
-        left: 15px;
-        content: ' ';
-        height: 33px;
-        width: 2px;
-        background-color: white;
-    }
-    &:before {
-        transform: rotate(45deg);
-      }
-    &:after {
-        transform: rotate(-45deg);
-      }
 }
+

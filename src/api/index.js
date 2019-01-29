@@ -25,4 +25,5 @@ export const apiUrls = {
   SEND_CONTACT_DATA: apiRoot + 'help/contact',
   EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',
   WORKING_PRO: apiRoot + 'users/pro/work',
+  CALLS: apiRoot + 'calls',
 }

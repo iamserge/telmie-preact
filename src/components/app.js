@@ -25,7 +25,7 @@ import BlogPage from '../routes/blog';
 import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
-import Call from "./communication/call"
+import Communication from "./communication/communication-component"
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -169,9 +169,10 @@ class App extends Component {
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
-				<Call user={this.props.userData} 
-					communicateModal={communicateModal} 
+				<Communication user={this.props.userData} 
+					comModal={communicateModal} 
 					onClose={closeComModal} 
+					openComModal={openComModal}
 					setChatPerson={setChatPerson} 
 					changeUnreadNum={changeUnreadNum}/>
 			</div>

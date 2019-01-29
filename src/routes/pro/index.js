@@ -9,7 +9,7 @@ import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
 import { routes } from '../../components/app'
-import { changeLocale, changeLocaleLangs, openComModal } from '../../actions/user';
+import { changeLocale, changeLocaleLangs, openComModal, createCall } from '../../actions/user';
 
 class Pro extends Component {
 	constructor(props){
@@ -59,6 +59,8 @@ class Pro extends Component {
 		});
 	}
 
+	createCall = (cid, isPro = false) => this.props.createCall(cid, isPro, this.props.userData.userAuth);
+
 	render() {
 
 		return (
@@ -75,6 +77,7 @@ class Pro extends Component {
 								person = { this.state.pro } 
 								isPro = { true }
 								openComModal = { this.props.openComModal }
+								createCall = { this.createCall }
 								cnageShortlist = { this.shortlist }  />
 				)}
 
@@ -94,6 +97,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	changeLocaleLangs,
 	changeLocale,
 	openComModal,
+	createCall,
 }, dispatch);
 
 export default connect(

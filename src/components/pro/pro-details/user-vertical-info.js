@@ -6,9 +6,13 @@ import { consts } from '../../../utils/consts'
 
 export default class UserVerticalInfo extends Component {
 	openChat = () => this.props.openComModal(consts.CHAT, this.props.person);
+	openCall = () => {
+		this.props.createCall(this.props.person.id);
+		this.props.openComModal(consts.CALL, this.props.person, true);
+	};
 
 	renderProPart = () => [
-		<button  id={style.callPro} className="uk-button" onClick={this.props.showCallProPopup}>CALL PRO</button>,
+		<button  id={style.callPro} className="uk-button" onClick={this.openCall}>CALL PRO</button>,
 		this.props.isShortlisted ? (
 			<span className={style.success}>
 				<span class={style.txt}><span aria-hidden="true" class="fa fa-check"/> Shortlisted</span>
