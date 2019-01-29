@@ -1,13 +1,23 @@
-.callComponent{
-    background-color: aqua;
-    height: 100%;
+@import './src/style/variables';
 
+.callComponent{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: $charcoalGrey;
+    text-align: center;
+    color: white;
+
+    .name{
+        font-size: 22px;
+    }
     .avatar {
         width: 200px;
         height: 200px;
         position: relative;
         overflow: hidden;
-        margin-right: 5px;
+        margin: 0 auto;
         &:after {
             content: "";
             background-image: url('/assets/avatar_mask_xlarge.png');
@@ -28,5 +38,37 @@
             left: 1px;
         }
     }
-}
+    .info{
+        font-size: 18px;
+        max-width: 250px;
+        margin: 0 auto;
+    }
 
+    .btnArea{
+        max-width: 500px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin: 0 auto;
+
+        .btn{
+            .btnText{
+                cursor: pointer;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        
+            img{
+                max-width: 70px;
+                max-height: 70px;
+                cursor: pointer;
+                margin-bottom: 3px;
+                &:hover ~ .btnText{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    
+}

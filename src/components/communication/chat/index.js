@@ -16,15 +16,16 @@ const Chat = (props) => {
     const renderUnreadItem = (el) => {
         const _id =  el.split('@')[0];
         const user = props.users[_id];
-        const {avatar, name, lastName} = user ? user : {};
+        const {avatar, name = '', lastName = ''} = user ? user : {};
+        const fullName = name + ' ' + lastName;
     
         return (<li key={el} onClick={onChangePerson(user)}>
 
             <div class={style.avatar}>
-                { (avatar != null) ? (
-                    <img src={apiRoot + 'image/' + avatar.id} alt={name + ' ' + lastName} title={name + ' ' + lastName} />
+                { avatar ? (
+                    <img src={apiRoot + 'image/' + avatar.id} alt={fullName} title={fullName} />
                 ) : (
-                    <img src="/assets/nouserimage.jpg" alt={name + ' ' + lastName} title={name + ' ' + lastName}/>
+                    <img src="/assets/nouserimage.jpg" alt={fullName} title={fullName}/>
                 )}
             </div>
             <div class={style.msgCount}>{unread[el]}</div>
