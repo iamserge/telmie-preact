@@ -275,10 +275,10 @@ export const langPack = {
     [PT]: {
         DOWNLOAD_APP_BTN: 'Baixar o App', //
         HOMEPAGE_FAQ_TITLE: 'Perguntas mais populares', //
-        GENERAL_QUESTIONS: 'General Questions',
-        CUSTOMERS_QUESTIONS: 'Customers',
-        EXPERTS_QUESTIONS: 'Especialistas', //
-        PAYMENTS_QUESTIONS: 'Payments',
+        GENERAL_QUESTIONS: 'Questões Gerais',
+        CUSTOMERS_QUESTIONS: 'Clientes',
+        EXPERTS_QUESTIONS: 'Especialista', //
+        PAYMENTS_QUESTIONS: 'Pagamentos',
         BLOG_TITLE: 'Blog',
         FULL_STORY_BTN: 'História completa', //
         OTHER_POSTS: 'Outros posts', //
