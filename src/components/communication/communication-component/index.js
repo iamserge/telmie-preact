@@ -87,6 +87,24 @@ class Communication extends Component {
 		return await getUserDetails(_id, this._userAuth, isPro);
 	}
 
+	undoAutoReject = () => {
+		clearTimeout(this.autoRejectTimeout);
+		this.autoRejectTimeout = null;
+	}
+
+	onClose = () => {
+		this.autoRejectTimeout && (
+			this.undoAutoReject(),
+			this.rejectCall()
+		)
+		this.props.onClose();
+	}
+
+	changeType = () => {
+		this.undoAutoReject();
+		this.props.changeType();
+	}
+
 	onMessage = async (msg) => {
 		console.log('---=== [onMessage] ===---');
 		const to = msg.getAttribute('to'),
@@ -150,11 +168,12 @@ class Communication extends Component {
 					break;
 				case 'reject':
 					console.log('REJECTED');
+					this.undoAutoReject();
 					this.props.onClose();
 					break;
 				case 'forbidden':
 					console.log('forbidden');
-					//this.props.onClose();
+					this.undoAutoReject();
 					this.props.caleeIsBusy();
 					break;
 			}
@@ -188,10 +207,12 @@ class Communication extends Component {
 			type: 'vcxep'
 		}).c("vcxep", {type: 'request', callId: callInfo.callId, avtime: callInfo.avTime});
 
+		this.autoRejectTimeout = setTimeout(this.rejectCall, 20000);
 		this.connection.send(m);
 	}
 
 	rejectCall = () => {
+		this.undoAutoReject();
 		const { user, comModal, callInfo = {} } = this.props;
 		const to = generateJID(comModal.person.id);
 
@@ -243,12 +264,12 @@ class Communication extends Component {
 			{(modalType === consts.CALL) && (
 				<div class={style.callArea}>
 					<Call communicateModal={this.props.comModal}
-						changeType={this.props.changeType}
-						closeModal={this.props.onClose}
+						changeType={this.changeType}
+						closeModal={this.onClose}
 						rejectCall={this.rejectCall} />
 				</div>
 			)}
-			<div class={style.closeBtn} onClick={this.props.onClose}/>
+			<div class={style.closeBtn} onClick={this.onClose}/>
 		</div>)
   	}
 }
