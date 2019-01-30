@@ -9,7 +9,8 @@ import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
 import { routes } from '../../components/app'
-import { changeLocale, changeLocaleLangs, openComModal, createCall } from '../../actions/user';
+import { changeLocale, changeLocaleLangs } from '../../actions/user';
+import { openComModal, createCall } from '../../actions/chat';
 
 class Pro extends Component {
 	constructor(props){

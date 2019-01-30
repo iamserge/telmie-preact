@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { actionTypes } from '../actions';
 
 import * as user from './user';
+import * as chat from './chat';
 
 const hiddenSearchBoxReduxer = (state = {}, action) => {
 	switch (action.type) {
@@ -37,7 +38,7 @@ const rootReducer = combineReducers({
 	dataFromServer: user.dataFromServer,
 	sendContactMessage: user.sendContactMessage,
 	locale: user.locale,
-	communicateModal: user.communicateModal,
+	communicateModal: chat.communicateModal,
 });
 
 export default rootReducer;

@@ -38,6 +38,9 @@ export const actionTypes = {
 
 	CHANGE_UNREAD_MSG: 'CHANGE_UNREAD_MSG',
 	CREATE_CALL: 'CREATE_CALL',
+	GET_CALL_INFO: 'GET_CALL_INFO',
+	CALEE_IS_BUSY: 'CALEE_IS_BUSY',
+	CHANGE_COMMUNICATION_TYPE: 'CHANGE_COMMUNICATION_TYPE',
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

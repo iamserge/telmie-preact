@@ -47,7 +47,8 @@ class Communication extends Component {
 
 		!nextProps.comModal.type && this.props.comModal.type && document.body.classList.remove("communicate-active");
 
-		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming && nextProps.comModal.callInfo) 
+		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming && !this.props.comModal.isBusy && 
+			Object.keys(nextProps.comModal.callInfo).length) 
 			&& this.callRequest(nextProps.comModal.callInfo);
 	}
 
@@ -125,13 +126,38 @@ class Communication extends Component {
 				callId = body.getAttribute('callId'),
 				avtime = body.getAttribute('avtime');
 			
-			const callInfo = await getCallDetails(callId, this._userAuth);
-			console.log(callInfo);
 
-			const { consultant = {}, consulted ={}, callerId } = callInfo;
-			const person = consultant.id === callerId ? {...consultant} : {...consulted};
-
-			this.props.openComModal(consts.CALL, person, false, true);
+			switch (type){
+				case 'request':
+					const { callInfo : cInfo = {} } = this.props.comModal;
+					console.log(cInfo);
+					//console.log(this.props.callInfo);
+					console.log('cInfo.callId',cInfo.callId);
+					if(cInfo.callId){
+						this.requestForbidden(callId, from);
+						break;
+					}
+					const callInfo = await getCallDetails(callId, this._userAuth);
+					if (callInfo.status && callInfo.status.toLowerCase() === 'active') {
+						this.props.getCallInfo(callInfo);
+						console.log('callInfo: ',callInfo);
+			
+						const { consultant = {}, consulted ={}, callerId } = callInfo;
+						const person = consultant.id === callerId ? {...consultant} : {...consulted};
+			
+						this.props.openComModal(consts.CALL, person, false, true);
+					}
+					break;
+				case 'reject':
+					console.log('REJECTED');
+					this.props.onClose();
+					break;
+				case 'forbidden':
+					console.log('forbidden');
+					//this.props.onClose();
+					this.props.caleeIsBusy();
+					break;
+			}
 		}
 
 		return true;
@@ -165,6 +191,34 @@ class Communication extends Component {
 		this.connection.send(m);
 	}
 
+	rejectCall = () => {
+		const { user, comModal, callInfo = {} } = this.props;
+		const to = generateJID(comModal.person.id);
+
+		let m = Strophe.$msg({
+			from: generateJID(user.id),
+			to,
+			type: 'vcxep'
+		}).c("vcxep", {type: 'reject', callId: callInfo.callId});
+
+		this.connection.send(m);
+		this.props.onClose();
+	}
+
+	requestForbidden = (callId, from) => {
+		console.log('requestForbidden');
+		const { user } = this.props;
+		const to = from;
+
+		let m = Strophe.$msg({
+			from: generateJID(user.id),
+			to,
+			type: 'vcxep'
+		}).c("vcxep", {type: 'forbidden', callId });
+
+		this.connection.send(m);
+	}
+
 	/*
 	<message xmlns='jabber:client' from='5946@sr461.2dayhost.com/web' to='5963@sr461.2dayhost.com/web' type='chat'>
 		<body>hi</body>
@@ -188,7 +242,10 @@ class Communication extends Component {
 			)}
 			{(modalType === consts.CALL) && (
 				<div class={style.callArea}>
-					<Call communicateModal={this.props.comModal} />
+					<Call communicateModal={this.props.comModal}
+						changeType={this.props.changeType}
+						closeModal={this.props.onClose}
+						rejectCall={this.rejectCall} />
 				</div>
 			)}
 			<div class={style.closeBtn} onClick={this.props.onClose}/>

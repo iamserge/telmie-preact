@@ -38,3 +38,10 @@ export const activityTypes = {
   'om': 'OUTGOING message',
   's': 'SHORTLISTED',
 }
+
+export const chatBtns = {
+  decline: 'Decline',
+  pickUp: 'Pick up',
+  textMe: 'Text me',
+  cancel: 'Cancel',
+}

@@ -33,7 +33,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, langs } from "../utils/consts";
-import { openComModal, closeComModal, setChatPerson, changeUnreadNum } from '../actions/user'
+import { } from '../actions/user'
+import { 
+	openComModal, closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType
+} from '../actions/chat'
 
 import 'animate.css'
 
@@ -149,7 +152,10 @@ class App extends Component {
 	])
 
 	render() {
-		const {userData : user  = {}, locale, communicateModal, openComModal, closeComModal, changeUnreadNum, setChatPerson} = this.props;
+		const {
+			userData : user  = {}, locale, communicateModal, openComModal, closeComModal, 
+			changeUnreadNum, setChatPerson, getCallInfo, caleeIsBusy, changeComType
+		} = this.props;
 		const { unread : newChats } = communicateModal;
 
 		return (
@@ -171,8 +177,11 @@ class App extends Component {
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
 				<Communication user={this.props.userData} 
 					comModal={communicateModal} 
+					getCallInfo={getCallInfo}
+					caleeIsBusy={caleeIsBusy}
 					onClose={closeComModal} 
 					openComModal={openComModal}
+					changeType={changeComType}
 					setChatPerson={setChatPerson} 
 					changeUnreadNum={changeUnreadNum}/>
 			</div>
@@ -191,6 +200,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	openComModal,
 	changeUnreadNum,
 	setChatPerson,
+	getCallInfo,
+	caleeIsBusy,
+	changeComType,
 }, dispatch);
 
 export default connect(
