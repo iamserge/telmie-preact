@@ -47,9 +47,10 @@ class Communication extends Component {
 
 		!nextProps.comModal.type && this.props.comModal.type && document.body.classList.remove("communicate-active");
 
-		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming && !this.props.comModal.isBusy && 
-			Object.keys(nextProps.comModal.callInfo).length) 
-			&& this.callRequest(nextProps.comModal.callInfo);
+		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
+			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
+			&& Object.keys(nextProps.comModal.callInfo).length) 
+				&& this.callRequest(nextProps.comModal.callInfo);
 	}
 
 	onConnect = (status) => {
@@ -87,6 +88,9 @@ class Communication extends Component {
 		return await getUserDetails(_id, this._userAuth, isPro);
 	}
 
+	setAutoReject = () => {
+		this.autoRejectTimeout = setTimeout(() => this.rejectCall(true), 5000);
+	}
 	undoAutoReject = () => {
 		clearTimeout(this.autoRejectTimeout);
 		this.autoRejectTimeout = null;
@@ -144,10 +148,11 @@ class Communication extends Component {
 				callId = body.getAttribute('callId'),
 				avtime = body.getAttribute('avtime');
 			
+			const { callInfo : cInfo = {} } = this.props.comModal;
 
 			switch (type){
 				case 'request':
-					const { callInfo : cInfo = {} } = this.props.comModal;
+					
 					console.log(cInfo);
 					//console.log(this.props.callInfo);
 					console.log('cInfo.callId',cInfo.callId);
@@ -169,7 +174,8 @@ class Communication extends Component {
 				case 'reject':
 					console.log('REJECTED');
 					this.undoAutoReject();
-					this.props.onClose();
+					(cInfo.callerId === this.props.user.id) ? 
+						this.props.caleeIsBusy() : this.props.onClose();
 					break;
 				case 'forbidden':
 					console.log('forbidden');
@@ -207,13 +213,14 @@ class Communication extends Component {
 			type: 'vcxep'
 		}).c("vcxep", {type: 'request', callId: callInfo.callId, avtime: callInfo.avTime});
 
-		this.autoRejectTimeout = setTimeout(this.rejectCall, 20000);
+		this.setAutoReject();
 		this.connection.send(m);
 	}
 
-	rejectCall = () => {
+	rejectCall = (isBusy = false) => {
 		this.undoAutoReject();
-		const { user, comModal, callInfo = {} } = this.props;
+		const { user, comModal } = this.props;
+		const { callInfo = {} } = comModal;
 		const to = generateJID(comModal.person.id);
 
 		let m = Strophe.$msg({
@@ -223,7 +230,7 @@ class Communication extends Component {
 		}).c("vcxep", {type: 'reject', callId: callInfo.callId});
 
 		this.connection.send(m);
-		this.props.onClose();
+		isBusy === true ? this.props.caleeIsBusy() : this.props.onClose();
 	}
 
 	requestForbidden = (callId, from) => {

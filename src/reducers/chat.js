@@ -36,14 +36,16 @@ export const communicateModal = (state = { type: null, unread: {}, isBusy: false
 				...state,
 				callInfo: {
 					avTime: action.avTime,
-					callId: action.callId,
+                    callId: action.callId,
+                    callerId: action.callerId,
 				},
 			};
 		case actionTypes.GET_CALL_INFO:
 			return {
 				...state,
 				callInfo: {
-					callId: action.callId,
+                    callId: action.callId,
+                    callerId: action.callerId,
 				},
 			}
 		case actionTypes.SET_CHAT_PERSON:

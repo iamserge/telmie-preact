@@ -4,12 +4,14 @@ import { actionTypes } from './index';
 const createCallAction = (response) => ({
 	type: actionTypes.CREATE_CALL,
 	avTime: response.avTime,
-	callId: response.id
+    callId: response.id,
+    callerId: response.callerId,
 });
 
 export const getCallInfo = (response) => dispatch => dispatch({
 	type: actionTypes.GET_CALL_INFO,
-	callId: response.id,
+    callId: response.id,
+    callerId: response.callerId,
 });
 
 export const caleeIsBusy = () => dispatch => dispatch({
