@@ -51,7 +51,7 @@ export const langs = {
     code: 'pt',
     lang: PT,
     name: 'pt',
-    emoji: '🇵🇹',
+    emoji: '🇧🇷',
   },
 };
 
