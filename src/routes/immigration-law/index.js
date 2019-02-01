@@ -18,7 +18,6 @@ import { route } from 'preact-router';
 import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
-const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class ImmigrationLaw extends Component {
   constructor(props){
@@ -64,18 +63,18 @@ class ImmigrationLaw extends Component {
       return (
         <div id="language-practice" lang={locale} class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} appLink={appLink} locale={locale}/>
+          <TextBlockMain content={pageData.becomePro} dBtn = {pageData.downloadBtn}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} appLink={appLink} locale={locale}/>
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} dBtn = {pageData.downloadBtn}/>
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} appLink={appLink} locale={locale}/>
+          <WhyChooseUs addClass={true} content={pageData.reasons} title={pageData.titles} dBtn = {pageData.downloadBtn}/>
 
           {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
-            <AppDetails appLink={appLink} content={pageData.app} />
+            <AppDetails content={pageData.app} />
           </div>
 
 

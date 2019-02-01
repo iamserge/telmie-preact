@@ -465,6 +465,10 @@ button.white-btn {
 	}
 }
 
+.arabic-text{
+	direction: rtl;
+}
+
 @media (max-width: 1200px) {
     .slick-next{
 		right: 15px !important;

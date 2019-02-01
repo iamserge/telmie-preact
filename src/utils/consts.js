@@ -6,7 +6,11 @@ export const consts = {
 
 export const EN = 'en-us',
   RU = 'ru',
-  IT = 'it-it';
+  IT = 'it-it',
+  ES = 'es-es',
+  PL = 'pl',
+  AE = 'ar-ae',
+  PT = 'pt-br';
 
 export const langs = {
   [EN]: {
@@ -27,6 +31,34 @@ export const langs = {
     name: 'ita',
     emoji: '🇮🇹',
   },
+  [ES]: {
+    code: 'es',
+    lang: ES,
+    name: 'esp',
+    emoji: '🇪🇸',
+  },
+  [PL]: {
+    code: 'pl',
+    lang: PL,
+    name: 'pol',
+    emoji: '🇵🇱',
+  },
+  [AE]: {
+    code: 'ar',
+    lang: AE,
+    name: 'ar',
+    emoji: '🇦🇪',
+  },
+  [PT]: {
+    code: 'pt',
+    lang: PT,
+    name: 'pt',
+    emoji: '🇧🇷',
+  },
+};
+
+export const labelsGA = {
+  downloadAppClick: 'Clicked Download App'
 };
 
 export const activityTypes = {
@@ -45,4 +77,4 @@ export const chatBtns = {
   textMe: 'Text me',
   cancel: 'Cancel',
   finish: 'Hang up',
-}
+};

@@ -1,4 +1,4 @@
-import { EN, RU, IT } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE, PT } from "../utils/consts";
 export const uids = {
 	[EN]: {
 		CONTACT_US: 'WoRRbigAACgAco9L',
@@ -17,6 +17,18 @@ export const uids = {
 	},
 	[IT]: {
 		MESSAGE: 'XBpjiBEAACcAYCHS',
+	},
+	[ES]: {
+		MESSAGE: 'XC-L8xEAACMAvKAs',
+	},
+	[PL]: {
+		MESSAGE: 'XEhg5xUAACQAvYtk',
+	},
+	[AE]: {
+		MESSAGE: 'XEhgmRUAACUAvYoL',
+	},
+	[PT]: {
+		MESSAGE: 'XE22fxQAACEALIfu',
 	}
 };
 
@@ -31,6 +43,7 @@ export const tags = {
 	PRIVACY: 'Privacy',
 	TERMS: 'Terms',
 	IMMIGRATION_ADVICE: 'ImmigrationAdvice',
+	IMMIGRATION_CLIENTS: 'ImmigrationAdviceClients',
 	LANGUAGE_PRACTICE: 'LanguagePractice',
 	LANGUAGE_LEARNERS: 'LanguageLearners',
 }

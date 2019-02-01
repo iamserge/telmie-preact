@@ -32,7 +32,7 @@ import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
-import { RU, EN, IT, langs } from "../utils/consts";
+import { RU, EN, IT, ES, PL, AE, PT, langs } from "../utils/consts";
 import { } from '../actions/user'
 import { 
 	openComModal, closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication
@@ -70,7 +70,8 @@ export const routes = {
 	BLOG_LINK: '/#blog',
 	BLOG_POST: '/blog/:uid',
 	LANGUAGE_PRACTICE: '/language-practice',
-	IMMIGRATION_LAW: '/immigration-advice',
+	IMMIGRATION_ADVICE: '/immigration-advice',
+	IMMIGRATION_CONSULTANT: '/immigration-pro',
 	LANGUAGE_LEARNERS: '/language-learners',
 };
 
@@ -132,6 +133,11 @@ class App extends Component {
 		...this.renderLangRoutes(langs[EN].code),
 		...this.renderLangRoutes(langs[RU].code),
 		...this.renderLangRoutes(langs[IT].code),
+		...this.renderLangRoutes(langs[ES].code),
+		...this.renderLangRoutes(langs[PL].code),
+		...this.renderLangRoutes(langs[AE].code),
+		...this.renderLangRoutes(langs[PT].code),
+		
 
 		<LogIn path = { routes.LOG_IN } />,
 		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
@@ -141,7 +147,8 @@ class App extends Component {
 
 	renderLangRoutes = (lang) => ([
 		<Home path={ langRoutes(lang, routes.HOME) } prismicCtx = { this.state.prismicCtx } type={types.HOMEPAGE} />,
-		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_LAW) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.IMMIGRATION_ADVICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_CONSULTANT) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.IMMIGRATION_ADVICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
+		<ImmigrationLaw path={ langRoutes(lang, routes.IMMIGRATION_ADVICE) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.IMMIGRATION_CLIENTS} reviewsUid={ uids.SHORT_REVIEWS }/>,
 		<LanguagePractice path={ langRoutes(lang, routes.LANGUAGE_PRACTICE) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_PRACTICE} reviewsUid={ uids.SHORT_REVIEWS }/>,
 		<LanguageLearners path={ langRoutes(lang, routes.LANGUAGE_LEARNERS) } prismicCtx = { this.state.prismicCtx } type={types.SERVICE_PAGE} tag={tags.LANGUAGE_LEARNERS} reviewsUid={ uids.SHORT_REVIEWS }/>,
 		<BlogPage path={ langRoutes(lang, routes.BLOG_POST) } prismicCtx = { this.state.prismicCtx } />,

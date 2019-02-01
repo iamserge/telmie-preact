@@ -19,8 +19,6 @@ import style from './style.scss';
 import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 
-const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
-
 class LanguagePractice extends Component {
   constructor(props){
     super(props);
@@ -60,7 +58,7 @@ class LanguagePractice extends Component {
   ga = () => ({
     downloadApp: () => {
       gtag('event', 'conversion', { 'send_to': 'AW-820107229/36HzCPn7lJABEN2vh4cD'});
-      window.open(appLink);
+      window.location.assign(appLink);
     }
   })
 
@@ -73,18 +71,18 @@ class LanguagePractice extends Component {
       return (
         <div id="language-practice" lang={locale} class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
+          <TextBlockMain content={pageData.becomePro} dBtn = {pageData.downloadBtn}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} dBtn = {pageData.downloadBtn}/>
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles} dBtn = {pageData.downloadBtn} />
 
           {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
-            <AppDetails onDownloadApp = {this.ga().downloadApp} content={pageData.app} />
+            <AppDetails content={pageData.app} />
           </div>
 
 

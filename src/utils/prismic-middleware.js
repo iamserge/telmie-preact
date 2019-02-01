@@ -1,8 +1,9 @@
 import Prismic from 'prismic-javascript';
 import { route } from 'preact-router';
 import { RU, EN, langs } from "./consts";
+import { routes } from '../components/app'
 
-function compareUrlLocale(props){
+export function compareUrlLocale(props){
     const urlLocale = props.path.toString().split('/')[1];
     let _lang = '';
 
@@ -36,6 +37,7 @@ export function getPage(props ={}, urlEng){
         }
     }).catch(e => {
         console.log(e);
+        route(routes.HOME, true);
         return null;
     })
 }
@@ -304,7 +306,9 @@ export function processHomepageData(data = {}){
         processedData.mainSection = {
             title: data.title[0].text,
             subTitle: data.sub_title[0].text,
-            typedWords: data.typed_words[0].text
+            typedWords: data.typed_words[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -317,7 +321,9 @@ export function processHomepageData(data = {}){
         processedData.howItWorks = {
             title: data.how_it_works_title[0].text,
             text: data.how_it_works[0].text,
-            videoID: data.how_it_works_video.video_id
+            videoID: data.how_it_works_video.video_id,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -339,6 +345,7 @@ export function processHomepageData(data = {}){
             title: data.app_title[0].text,
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -351,7 +358,9 @@ export function processHomepageData(data = {}){
     try{
         processedData.becomePro = {
             title: data.earn_more_title[0].text,
-            text: data.earn_more_text[0].text
+            text: data.earn_more_text[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -423,15 +432,28 @@ const getInfo = (data) => {
 
 export function processTextPageData(data){
     let processedData = {};
+    let btnLink, btnText;
 
-    processedData = { ...data };
+    try{
+        btnLink = data.button_link.url;
+        btnText = data.button_title[0] && data.button_title[0].text;
+    } catch(e){
+        console.log(e);
+        btnLink = '';
+        btnTetxt = '';
+    }
+    //processedData = { ...data };
+    processedData.downloadBtn = {
+        btnLink,
+        btnText,
+    };
 
     try{
         processedData.becomePro = {
             img: data.earn_money_image.url,
             title: data.earn_money_title[0].text,
             emphasized: data.emphasize_title_part[0].text,
-            text: data.earn_money_text[0].text
+            text: data.earn_money_text[0].text,
         };
     } catch(e){
         console.log(e);
@@ -467,6 +489,7 @@ export function processTextPageData(data){
             title: data.app_title[0] ? data.app_title[0].text : '',
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink,
         };
     } catch(e){
         console.log(e);
@@ -477,6 +500,7 @@ export function processTextPageData(data){
         };
     }
     
+    console.log(processedData)
 
     return processedData;
 }

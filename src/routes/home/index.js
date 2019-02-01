@@ -24,13 +24,12 @@ import { route } from 'preact-router';
 import { verify, sendContactData, clearContactData } from '../../actions/user';
 import style from './style.scss';
 
-import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage } from '../../utils/prismic-middleware';
+import { processRecentPosts, processPostThumbnailData, processHomepageData, getPage, compareUrlLocale } from '../../utils/prismic-middleware';
 import { langPack } from '../../utils/langPack';
+import { AE } from '../../utils/consts'
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import { routes } from '../../components/app';
 
-
-const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class HomePage extends Component {
 	constructor(props){
@@ -129,11 +128,12 @@ class HomePage extends Component {
 	}
 	fetchFeatuedPost = (props) => {
 		let that = this;
+		const lang = compareUrlLocale(props);
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.at('document.tags', ['featured'])
 		],
-		{ orderings : '[document.first_publication_date desc]', lang: props.locale }
+		{ orderings : '[document.first_publication_date desc]', lang }
 		).then(function(response) {
 			that.setState({
 					fetchingFeaturedPost: false,
@@ -143,11 +143,12 @@ class HomePage extends Component {
 	}
 	fetchRecentPosts = (props) => {
 		let that = this;
+		const lang = compareUrlLocale(props);
 		props.prismicCtx.api.query([
 			Prismic.Predicates.at('document.type', 'blog_post'),
 			Prismic.Predicates.not('document.tags', ['featured']),
 		],
-		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang: props.locale }
+		{ pageSize: 4, orderings : '[document.first_publication_date desc]', lang }
 		).then(function(response) {
 			that.setState({
 					fetchingRecentPosts: false,
@@ -176,17 +177,17 @@ class HomePage extends Component {
 				<div id="homepage">
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
-						<InfoComponent mainSection={pageData.mainSection} appLink={appLink} locale={locale} 
+						<InfoComponent mainSection={pageData.mainSection} locale={locale} 
 							hiddenSearchBox={this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin = { Object.keys(user).length !== 0 } />
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
-						<PhotoCards cards = {pageData.experts} getVideo={this.getVideo}/>
+						<PhotoCards cards = {pageData.experts} getVideo={this.getVideo} locale={locale}/>
 					</div>
 
 					{ pageData.howItWorks && [<Element name='howWorksElement'  />,
 					<div class="wow slideInLeft" dataWowDuration="2s" dataWowDelay="5s">
-						<HowWorksDetails content={pageData.howItWorks} appLink={appLink} locale={locale}/>
+						<HowWorksDetails content={pageData.howItWorks} locale={locale}/>
 					</div> ]}
 
 					<div class="wow bounceInUp" >
@@ -194,7 +195,7 @@ class HomePage extends Component {
 					</div>
 
 					{ pageData.app && <div class={`${style.iosAppSection} wow slideInRight`}>
-						<AppDetails appLink={appLink} content={pageData.app} locale={locale}/>
+						<AppDetails content={pageData.app} locale={locale}/>
 					</div> }
 
 					{ pageData.faqs && <div class={`${style.faqContainer} wow rotateInUpLeft`}>
@@ -204,7 +205,7 @@ class HomePage extends Component {
 
 					{ pageData.becomePro && <div class={`${style.proWrapper} wow rotateInUpRight`}>
 						<Element name='becomeProElement' />
-						<ProDetails content={pageData.becomePro} locale={locale} appLink={appLink} />
+						<ProDetails content={pageData.becomePro} locale={locale}/>
 					</div> }
 
 					{ !this.state.fetchingFeaturedPost 
@@ -212,7 +213,8 @@ class HomePage extends Component {
 						&& (featuredPost || (recentPosts && recentPosts.length > 0) )
 						&& <div class={`${style.blogContainer} uk-container wow jackInTheBox`}>
 							<Element name="blogElement"></Element>
-							<div class={style.header}>{langPack[locale].BLOG_TITLE}</div>
+							<div class={`${style.header} ${locale===AE && 'arabic-text'}`}>
+								{langPack[locale].BLOG_TITLE}</div>
 							<BlogArticles articles = {recentPosts} featured = {featuredPost} locale={locale}/>
 						</div> }
 					
