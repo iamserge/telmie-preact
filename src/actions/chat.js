@@ -7,6 +7,10 @@ const createCallAction = (response) => ({
     callId: response.id,
     callerId: response.callerId,
 });
+const createCallErrorAction = (response = {}) => ({
+	type: actionTypes.CREATE_CALL_ERROR,
+	info: response.message || "Server error. You can't make a call.",
+});
 
 export const getCallInfo = (response) => dispatch => dispatch({
 	type: actionTypes.GET_CALL_INFO,
@@ -18,6 +22,13 @@ export const caleeIsBusy = () => dispatch => dispatch({
 	type: actionTypes.CALEE_IS_BUSY,
 });
 
+export const speaking = () => dispatch => dispatch({
+	type: actionTypes.SPEAKING,
+});
+
+export const stopCommunication = () => dispatch => dispatch({
+	type: actionTypes.STOP_COMMUNICATION,
+})
 
 export const closeComModal = () => (dispatch) => dispatch({
 	type: actionTypes.CLOSE_COMMUNICATE_MODAL,
@@ -31,6 +42,10 @@ export const openComModal = (type, person, isOutcoming = false, isIncoming = fal
 	isIncoming,
 });
 
+export const processCall = () => dispatch => dispatch({
+    type: actionTypes.PROCESSING_CALL,
+})
+
 export const changeComType = (type) => dispatch => dispatch({
     type: actionTypes.CHANGE_COMMUNICATION_TYPE,
     modalType: type,
@@ -41,15 +56,8 @@ export const createCall = (cid, isPro, auth) => async (dispatch) => {
 	console.log(response);
 
 	(response.error) ? 
-		null
+		dispatch(createCallErrorAction(response))
 		: dispatch(createCallAction(response));
-
-	
-	/*dispatch(sendContactMessage());
-
-	(response.error) ? 
-		dispatch(sendContactMessageFailure(response.message)) 
-		: dispatch(sendContactMessageSuccess());*/
 };
 
 export const setChatPerson = (person) => (dispatch) => dispatch({

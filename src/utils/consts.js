@@ -44,4 +44,5 @@ export const chatBtns = {
   pickUp: 'Pick up',
   textMe: 'Text me',
   cancel: 'Cancel',
+  finish: 'Hang up',
 }

@@ -1,7 +1,7 @@
 import { actionTypes } from '../actions';
 import { generateJID } from "../utils";
 
-export const communicateModal = (state = { type: null, unread: {}, isBusy: false, }, action) => {
+export const communicateModal = (state = { callInfo: {}, type: null, unread: {}, isBusy: false, }, action) => {
 	switch (action.type) {
 
 		case actionTypes.CLOSE_COMMUNICATE_MODAL:
@@ -12,7 +12,9 @@ export const communicateModal = (state = { type: null, unread: {}, isBusy: false
 				person: {},
 				isOutcoming: false,
 				isIncoming: false,
-				isBusy: false,
+                isBusy: false,
+				isCalling: false,
+				isSpeaking: false,
 			 };
 		case actionTypes.OPEN_COMMUNICATE_MODAL:
 			return { 
@@ -29,15 +31,46 @@ export const communicateModal = (state = { type: null, unread: {}, isBusy: false
                 isOutcoming: false,
 				isIncoming: false,
                 isBusy: false,
+				isCalling: false,
+				isSpeaking: false,
                 callInfo: {},
             }
+        case actionTypes.PROCESSING_CALL:
+            return {
+                ...state,
+                isCalling: true,
+			}
+		case actionTypes.SPEAKING:
+            return {
+                ...state,
+				isSpeaking: true,
+				isCalling: false,
+			}
+		case actionTypes.STOP_COMMUNICATION:
+			return {
+				...state,
+				isSpeaking: false,
+				isCalling: false,
+				isOutcoming: false,
+				isIncoming: false,
+			}
 		case actionTypes.CREATE_CALL:
 			return { 
 				...state,
 				callInfo: {
 					avTime: action.avTime,
                     callId: action.callId,
-                    callerId: action.callerId,
+					callerId: action.callerId,
+					info: '',
+					error: false,
+				},
+			};
+		case actionTypes.CREATE_CALL_ERROR:
+			return { 
+				...state,
+				callInfo: {
+					info: action.info,
+					error: true,
 				},
 			};
 		case actionTypes.GET_CALL_INFO:
@@ -45,7 +78,9 @@ export const communicateModal = (state = { type: null, unread: {}, isBusy: false
 				...state,
 				callInfo: {
                     callId: action.callId,
-                    callerId: action.callerId,
+					callerId: action.callerId,
+					info: '',
+					error: false,
 				},
 			}
 		case actionTypes.SET_CHAT_PERSON:

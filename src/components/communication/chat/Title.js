@@ -1,10 +1,11 @@
 import { h } from 'preact';
 import { apiRoot } from '../../../api';
 import PriceItem from '../../profile/transactions/balance-item'
-import callBtn from '../../../assets/btnCallEnd.png'
+import callBtn from '../../../assets/btnCallStart.png'
 import style from './style.scss';
 
 const Title = (props) => {
+    console.log(props);
     const { name = '', lastName = '', pro, avatar } = props.person;
     const { costPerMinute = '', professionDescription = '' } = pro ? pro : {};
     const fullName = `${name} ${lastName}`;
@@ -25,7 +26,7 @@ const Title = (props) => {
 
         <PriceItem balance={costPerMinute} text='min' className={style.priceItem}/>
         
-        <div class={style.callBtn}>
+        <div class={style.callBtn} onClick={() => {}}>
             <img src={callBtn} />
         </div>
     </div>)

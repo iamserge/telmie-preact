@@ -8,7 +8,10 @@ export function createCall(cid, isPro = false, authData) {
 
 	return fetch(apiUrls.CALLS + additionalQuery, {method: 'POST', headers}).then(response => {
 		return response.json().then(json => {
-			return json;
+			return (response.status === 200 || response.status === 201) ? json : {
+				...json,
+				error: true
+			};
 		})
 		.catch(err => {
 			console.log(err);

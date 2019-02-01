@@ -42,7 +42,7 @@ const Chat = (props) => {
                 {messages.map((el, i) => <Msg {...el} key={i}/>)}
             </ul>
         </div>
-        <SendForm onSend={props.onSend}/>
+        { communicateModal.person && <SendForm onSend={props.onSend}/> }
     </div>)
 };
 

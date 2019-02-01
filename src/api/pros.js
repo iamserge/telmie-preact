@@ -41,16 +41,6 @@ export  function getCallDetails(callId, authData){
 	});
 }
 
-export  function getClientDetails(userId, authData){
-	let headers = new Headers();
-	headers.append("Authorization", "Basic " + authData);
-	return fetch(apiUrls.GET_CLIENT_USER_DETAILS(userId), { method: 'GET', headers }).then(response => {
-		return (response.status === 404) ? {} : response.json().then(json => json);
-	}, error => {
-		throw new Error(error.message);
-	});
-}
-
 export function addToShortlist(userId, authData, isForDelete){
 
 	let headers = new Headers();

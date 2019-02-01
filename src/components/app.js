@@ -35,7 +35,7 @@ import ReactGA from 'react-ga';
 import { RU, EN, IT, langs } from "../utils/consts";
 import { } from '../actions/user'
 import { 
-	openComModal, closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType
+	openComModal, closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication
 } from '../actions/chat'
 
 import 'animate.css'
@@ -154,7 +154,7 @@ class App extends Component {
 	render() {
 		const {
 			userData : user  = {}, locale, communicateModal, openComModal, closeComModal, 
-			changeUnreadNum, setChatPerson, getCallInfo, caleeIsBusy, changeComType
+			changeUnreadNum, setChatPerson, getCallInfo, caleeIsBusy, changeComType, processCall, speaking
 		} = this.props;
 		const { unread : newChats } = communicateModal;
 
@@ -182,7 +182,10 @@ class App extends Component {
 					onClose={closeComModal} 
 					openComModal={openComModal}
 					changeType={changeComType}
+					processCall={processCall}
 					setChatPerson={setChatPerson} 
+					speaking={speaking}
+					stopCommunication={this.props.stopCommunication}
 					changeUnreadNum={changeUnreadNum}/>
 			</div>
 		);
@@ -203,6 +206,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getCallInfo,
 	caleeIsBusy,
 	changeComType,
+	processCall,
+	speaking,
+	stopCommunication,
 }, dispatch);
 
 export default connect(
