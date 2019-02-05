@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import Strophe from 'npm-strophe'
 import kUtils from "kurento-utils";
 import style from './style.scss';
+import { bindActionCreators } from 'redux';
+import { connect } from 'preact-redux';
 
 import Chat from "../chat";
 import Call from "../call";
@@ -11,6 +13,9 @@ import { getCookie } from "../../../utils/index";
 import { generateJID } from "../../../utils";
 import { getCallDetails } from "../../../api/pros";
 import { setMessages, setUser, getUserInfo, prepareFromTo } from './helpers'
+import { 
+	closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication
+} from '../../../actions/chat'
 
 class Communication extends Component {
 	constructor(props){
@@ -21,6 +26,7 @@ class Communication extends Component {
 			showNotif: false,
 			isConnected: false,
 			isDelayingCall: false,
+			callSec: 0,
 		};
 		this.webRtcPeer;
 		this.connection = new Strophe.Strophe.Connection('ws://sr461.2dayhost.com:5280/websocket', {});
@@ -55,8 +61,15 @@ class Communication extends Component {
 
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
-			&& !this.props.comModal.isCalling && nextProps.comModal.callInfo.callId)
+			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
+			&& nextProps.comModal.callInfo.callId)
 				&& this.makeCall(nextProps.comModal.callInfo);
+	}
+
+	componentWillUnmount(){
+		this.autoRejectTimeout && this.undoAutoReject();
+		(this.autoFinishTimeout || this.hideNotifTimeout) && this.undoAutoFinish();
+		this.callSecondsInterval && this.undoCallSecInterval();
 	}
 
 	onConnect = (status) => {		
@@ -90,7 +103,9 @@ class Communication extends Component {
 	
 
 	setAutoReject = () => {
-		this.autoRejectTimeout = setTimeout(() => this.rejectCall(true), 20000);
+		this.autoRejectTimeout = setTimeout(() => {
+			this.rejectCall(true);
+		}, 20000);
 	}
 	undoAutoReject = () => {
 		clearTimeout(this.autoRejectTimeout);
@@ -108,6 +123,12 @@ class Communication extends Component {
 		this.autoFinishTimeout = null;
 		this.hideNotifTimeout = null;
 	}
+
+	undoCallSecInterval = () => {
+		clearInterval(this.callSecondsInterval);
+		this.callSecondsInterval = null;
+	}
+
 	hideNotif = () => {
 		this.setState({ showNotif: false });
 		clearTimeout(this.hideNotifTimeout);
@@ -119,12 +140,12 @@ class Communication extends Component {
 			this.undoAutoReject(),
 			this.rejectCall()
 		)
-		this.props.onClose();
+		this.props.closeComModal();
 	}
 
 	changeType = (type) => {
 		this.undoAutoReject();
-		this.props.changeType(type);
+		this.props.changeComType(type);
 	}
 
 	onMessage = async (msg) => {
@@ -137,7 +158,6 @@ class Communication extends Component {
 
 
 		if (type == "chat" && elems.length > 0) {
-			console.log(' ---=== [CHAT] ===--- ');
 			let body = elems[0];
 			let userInfo = null;
 
@@ -153,10 +173,8 @@ class Communication extends Component {
 		}
 
 		if (type === 'vcxep' && vcxepElems.length > 0){
-			console.log(' ---=== [CALL] ===--- ');
 			let body = vcxepElems[0];
 
-			console.log(body);
 			const type = body.getAttribute('type'),
 				callId = body.getAttribute('callid'),
 				avtime = body.getAttribute('avtime');
@@ -164,8 +182,8 @@ class Communication extends Component {
 			const { callInfo : cInfo = {} } = this.props.comModal;
 
 			switch (type){
-				case 'request':
-					if(cInfo.callId){
+				case 'request':					
+					if(cInfo.callId && cInfo.callId != callId){
 						this.requestForbidden(callId, from);
 						break;
 					}
@@ -183,7 +201,7 @@ class Communication extends Component {
 					console.log('REJECTED');
 					this.undoAutoReject();
 					(cInfo.callerId === this.props.user.id) ? 
-						this.props.caleeIsBusy() : this.props.onClose();
+						this.props.caleeIsBusy() : this.props.closeComModal();
 					
 					break;
 				case 'forbidden':
@@ -216,12 +234,16 @@ class Communication extends Component {
 				case 'accept':
 					console.log('accept');
 					const address = prepareFromTo(this.props);
-					console.log('cInfo.callerId',cInfo.callerId);
 					this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'speaking', callid: cInfo.callId});
+					this.callSecondsInterval = setInterval(
+						() => this.setState(prev => ({ callSec: prev.callSec + 1})),
+						1000
+					);
 					break;
 				case 'speaking':
 					console.log('speaking');
 					this.props.speaking();
+
 					// check callerId and send 1 more speaking-type msg
 					break;
 				case 'avtimeEnded':
@@ -239,7 +261,7 @@ class Communication extends Component {
 						sdpMid: obj.sdpMid,
 						sdpMLineIndex: obj.index,
 					}
-					this.webRtcPeer.addIceCandidate(candidate);
+					this.webRtcPeer && this.webRtcPeer.addIceCandidate(candidate);
 					break;
 			}
 		}
@@ -276,7 +298,7 @@ class Communication extends Component {
 		const address = prepareFromTo(this.props);
 		const { callInfo = {} } = this.props.comModal;
 		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'reject', callid: callInfo.callId});
-		isBusy === true ? this.props.caleeIsBusy() : this.props.onClose();
+		isBusy === true ? this.props.caleeIsBusy() : this.props.closeComModal();
 	}
 
 	finishCall = () => {
@@ -290,7 +312,8 @@ class Communication extends Component {
 
 	stopCommunication = () => {
 		//this.props.stopCommunication();
-		this.props.onClose();
+		this.undoCallSecInterval();
+		this.props.closeComModal();
 		this.webRtcPeer && (
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
@@ -397,6 +420,7 @@ class Communication extends Component {
 			{(modalType === consts.CALL) && (
 				<div class={style.callArea}>
 					<Call communicateModal={this.props.comModal}
+						seconds={this.state.callSec}
 						changeType={this.changeType}
 						closeModal={this.onClose}
 						pickUp = {this.requestGranted}
@@ -412,5 +436,21 @@ class Communication extends Component {
 		</div>)
   	}
 }
+const mapStateToProps = (state) => ({});
 
-export default Communication;
+const mapDispatchToProps = dispatch => bindActionCreators({
+	closeComModal,
+	changeUnreadNum,
+	setChatPerson,
+	getCallInfo,
+	caleeIsBusy,
+	changeComType,
+	processCall,
+	speaking,
+	stopCommunication,
+}, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Communication);

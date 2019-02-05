@@ -99,3 +99,10 @@ export function bytesToSize(bytes) {
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
+
+export function secToMS(sec = 0){
+  const s = sec % 60;
+  const m = (sec - s) / 60;
+  
+  return {m, s};
+}

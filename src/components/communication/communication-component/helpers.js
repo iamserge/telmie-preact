@@ -29,7 +29,7 @@ export const getUserInfo = async (id, userAuth, props) => {
 
 export const prepareFromTo = (props) => {
 	const { user, comModal } = props;
-	const to = generateJID(comModal.person.id);
+	const to = comModal.person && generateJID(comModal.person.id);
 	const from = generateJID(user.id);
 
 	return {from, to};

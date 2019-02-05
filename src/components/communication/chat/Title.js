@@ -5,7 +5,7 @@ import callBtn from '../../../assets/btnCallStart.png'
 import style from './style.scss';
 
 const Title = (props) => {
-    console.log(props);
+    //console.log(props);
     const { name = '', lastName = '', pro, avatar } = props.person;
     const { costPerMinute = '', professionDescription = '' } = pro ? pro : {};
     const fullName = `${name} ${lastName}`;

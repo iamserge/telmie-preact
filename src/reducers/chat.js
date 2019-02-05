@@ -1,7 +1,19 @@
 import { actionTypes } from '../actions';
 import { generateJID } from "../utils";
 
-export const communicateModal = (state = { callInfo: {}, type: null, unread: {}, isBusy: false, }, action) => {
+const initialState = { 
+	callInfo: {}, 
+	type: null, 
+	unread: {}, 
+	isBusy: false, 
+	isOutcoming: false,
+	isIncoming: true,
+	isBusy: false,
+	isCalling: false,
+	isSpeaking: false,
+};
+
+export const communicateModal = (state = {...initialState}, action) => {
 	switch (action.type) {
 
 		case actionTypes.CLOSE_COMMUNICATE_MODAL:
@@ -38,13 +50,15 @@ export const communicateModal = (state = { callInfo: {}, type: null, unread: {},
         case actionTypes.PROCESSING_CALL:
             return {
                 ...state,
-                isCalling: true,
+				isCalling: true,
+				isBusy: false,
 			}
 		case actionTypes.SPEAKING:
             return {
                 ...state,
 				isSpeaking: true,
 				isCalling: false,
+				isBusy: false,
 			}
 		case actionTypes.STOP_COMMUNICATION:
 			return {
@@ -53,6 +67,7 @@ export const communicateModal = (state = { callInfo: {}, type: null, unread: {},
 				isCalling: false,
 				isOutcoming: false,
 				isIncoming: false,
+				isBusy: false,
 			}
 		case actionTypes.CREATE_CALL:
 			return { 

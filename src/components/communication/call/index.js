@@ -4,16 +4,19 @@ import Btn from "./callBtn";
 
 import { apiRoot } from "../../../api/index";
 import { chatBtns, consts } from '../../../utils/consts'
+import { secToMS } from '../../../utils/index'
 
 
 const Call = ({ 
-    communicateModal = {}, rejectCall, finishCall, pickUp, changeType, closeModal,
-    getVideoInput, getVideoOutput, isConnected
+    communicateModal = {}, rejectCall, finishCall, pickUp, changeType, closeModal, ...props
 }) => {
     const { person = {}, isIncoming, isOutcoming, isBusy, isCalling, callInfo = {}, isSpeaking }  = communicateModal;
     const {error, info } = callInfo;
 
     const { name = '', lastName = '', pro, avatar } = person;
+    let cTime;
+    const { costPerMinute : cpm = 0 } = pro || {};
+
 
     const fullName = name + ' ' + lastName;
     const title = isSpeaking ? 'On call with' 
@@ -21,9 +24,13 @@ const Call = ({
                 : isOutcoming ? 'Calling Pro' : isIncoming ? 'Telmie user is calling' : '';
     const descr = isIncoming ? 'Your client' : pro && pro.profession;
     const _info = error ? info : 
-        (isBusy && !isCalling) ? 
-            "Sorry, I'm busy now. Please text me & I will respond ASAP." 
-            : !isIncoming && `You will pay £${pro && pro.costPerMinute} per minute for this call`;
+        (isSpeaking && isOutcoming) ? (
+            cTime = secToMS(props.seconds),
+            `£${cpm}/min - ${!!cTime.m ? cTime.m + ':' : ''} - ${cTime.s} - £${cTime.s > 0 ? cpm * cTime.m + cpm : cpm * cTime.m}` 
+        ) :
+            (isBusy && !isCalling) ? 
+                "Sorry, I'm busy now. Please text me & I will respond ASAP." 
+                : !isIncoming && `You will pay £${cpm} per minute for this call`;
 
     const _changeType = (type) => () => changeType(type);
 
@@ -69,12 +76,12 @@ const Call = ({
 
             <video class={style.callerStream}
                 style={{display: (isCalling || isSpeaking) ? 'block' : 'none' }}
-                ref={el => getVideoOutput(el)}
+                ref={el => props.getVideoOutput(el)}
                 autoPlay
                 />
             <video class={style.calleeStream}
                 style={{display: (isSpeaking) ? 'block' : 'none' }}
-                ref={el => getVideoInput(el)}
+                ref={el => props.getVideoInput(el)}
                 autoPlay
                 muted/>
         </div>
@@ -90,7 +97,8 @@ const Call = ({
             ] 
                 :
             <div class={style.btnArea}>
-                {isConnected ? btns.map(el => <Btn text={el.txt} key={el.txt} clickHandler={el.handler}/>) : 'Connecting to server'}
+                {props.isConnected ? 
+                    btns.map(el => <Btn text={el.txt} key={el.txt} clickHandler={el.handler}/>) : 'Connecting to server'}
             </div> 
         }
     </div>)
