@@ -5,8 +5,8 @@ import { connect } from 'preact-redux';
 import LogInForm from '../../components/log-in/log-in-form';
 import style from './style.scss';
 import { logIn, getProCalls, getPersonalCalls, getTransactions, changeLocale, changeLocaleLangs } from '../../actions/user';
-import { route } from 'preact-router';
 import Redirect from '../../components/global/redirect';
+import { routes } from '../../components/app'
 
 class LogIn extends Component {
 	constructor(props){
@@ -25,24 +25,19 @@ class LogIn extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (Object.keys(this.props.userData).length === 0 && Object.keys(nextProps.userData).length != 0) {
 			this.setState({
-				loggedIn: true
+				loggedIn: true,
+				isPro: !!nextProps.userData.pro
 			});
 		}
 	}
 	render() {
-		if (!this.state.loggedIn) {
-			return (
-				<div id="login" className="uk-container uk-container-small" >
-					<h1>Log in</h1>
-					<LogInForm logIn = {this.props.logIn} logInFailure = {this.props.logInFailure}/>
-
-				</div>
-
-			);
-		} else {
-			return (<Redirect to='/profile' />)
-		}
-
+		return (!this.state.loggedIn) ? (
+			<div id="login" className="uk-container uk-container-small" >
+				<h1>Log in</h1>
+				<LogInForm logIn = {this.props.logIn} logInFailure = {this.props.logInFailure}/>
+			</div>
+		) : (this.state.isPro) ? 
+			<Redirect to={routes.MY_CLIENTS} /> : <Redirect to={routes.MY_PROS} />
 	}
 }
 
