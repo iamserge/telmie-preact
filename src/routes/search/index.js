@@ -52,8 +52,9 @@ class Search extends Component {
 		props.changeLocaleLangs([]);
 	}
 
-	fetchPros(searchTerm, sortBy, page){
+	fetchPros= (searchTerm, sortBy, page) => {
 		let that = this;
+		this.setState({ loading: true, pros: [] });
 		getPros(searchTerm, sortBy, page,this.props.userData.userAuth).then(function(data) {
 	    	that.setState({
 				pros: data.results ? data.results : [],
@@ -99,6 +100,7 @@ class Search extends Component {
 				<h2>Results for: <span>{this.props.searchTerm} </span></h2>
 				<div id="searchContainer">
 					<SideBar items={ searchSortingItems }
+						disabled={this.state.loading}
 						sortToggleSwitched = { this.sortToggleSwitched } 
 						sortBy = { this.state.sortBy }/>
 					{ (this.state.loading) ? (

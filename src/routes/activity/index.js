@@ -102,6 +102,7 @@ class Activity extends Component {
 				</h1>
 				{ !this.props.isProCalls && <SideBar style={{marginTop: 40}} 
 												items={proSortingItems}
+												disabled={this.state.loading}
 												sortToggleSwitched = { this.sortToggleSwitched } 
 												sortBy = { this.state.sortBy }/> }
 				<AllActivity

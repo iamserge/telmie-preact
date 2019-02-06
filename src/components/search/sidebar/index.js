@@ -17,7 +17,7 @@ export default class SideBar extends Component {
 		this.props.sortToggleSwitched(value);
 	}
 	render() {
-		const { items = [] } = this.props;
+		const { items = [], disabled } = this.props;
 		return (
 			<div id={style.sideBar} style={this.props.style || {}}>
 				<h3>Arrange by:</h3>
@@ -25,6 +25,7 @@ export default class SideBar extends Component {
 				<Radio name='sortType'
 					value={this.state.switched} 
 					onChange = {this.toggleSwitch}
+					disabled={disabled}
 					data = {items}/>
 			</div>
 		)

@@ -14,7 +14,7 @@ const Radio = (props) => {
                 {
                     props.data && props.data.length !== 0 && ( props.data.map(el => {
                         return (
-                            <label class={ style.container } key={el.value}>
+                            <label class={`${style.container} ${props.disabled && style.disabledContainer}`} key={el.value}>
                                 {el.name}
                                 <input type="radio" 
                                     name= {props.name} 
