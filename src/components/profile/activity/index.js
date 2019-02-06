@@ -1,8 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import Spinner from '../../global/spinner';
-import { Link, route } from 'preact-router';
-import FontAwesome from 'react-fontawesome';
+import { route } from 'preact-router';
 import { apiRoot } from '../../../api';
 import { convertDate } from '../../../utils';
 import { activityTypes } from "../../../utils/consts";
@@ -31,11 +29,11 @@ export default class Activity extends Component {
 					</div>
 					<div className={style.info}>
 						<h3>{activity.name + ' ' + activity.lastName}</h3>
-							{!this.props.client && activity.pro != null && (
-								<div>
-									{activity.pro.profession}
-								</div>
-							)}
+						{!this.props.client && activity.pro != null && (
+							<div>
+								{activity.pro.profession}
+							</div>
+						)}
 					</div>
 				</div>
 				<div className={style.type}>
