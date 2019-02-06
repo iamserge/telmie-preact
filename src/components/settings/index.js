@@ -42,9 +42,7 @@ export default class Settings extends Component {
 
         switch (this.state.activeLink) {
             case 'general':
-                tabContent = <GeneralTab userData={userData}
-                                        editDetails={this.props.editDetails}
-                                        uploadPhoto={this.props.uploadPhoto}/>;
+                tabContent = <GeneralTab {...this.props} userData={userData}/>;
                 break;
             case 'pro':
                 tabContent = <ProDetailsTab userData={userData}/>;

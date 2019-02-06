@@ -10,7 +10,6 @@ import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 import ImageUploader from 'react-images-upload';
 import { routes } from "../../app";
-import AccSettings from "./accaunt-settings";
 
 import ImageUpload from '../image-upload'
 
@@ -28,7 +27,6 @@ export default class EditProfileForm extends Component {
 			userInfo: setUserInfo(this.props.userData),
 
 			loading: false,
-			loadingSettings: false,
 			isModify: false,
 		}
 		this.validator = new SimpleReactValidator({
@@ -41,7 +39,7 @@ export default class EditProfileForm extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps){
-		this.setState({loading: false, loadingSettings: false, isModify: false, userInfo: setUserInfo(nextProps.userData)})
+		this.setState({loading: false, isModify: false, userInfo: setUserInfo(nextProps.userData)})
 	}
 	onDrop = (picture) => {
 		this.props.uploadPhoto(this.props.userData.userAuth, picture);
@@ -66,15 +64,6 @@ export default class EditProfileForm extends Component {
 			this.validator.showMessages();
 			this.forceUpdate();
 		}
-	}
-
-	onSwitchEmail = () => {
-		this.setState({loadingSettings: true});
-		this.props.switchEmailNotif();
-	}
-	onSwitchWorkPro = () => {
-		this.setState({loadingSettings: true});
-		this.props.switchWorkingPro();
 	}
 
 	render() {
@@ -150,11 +139,6 @@ export default class EditProfileForm extends Component {
 						</div>
 
 						<button className="uk-button" onClick={this.onSave}>Save</button>
-
-						<AccSettings userData = { this.props.userData } 
-							isLoading = {this.state.loadingSettings} 
-							switchEmailNotif={this.onSwitchEmail} 
-							switchWorkingPro = {this.onSwitchWorkPro}/>
 					</div>
 
 

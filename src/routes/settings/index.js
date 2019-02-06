@@ -5,9 +5,9 @@ import style from './style.scss';
 
 import Settings from '../../components/settings';
 
-import { uploadPhoto, editDetails,
-	changeLocaleLangs, changeLocale } from '../../actions/user';
+import { changeLocaleLangs, changeLocale, switchEmailNotif, switchWorkingPro, } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
+import { getCookie } from "../../utils";
 
 
 class SettingsPage extends Component {
@@ -20,16 +20,28 @@ class SettingsPage extends Component {
 		this.props.changeLocale();
 	}
 
+	switchEmailNotif = () => {
+		const {userAuth, emailNotifications} = this.props.userData
+		let _userAuth = userAuth || getCookie('USER_AUTH'); 
+		
+		this.props.switchEmailNotif(!emailNotifications, _userAuth);
+	}
+	switchWorkingPro = () => {
+		const {userAuth, pro = {}} = this.props.userData
+		let _userAuth = userAuth || getCookie('USER_AUTH'); 
+		
+		this.props.switchWorkingPro(!pro.workPro, _userAuth);
+	}
+
 	render() {
 		const {userData = {}} = this.props;
 		return (
 			<div className="uk-container uk-container-small">
 				<h1>Settings</h1>
 				{(Object.keys(userData).length != 0) ? (
-                    <Settings userData = { this.props.userData } 
-                        uploadPhoto = { this.props.uploadPhoto }
-                        editDetails = { this.props.editDetails } 
-                    />
+                    <Settings userData = { this.props.userData }
+						switchEmailNotif = { this.switchEmailNotif }
+						switchWorkingPro={ this.switchWorkingPro }/>
 				) : (
 					<Spinner />
 				)}
@@ -46,10 +58,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    uploadPhoto,
-	editDetails,
 	changeLocaleLangs,
 	changeLocale,
+	switchEmailNotif,
+	switchWorkingPro,
 }, dispatch);
 
 export default connect(

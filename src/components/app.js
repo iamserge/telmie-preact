@@ -121,7 +121,7 @@ class App extends Component {
 		<Pro path={routes.PRO} />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
-		//<SettingsPage path = { routes.SETTINGS }/>
+		<SettingsPage path = { routes.SETTINGS }/>
 	];
 
 	renderDefaultRoutes = () => [

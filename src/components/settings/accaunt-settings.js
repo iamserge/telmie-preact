@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import ToggleItem from "../../toggle-item";
-import Card from '../../card'
-import Hr from '../../hr'
-import Spinner from '../../global/spinner';
+import ToggleItem from "../toggle-item";
+import Card from '../card'
+import Hr from '../hr'
+import Spinner from '../global/spinner';
 
 const AccauntSettings = (props) => {
     const { userData = {} } = props;
