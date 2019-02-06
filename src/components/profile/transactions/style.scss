@@ -73,10 +73,15 @@
 	margin: 0 !important;
 	div{
 		width: 50%;
-		padding: 15px 15px 15px 0;
+		padding: 15px 0;
+		height: 100%;
+		margin: 0 !important;
+		line-height: 79px;
 
 		&:first-child{
 			background-color: #7f7f7f2d;
+			line-height: 50px;
+			text-align: center;
 		}
 	}
 }
@@ -100,5 +105,31 @@
 	}
 	.balanceText{
 		font-size: 16px;
+	}
+}
+
+
+@media (max-width: 640px) {
+	.tableRow{
+		div{
+			margin: 5px 0;
+			padding: 5px 0;
+		}
+	}
+
+	.balanceCell{
+		div{
+			line-height: 44px;
+	
+			&:first-child{
+				line-height: 34px;
+			}
+		}
+	}
+
+	.balanceItem{
+		&:not(:last-child){
+			margin-right: 50px;
+		}
 	}
 }
