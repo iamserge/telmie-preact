@@ -100,8 +100,8 @@ class Communication extends Component {
 				console.log('Strophe is disconnecting.');
 			} else if (status == Strophe.Strophe.Status.DISCONNECTED) {
 				console.log('Strophe is disconnected.');
-\				this.connection.connect(generateJID(id),'', this.onConnect);
-\			}
+				this.connection.connect(generateJID(id),'', this.onConnect);
+			}
 		}
 	}
 
