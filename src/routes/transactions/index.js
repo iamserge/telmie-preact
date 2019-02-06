@@ -23,6 +23,7 @@ class AllTransactions extends Component {
 		}
 	}
 	componentDidMount(){
+		window.scrollTo(0, 0);
 		if (typeof this.props.userData.userAuth != 'undefined') {
 			this.setState({
 				loading: true
