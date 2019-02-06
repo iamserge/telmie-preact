@@ -1,6 +1,10 @@
 @import './src/style/variables';
 .activityList {
 	margin-top: 40px;
+
+	&.withSorting{
+		margin-left: 200px;
+	}
 	h2 {
 		a {
 			float: right;

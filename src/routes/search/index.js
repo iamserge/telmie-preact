@@ -14,6 +14,17 @@ import { checkIfLoggedIn } from '../../utils';
 import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { routes } from "../../components/app";
 
+const searchSortingItems = [{
+	name: 'Hourly rate',
+	value: 'rate'
+},{
+	name: 'Rating',
+	value: 'rating'
+},{
+	name: 'Experience',
+	value: 'experience'
+}];
+
 class Search extends Component {
 	constructor(props){
 		super(props);
@@ -24,8 +35,6 @@ class Search extends Component {
 			sortBy: 'rating',
 			page: 1
 		}
-		this.sortToggleSwitched = this.sortToggleSwitched.bind(this);
-		this.pageChange = this.pageChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -69,17 +78,13 @@ class Search extends Component {
 		}
 	}
 
-	sortToggleSwitched(sortBy){
-		this.setState({
-			sortBy: sortBy
-		});
+	sortToggleSwitched = (sortBy) =>{
+		this.setState({ sortBy });
 		this.fetchPros(this.state.searchTerm, sortBy, this.state.page);
 	}
 
-	pageChange(page){
-		this.setState({
-			page: page
-		});
+	pageChange = (page) => {
+		this.setState({ page });
 		this.fetchPros(this.state.searchTerm, this.state.sortBy, page);
 	}
 
@@ -93,7 +98,9 @@ class Search extends Component {
 				/>
 				<h2>Results for: <span>{this.props.searchTerm} </span></h2>
 				<div id="searchContainer">
-					<SideBar sortToggleSwitched = { this.sortToggleSwitched } sortBy = { this.state.sortBy }/>
+					<SideBar items={ searchSortingItems }
+						sortToggleSwitched = { this.sortToggleSwitched } 
+						sortBy = { this.state.sortBy }/>
 					{ (this.state.loading) ? (
 						<Spinner />
 					) : (

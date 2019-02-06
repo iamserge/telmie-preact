@@ -222,7 +222,7 @@ export const fetchRegistration = () => (dispatch) => {
 
 export const getProCalls = (authData, num) => async (dispatch) => {
 	dispatch(proCallsReceived([]));
-	const response = await user.getCalls(authData, num, true);
+	const response = await user.getCalls(authData, true, num);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
@@ -232,7 +232,7 @@ export const getProCalls = (authData, num) => async (dispatch) => {
 
 export const getPersonalCalls = (authData, num) => async (dispatch) => {
 	dispatch(personalCallsReceived([]));
-	const response = await user.getCalls(authData, num, false);
+	const response = await user.getCalls(authData, false, num);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {

@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 import Switch from 'react-toggle-switch'
+import Radio from '../../radio'
 
 export default class SideBar extends Component {
 	constructor(props){
@@ -9,30 +10,22 @@ export default class SideBar extends Component {
 		this.state = {
 			switched: props.sortBy
 		}
-		this.toggleSwitch = this.toggleSwitch.bind(this);
 	}
-	toggleSwitch(switchName){
-		this.setState({
-			switched: switchName
-		});
-		this.props.sortToggleSwitched(switchName);
+	toggleSwitch = (e) => {
+		const {value} = e.target;
+		this.setState({ switched: value });
+		this.props.sortToggleSwitched(value);
 	}
 	render() {
+		const { items = [] } = this.props;
 		return (
-			<div id={style.sideBar}>
+			<div id={style.sideBar} style={this.props.style || {}}>
 				<h3>Arrange by:</h3>
-				<div class="switchContainer">
-					<Switch onClick={()=>this.toggleSwitch('rate')} on={this.state.switched == 'rate'}/>
-					<span>Hourly rate</span>
-				</div>
-				<div class="switchContainer">
-					<Switch onClick={()=>this.toggleSwitch('rating')} on={this.state.switched == 'rating'}/>
-					<span>Rating</span>
-				</div>
-				<div class="switchContainer">
-					<Switch onClick={()=>this.toggleSwitch('experience')} on={this.state.switched == 'experience'}/>
-					<span>Experience</span>
-				</div>
+
+				<Radio name='sortType'
+					value={this.state.switched} 
+					onChange = {this.toggleSwitch}
+					data = {items}/>
 			</div>
 		)
 	}

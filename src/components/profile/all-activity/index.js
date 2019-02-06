@@ -9,7 +9,7 @@ export default class AllActivity extends Component {
 
 	render({activity}) {
 		return (
-			<div className={style.activityList}>
+			<div className={`${style.activityList} ${!this.props.client && style.withSorting}`}>
 				<div className={style.inner}>
 					<div className={style.header}>
 						<div className={style.contact}>Contact</div>

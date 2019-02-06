@@ -23,13 +23,17 @@ $font-size: 18px;
             display: inline-block;
             position: relative;
             padding-left: 30px;
-            margin-right: 20px;
             cursor: pointer;
             font-size: 18px;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+
+            &:not(:last-child){
+                margin-right: 20px;
+                margin-bottom: 5px;
+            }
 
             input {
                 position: absolute;

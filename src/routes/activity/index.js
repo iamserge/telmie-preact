@@ -4,14 +4,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { getCalls } from '../../api/users'
 import style from './style.scss';
-import { logIn,
-	changeLocaleLangs, changeLocale } from '../../actions/user';
-import { route } from 'preact-router';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import AllActivity from '../../components/profile/all-activity';
-import Spinner from '../../components/global/spinner';
-import { processActivities } from '../../utils';
-const MAX_ITEMS = 10;
+import SideBar from '../../components/search/sidebar';
 
+const MAX_ITEMS = 10;
+const proSortingItems = [{
+	name: 'Last activity date',
+	value: 'date'
+},{
+	name: 'Name',
+	value: 'name'
+},{
+	name: 'Profession',
+	value: 'trade'
+}];
 
 class Activity extends Component {
 
@@ -23,12 +30,13 @@ class Activity extends Component {
 			cutActivity: [],
 			currentPage: 1,
 			loading: false,
+			sortBy: 'date'
 		}
 	}
 
-	getData = (props) => {
+	getData = (props, sortBy = '') => {
 		this.setState({ loading: true, activity: [], cutActivity: [] });
-		getCalls(props.userData.userAuth, null, props.isProCalls).then((data) => {
+		getCalls(props.userData.userAuth, props.isProCalls, null, sortBy).then((data) => {
 			const { results  = []} = data;
 		   	this.setState({
 				loading: false,
@@ -80,6 +88,11 @@ class Activity extends Component {
 			this.getData(nextProps);
 	}
 
+	sortToggleSwitched = (sortBy) => {
+		this.setState({ sortBy });
+		this.getData(this.props, sortBy);
+	}
+
 	render() {
 		const { userData : user = {} } = this.props;
 		return (
@@ -87,6 +100,10 @@ class Activity extends Component {
 				<h1>
 					 { this.props.isProCalls ? "My Clients" : "My Pros"}
 				</h1>
+				{ !this.props.isProCalls && <SideBar style={{marginTop: 40}} 
+												items={proSortingItems}
+												sortToggleSwitched = { this.sortToggleSwitched } 
+												sortBy = { this.state.sortBy }/> }
 				<AllActivity
 					showConsultedMe = { this.showConsultedMe }
 					showConsulted = { this.showConsulted }

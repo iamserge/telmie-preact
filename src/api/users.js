@@ -18,11 +18,12 @@ export function logIn(authData){
 	});
 }
 
-export function getCalls(authData, num, isProCalls){
+export function getCalls(authData, isProCalls, num, sort = ''){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	const additionalQuery = num ? `&size=${num}` : '';
+	let additionalQuery = num ? `&size=${num}` : '';
+	sort && (additionalQuery = `${additionalQuery}&sort=${sort}`);
 	return fetch(
 		(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS) + additionalQuery,
 		{ method: 'GET', headers}
