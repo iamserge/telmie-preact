@@ -13,8 +13,8 @@ export default class AllActivity extends Component {
 				<div className={style.inner}>
 					<div className={style.header}>
 						<div className={style.contact}>Contact</div>
-						<div className={style.date}>Date</div>
 						<div class={style.type}>Type</div>
+						<div className={style.date}>Date</div>
 						<div class={style.count}>Count</div>
 					</div>
 					{ activity.length > 0 && activity.map(activity => (

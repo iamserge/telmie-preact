@@ -31,11 +31,6 @@ export default class Activity extends Component {
 					</div>
 					<div className={style.info}>
 						<h3>{activity.name + ' ' + activity.lastName}</h3>
-							{this.props.client && (
-								<div>
-									CLIENT
-								</div>
-							)}
 							{!this.props.client && activity.pro != null && (
 								<div>
 									{activity.pro.profession}
@@ -43,59 +38,11 @@ export default class Activity extends Component {
 							)}
 					</div>
 				</div>
-				<div className={style.date}> { convertDate(activity.activityDate) }</div>
 				<div className={style.type}>
-						<span>{ activityTypes[activity.activity] }</span>
+					<span style={activity.activity == 'mc' && {color: 'red'}}>{ activityTypes[activity.activity] }</span>
 				</div>
-				{/*<div className={style.price}>
-					{activity.amount != null ? (
-						<span>
-							£{activity.amount.toFixed(2)}
-						</span>
-					) : (
-						<span>
-							£0.00
-						</span>
-					)}
-				</div>*/}
+				<div className={style.date}> { convertDate(activity.activityDate) }</div>
 				<div className={style.count}>{activity.activityCount}</div>
-				{ /*typeof activity.related != 'undefined' && (
-					<div className={this.state.expanded ? style.relatedActivities + ' ' + style.expanded : style.relatedActivities }>
-						<span className={style.relatedTitle} onClick={()=>{this.setState({expanded: !this.state.expanded})}}>
-							{activity.related.length} more {activity.related.length == 1 ? 'call' : 'calls' } <span aria-hidden="true" class="fa fa-angle-down"></span>
-						</span>
-						<div className={style.container}>
-							{ activity.related.map(related => (
-							<div className={style.related}>
-								<div className={style.relatedDate}> { convertDate(related.date) }</div>
-								<div className={style.relatedDuration}>
-									{related.duration != null ? (
-										<span>
-											{convertDuration(related.duration)}
-										</span>
-									) : (
-										<span>00:00</span>
-									)}
-								</div>
-								<div className={style.relatedPrice}>
-									{related.amount != null ? (
-										<span>
-											£{related.amount.toFixed(2)}
-										</span>
-									) : (
-										<span>
-											£0.00
-										</span>
-									)}
-								</div>
-								<div className={style.relatedStatus}>
-									{related.status}
-								</div>
-							</div>
-						))}
-						</div>
-					</div>
-				)*/}
 			</div>
 		)
 	}

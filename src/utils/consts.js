@@ -62,7 +62,7 @@ export const labelsGA = {
 };
 
 export const activityTypes = {
-  'c': 'CALLED',
+  'c': 'RECEIVED CALL',
   'mc': 'MISSED CALL',
   'fc': 'FAILED CALL',
   'im': 'READ message',

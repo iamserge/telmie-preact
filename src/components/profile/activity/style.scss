@@ -1,5 +1,7 @@
 @import './src/style/variables';
 .activity {
+	display: flex;
+	align-items: center;
 	margin: 0;
 	padding: 16px 0;
 	font-size: 14px;
@@ -13,22 +15,15 @@
 		width: 12%;
 	}
 	.type {
-			width: 25%;
-    /*width: 8%;
-    line-height: 54px;
-    position: relative;
-    top: 7px;
-    opacity: 0.3;
-		> span {
-			font-size: 24px;
-			transform: rotate(-45deg);
-		}*/
+		width: 25%;
 	}
 	.count{
 		width: 15%;
 		text-align: center;
 	}
 	.contact {
+		display: flex;
+    	align-items: center;
 		width: 40%;
 		cursor: pointer;
 		h3 {
@@ -44,7 +39,7 @@
 			color: $red;
 			overflow: hidden;
             &.info {
-                margin-left: 10px;
+                margin-left: 15px;
             }
 			.profession {
 		    background-color: $backgroundGrey;
