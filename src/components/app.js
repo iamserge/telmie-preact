@@ -11,7 +11,6 @@ import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
 import LogInOrSignup from '../routes/login-or-signup';
-import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
@@ -56,7 +55,6 @@ export const routes = {
 	BECOME_PRO_LINK: '/#become-pro',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
-	PROFILE: '/profile',
 	MY_PROS: '/my-pros',
 	MY_CLIENTS: '/my-clients',
 	TRANSACTIONS: '/transactions',
@@ -121,7 +119,6 @@ class App extends Component {
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
 		<Pro path={routes.PRO} />,
-		<Profile path = { routes.PROFILE } />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		//<SettingsPage path = { routes.SETTINGS }/>

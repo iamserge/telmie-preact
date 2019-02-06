@@ -209,8 +209,6 @@ class Header extends Component {
                 </div>
                 <div class={style.dropdown + ' uk-dropdown'}>
                     <ul class="uk-nav uk-dropdown-nav">
-                        <li><Link href={routes.PROFILE}>My Account</Link></li>
-                        <li class="uk-nav-divider"></li>
                         <li><Link href={routes.MY_PROS}>My Pros</Link></li>
                         {(user.pro != null) && (
                             <li><Link href={routes.MY_CLIENTS}>My Clients</Link></li>
