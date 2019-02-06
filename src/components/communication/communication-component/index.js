@@ -12,7 +12,10 @@ import { consts } from "../../../utils/consts";
 import { getCookie } from "../../../utils/index";
 import { generateJID } from "../../../utils";
 import { getCallDetails } from "../../../api/pros";
-import { setMessages, setUser, getUserInfo, prepareFromTo } from './helpers'
+import { setMessages, setUser, prepareFromTo, 
+	processServerMsg, processChatMsg, processCallMsg,
+	reqGranted, reqForbidden, sendOfferData, sendAnswerData, onIceCandidate, videoCapture
+} from './helpers'
 import { 
 	closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication
 } from '../../../actions/chat'
@@ -27,6 +30,11 @@ class Communication extends Component {
 			isConnected: false,
 			isDelayingCall: false,
 			callSec: 0,
+			options:{
+				mute: false,
+				video: false,
+				muteSpeaker: false,
+			}
 		};
 		this.webRtcPeer;
 		this.connection = new Strophe.Strophe.Connection('ws://sr461.2dayhost.com:5280/websocket', {});
@@ -34,6 +42,7 @@ class Communication extends Component {
 	}		
 
 	initializeConnection = (props) => {
+		console.log('---=== initializeConnection ===---');
 		const {user = {}} = props;
 		if (Object.keys(user).length === 0) return;
 
@@ -91,8 +100,8 @@ class Communication extends Component {
 				console.log('Strophe is disconnecting.');
 			} else if (status == Strophe.Strophe.Status.DISCONNECTED) {
 				console.log('Strophe is disconnected.');
-				//this.initializeConnection(props);
-			}
+\				this.connection.connect(generateJID(id),'', this.onConnect);
+\			}
 		}
 	}
 
@@ -100,13 +109,22 @@ class Communication extends Component {
 
 	setUsr = (user) => this.setState(prev => setUser(user, prev));
 
-	
+	getCallControls = () => ({
+		mute: () => {
+			console.log('mute');
+			this.webRtcPeer.peerConnection.getLocalStreams()[0].getAudioTracks()[0].enabled = !this.state.options.mute;
+			this.setState(prev => ({ options: {...prev.options, mute: !prev.options.mute}}));
+		},
+		muteSpeaker: () => this.setState(prev => ({ options: {...prev.options, muteSpeaker: !prev.options.muteSpeaker}})),
+		video: () => {
+			console.log('video mute');
+			videoCapture(!this.state.options.video, this.msgGenSend, this.props);
+			this.webRtcPeer.peerConnection.getLocalStreams()[0].getVideoTracks()[0].enabled = this.state.options.video;
+			this.setState(prev => ({ options: {...prev.options, video: !prev.options.video}}));
+		},
+	})
 
-	setAutoReject = () => {
-		this.autoRejectTimeout = setTimeout(() => {
-			this.rejectCall(true);
-		}, 20000);
-	}
+	setAutoReject = () => this.autoRejectTimeout = setTimeout(() => this.rejectCall(true), 20000);
 	undoAutoReject = () => {
 		clearTimeout(this.autoRejectTimeout);
 		this.autoRejectTimeout = null;
@@ -149,42 +167,24 @@ class Communication extends Component {
 	}
 
 	onMessage = async (msg) => {
-		console.log('---=== [onMessage] ===---');
-		const to = msg.getAttribute('to'),
-			from = msg.getAttribute('from'),
-			type = msg.getAttribute('type'),
-			elems = msg.getElementsByTagName('body'),
-			vcxepElems = msg.getElementsByTagName('vcxep');
-
+		const { to, from, type, elems, vcxepElems } = processServerMsg(msg);
 
 		if (type == "chat" && elems.length > 0) {
-			let body = elems[0];
-			let userInfo = null;
-
-			const { person={} } = this.props.comModal;
-
-			from.indexOf(person.id) !== 0 && (
-				this.props.changeUnreadNum(from),
-				userInfo = await getUserInfo(from, this._userAuth, this.props)
-			)
-
-			this.setMsg(from, Strophe.Strophe.getText(body));
+			const userInfo = await processChatMsg(from, this._userAuth, this.props);
+			this.setMsg(from, Strophe.Strophe.getText(elems[0]));
 			userInfo && this.setUsr(userInfo);
 		}
 
 		if (type === 'vcxep' && vcxepElems.length > 0){
-			let body = vcxepElems[0];
-
-			const type = body.getAttribute('type'),
-				callId = body.getAttribute('callid'),
-				avtime = body.getAttribute('avtime');
+			const body = vcxepElems[0];
+			const {type, callId, avtime, bodyInner} = processCallMsg(body);
 			
 			const { callInfo : cInfo = {} } = this.props.comModal;
 
 			switch (type){
 				case 'request':					
 					if(cInfo.callId && cInfo.callId != callId){
-						this.requestForbidden(callId, from);
+						reqForbidden(callId, from, this.msgGenSend, this.props);
 						break;
 					}
 					const callInfo = await getCallDetails(callId, this._userAuth);
@@ -198,41 +198,31 @@ class Communication extends Component {
 					}
 					break;
 				case 'reject':
-					console.log('REJECTED');
 					this.undoAutoReject();
 					(cInfo.callerId === this.props.user.id) ? 
 						this.props.caleeIsBusy() : this.props.closeComModal();
 					
 					break;
 				case 'forbidden':
-					console.log('forbidden');
 					this.undoAutoReject();
 					this.props.caleeIsBusy();
 					break;
 				case 'granted':
-					console.log('granted');
 					this.undoAutoReject();
 					this.props.processCall();
 					//timer ???
-					this.sendOfferData();
+					this.webRtcPeer = sendOfferData(this.msgGenSend, this.getOptions(), this.props);
 					break;
 				case 'offerData':
-					console.log('offerData');
 					this.props.processCall();
-					let sdpOffer = body.innerHTML;
-					//this.webRtcPeer && this.webRtcPeer.processAnswer(sdpOffer);
-					this.sendAnswerData(sdpOffer);
+					this.webRtcPeer = sendAnswerData(bodyInner, this.msgGenSend, this.getOptions(), this.props);
 					break;
 				case 'answerData':
-					console.log('answerData');
-					let sdpAnswer = body.innerHTML;
-					this.webRtcPeer && this.webRtcPeer.processAnswer(sdpAnswer,(err) =>{
+					this.webRtcPeer && this.webRtcPeer.processAnswer(bodyInner, (err) =>{
 						err && console.log(err);
 					});
-					//this.callAccepted();
 					break;
 				case 'accept':
-					console.log('accept');
 					const address = prepareFromTo(this.props);
 					this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'speaking', callid: cInfo.callId});
 					this.callSecondsInterval = setInterval(
@@ -241,10 +231,7 @@ class Communication extends Component {
 					);
 					break;
 				case 'speaking':
-					console.log('speaking');
 					this.props.speaking();
-
-					// check callerId and send 1 more speaking-type msg
 					break;
 				case 'avtimeEnded':
 					this.setAutoFinish();
@@ -253,8 +240,7 @@ class Communication extends Component {
 					this.stopCommunication();
 					break;
 				case 'candidateData':
-					let txt = body.innerHTML;
-					let obj = JSON.parse(txt);
+					let obj = JSON.parse(bodyInner);
 					// check for the Object instance
 					let candidate = {
 						candidate: obj.sdp,
@@ -318,24 +304,14 @@ class Communication extends Component {
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
 		);
+		this.setState({ options: {
+			mute: false,
+			video: false,
+			muteSpeaker: false,
+		}})
 	}
 
-	requestForbidden = (callId, _from) => {
-		console.log('requestForbidden');
-		const { user } = this.props;
-		const address = {
-			from: generateJID(user.id),
-			to: _from,
-		};
-		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'forbidden', callid: callId});
-	}
-
-	requestGranted = () => {
-		console.log('requestGranted');
-		const address = prepareFromTo(this.props);
-		const { callInfo = {} } = this.props.comModal;
-		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'granted', callid: callInfo.callId});
-	}
+	requestGranted = () => reqGranted(this.msgGenSend, this.props);
 
 	getVideoInput = (el) => this.videoInput = el;
 	getVideoOutput = (el) => this.videoOutput = el;
@@ -343,64 +319,8 @@ class Communication extends Component {
 	getOptions = () => ({
 		localVideo : this.videoInput,
 		remoteVideo : this.videoOutput,
-		onicecandidate : this.onIceCandidate
+		onicecandidate : onIceCandidate(this.msgGenSend, this.props)
 	})
-
-	sendOfferData = () => {
-		console.log('sendOfferData');
-		const address = prepareFromTo(this.props);
-		const { callInfo = {} } = this.props.comModal;
-		let that = this;
-
-		this.webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(this.getOptions(), function(err){
-			err && console.log(err); // & setCallState(NO_CALL);
-		
-			this.generateOffer(function(err, offerSdp) {
-				err && console.log(err); // & setCallState(NO_CALL);
-		
-				that.msgGenSend(address, 'vcxep', 'vcxep', {type: 'offerData', callid: callInfo.callId}, offerSdp);
-				
-			});
-		});
-	}
-
-	sendAnswerData = (sdpOffer) => {
-		console.log('sendAnswerData');
-		const address = prepareFromTo(this.props);
-		const { callInfo = {} } = this.props.comModal;
-		let that = this;
-
-		this.webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(this.getOptions(), function(err){
-			err && console.log(err); // & setCallState(NO_CALL);
-		
-			this.processOffer(sdpOffer,(err, sdpAnswer) => {
-				err && console.log(err); // & setCallState(NO_CALL);
-
-				that.msgGenSend(address, 'vcxep', 'vcxep', {type: 'answerData', callid: callInfo.callId}, sdpAnswer);
-				that.msgGenSend(address, 'vcxep', 'vcxep', {type: 'accept', callid: callInfo.callId});
-				that.msgGenSend(address, 'vcxep', 'vcxep', {type: 'speaking', callid: callInfo.callId});
-			})
-		});
-	}
-
-
-	onIceCandidate = (candidate) => {
-		console.log('[onIceCandidate]', candidate);
-		this.candidateData(candidate);
-	}
-
-	candidateData = (candidate) => {
-		console.log('candidateData');
-		const address = prepareFromTo(this.props);
-		const { callInfo = {} } = this.props.comModal;
-		const data = {
-			sdp: candidate.candidate,
-			sdpMid: candidate.sdpMid,
-			index: candidate.sdpMLineIndex,
-		}
-		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'candidateData', callid: callInfo.callId}, JSON.stringify(data));
-	}
-
 
   	render(){
 		const { type: modalType, person = {} } = this.props.comModal;
@@ -428,6 +348,8 @@ class Communication extends Component {
 						finishCall={this.finishCall}
 						getVideoOutput={this.getVideoOutput}
 						isConnected = {this.state.isConnected}
+						videoOptions = {this.state.options}
+						callControls={this.getCallControls()}
 						getVideoInput={this.getVideoInput}/>
 				</div>
 			)}

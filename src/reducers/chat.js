@@ -7,7 +7,7 @@ const initialState = {
 	unread: {}, 
 	isBusy: false, 
 	isOutcoming: false,
-	isIncoming: true,
+	isIncoming: false,
 	isBusy: false,
 	isCalling: false,
 	isSpeaking: false,

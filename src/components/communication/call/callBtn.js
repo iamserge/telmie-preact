@@ -5,9 +5,13 @@ import btnCallStart from '../../../assets/btnCallStart.png'
 import btnCancel from '../../../assets/btnCancel.png'
 import btnText from '../../../assets/btnText.png'
 
+import btnControlVideo from '../../../assets/btnControlVideo.png'
+import btnControlSpeaker from '../../../assets/btnControlSpeaker.png'
+import btnControlMute from '../../../assets/btnControlMute.png'
+
 import { chatBtns } from '../../../utils/consts'
 
-const Btn = ({text, clickHandler}) => {
+export const Btn = ({text, clickHandler}) => {
     let src;
     switch (text){
         case chatBtns.cancel:
@@ -31,4 +35,22 @@ const Btn = ({text, clickHandler}) => {
     </div>)
 }
 
-export default Btn;
+export const ControlBtn = ({type, clickHandler, isTurnOff}) => {
+    let src;
+    switch (type){
+        case chatBtns.control.mute:
+            src = btnControlMute;
+            break;
+        case chatBtns.control.speaker:
+            src = btnControlSpeaker;
+            break;
+        case chatBtns.control.video:
+            src = btnControlVideo;
+            break;
+    }
+
+    return src && (<div class={style.controlBtn}>
+        <img src={src} onClick={clickHandler}/>
+        { isTurnOff && <div class={style.lineThrough}/>}
+    </div>)
+}

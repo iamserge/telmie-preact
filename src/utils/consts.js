@@ -77,4 +77,9 @@ export const chatBtns = {
   textMe: 'Text me',
   cancel: 'Cancel',
   finish: 'Hang up',
+  control: {
+    speaker: 'speaker',
+    video: 'video',
+    mute: 'mute',
+  }
 };
