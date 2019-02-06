@@ -65,6 +65,7 @@ class RegisterPro extends Component {
 	}
 
 	componentDidMount(){
+		window.scrollTo(0,0);
 		this.prepareRoute(this.props);
 		this.props.changeLocaleLangs([]);
 		this.props.changeLocale();

@@ -164,14 +164,14 @@ export default class RegisterProForm extends Component{
 			case false:
 				regControl = accountType == accountTypeArr[0].value && 
 					(<button className={`uk-button ${style.applyBtn}`} onClick={this.updateHandler}>
-						Edit pro details
+						Submit for review
 					</button>);
 			  	break;
 			case true:
 				regControl = [
 					<div class={style.approvalWaiting}>Your application is waiting for approval.</div>,
 					<button className={`uk-button ${style.applyBtn}`} onClick={this.updateHandler}>
-						Edit pro details
+						Submit for review
 					</button>,
 					<button className={`uk-button ${style.applyBtn}`} onClick={this.onCancelingPending}>
 						Cancel changes
@@ -427,7 +427,7 @@ export default class RegisterProForm extends Component{
         return  (
 			<div class = {`uk-container-small ${style.registerPro}`}>
 				<div class={ style.content }>
-					{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit pro details</h2>) }
+					{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit Pro details</h2>) }
 						
 					<GeneralInfo accountType={this.state.regInfo.accountType}
 						onChangeHandler={this.onChangeHandler}
