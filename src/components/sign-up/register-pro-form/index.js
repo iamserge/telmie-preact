@@ -6,7 +6,7 @@ import Modal from '../../modal'
 import GeneralInfo from './general-info'
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
-import { getCookie } from "../../../utils";
+import { getCookie, getIntervalStep } from "../../../utils";
 import { getPreparedProState, getDefaultState, accountTypeArr } from "../../../utils/proPending";
 
 const STORAGE_ITEM_NAME = 'register_pro_data';
@@ -27,6 +27,7 @@ export default class RegisterProForm extends Component{
 			isFieldCorrect: true,
 			isSaveVisible: false,
 			isCancelPendVisible: false,
+			step: getIntervalStep(data.costPerMinute),
 		}
 
 		let that = this;
@@ -150,7 +151,8 @@ export default class RegisterProForm extends Component{
 	onSliderChange = (rate, disabled = false) => {
 		!disabled && this.setState(prev => {
 			return {
-				regInfo: { ...prev.regInfo, costPerMinute: Number.parseFloat(rate.toFixed(2))  }
+				regInfo: { ...prev.regInfo, costPerMinute: Number.parseFloat(rate.toFixed(2))  },
+				step: getIntervalStep(Number.parseFloat(rate.toFixed(2)))
 			}
 		})
 	}
@@ -284,8 +286,7 @@ export default class RegisterProForm extends Component{
 
 		const { categories = [], subCategories = [] } = this.props.dataFromServer;
 
-		let maxRate = (this.props.regData && this.props.regData.max_rate) ? this.props.regData.max_rate : 10,
-			step = (this.props.regData && this.props.regData.rate_slider_step)  ? this.props.regData.rate_slider_step : 0.1;
+		let maxRate = (this.props.regData && this.props.regData.max_rate) ? this.props.regData.max_rate : 10;
 
 		const dateOfBirth = year ? `${year}-${month}-${day}` : '';
 
@@ -372,7 +373,7 @@ export default class RegisterProForm extends Component{
 					<label for="costPerMinute">Rate</label>
 					<Slider min={0}
 							max={maxRate}
-							step={step}
+							step={this.state.step}
 							value={costPerMinute}
 							onChange={(rate) => this.onSliderChange(rate, fieldsDisabled)}/>
 					{costPerMinute == 0.00 ? (

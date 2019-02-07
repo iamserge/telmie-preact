@@ -84,3 +84,10 @@ export function secToMS(sec = 0){
   
   return {m, s};
 }
+
+export function getIntervalStep(val){
+  return val <= 1 
+    ? 0.01 : val <= 2 
+      ? 0.05 : val <= 5 
+        ? 0.1 : 0.2;
+}
