@@ -325,8 +325,6 @@ class Communication extends Component {
   	render(){
 		const { type: modalType, person = {} } = this.props.comModal;
 
-		console.log('STATE: ', this.state);
-
 		modalType && document.body.classList.add("communicate-active");
 		
 		return modalType && (<div class={style.callAreaBackground}>

@@ -6,6 +6,7 @@ import { getCalls } from '../../api/users'
 import style from './style.scss';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import AllActivity from '../../components/profile/all-activity';
+import SimpleSearch from '../../components/simple-search'
 import SideBar from '../../components/search/sidebar';
 
 const MAX_ITEMS = 10;
@@ -21,7 +22,6 @@ const proSortingItems = [{
 }];
 
 class Activity extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -30,8 +30,35 @@ class Activity extends Component {
 			cutActivity: [],
 			currentPage: 1,
 			loading: false,
-			sortBy: 'date'
+			sortBy: 'date',
+
+			isSearched: false,
+			sActivity: [],
+			sCutActivity: [],
 		}
+	}
+
+	onSearch = (val) =>{
+		if (!val){
+			this.setState({
+				loading: false,
+				isSearched: false, 
+				sActivity: [],
+				sCutActivity: [],
+			});
+			return;
+		}
+
+		this.setState({ loading: true, isSearched: true, sActivity: [], sCutActivity: [] });
+
+		const result = this.state.activity.filter(el => (el.lastName.indexOf(val) +1 || el.name.indexOf(val) +1));
+
+		this.setState({
+			loading: false,
+			currentPage: 1,
+			sActivity: result,
+			sCutActivity: result.slice(0, MAX_ITEMS)
+		});
 	}
 
 	getData = (props, sortBy = '') => {
@@ -73,9 +100,13 @@ class Activity extends Component {
 	}
 	changeActivityPage = (page) => {
 		window.scrollTo(0,0);
-		this.setState({
-			cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
-		})
+		this.state.isSearched ?
+			this.setState({
+				sCutActivity: this.state.sActivity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			})
+			: this.setState({
+				cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			});			
 	}
 
 	showConsulted = () => this.setState({ proCalls: false });
@@ -94,7 +125,9 @@ class Activity extends Component {
 	}
 
 	render() {
-		const { userData : user = {} } = this.props;
+		const allActivity = this.state.isSearched ? this.state.sActivity : this.state.activity,
+			activity = this.state.isSearched ? this.state.sCutActivity : this.state.cutActivity;
+
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>
@@ -105,11 +138,12 @@ class Activity extends Component {
 												disabled={this.state.loading}
 												sortToggleSwitched = { this.sortToggleSwitched } 
 												sortBy = { this.state.sortBy }/> }
+				{ this.props.isProCalls && <SimpleSearch onSearch={this.onSearch}/> }
 				<AllActivity
 					showConsultedMe = { this.showConsultedMe }
 					showConsulted = { this.showConsulted }
-					activity = { this.state.cutActivity }
-					allActivity = { this.state.activity }
+					activity = { activity }
+					allActivity = { allActivity }
 					currentPage = { this.state.currentPage }
 					client = {this.props.isProCalls}
 					loading = { this.state.loading }
