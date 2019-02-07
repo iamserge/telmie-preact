@@ -99,8 +99,8 @@ class Communication extends Component {
 			} else if (status == Strophe.Strophe.Status.DISCONNECTING) {
 				console.log('Strophe is disconnecting.');
 			} else if (status == Strophe.Strophe.Status.DISCONNECTED) {
-				console.log('Strophe is disconnected.');
-				this.connection.connect(generateJID(id),'', this.onConnect);
+				console.log('Strophe is disconnected.');				
+				//this.connection.connect(generateJID(id),'', this.onConnect);
 			}
 		}
 	}
@@ -325,6 +325,8 @@ class Communication extends Component {
   	render(){
 		const { type: modalType, person = {} } = this.props.comModal;
 
+		console.log('STATE: ', this.state);
+
 		modalType && document.body.classList.add("communicate-active");
 		
 		return modalType && (<div class={style.callAreaBackground}>
@@ -334,6 +336,7 @@ class Communication extends Component {
 						users = {this.state.users}
 						communicateModal={this.props.comModal} 
 						setChatPerson={this.props.setChatPerson}
+						isConnected={this.state.isConnected}
 						onSend={this.sendMessage}/>
 				</div>
 			)}

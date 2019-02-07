@@ -23,8 +23,11 @@ class SendForm extends Component {
 
     sendHandler = (_, value) => {
         let val = value ? value : this.state.value;
-        val && this.props.onSend(val);
-        this.setState({ value: '' });
+
+        this.props.isConnected && (
+            val && this.props.onSend(val),
+            this.setState({ value: '' })
+        )
     }
 
     render(){

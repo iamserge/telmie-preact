@@ -7,7 +7,7 @@ import SendForm from './SendForm'
 import { apiRoot } from "../../../api/index";
 
 const Chat = (props) => {
-    const {messages = [], communicateModal = {}, users = {}} = props;
+    const {messages = [], communicateModal = {}, users = {}, isConnected} = props;
     const { unread } = communicateModal;
     const unreadKeys = Object.keys(unread);
     
@@ -42,7 +42,7 @@ const Chat = (props) => {
                 {messages.map((el, i) => <Msg {...el} key={i}/>)}
             </ul>
         </div>
-        { communicateModal.person && <SendForm onSend={props.onSend}/> }
+        { communicateModal.person && <SendForm onSend={props.onSend} isConnected={isConnected}/> }
     </div>)
 };
 
