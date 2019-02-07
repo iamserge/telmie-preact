@@ -8,8 +8,11 @@ export default class Pagination extends Component {
 	constructor(props){
 		super(props);
 		let pages = [];
-		if(props.list.length > 0) {
-			let numberOfPages = Math.ceil(props.list.length/props.max);
+
+		const length = typeof props.list === 'number' ? 
+			props.list : props.list.length;
+		if(length > 0) {
+			let numberOfPages = Math.ceil(length/props.max);
 			for (let i = 1; i < numberOfPages + 1; i++) {
 				pages.push(i)
 			}
@@ -19,18 +22,18 @@ export default class Pagination extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps){
-		if(nextProps.list.length > 0) {
+		const length = typeof nextProps.list === 'number' ? 
+		nextProps.list : nextProps.list.length;
+		if(length > 0) {
 			let pages = [],
-					numberOfPages = Math.ceil(nextProps.list.length/nextProps.max);
+					numberOfPages = Math.ceil(length/nextProps.max);
 			for (let i = 1; i < numberOfPages + 1; i++) {
 				pages.push(i)
 			}
-			this.setState({
-				pages: pages
-			})
+			this.setState({ pages });
 		}
 	}
-	render({list}) {
+	render() {
 		if (this.state.pages.length > 1) {
 				return (
 					<div className={style.pagination}>

@@ -94,8 +94,7 @@ class AllTransactions extends Component {
 					previousPage = { this.previousPage }
 					currentPage = { this.state.currentPage }
 
-					max = {MAX_ITEMS}
-					/>
+					max = {MAX_ITEMS}/>
 			</div>
 		);
 	}

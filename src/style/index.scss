@@ -469,6 +469,36 @@ button.white-btn {
 	direction: rtl;
 }
 
+.react-tabs__tab-list{
+	border: none !important;
+}
+.react-tabs__tab{
+	font-size: 20px;
+	color: black !important;
+	border: none !important;
+	border-radius: 0 !important;
+	& + .react-tabs__tab::before {
+		content: '';
+		border-left: 2px solid gray;
+		position: absolute;
+		height: 70%;
+		left: 0;
+		top: 15%;
+	}
+}
+.react-tabs__tab--selected{
+	color: $red !important;
+}
+.react-tabs__tab-panel{
+	padding-top: 20px;
+}
+.loading-tabs{
+	overflow: hidden !important;
+	.spinner{
+		padding: 40px 0px !important;
+	}
+}
+
 @media (max-width: 1200px) {
     .slick-next{
 		right: 15px !important;

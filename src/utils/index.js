@@ -2,32 +2,6 @@ import { map, without } from 'lodash';
 import { host } from "../api/index";
 import emoji from 'react-easy-emoji'
 
-/*export function processActivities(activities){
-  let collapsedActivities = [],
-      currentActivity = {
-        contact:{}
-      };
-
-  activities.forEach((activity, index)=>{
-    if (activity.contact.id != currentActivity.contact.id) {
-      if (index != 0 ) collapsedActivities.push(currentActivity);
-      currentActivity = activity;
-    } else {
-      if (typeof currentActivity.related == 'undefined')  {
-        currentActivity.related = [ activity ]
-      } else {
-        currentActivity.related.push(activity);
-      }
-    }
-  });
-
-  let withoutShortlist = map(collapsedActivities, (entry) => {
-    if (entry.status != 'SHORTLIST') return entry;
-  });
-
-  withoutShortlist = without(withoutShortlist, undefined);
-  return withoutShortlist;
-}*/
 export const generateJID = (id) => `${id}@${host}/web`;
 
 export function generateProfessionsArray(professions){
@@ -50,7 +24,11 @@ export function checkIfLoggedIn(){
 export function convertDate(date = '') {
 	let oldDate = new Date(date.split('.')[0]),
 			newDate;
-	newDate = (oldDate.getMonth() + 1) + '/' + oldDate.getDate() + '/' +  oldDate.getFullYear() + ' ' + oldDate.getHours() + ':' + oldDate.getMinutes();
+  newDate = (oldDate.getMonth() + 1).toString().padStart(2,'0') 
+    + '/' + oldDate.getDate().toString().padStart(2,'0') 
+    + '/' + oldDate.getFullYear() 
+    + ' ' + oldDate.getHours().toString().padStart(2,'0') 
+    + ':' + oldDate.getMinutes().toString().padStart(2,'0');
 	return newDate;
 }
 

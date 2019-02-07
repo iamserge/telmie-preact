@@ -26,4 +26,5 @@ export const apiUrls = {
   EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',
   WORKING_PRO: apiRoot + 'users/pro/work',
   CALLS: apiRoot + 'calls',
+  CALL_HISTORY: (id) => apiRoot + 'calls/user/' + id,
 }

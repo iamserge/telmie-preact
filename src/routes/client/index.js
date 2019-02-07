@@ -47,7 +47,8 @@ class Client extends Component {
 					<Spinner />
 				) : (
 					<ProDetails person = { this.state.client } 
-                                isPro = { false }
+								isPro = { false }
+								userAuth = { this.props.userData.userAuth }
                                 openComModal = { this.props.openComModal } />
 				)}
 

@@ -38,6 +38,27 @@ export function getCalls(authData, isProCalls, num, sort = ''){
 	});
 }
 
+export function getCallHistory(id, isPro = false, page, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+
+	let additionalQuery = `?isPro=${isPro}`;
+	page && (additionalQuery = `${additionalQuery}&page=${page}`);
+	return fetch(apiUrls.CALL_HISTORY(id) + additionalQuery, { method: 'GET', headers}).then(response => {
+		return response.json().then(json => (response.status === 200 || response.status === 201) ? 
+			json : ({
+				error: true,
+				message: json.message
+			}));
+
+	}, error => {
+		console.log(error);
+		return ({
+			error: true,
+			text: error,
+		})
+	});
+}
 
 
 export function getTransactions(authData, num){

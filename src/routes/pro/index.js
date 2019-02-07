@@ -77,6 +77,7 @@ class Pro extends Component {
 								shortlistMessage={this.state.shortlistMessage}
 								person = { this.state.pro } 
 								isPro = { true }
+								userAuth = { this.props.userData.userAuth }
 								openComModal = { this.props.openComModal }
 								createCall = { this.createCall }
 								cnageShortlist = { this.shortlist }  />
