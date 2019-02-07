@@ -38,7 +38,7 @@ class Activity extends Component {
 		}
 	}
 
-	onSearch = (val) =>{
+	onSearch = async (val) =>{
 		if (!val){
 			this.setState({
 				loading: false,
@@ -51,7 +51,7 @@ class Activity extends Component {
 
 		this.setState({ loading: true, isSearched: true, sActivity: [], sCutActivity: [] });
 
-		const result = this.state.activity.filter(el => (el.lastName.indexOf(val) +1 || el.name.indexOf(val) +1));
+		const result = await this.state.activity.filter(el => (el.lastName.indexOf(val) +1 || el.name.indexOf(val) +1));
 
 		this.setState({
 			loading: false,
