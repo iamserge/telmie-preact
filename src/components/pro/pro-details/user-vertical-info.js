@@ -9,7 +9,7 @@ export default class UserVerticalInfo extends Component {
 	openChat = () => this.props.openComModal(consts.CHAT, this.props.person);
 
 	render({person, isPro}) {
-		const { pro = {} } = person;
+		const { pro } = person;
 
 		return (
 			<div className={style.imageContainer}>
@@ -20,7 +20,7 @@ export default class UserVerticalInfo extends Component {
 						<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 					)}
 				</div>
-				<div className={style.raiting}>
+				{ pro && <div className={style.raiting}>
 						<span>
 							{(pro.review != null) ? pro.review.count : 0} sessions
 						</span>
@@ -29,7 +29,7 @@ export default class UserVerticalInfo extends Component {
 							value={(pro.review != null) ? pro.review.rating : 0}
 							edit={false}
 							size={25} />
-					</div>
+					</div> }
 				<button class={`uk-button ${style.userControlBtn}`} onClick={this.openChat}>TEXT { isPro ? 'PRO' : 'Client'}</button>
 				
 				
