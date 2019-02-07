@@ -12,7 +12,6 @@ export default class ProTopInfo extends Component {
 		return isPro ? (
 			<div>
 				<div className={style.nameAndTitle}>
-					<span className={style.proRoundel}>PRO</span>
 					<h2>{person.name} {person.lastName}</h2>
 					<h3>{pro.profession}</h3>
 				</div>

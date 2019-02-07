@@ -3,7 +3,6 @@ import style from './style.scss';
 import UserVerticalInfo from './user-vertical-info';
 import ProTopInfo from './pro-top-info';
 import PriceInfo from './price-info';
-import { route } from 'preact-router';
 import YouTube from 'react-youtube';
 import Collapse from 'rc-collapse'
 import 'rc-collapse/assets/index.css';
@@ -35,7 +34,7 @@ export default class Pro extends Component {
 					</Collapse>
 				</div>
 
-				{ isPro && <PriceInfo pro={pro}/> }
+				{ isPro && <PriceInfo pro={pro} isPro={isPro} {...this.props}/> }
 				
 			</div>
 		)

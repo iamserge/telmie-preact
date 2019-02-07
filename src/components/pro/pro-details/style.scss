@@ -84,27 +84,17 @@
 		}
 	}
 }
-.proRoundel {
-	display: block;
-  	width: 70px;
-  	height: 70px;
-  	background-color: $red;
-  	border-radius: 100%;
-  	text-align: center;
-  	color: white;
-  	line-height: 70px;
-  	font-weight: bold;
-  	font-size: 22px;
-  	position: absolute;
-  	left: 0;
-  	top: 4px;
-}
-#callPro {
+
+.userControlBtn{
 	width: 100%;
   	font-size: 20px;
   	font-weight: bold;
   	height: 50px;
   	margin-top: 20px;
+}
+#callPro {
+	background-color: $red;
+	color: white;
 }
 .info {
 	width: calc(100% - 250px - 170px);
@@ -173,21 +163,21 @@
 			font-size: 18px;
 			color: $grey;
 		}
+	}	
+}
+
+.raiting {
+	text-align: center;
+	> span {
+		text-transform: uppercase;
+		color: $grey;
+		font-size: 18px;
+		display: block;
+		margin: 15px 0 -6px 0;
 	}
+	> div {
+		display: inline-block;
 
-	.raiting {
-
-		> span {
-			text-transform: uppercase;
-			color: $grey;
-			font-size: 16px;
-			display: block;
-			margin: 10px 0 -6px 0;
-		}
-		> div {
-			display: inline-block;
-
-		}
 	}
 }
 
@@ -199,10 +189,6 @@
 		width: 100%;
 		height: 387px;
 	}
-}
-.nameAndTitle {
-	position: relative;
-	padding-left: 88px;
 }
 
 @media (max-width: 960px) {
