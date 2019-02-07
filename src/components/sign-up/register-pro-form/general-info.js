@@ -20,8 +20,10 @@ const GeneralInfo = ({ accountType, userData={}, onChangeHandler}) => {
         <Radio name='accountType'
             value={accountType} 
             label='I am:' 
+            disabled={true}
             onChange = {onChangeHandler}
             data = {accountTypeArr}/>
+        <em style={{display: "block", textAlign: "center", color: "gray"}}>Registration as a Company is coming soon.</em>
     </div>)
 }
 

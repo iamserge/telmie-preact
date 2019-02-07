@@ -44,12 +44,12 @@ $font-size: 18px;
                 opacity: 0;
             }
 
-            &:hover input ~ .checkmark {
+            &:hover input:enabled ~ .checkmark {
                 background-color: rgb(218, 214, 214);
             }
 
-            &:hover input:disabled ~ .checkmark {
-                background-color: white;
+            input:disabled ~ .checkmark {
+                background-color: rgba(218, 214, 214, 0.4);
             }
 
             input:checked ~ .checkmark {
