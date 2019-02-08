@@ -66,6 +66,9 @@ class Communication extends Component {
 		(Object.keys(prevUser).length === 0) 
 			&& this.initializeConnection(nextProps);
 
+		(Object.keys(prevUser).length&& Object.keys(nextProps.user).length === 0) 
+			&& this.connection.disconnect();
+
 		!nextProps.comModal.type && this.props.comModal.type && document.body.classList.remove("communicate-active");
 
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
@@ -366,7 +369,9 @@ class Communication extends Component {
 		</div>)
   	}
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+	user: state.loggedInUser
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	closeComModal,
