@@ -86,6 +86,7 @@ class Communication extends Component {
 		if (status == Strophe.Strophe.Status.CONNECTED) {
 			console.log('Strophe is connected.');
 			this.connection.addHandler(this.onMessage, null, 'message', null, null, null);
+			this.sendPresence();
 
 			this.state.isDelayingCall && this.callRequest(this.props.comModal.callInfo);
 			this.setState({ isConnected: true, isDelayingCall: false });
@@ -99,8 +100,8 @@ class Communication extends Component {
 			} else if (status == Strophe.Strophe.Status.DISCONNECTING) {
 				console.log('Strophe is disconnecting.');
 			} else if (status == Strophe.Strophe.Status.DISCONNECTED) {
-				console.log('Strophe is disconnected.');				
-				//this.connection.connect(generateJID(id),'', this.onConnect);
+				console.log('Strophe is disconnected.');
+				this.connection.reset();
 			}
 		}
 	}
@@ -263,6 +264,12 @@ class Communication extends Component {
 			Strophe.$msg({ from, to, type }).c(elemType, elemOptions).t(body) 
 			: Strophe.$msg({ from, to, type }).c(elemType, elemOptions);
 
+		this.connection.send(m);
+	}
+
+	sendPresence = () => {
+		const from = generateJID(this.props.user.id);
+		const m = Strophe.$pres({ from }).c("status", {}).t("Available");
 		this.connection.send(m);
 	}
 

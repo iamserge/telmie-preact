@@ -2,7 +2,8 @@ import { map, without } from 'lodash';
 import { host } from "../api/index";
 import emoji from 'react-easy-emoji'
 
-export const generateJID = (id) => `${id}@${host}/web`;
+export const generateJID = (id, isMain) => isMain ? 
+  `${id}@${host}` : `${id}@${host}/web`;
 
 export function generateProfessionsArray(professions){
   let Services = [];
