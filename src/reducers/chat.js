@@ -101,7 +101,7 @@ export const communicateModal = (state = {...initialState}, action) => {
 		case actionTypes.SET_CHAT_PERSON:
 			const { person } = action;
 			const chats = { ...state.unread };
-			delete chats[generateJID(person.id)];
+			delete chats[generateJID(person.id, true)];
 			return { 
 				...state,
 				person,

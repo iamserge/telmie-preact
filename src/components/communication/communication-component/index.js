@@ -337,7 +337,7 @@ class Communication extends Component {
 		return modalType && (<div class={style.callAreaBackground}>
 			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
-					<Chat messages={this.state.chats[generateJID(person.id)]} 
+					<Chat messages={this.state.chats[generateJID(person.id, true)]} 
 						users = {this.state.users}
 						communicateModal={this.props.comModal} 
 						setChatPerson={this.props.setChatPerson}

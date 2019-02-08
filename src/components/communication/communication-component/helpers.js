@@ -2,15 +2,17 @@ import { getUserDetails } from "../../../api/pros";
 import { generateJID } from "../../../utils";
 import kUtils from "kurento-utils";
 
-export const setMessages = (id, text, isMy, prevState) => ({
+export const setMessages = (id, text, isMy, prevState) => {
+	const _id = id.split('/')[0];
+	return ({
     chats: {
 		...prevState.chats, 
-		[id]: prevState.chats[id] ? [ 
-			...prevState.chats[id], 
+		[_id]: prevState.chats[_id] ? [ 
+			...prevState.chats[_id], 
 			{ text, isMy } 
 		] : [ { text, isMy } ],
 	}
-});
+})};
 
 export const setUser = (user, prevState) => ({
     users: {
@@ -48,7 +50,7 @@ export const processChatMsg = async (from, _userAuth, props) => {
 	let userInfo;
 	const { person={} } = props.comModal;
 	from.indexOf(person.id) !== 0 && (
-		props.changeUnreadNum(from),
+		props.changeUnreadNum(from.split('/')[0]),
 		userInfo = await getUserInfo(from, _userAuth, props)
 	)
 	return userInfo;

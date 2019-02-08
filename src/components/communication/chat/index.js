@@ -33,6 +33,12 @@ const Chat = (props) => {
     }
 
     return (<div class={style.chatComponent}>
+        { !isConnected && <div class={style.connectingDiv}>
+            <div class={style.ldsDefault}>
+                <div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
+                <div>Connecting</div>
+            </div>
+        </div>}
         { communicateModal.person && <Title person={communicateModal.person}/> }
         <div class={style.chatArea}>
             { unreadKeys.length !== 0 && <ul class={style.users}>
