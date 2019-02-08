@@ -3,7 +3,7 @@
 :global {
 	#search {
 		> h2 {
-			margin: 40px 0;
+			margin: 40px 0 30px 0;
 			font-size: 40px;
 			text-align: left;
             margin-left: 20%;
@@ -48,5 +48,17 @@
             #sideBar {  
             }
 		}
+	}
+}
+
+.filterArea{
+	text-align: left;
+	margin-left: 20%;
+}
+
+@media (max-width: 880px) {
+	.filterArea {
+		margin-left:0;
+		text-align: center;
 	}
 }

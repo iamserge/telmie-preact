@@ -1,13 +1,14 @@
 import { apiUrls } from './index';
 import { consts } from '../utils/consts';
 
-
-
-export  function getPros(searchTerm, sortBy, page, authData){
+export  function getPros(searchTerm, sortBy, page, filter, authData){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 	page = page - 1;
-	return fetch(apiUrls.SEARCH_USERS + searchTerm + '&size=' + consts.PAGE_SIZE + '&page=' + page + '&sort=' + sortBy , { method: 'GET', headers}).then(response => {
+	return fetch(
+		apiUrls.SEARCH_USERS + searchTerm + '&size=' + consts.PAGE_SIZE + '&page=' + page + '&sort=' + sortBy + '&f=' + filter, 
+		{ method: 'GET', headers}
+	).then(response => {
     if (response.status === 404){
 			return {};
 		}

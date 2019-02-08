@@ -3,10 +3,8 @@
 $font-size: 18px;
 
 .formRadio {
-
-
     .label {
-        display: inline-block;
+        display: block;
         padding: 3px 0;
         margin-right: 20px;
         font-size: $font-size;
@@ -14,13 +12,13 @@ $font-size: 18px;
     }
     
     .radioGroup {
-        display: inline-block;
+        display: block;
+        width: 100%;
         background: transparent;
         color: $blue;
 
-
         .container {
-            display: inline-block;
+            display: block;
             position: relative;
             padding-left: 30px;
             cursor: pointer;
@@ -90,3 +88,11 @@ $font-size: 18px;
 }
 
 
+@media (max-width: 880px) {
+	.radioGroup {
+        text-align: center;
+        .container {
+            display: inline-block !important;
+        }
+    }
+}

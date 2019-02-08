@@ -7,7 +7,7 @@ export const apiRoot = 'http://'+host+'/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
-  SEARCH_USERS: apiRoot + 'users/pro?q=',
+  SEARCH_USERS: apiRoot + 'users/pro/filter?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   GET_PRO_USER_DETAILS: (proId) => apiRoot + 'users/pro/' + proId,
   GET_CLIENT_USER_DETAILS: (proId) => apiRoot + 'users/client/' + proId,

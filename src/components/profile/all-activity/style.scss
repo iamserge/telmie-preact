@@ -76,3 +76,12 @@
 .spinnerContainer {
 	margin: 20px 0;
 }
+
+
+@media (max-width: 880px){
+    .activityList {	
+		&.withSorting{
+			margin-left: 0;
+		}
+	}
+}

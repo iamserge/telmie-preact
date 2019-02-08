@@ -8,6 +8,7 @@ import { route } from 'preact-router';
 import style from './style.scss';
 import ProList from '../../components/search/pros-list';
 import SideBar from '../../components/search/sidebar';
+import RadioBtns from '../../components/radio-buttons';
 import Pagination from '../../components/search/pagination';
 import Spinner from '../../components/global/spinner';
 import { checkIfLoggedIn } from '../../utils';
@@ -15,14 +16,34 @@ import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { routes } from "../../components/app";
 
 const searchSortingItems = [{
-	name: 'Hourly rate',
-	value: 'rate'
+	name: 'Lowest rate first',
+	value: 'lowestratefirst'
+},{
+	name: 'Highest rate first',
+	value: 'highestratefirst'
+},{
+	name: 'Experience',
+	value: 'experience'
 },{
 	name: 'Rating',
 	value: 'rating'
 },{
-	name: 'Experience',
-	value: 'experience'
+	name: 'Activity',
+	value: 'activity'
+},];
+
+const searchFilterItems = [{
+	name: 'Languages',
+	value: 'languages'
+},{
+	name: 'Coaching',
+	value: 'coaching'
+},{
+	name: 'Immigration',
+	value: 'immigration'
+},{
+	name: 'Other',
+	value: 'other'
 }];
 
 class Search extends Component {
@@ -33,6 +54,7 @@ class Search extends Component {
 			searchTerm: this.props.searchTerm || '',
 			loading: true,
 			sortBy: 'rating',
+			filter: 'languages',
 			page: 1
 		}
 	}
@@ -43,7 +65,7 @@ class Search extends Component {
 			return;
 		}
 		this.fetchPage(this.props);
-		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page);
+		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page, this.state.filter);
 	}
 
 	fetchPage= (props) => {
@@ -52,43 +74,46 @@ class Search extends Component {
 		props.changeLocaleLangs([]);
 	}
 
-	fetchPros= (searchTerm, sortBy, page) => {
-		let that = this;
+	fetchPros= (searchTerm, sortBy, page, filter) => {
 		this.setState({ loading: true, pros: [] });
-		getPros(searchTerm, sortBy, page,this.props.userData.userAuth).then(function(data) {
-	    	that.setState({
+		getPros(searchTerm, sortBy, page, filter, this.props.userData.userAuth).then((data) => {
+	    	this.setState({
 				pros: data.results ? data.results : [],
-				searchTerm: that.props.searchTerm,
+				searchTerm: this.props.searchTerm,
 				loading: false
 			});
-		}).catch(function(error) {
-				that.setState({
-					pros: [],
-					searchTerm: that.props.searchTerm,
-					loading: false
-				})
+		}).catch((error) => {
+			console.log(error);
+			this.setState({
+				pros: [],
+				searchTerm: this.props.searchTerm,
+				loading: false
+			})
 		});
 	}
 
 
 	componentWillReceiveProps(nextProps){
-		const that = this;
-		if (nextProps.searchTerm != that.state.searchTerm) {
-			that.setState({pros: []});
-			that.fetchPros(nextProps.searchTerm, that.state.sortBy, that.state.page);
+		if (nextProps.searchTerm != this.state.searchTerm) {
+			this.setState({pros: []});
+			this.fetchPros(nextProps.searchTerm, this.state.sortBy, this.state.page, this.state.filter);
 		}
 	}
 
 	sortToggleSwitched = (sortBy) =>{
 		this.setState({ sortBy });
-		this.fetchPros(this.state.searchTerm, sortBy, this.state.page);
+		this.fetchPros(this.state.searchTerm, sortBy, this.state.page, this.state.filter);
 	}
 
 	pageChange = (page) => {
 		this.setState({ page });
-		this.fetchPros(this.state.searchTerm, this.state.sortBy, page);
+		this.fetchPros(this.state.searchTerm, this.state.sortBy, page, this.state.filter);
 	}
 
+	onFilterChange = (filter) => {
+		this.setState({ filter });
+		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page, filter);
+	}
 
 	render() {
 
@@ -99,6 +124,13 @@ class Search extends Component {
 				/>
 				<h2>Results for: <span>{this.props.searchTerm} </span></h2>
 				<div id="searchContainer">
+					<div class={style.filterArea}>
+						<RadioBtns data={ searchFilterItems } 
+							disabled={this.state.loading}
+							name='searchFilter'
+							value = { this.state.filter }
+							onChange={ this.onFilterChange }/>
+					</div>
 					<SideBar items={ searchSortingItems }
 						disabled={this.state.loading}
 						sortToggleSwitched = { this.sortToggleSwitched } 
