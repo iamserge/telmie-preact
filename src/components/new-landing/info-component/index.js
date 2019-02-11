@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import AutoPrintText from '../auto-print-text'
-import Search from '../../global/search';
 import SimpleSearch from '../../simple-search'
 import { route } from 'preact-router';
 import ReactGA from 'react-ga';
