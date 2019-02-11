@@ -98,13 +98,12 @@ export const communicateModal = (state = {...initialState}, action) => {
 					error: false,
 				},
 			}
-		case actionTypes.SET_CHAT_PERSON:
+		case actionTypes.CHOOSE_CHAT_PERSON:
 			const { person } = action;
 			const chats = { ...state.unread };
 			delete chats[generateJID(person.id, true)];
 			return { 
 				...state,
-				person,
 				unread: chats,
 			};
 		case actionTypes.CHANGE_UNREAD_MSG:

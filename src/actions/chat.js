@@ -59,9 +59,12 @@ export const createCall = (cid, isPro, auth) => async (dispatch) => {
 		: dispatch(createCallAction(response));
 };
 
-export const setChatPerson = (person) => (dispatch) => dispatch({
-	type: actionTypes.SET_CHAT_PERSON,
+export const chooseChatPerson = (person) => (dispatch) => dispatch({
+	type: actionTypes.CHOOSE_CHAT_PERSON,
 	person,
+});
+export const setChatPerson = (person) => (dispatch) => dispatch({
+
 });
 
 export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({

@@ -12,6 +12,8 @@ import { routes } from '../../components/app'
 import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { openComModal } from '../../actions/chat';
 
+import { generateJID } from "../../utils";
+
 class Client extends Component {
 	constructor(props){
 		super(props);
@@ -48,6 +50,9 @@ class Client extends Component {
 				) : (
 					<ProDetails person = { this.state.client } 
 								isPro = { false }
+								isConnected={this.props.isConnected}
+								connection={this.props.connection}
+								chat={this.props.chats[generateJID(this.state.client.id, true)]}
 								userAuth = { this.props.userData.userAuth }
                                 openComModal = { this.props.openComModal } />
 				)}

@@ -10,6 +10,10 @@ import { getCallHistory } from "../../../api/users";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 
+import Message from '../../communication/chat/Message'
+import SendForm from '../../communication/chat/SendForm'
+import chatStyle from './chatStyles.scss';
+
 
 export default class Pro extends Component {
 	constructor(props){
@@ -68,8 +72,13 @@ export default class Pro extends Component {
 		this.setState({ currentPage: page });
 		this.getCallHistory(page - 1);
 	}
+
+	onSend = (msg) =>{
+		console.log(msg);
+		msg && this.props.connection.sendMessage(msg, this.props.person.id);
+	}
 	
-	render({person, isPro}) {
+	render({person, isPro, isConnected, chat = []}) {
 		const { pro = {} } = person;
 		const { callHistory, total, currentPage } = this.state;
 
@@ -102,6 +111,20 @@ export default class Pro extends Component {
 
 					<TabPanel>
 						<h2>Chat with Pro</h2>
+						<div class={chatStyle.chatComponent}>
+							{ !isConnected && <div class={chatStyle.connectingDiv}>
+								<div class={chatStyle.ldsDefault}>
+									<div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
+									<div>Connecting</div>
+								</div>
+							</div>}
+							<div class={chatStyle.chatArea}>
+								<ul class={chatStyle.messages}>
+									{chat.map((el, i) => <Message {...el} key={i}/>)}
+								</ul>
+							</div>
+							<SendForm onSend={this.onSend} isConnected={isConnected}/>
+						</div>
 					</TabPanel>
 
 					<TabPanel>

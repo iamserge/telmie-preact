@@ -11,7 +11,7 @@ const Chat = (props) => {
     const { unread } = communicateModal;
     const unreadKeys = Object.keys(unread);
     
-    const onChangePerson = (person) => () => props.setChatPerson(person);
+    const onChangePerson = (person) => () => props.chooseChatPerson(person);
 
     const renderUnreadItem = (el) => {
         const _id =  el.split('@')[0];

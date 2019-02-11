@@ -12,6 +12,8 @@ import { routes } from '../../components/app'
 import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { openComModal, createCall } from '../../actions/chat';
 
+import { generateJID } from "../../utils";
+
 class Pro extends Component {
 	constructor(props){
 		super(props);
@@ -77,6 +79,9 @@ class Pro extends Component {
 								shortlistMessage={this.state.shortlistMessage}
 								person = { this.state.pro } 
 								isPro = { true }
+								isConnected={this.props.isConnected}
+								connection={this.props.connection}
+								chat={this.props.chats[generateJID(this.state.pro.id, true)]}
 								userAuth = { this.props.userData.userAuth }
 								openComModal = { this.props.openComModal }
 								createCall = { this.createCall }

@@ -32,8 +32,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, ES, PL, AE, PT, langs } from "../utils/consts";
-import { } from '../actions/user'
-import { openComModal } from '../actions/chat'
+import { openComModal, changeUnreadNum, chooseChatPerson } from '../actions/chat'
+
+import Strophe from 'npm-strophe'
+import Connection from '../utils/connection'
+import { setMessages, setUser } from '../utils/con-helpers'
 
 import 'animate.css'
 
@@ -80,8 +83,56 @@ class App extends Component {
 		this.state = {
 			prismicCtx: null,
 			currentUrl: "",
+
+			chats: {},
+			users: {},
+			isConnected: false,
 		}
+
+		this.connection = new Connection({
+			setMsg: this.setMsg,
+			setUsr: this.setUsr,
+			changeUnreadNum: this.props.changeUnreadNum,
+			changeConnectedState: (isConnected) => this.setState({ isConnected }),
+		});
 	}
+
+	setMsg = (id, text, isMy = false) => this.setState(prev => setMessages(id, text, isMy, prev));
+	setUsr = (user) => this.setState(prev => setUser(user, prev));
+
+	componentDidMount(){
+		this.connection.initializeConnection(this.props);
+	}
+
+	componentWillReceiveProps(nextProps){
+		const {userData : prevUser = {}} = this.props;
+		const isPrevLogedIn = !!Object.keys(prevUser).length;
+		(!isPrevLogedIn) && this.connection.initializeConnection(nextProps);
+
+		(isPrevLogedIn && Object.keys(nextProps.userData).length === 0) 
+			&& this.connection.disconnect();
+
+		/*
+		!nextProps.comModal.type && this.props.comModal.type && document.body.classList.remove("communicate-active");
+
+		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
+			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
+			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
+			&& nextProps.comModal.callInfo.callId)
+				&& this.makeCall(nextProps.comModal.callInfo);
+		*/
+	}
+
+	chooseChatPerson = (person) => {
+		console.log(person);
+		/*let users = this.state.users;
+		delete users[person.id];
+		this.setState({ users });
+		this.props.chooseChatPerson(person);*/
+		//route
+	}
+
+
 
 	componentWillMount() {
 		ReactGA.initialize('UA-127710081-1');
@@ -107,18 +158,18 @@ class App extends Component {
 		}));
 	}
 
-	renderProRoutes = () => [
-		...this.renderUserRoutes(),
+	renderProRoutes = (chats, isConnected) => [
+		...this.renderUserRoutes(chats, isConnected),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
-		<Client path={routes.CLIENT} />,
+		<Client path={routes.CLIENT} chats={chats} isConnected={isConnected} connection={this.connection}/>,
 	];
 
-	renderUserRoutes = () => [
+	renderUserRoutes = (chats, isConnected) => [
 		...this.renderDefaultRoutes(),
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
-		<Pro path={routes.PRO} />,
+		<Pro path={routes.PRO} chats={chats} isConnected={isConnected} connection={this.connection}/>,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>
@@ -151,13 +202,16 @@ class App extends Component {
 		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.TERMS}/>,
 		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.PRIVACY} />,
 		<ContactRoute path = { langRoutes(lang, routes.CONTACT_US) }/>,
-	])
+	]);
 
 	render() {
 		const {
 			userData : user  = {}, locale, communicateModal, openComModal, 
 		} = this.props;
 		const { unread : newChats } = communicateModal;
+
+		console.log('CONNECTION', { ...this.connection.connection });
+		console.log('STATE', { ...this.state });
 
 		return (
 			<div id="app">
@@ -170,13 +224,21 @@ class App extends Component {
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
-							(user.pro != null) ? this.renderProRoutes() : this.renderUserRoutes()
+							(user.pro != null) ? 
+								this.renderProRoutes(this.state.chats, this.state.isConnected) 
+								: this.renderUserRoutes(this.state.chats, this.state.isConnected)
 							: this.renderDefaultRoutes()}
 						<ErrorRoute default />
 					</Router>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
-				<Communication user={this.props.userData} 
+				<Communication 
+					connection={this.connection}
+					isConnected={this.state.isConnected}
+					users={this.state.users}
+					chooseChatPerson={this.chooseChatPerson}
+							
+					user={this.props.userData} 
 					comModal={communicateModal} 
 					openComModal={openComModal}/>
 			</div>
@@ -192,6 +254,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	openComModal,
+
+	changeUnreadNum,
+	chooseChatPerson,
 }, dispatch);
 
 export default connect(
