@@ -53,7 +53,6 @@ export const changeComType = (type) => dispatch => dispatch({
 
 export const createCall = (cid, isPro, auth) => async (dispatch) => {
 	let response = await chatAPI.createCall(cid, isPro, auth);
-	console.log(response);
 
 	(response.error) ? 
 		dispatch(createCallErrorAction(response))

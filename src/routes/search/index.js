@@ -52,10 +52,12 @@ class Search extends Component {
 		this.state = {
 			pros: [],
 			searchTerm: this.props.searchTerm || '',
+			prevSearchTerm: this.props.searchTerm || '',
 			loading: true,
 			sortBy: 'rating',
 			filter: 'languages',
-			page: 1
+			page: 1,
+			showSearchIcon: false,
 		}
 	}
 
@@ -79,14 +81,16 @@ class Search extends Component {
 		getPros(searchTerm, sortBy, page, filter, this.props.userData.userAuth).then((data) => {
 	    	this.setState({
 				pros: data.results ? data.results : [],
-				searchTerm: this.props.searchTerm,
+				searchTerm,
+				prevSearchTerm: this.state.searchTerm,
 				loading: false
 			});
 		}).catch((error) => {
 			console.log(error);
 			this.setState({
 				pros: [],
-				searchTerm: this.props.searchTerm,
+				searchTerm,
+				prevSearchTerm: this.state.searchTerm,
 				loading: false
 			})
 		});
@@ -95,7 +99,6 @@ class Search extends Component {
 
 	componentWillReceiveProps(nextProps){
 		if (nextProps.searchTerm != this.state.searchTerm) {
-			this.setState({pros: []});
 			this.fetchPros(nextProps.searchTerm, this.state.sortBy, this.state.page, this.state.filter);
 		}
 	}
@@ -115,6 +118,28 @@ class Search extends Component {
 		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page, filter);
 	}
 
+	performSearch = (e, value) => {
+		this.setState({ showSearchIcon: false });
+		const term = value || this.state.searchTerm;
+		term && this.fetchPros(term, this.state.sortBy, this.state.page, this.state.filter);; 
+        
+    };
+
+    changeHandler = e => this.setState({ searchTerm: e.target.value || this.state.prevSearchTerm });
+
+    keyHandler = e => {
+        (e.keyCode == 13) && (
+            e.preventDefault(),
+            this.setState({ searchTerm: e.target.value || this.state.prevSearchTerm }),
+            e.target.value && this.performSearch(_, e.target.value)
+        )
+	}
+
+	hadlerFocus = () => this.setState({ showSearchIcon: true });
+	handlerBlur = () => {
+		(this.state.prevSearchTerm == this.state.searchTerm) && this.setState({ showSearchIcon: false })
+	}
+	
 	render() {
 
 		return (
@@ -122,7 +147,21 @@ class Search extends Component {
 				<Helmet
 					title="Telmie | Search"
 				/>
-				<h2>Results for: <span>{this.props.searchTerm} </span></h2>
+				<h2>Results for: <span class={style.searchContainer}>
+						<input class={style.serchInput} 
+							disabled={this.state.loading}
+							value={this.state.searchTerm}
+							onKeyDown={this.keyHandler}
+							onChange={this.changeHandler}
+							onFocus={this.hadlerFocus}
+							onBlur={this.handlerBlur}/>
+
+						<span style={{display: `${this.state.showSearchIcon ? 'block' : 'none'}`}} class={style.searchIcon} 
+							onClick={this.performSearch} >
+							<span class="icon-magnifying-glass"/>
+						</span>
+					</span>
+				</h2>
 				<div id="searchContainer">
 					<div class={style.filterArea}>
 						<RadioBtns data={ searchFilterItems } 
@@ -145,7 +184,7 @@ class Search extends Component {
 									<Pagination page = { this.state.page } noNext = {this.state.pros.length  < consts.PAGE_SIZE } pageChange = { this.pageChange }/>
 								</div>
 							) : (
-								<div className={style.empty}>Sorry, no pros found for <span>{this.props.searchTerm}</span></div>
+								<div className={style.empty}>Sorry, no pros found for <span>{this.state.searchTerm}</span></div>
 							)}
 						</div>
 					)}

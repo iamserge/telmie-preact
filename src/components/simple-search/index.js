@@ -25,8 +25,8 @@ class SimpleSearch extends Component {
 
 	render() {
 		return (
-            <form class={style.searchContainer}>
-                <input type="text" placeholder="Find a Client" value={this.state.value}
+            <form class={`${style.searchContainer} ${this.props.isHome && style.homeContainer}`}>
+                <input type="text" placeholder={this.props.placeholder} value={this.state.value}
                     onKeyDown={this.keyHandler} onChange={this.changeHandler} />
                 <span class={style.searchIcon} onClick={this.performSearch} >
 					<span class="icon-magnifying-glass"/>

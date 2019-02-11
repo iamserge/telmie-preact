@@ -3,7 +3,6 @@ export const actionTypes = {
 	CHANGE_LOCALE: 'CHANGE_LOCALE',
 	CHANGE_LOCALE_LANGS: 'CHANGE_LOCALE_LANGS',
 	USER_DETAILS_FETCHED: 'USER_DETAILS_FETCHED',
-	HIDE_SEARCH_BOX: 'HIDE_SEARCH_BOX',
 	SHOW_SEARCH_BOX: 'SHOW_SEARCH_BOX',
 	LOG_IN_SUCCESS: 'LOG_IN_SUCCESS',
 	LOG_IN_FAILURE: 'LOG_IN_FAILURE',
@@ -45,15 +44,4 @@ export const actionTypes = {
 	PROCESSING_CALL: 'PROCESSING_CALL',
 	SPEAKING: 'SPEAKING',
 	STOP_COMMUNICATION: 'STOP_COMMUNICATION',
-};
-
-//export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';
-const hideSearch = (facet) => ({
-	type: actionTypes.HIDE_SEARCH_BOX
-});
-
-
-
-export const hideSearchBox = () => (dispatch) => {
-	dispatch(hideSearch());
 };

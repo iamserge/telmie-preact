@@ -138,7 +138,8 @@ class Activity extends Component {
 												disabled={this.state.loading}
 												sortToggleSwitched = { this.sortToggleSwitched } 
 												sortBy = { this.state.sortBy }/> }
-				{ this.props.isProCalls && <SimpleSearch onSearch={this.onSearch}/> }
+				{ this.props.isProCalls && <SimpleSearch onSearch={this.onSearch}
+														placeholder='Find a client'/> }
 				<AllActivity
 					showConsultedMe = { this.showConsultedMe }
 					showConsulted = { this.showConsulted }

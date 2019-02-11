@@ -3,7 +3,7 @@ import { api } from "prismic-javascript";
 export const host = 'sr461.2dayhost.com';
 //export const host = 'telmie.com';
 
-export const apiRoot = 'https://'+host+'/api/';
+export const apiRoot = 'http://'+host+'/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',

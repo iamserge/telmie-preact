@@ -2,12 +2,10 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import * as router from 'preact-router';
 import style from './style.scss';
-import Search from '../search';
 import Select from './select';
 import Hr from '../../hr';
 import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
-import { hideSearchBox } from '../../../actions';
 import { apiRoot } from '../../../api';
 import { logIn, logOff, changeLocale } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
@@ -179,8 +177,8 @@ class Header extends Component {
           
               <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
             { /*this.props.currentUrl != '/' && (
-                <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
-                  hideSearchBox = { this.props.hideSearchBox } 
+                <Search
+                  
                   isLogin = {isLogin} 
                   home= { false }/>
             )*/}
@@ -300,14 +298,12 @@ class Header extends Component {
 
 
 const mapStateToProps = (state) => ({
-	hiddenSearchBox: state.hiddenSearchBox,
   userData: state.loggedInUser,
   locale: state.locale,
 });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	hideSearchBox,
 	logIn,
   logOff,
   changeLocale,

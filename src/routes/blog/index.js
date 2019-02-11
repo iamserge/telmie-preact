@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
 import Spinner from '../../components/global/spinner';
 import ScrollToTop from 'react-scroll-up';
@@ -166,7 +165,6 @@ class BlogPage extends Component {
 	}
 };
 const mapStateToProps = (state) => ({
-	hiddenSearchBox: state.hiddenSearchBox,
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
@@ -175,7 +173,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	hideSearchBox,
 	verify,
 	sendContactData,
 	clearContactData,
