@@ -105,6 +105,8 @@ export const communicateModal = (state = {...initialState}, action) => {
 			return { 
 				...state,
 				unread: chats,
+				type: null,
+				person: {},
 			};
 		case actionTypes.CHANGE_UNREAD_MSG:
 			const {from, num} = action;
@@ -114,7 +116,12 @@ export const communicateModal = (state = {...initialState}, action) => {
 					...state.unread,
 					[from]: state.unread[from] ? state.unread[from] + num : num,
 				},
-            }
+			}
+		case actionTypes.CLEAR_CHATS:
+			return {
+				...state,
+				unread: { },
+			}
         case actionTypes.CALEE_IS_BUSY:
             return {
                 ...state,

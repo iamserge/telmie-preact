@@ -29,6 +29,7 @@ const Chat = (props) => {
                 )}
             </div>
             <div class={style.msgCount}>{unread[el]}</div>
+            <div class={style.authorName}>{fullName}</div>
         </li>)
     }
 

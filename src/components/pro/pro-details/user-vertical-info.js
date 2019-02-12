@@ -2,13 +2,11 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import ReactStars from 'react-stars';
 import { apiRoot } from '../../../api'
-import { consts } from '../../../utils/consts'
 
 
 export default class UserVerticalInfo extends Component {
-	openChat = () => this.props.openComModal(consts.CHAT, this.props.person);
 
-	render({person, isPro}) {
+	render({person}) {
 		const { pro } = person;
 
 		return (
@@ -30,10 +28,6 @@ export default class UserVerticalInfo extends Component {
 							edit={false}
 							size={25} />
 					</div> }
-				<button class={`uk-button ${style.userControlBtn}`} onClick={this.openChat}>TEXT { isPro ? 'PRO' : 'Client'}</button>
-				
-				
-
 			</div>
 		)
 	}

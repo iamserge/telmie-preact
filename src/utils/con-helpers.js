@@ -21,11 +21,9 @@ export const setUser = (user, prevState) => ({
 	}
 });
 
-export const getUserInfo = async (id, userAuth) => {
+export const getUserInfo = async (id, userAuth, isPro = false) => {
 	const _id = id.split('@')[0];
-	const isPro = false;
-
-	return await getUserDetails(_id, userAuth, isPro);
+	return await getUserDetails(_id, userAuth, !isPro);
 }
 
 export const processServerMsg = (msg) => {
@@ -37,9 +35,9 @@ export const processServerMsg = (msg) => {
 	return {to, from, type, elems, vcxepElems};
 }
 
-export const processChatMsg = async (from, _userAuth, changeUnreadNum) => {
+export const processChatMsg = async (from, _userAuth, isPro, changeUnreadNum) => {
     changeUnreadNum(from.split('/')[0]);
-    return await getUserInfo(from, _userAuth);
+    return await getUserInfo(from, _userAuth, isPro);
 }
 
 export const processCallMsg = (body) => {

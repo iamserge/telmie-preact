@@ -72,3 +72,7 @@ export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({
 	from,
 	num,
 })
+
+export const clearChats = () => dispatch => dispatch({
+	type: actionTypes.CLEAR_CHATS,
+})

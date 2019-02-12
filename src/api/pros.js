@@ -21,12 +21,14 @@ export  function getPros(searchTerm, sortBy, page, filter, authData){
 	});
 }
 
-export  function getUserDetails(userId, authData, isPro = true){
+export  function getUserDetails(userId, authData, isPro = true, isSecond = false){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 	const url = isPro ? apiUrls.GET_PRO_USER_DETAILS(userId) : apiUrls.GET_CLIENT_USER_DETAILS(userId);
 	return fetch(url, { method: 'GET', headers }).then(response => {
-		return (response.status === 404) ? {} : response.json().then(json => json);
+		return (response.status === 404) ? 
+			{} : (response.status === 403 && !isSecond) ? 
+				getUserDetails(userId, authData, !isPro, true) : response.json().then(json => json);
 	}, error => {
 		throw new Error(error.message);
 	});

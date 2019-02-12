@@ -21,7 +21,8 @@ class Connection{
         const {userData : user = {}} = props;
         if (Object.keys(user).length === 0) return;
     
-        const { userAuth, id } = user;
+        const { userAuth, id, pro } = user;
+        this._isPro = !!pro;
         this._curUserId = id;
         this._curUserJID = generateJID(this._curUserId);
         this._userAuth = userAuth || getCookie('USER_AUTH');
@@ -38,6 +39,7 @@ class Connection{
         this._userAuth = "";
         this._curUserId = 0;
         this._curUserJID = '';
+        this._isPro = false;
         this.connection.disconnect();
     };
 
@@ -73,7 +75,7 @@ class Connection{
         const { to, from, type, elems, vcxepElems } = processServerMsg(msg);
     
         if (type == "chat" && elems.length > 0) {
-            const userInfo = await processChatMsg(from, this._userAuth, this.props.changeUnreadNum);
+            const userInfo = await processChatMsg(from, this._userAuth, this._isPro, this.props.changeUnreadNum);
             console.log('new msg from: ', userInfo);
             this.props.setMsg(from, Strophe.Strophe.getText(elems[0]));
             userInfo && this.props.setUsr(userInfo);

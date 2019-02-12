@@ -32,7 +32,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, ES, PL, AE, PT, langs } from "../utils/consts";
-import { openComModal, changeUnreadNum, chooseChatPerson } from '../actions/chat'
+import { openComModal, changeUnreadNum, chooseChatPerson, clearChats } from '../actions/chat'
 
 import Strophe from 'npm-strophe'
 import Connection from '../utils/connection'
@@ -110,10 +110,13 @@ class App extends Component {
 		(!isPrevLogedIn) && this.connection.initializeConnection(nextProps);
 
 		(isPrevLogedIn && Object.keys(nextProps.userData).length === 0) 
-			&& this.connection.disconnect();
+			&& (
+				this.connection.disconnect(),
+				this.setState({ chats: {}, users: {} }),
+				this.props.clearChats()
+			);
 
 		/*
-		!nextProps.comModal.type && this.props.comModal.type && document.body.classList.remove("communicate-active");
 
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
@@ -124,12 +127,13 @@ class App extends Component {
 	}
 
 	chooseChatPerson = (person) => {
-		console.log(person);
-		/*let users = this.state.users;
+		let users = this.state.users;
 		delete users[person.id];
 		this.setState({ users });
-		this.props.chooseChatPerson(person);*/
-		//route
+		this.props.chooseChatPerson(person);
+		person.pro ? 
+			route(routes.PRO_FOR_COMP + person.id + '/#chat') 
+			: route(routes.CLIENT_FOR_COMP + person.id + '/#chat');
 	}
 
 
@@ -257,6 +261,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 	changeUnreadNum,
 	chooseChatPerson,
+	clearChats,
 }, dispatch);
 
 export default connect(

@@ -8,6 +8,7 @@ import YouTube from 'react-youtube';
 import CallHistory from "./call-history-tab";
 import { getCallHistory } from "../../../api/users";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Element, scroller, Link as ScrollLink } from 'react-scroll'
 import "react-tabs/style/react-tabs.css";
 
 import Message from '../../communication/chat/Message'
@@ -27,6 +28,32 @@ export default class Pro extends Component {
 
 		this.tabs = props.isPro ? 
 			['User Info', 'Chat with Pro', 'Call history'] : ['Chat with Pro', 'Call history'];
+		this.bottomSection = null;
+	}
+
+	componentDidMount(){
+		this.scrollToHashElement();
+	}
+	componentWillUnmount(){
+		clearInterval(this.scrollInterval);
+		this.scrollInterval = null;
+	}
+
+	scrollToHashElement = () => {
+		const {hash} = window.location;
+
+		hash && (
+			(hash.indexOf('chat') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.bottomSection !== null && (
+						scroller.scrollTo('chatElement', {
+							spy: true, smooth: true, duration: 500, offset: 0,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))
+		)
 	}
 
 	getCallHistory = (page) => {
@@ -84,7 +111,7 @@ export default class Pro extends Component {
 
 		return (<div>
 			<div class={style.person}>
-				<UserVerticalInfo {...this.props} />
+				<UserVerticalInfo person={person} />
 
 				<div className={style.info}>
 					<ProTopInfo person={person} pro={pro} isPro={isPro}/>
@@ -93,7 +120,7 @@ export default class Pro extends Component {
 				{ isPro && <PriceInfo pro={pro} isPro={isPro} {...this.props}/> }
 				
 			</div>
-			<div>
+			<div class={style.bottomSection} ref={el => this.bottomSection = el}>
 				<Tabs className={`${style.tabs} ${this.state.loading && 'loading-tabs'}`} onSelect={this.onTabSelect}>
 					<TabList>
 						{ this.tabs.map(el => <Tab>{el}</Tab>) }
@@ -111,20 +138,7 @@ export default class Pro extends Component {
 
 					<TabPanel>
 						<h2>Chat with Pro</h2>
-						<div class={chatStyle.chatComponent}>
-							{ !isConnected && <div class={chatStyle.connectingDiv}>
-								<div class={chatStyle.ldsDefault}>
-									<div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
-									<div>Connecting</div>
-								</div>
-							</div>}
-							<div class={chatStyle.chatArea}>
-								<ul class={chatStyle.messages}>
-									{chat.map((el, i) => <Message {...el} key={i}/>)}
-								</ul>
-							</div>
-							<SendForm onSend={this.onSend} isConnected={isConnected}/>
-						</div>
+						
 					</TabPanel>
 
 					<TabPanel>
@@ -140,7 +154,25 @@ export default class Pro extends Component {
 									currentPage = { currentPage }/> }
 					</TabPanel>
 				</Tabs>
+				<div>
+					<div class={chatStyle.chatComponent}>
+						<Element name="chatElement"/>
+						{ !isConnected && <div class={chatStyle.connectingDiv}>
+							<div class={chatStyle.ldsDefault}>
+								<div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
+								<div>Connecting</div>
+							</div>
+						</div>}
+						<div class={chatStyle.chatArea}>
+							<ul class={chatStyle.messages}>
+								{chat.map((el, i) => <Message {...el} key={i}/>)}
+							</ul>
+						</div>
+						<SendForm onSend={this.onSend} isConnected={isConnected}/>
+					</div>
+				</div>
 			</div>
+			
 		</div>)
 	}
 }
