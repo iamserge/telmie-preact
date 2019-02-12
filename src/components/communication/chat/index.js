@@ -7,7 +7,7 @@ import SendForm from './SendForm'
 import { apiRoot } from "../../../api/index";
 
 const Chat = (props) => {
-    const {messages = [], communicateModal = {}, users = {}, isConnected} = props;
+    const { communicateModal = {}, users = {}, isConnected} = props;
     const { unread } = communicateModal;
     const unreadKeys = Object.keys(unread);
     
@@ -15,7 +15,7 @@ const Chat = (props) => {
 
     const renderUnreadItem = (el) => {
         const _id =  el.split('@')[0];
-        const user = props.users[_id];
+        const user = users[_id];
         const {avatar, name = '', lastName = ''} = user ? user : {};
         const fullName = name + ' ' + lastName;
     
@@ -40,16 +40,10 @@ const Chat = (props) => {
                 <div>Connecting</div>
             </div>
         </div>}
-        { communicateModal.person && <Title person={communicateModal.person}/> }
-        <div class={style.chatArea}>
-            { unreadKeys.length !== 0 && <ul class={style.users}>
-                {unreadKeys.map(el => renderUnreadItem(el))}
-            </ul> }
-            <ul class={style.messages}>
-                {messages.map((el, i) => <Msg {...el} key={i}/>)}
-            </ul>
-        </div>
-        { communicateModal.person && <SendForm onSend={props.onSend} isConnected={isConnected}/> }
+        
+        { unreadKeys.length !== 0 && <ul class={style.users}>
+            {unreadKeys.map(el => renderUnreadItem(el))}
+        </ul> }
     </div>)
 };
 
