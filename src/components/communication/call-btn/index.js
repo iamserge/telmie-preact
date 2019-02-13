@@ -30,7 +30,7 @@ export const Btn = ({text, clickHandler}) => {
     }
 
     return (<div class={style.btn}>
-        <img src={src} onClick={clickHandler}/>
+        <img class={style.btnImg} src={src} onClick={clickHandler}/>
         <div class={style.btnText} onClick={clickHandler}>{text}</div>
     </div>)
 }

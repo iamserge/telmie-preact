@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import Strophe from 'npm-strophe'
 import kUtils from "kurento-utils";
+import { route } from 'preact-router';
 import style from './style.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
@@ -17,8 +18,11 @@ import { setMessages, setUser, prepareFromTo,
 	reqGranted, reqForbidden, sendOfferData, sendAnswerData, onIceCandidate, videoCapture
 } from './helpers'
 import { 
-	closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication
+	closeComModal, setChatPerson, changeUnreadNum, getCallInfo, caleeIsBusy, changeComType, processCall, speaking, stopCommunication,
+	pickUp, 
 } from '../../../actions/chat'
+
+import { routes } from "../../app";
 
 class Communication extends Component {
 	constructor(props){
@@ -67,12 +71,6 @@ class Communication extends Component {
 			this.setState(prev => ({ options: {...prev.options, video: !prev.options.video}}));
 		},
 	})
-
-	setAutoReject = () => this.autoRejectTimeout = setTimeout(() => this.rejectCall(true), 20000);
-	undoAutoReject = () => {
-		clearTimeout(this.autoRejectTimeout);
-		this.autoRejectTimeout = null;
-	}
 
 	setAutoFinish = () => {
 		this.autoFinishTimeout = setTimeout(this.finishCall, 60000);
@@ -127,39 +125,18 @@ class Communication extends Component {
 		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'request', callid: callInfo.callId, avtime: callInfo.avTime});
 	}
 
+	// new func
 	rejectCall = (isBusy = false) => {
-		this.undoAutoReject();
-
-		const address = prepareFromTo(this.props);
-		const { callInfo = {} } = this.props.comModal;
-		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'reject', callid: callInfo.callId});
-		isBusy === true ? this.props.caleeIsBusy() : this.props.closeComModal();
-	}
-
-	finishCall = () => {
-		this.undoAutoFinish();
-
-		const { callInfo = {} } = this.props.comModal;
-		const address = prepareFromTo(this.props);
-		this.msgGenSend(address, 'vcxep', 'vcxep', {type: 'finished', callid: callInfo.callId});
-		this.stopCommunication();
-	}
-
-	stopCommunication = () => {
-		this.undoCallSecInterval();
+		this.props.connection.rejectCall(isBusy);
 		this.props.closeComModal();
-		this.webRtcPeer && (
-			this.webRtcPeer.dispose(),
-			this.webRtcPeer = null
-		);
-		this.setState({ options: {
-			mute: false,
-			video: false,
-			muteSpeaker: false,
-		}})
 	}
 
-	requestGranted = () => reqGranted(this.msgGenSend, this.props);
+	// new func
+	requestGranted = () => {
+		route(routes.CLIENT_FOR_COMP + this.props.comModal.person.id + '#call');
+		this.props.connection.reqGranted();
+		this.props.pickUp();
+	};
 
 	getVideoInput = (el) => {
 		this.videoInput = el
@@ -175,12 +152,12 @@ class Communication extends Component {
 			remoteVideo : this.videoInput,
 			onicecandidate : onIceCandidate(this.msgGenSend, this.props)
 		})
-}
+	}
 
   	render(){
-		const { type: modalType, person = {} } = this.props.comModal;
+		const { type: modalType, person = {}, isOutcoming, isPickUp } = this.props.comModal;
 		
-		return modalType && (<div class={style.callAreaBackground}>
+		return modalType && !isOutcoming && !isPickUp && (<div class={style.callAreaBackground}>
 			{(modalType === consts.CHAT) && (
 				<div class={style.callArea}>
 					<Chat 
@@ -225,6 +202,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	processCall,
 	speaking,
 	stopCommunication,
+	pickUp,
 }, dispatch);
 
 export default connect(

@@ -85,6 +85,7 @@ class Pro extends Component {
 								userAuth = { this.props.userData.userAuth }
 								openComModal = { this.props.openComModal }
 								createCall = { this.createCall }
+								comModal={ this.props.communicateModal }
 								cnageShortlist = { this.shortlist }  />
 				)}
 
@@ -98,6 +99,7 @@ class Pro extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
+	communicateModal: state.communicateModal,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -32,7 +32,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
 import { RU, EN, IT, ES, PL, AE, PT, langs } from "../utils/consts";
-import { openComModal, changeUnreadNum, chooseChatPerson, clearChats } from '../actions/chat'
+import { 
+	openComModal, closeComModal, changeUnreadNum, chooseChatPerson, clearChats, getCallInfo,
+	caleeIsBusy,
+	processCall, speaking, 
+} from '../actions/chat'
 
 import Strophe from 'npm-strophe'
 import Connection from '../utils/connection'
@@ -94,6 +98,14 @@ class App extends Component {
 			setUsr: this.setUsr,
 			changeUnreadNum: this.props.changeUnreadNum,
 			changeConnectedState: (isConnected) => this.setState({ isConnected }),
+			getCInfo: () => this.props.communicateModal.callInfo,
+			getCallInfo: this.props.getCallInfo,
+			openComModal: this.props.openComModal,
+			closeComModal: this.props.closeComModal,
+			caleeIsBusy: this.props.caleeIsBusy,
+			processCall: this.props.processCall,
+			speaking: this.props.speaking,
+
 		});
 	}
 
@@ -115,15 +127,6 @@ class App extends Component {
 				this.setState({ chats: {}, users: {} }),
 				this.props.clearChats()
 			);
-
-		/*
-
-		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
-			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
-			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
-			&& nextProps.comModal.callInfo.callId)
-				&& this.makeCall(nextProps.comModal.callInfo);
-		*/
 	}
 
 	chooseChatPerson = (person) => {
@@ -132,8 +135,8 @@ class App extends Component {
 		this.setState({ users });
 		this.props.chooseChatPerson(person);
 		person.pro ? 
-			route(routes.PRO_FOR_COMP + person.id + '/#chat') 
-			: route(routes.CLIENT_FOR_COMP + person.id + '/#chat');
+			route(routes.PRO_FOR_COMP + person.id + '#chat') 
+			: route(routes.CLIENT_FOR_COMP + person.id + '#chat');
 	}
 
 
@@ -258,10 +261,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	openComModal,
-
+	closeComModal,
 	changeUnreadNum,
 	chooseChatPerson,
 	clearChats,
+	getCallInfo,
+	caleeIsBusy,
+	processCall,
+	speaking,
 }, dispatch);
 
 export default connect(

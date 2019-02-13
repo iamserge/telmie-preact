@@ -54,6 +54,7 @@ class Client extends Component {
 								connection={this.props.connection}
 								chat={this.props.chats[generateJID(this.state.client.id, true)]}
 								userAuth = { this.props.userData.userAuth }
+								comModal={ this.props.communicateModal}
                                 openComModal = { this.props.openComModal } />
 				)}
 
@@ -67,6 +68,7 @@ class Client extends Component {
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
+	communicateModal: state.communicateModal,
 
 });
 

@@ -27,6 +27,7 @@ export const communicateModal = (state = {...initialState}, action) => {
                 isBusy: false,
 				isCalling: false,
 				isSpeaking: false,
+				isPickUp: false,
 			 };
 		case actionTypes.OPEN_COMMUNICATE_MODAL:
 			return { 
@@ -35,6 +36,10 @@ export const communicateModal = (state = {...initialState}, action) => {
 				person: action.person,
 				isOutcoming: action.isOutcoming,
 				isIncoming: action.isIncoming,
+				isBusy: false,
+				isCalling: false,
+				isSpeaking: false,
+				isPickUp: false,
             };
         case actionTypes.CHANGE_COMMUNICATION_TYPE: 
             return {
@@ -45,6 +50,7 @@ export const communicateModal = (state = {...initialState}, action) => {
                 isBusy: false,
 				isCalling: false,
 				isSpeaking: false,
+				isPickUp: false,
                 callInfo: {},
             }
         case actionTypes.PROCESSING_CALL:
@@ -68,6 +74,7 @@ export const communicateModal = (state = {...initialState}, action) => {
 				isOutcoming: false,
 				isIncoming: false,
 				isBusy: false,
+				isPickUp: false,
 			}
 		case actionTypes.CREATE_CALL:
 			return { 
@@ -79,6 +86,8 @@ export const communicateModal = (state = {...initialState}, action) => {
 					info: '',
 					error: false,
 				},
+				isBusy: false,
+				isPickUp: false,
 			};
 		case actionTypes.CREATE_CALL_ERROR:
 			return { 
@@ -125,8 +134,21 @@ export const communicateModal = (state = {...initialState}, action) => {
         case actionTypes.CALEE_IS_BUSY:
             return {
                 ...state,
-                isBusy: true,
-            }
+				isBusy: true,
+				callInfo: {},
+				type: null,
+				person: {},
+				isOutcoming: false,
+				isIncoming: false,
+				isCalling: false,
+				isSpeaking: false,
+				isPickUp: false,
+			}
+		case actionTypes.PICK_UP_CALL:
+			return {
+				...state,
+				isPickUp: true,
+			}
 		default:
 			return state;
 	}

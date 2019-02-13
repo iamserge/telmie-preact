@@ -48,65 +48,53 @@ export const processCallMsg = (body) => {
 	return {type, callId, avtime, bodyInner};
 }
 
-export const reqForbidden = (callId, _from, msgGenSend = ()=>{}, props) => {
-	const { user } = props;
-	const address = {
-		from: generateJID(user.id),
-		to: _from,
-	};
-	msgGenSend(address, 'vcxep', 'vcxep', {type: 'forbidden', callid: callId});
+export const reqForbidden = (callId, from, to, msgGenSend = ()=>{}) => {
+	msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'forbidden', callid: callId});
 }
 
-export const reqGranted = (msgGenSend = ()=>{}, props) => {
+/*export const reqGranted = (msgGenSend = ()=>{}, props) => {
 	const address = prepareFromTo(props);
 	const { callInfo = {} } = props.comModal;
 	msgGenSend(address, 'vcxep', 'vcxep', {type: 'granted', callid: callInfo.callId});
-}
+}*/
 
-export const sendOfferData = (msgGenSend = ()=>{}, options = {}, props) => {
-	const address = prepareFromTo(props);
-	const { callInfo = {} } = props.comModal;
+export const sendOfferData = (from, to, msgGenSend = ()=>{}, options = {}, cInfo) => {
 
 	const webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(err){
 		err && console.log(err); // & setCallState(NO_CALL);
 
 		this.generateOffer(function(err, offerSdp) {
 			err && console.log(err); // & setCallState(NO_CALL);
-			msgGenSend(address, 'vcxep', 'vcxep', {type: 'offerData', callid: callInfo.callId}, offerSdp);
+			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'offerData', callid: cInfo.callId}, offerSdp);
 		});
 	});
 
 	return webRtcPeer;
 }
 
-export const sendAnswerData = (sdpOffer, msgGenSend = ()=>{}, options = {}, props) => {
-	const address = prepareFromTo(props);
-	const { callInfo = {} } = props.comModal;
-
+export const sendAnswerData = (from, to, sdpOffer, msgGenSend = ()=>{}, options = {}, cInfo) => {
 	const webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(err){
 		err && console.log(err); // & setCallState(NO_CALL);
 	
 		this.processOffer(sdpOffer,(err, sdpAnswer) => {
 			err && console.log(err); // & setCallState(NO_CALL);
-			msgGenSend(address, 'vcxep', 'vcxep', {type: 'answerData', callid: callInfo.callId}, sdpAnswer);
-			msgGenSend(address, 'vcxep', 'vcxep', {type: 'accept', callid: callInfo.callId});
-			msgGenSend(address, 'vcxep', 'vcxep', {type: 'speaking', callid: callInfo.callId});
+			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'answerData', callid: cInfo.callId}, sdpAnswer);
+			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'accept', callid: cInfo.callId});
+			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'speaking', callid: cInfo.callId});
 		})
 	});
 
 	return webRtcPeer;
 }
 
-export const onIceCandidate = (msgGenSend = ()=>{}, props) => (candidate) => candidateData(candidate, msgGenSend = ()=>{}, props);
-function candidateData(candidate, msgGenSend = ()=>{}, props){
-	const address = prepareFromTo(props);
-	const { callInfo = {} } = props.comModal;
+export const onIceCandidate = (from, to, cInfo, msgGenSend = ()=>{}) => (candidate) => candidateData(from, to, cInfo, candidate, msgGenSend);
+function candidateData(from, to, cInfo, candidate, msgGenSend){
 	const data = {
 		sdp: candidate.candidate,
 		sdpMid: candidate.sdpMid,
 		index: candidate.sdpMLineIndex,
 	}
-	msgGenSend(address, 'vcxep', 'vcxep', {type: 'candidateData', callid: callInfo.callId}, JSON.stringify(data));
+	msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'candidateData', callid: cInfo.callId}, JSON.stringify(data));
 }
 
 export const videoCapture = (isDisabled, msgGenSend = ()=>{}, props) => {

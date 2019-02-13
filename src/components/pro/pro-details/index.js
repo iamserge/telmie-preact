@@ -8,13 +8,25 @@ import YouTube from 'react-youtube';
 import CallHistory from "./call-history-tab";
 import { getCallHistory } from "../../../api/users";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Element, scroller, Link as ScrollLink } from 'react-scroll'
+import { Element, scroller } from 'react-scroll'
+import { consts } from '../../../utils/consts'
+
 import "react-tabs/style/react-tabs.css";
 
 import Message from '../../communication/chat/Message'
 import SendForm from '../../communication/chat/SendForm'
+import CallTab from './call-tab'
 import chatStyle from './chatStyles.scss';
 
+const getTabs = (isPro) => isPro ? 
+	[consts.USER_INFO_TAB, consts.CALL_TAB, consts.CALL_HISTORY_TAB] 
+	: [consts.CALL_TAB, consts.CALL_HISTORY_TAB];
+
+const getDefaultTabIndex = (props) => {
+	return (window.location.hash.indexOf('call') + 1) ? 
+		(getTabs(props.isPro).indexOf(consts.CALL_TAB) || 0)
+		: 0;
+}
 
 export default class Pro extends Component {
 	constructor(props){
@@ -24,15 +36,25 @@ export default class Pro extends Component {
 			callHistory: [],
 			total: 0,
 			currentPage: 1,
+
+			callSec: 0,
+
+			tabIndex: getDefaultTabIndex(props),
 		}
 
-		this.tabs = props.isPro ? 
-			['User Info', 'Chat with Pro', 'Call history'] : ['Chat with Pro', 'Call history'];
+		this.tabs = getTabs(props.isPro);
 		this.bottomSection = null;
 	}
 
 	componentDidMount(){
 		this.scrollToHashElement();
+	}
+	componentWillReceiveProps(nextProps){
+		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
+			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
+			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
+			&& nextProps.comModal.callInfo.callId)
+				&& this.makeCall(nextProps);
 	}
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);
@@ -48,6 +70,16 @@ export default class Pro extends Component {
 					this.bottomSection !== null && (
 						scroller.scrollTo('chatElement', {
 							spy: true, smooth: true, duration: 500, offset: 0,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100)),
+			(hash.indexOf('call') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.bottomSection !== null && (
+						scroller.scrollTo('callElement', {
+							spy: true, smooth: true, duration: 500, offset: -100,
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null
@@ -83,8 +115,10 @@ export default class Pro extends Component {
 	}
 
 	onTabSelect = (index, prevIndex) => {
-		(index === this.tabs.length - 1) && this.getCallHistory();
-		(prevIndex === this.tabs.length - 1) && this.setState({ callHistory: [], total: 0, });
+		(this.tabs[index] === consts.CALL_HISTORY_TAB) && this.getCallHistory();
+		(this.tabs[prevIndex] === consts.CALL_HISTORY_TAB) && this.setState({ callHistory: [], total: 0, });
+
+		this.setState({ tabIndex: index });
 	}
 
 	nextPage= () => {
@@ -104,6 +138,21 @@ export default class Pro extends Component {
 		console.log(msg);
 		msg && this.props.connection.sendMessage(msg, this.props.person.id);
 	}
+
+	openCall = (videoOutput, videoInput) => {
+		console.log('person',this.props.person);
+		this.props.createCall(this.props.person.id);
+		this.props.openComModal(consts.CALL, this.props.person, true);
+
+		this.props.connection.setVideoElements(videoOutput, videoInput);
+	};
+
+	rejectCall = (isBusy = false) => {
+		this.props.connection.rejectCall(isBusy);
+	}
+
+	makeCall = (props) => /*this.state.isConnected ? */
+		props.connection.callRequest(props.person.id, props.comModal.callInfo) /*: this.setState({ isDelayingCall: true })*/;
 	
 	render({person, isPro, isConnected, chat = []}) {
 		const { pro = {} } = person;
@@ -121,7 +170,11 @@ export default class Pro extends Component {
 				
 			</div>
 			<div class={style.bottomSection} ref={el => this.bottomSection = el}>
-				<Tabs className={`${style.tabs} ${this.state.loading && 'loading-tabs'}`} onSelect={this.onTabSelect}>
+				<Element name="callElement"/>
+				<Tabs className={`${style.tabs} ${this.state.loading && 'loading-tabs'}`}
+					selectedIndex={this.state.tabIndex}
+					onSelect={this.onTabSelect}>
+					
 					<TabList>
 						{ this.tabs.map(el => <Tab>{el}</Tab>) }
 					</TabList>
@@ -136,9 +189,15 @@ export default class Pro extends Component {
 						)}
 					</TabPanel> }
 
-					<TabPanel>
-						<h2>Chat with Pro</h2>
-						
+					<TabPanel className={chatStyle.callArea}>
+						<CallTab isPro={isPro}
+							person={person}
+							isConnected={isConnected}
+							connection={this.props.connection}
+							seconds={this.state.callSec}
+							comModal={this.props.comModal}
+							rejectCall={this.rejectCall}
+							openCall={this.openCall}/>
 					</TabPanel>
 
 					<TabPanel>

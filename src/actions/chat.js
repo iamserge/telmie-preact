@@ -75,4 +75,8 @@ export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({
 
 export const clearChats = () => dispatch => dispatch({
 	type: actionTypes.CLEAR_CHATS,
+});
+
+export const pickUp = () => dispatch => dispatch({
+	type: actionTypes.PICK_UP_CALL,
 })

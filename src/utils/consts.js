@@ -2,6 +2,10 @@ export const consts = {
   PAGE_SIZE: 20,
   CHAT: 'CHAT',
   CALL: 'CALL',
+
+  USER_INFO_TAB: 'User Info',
+  CALL_TAB: 'Call with user',
+  CALL_HISTORY_TAB: 'Call history',
 };
 
 export const EN = 'en-us',
