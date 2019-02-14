@@ -134,7 +134,7 @@ class App extends Component {
 		delete users[person.id];
 		this.setState({ users });
 		this.props.chooseChatPerson(person);
-		person.pro ? 
+		person.isUserPro ? 
 			route(routes.PRO_FOR_COMP + person.id + '#chat') 
 			: route(routes.CLIENT_FOR_COMP + person.id + '#chat');
 	}
@@ -217,8 +217,7 @@ class App extends Component {
 		} = this.props;
 		const { unread : newChats } = communicateModal;
 
-		console.log('CONNECTION', { ...this.connection.connection });
-		console.log('STATE', { ...this.state });
+		console.log('APP STATE', { ...this.state });
 
 		return (
 			<div id="app">

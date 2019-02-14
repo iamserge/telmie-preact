@@ -48,8 +48,9 @@ export const processChatMsg = async (thread, _userId, _userAuth, changeUnreadNum
 		isPro = false
 	);
 	
-	changeUnreadNum(generateJID(fromId, true));
-	return await getUserDetails(fromId, _userAuth, isPro);
+	changeUnreadNum(generateJID(fromId, true)); 
+	const _usr = await getUserDetails(fromId, _userAuth, isPro) || {};
+	return { ..._usr, isUserPro: isPro };
 }
 
 export const processCallMsg = (body) => {
