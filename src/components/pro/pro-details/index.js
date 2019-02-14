@@ -66,7 +66,6 @@ export default class Pro extends Component {
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);
 		this.scrollInterval = null;
-		this.props.clearChat(this.props.person.id);
 	}
 
 	scrollToHashElement = () => {

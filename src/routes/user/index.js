@@ -49,6 +49,7 @@ class User extends Component {
 	componentWillUnmount(){
 		clearTimeout(this.clearMsgTimeout);
 		this.clearMsgTimeout = null;
+		this.props.clearChat(this.props.userId);
 	}
     
     clearMsg = () => this.setState({ shortlistMessage: ''});
@@ -106,7 +107,6 @@ class User extends Component {
                         connection={ this.props.connection }
                         isConnected={ isConnected }
                         received={ received }
-                        clearChat={ clearChat }
                         userData = { userData } 
                         comModal={ communicateModal }
                         openComModal = { openComModal }
