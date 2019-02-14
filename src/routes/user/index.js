@@ -10,6 +10,7 @@ import { checkIfLoggedIn } from '../../utils';
 import { routes } from '../../components/app'
 import { changeLocale, changeLocaleLangs } from '../../actions/user';
 import { openComModal, createCall } from '../../actions/chat';
+import { consts } from "../../utils/consts";
 
 import { generateJID } from "../../utils";
 
@@ -19,7 +20,10 @@ class User extends Component {
 		this.state = {
 			user: {},
 			loading: false,
-			shortlisted: false
+			shortlisted: false,
+
+			offset: 0,
+			allHistoryReceived: false,
         }
         this.clearMsgTimeout = null;
 	}
@@ -37,9 +41,13 @@ class User extends Component {
 		});
 	}
 	componentWillReceiveProps(nextProps){
+
+		((nextProps.received < consts.MES_HISTORY_SIZE) && (nextProps.received !== -1)) 
+			&& this.setState({ allHistoryReceived: true });
+
         (this.props.userId !== nextProps.userId) 
             && (
-                this.setState({ user: {}, loading: true }),
+                this.setState({ user: {}, loading: true, allHistoryReceived: false, offset: 0 }),
                 nextProps.clearChat(this.props.userId),
                 getUserDetails(nextProps.userId, nextProps.userData.userAuth, nextProps.isPro).then((data) => {
                     this.setState({ user: data, loading: false, isShortlisted: nextProps.isPro ? data.inShortlistForCurrent : false });
@@ -76,13 +84,14 @@ class User extends Component {
 	}
 
     createCall = (cid, isPro = false) => this.props.isPro 
-        && this.props.createCall(cid, isPro, this.props.userData.userAuth);
+		&& this.props.createCall(cid, isPro, this.props.userData.userAuth);
+		
+	changeOffset = () => this.setState( prev => ({ offset: prev.offset + consts.MES_HISTORY_SIZE }));
 
 	render() {
 
         const { 
-            isPro, received, clearChat, chats, isConnected, userData, 
-            communicateModal, openComModal
+            isPro, chats, isConnected, userData, communicateModal, openComModal
         } = this.props;
 
         const proProps = isPro ? {
@@ -102,15 +111,17 @@ class User extends Component {
 				{(Object.keys(this.state.user).length === 0 || this.state.loading) ? (
 					<Spinner />
 				) : (
-                    <ProDetails isPro = { isPro }
+					<ProDetails isPro = { isPro }
                         person = { this.state.user }
                         connection={ this.props.connection }
                         isConnected={ isConnected }
-                        received={ received }
                         userData = { userData } 
                         comModal={ communicateModal }
                         openComModal = { openComModal }
-                        chat={ chats[generateJID(this.state.user.id, true)] || [] }
+						chat={ chats[generateJID(this.state.user.id, true)] || [] }
+						offset={ this.state.offset }
+						changeOffset = { this.changeOffset }
+						allHistoryReceived = { this.state.allHistoryReceived }
                         {...proProps}
                         />
 				)}

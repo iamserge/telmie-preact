@@ -39,9 +39,6 @@ export default class Pro extends Component {
 
 			callSec: 0,
 
-			offset: 0,
-			allHistoryReceived: false,
-
 			tabIndex: getDefaultTabIndex(props),
 		}
 
@@ -53,9 +50,6 @@ export default class Pro extends Component {
 		this.scrollToHashElement();
 	}
 	componentWillReceiveProps(nextProps){
-
-		((nextProps.received < consts.MES_HISTORY_SIZE) && (nextProps.received !== -1)) 
-			&& this.setState({ allHistoryReceived: true });
 
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
@@ -160,9 +154,9 @@ export default class Pro extends Component {
 	}
 
 	getMessages = () => {
-		!this.props.isPro ? this.props.connection.getChatMessages(this.props.person.id, this.props.userData.id, this.state.offset) 
-			: this.props.connection.getChatMessages(this.props.userData.id, this.props.person.id, this.state.offset);
-		this.setState( prev => ({ offset: prev.offset + consts.MES_HISTORY_SIZE }));
+		!this.props.isPro ? this.props.connection.getChatMessages(this.props.person.id, this.props.userData.id, this.props.offset) 
+			: this.props.connection.getChatMessages(this.props.userData.id, this.props.person.id, this.props.offset);
+		this.props.changeOffset();
 	}
 
 	makeCall = (props) => /*this.state.isConnected ? */
@@ -239,7 +233,7 @@ export default class Pro extends Component {
 						</div>}
 						<div class={chatStyle.chatArea}>
 							<ul class={chatStyle.messages}>
-						{ !this.state.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
+						{ !this.props.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
 								{chat.map((el) => <Message {...el} isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
 									key={el.id || el.timestamp}/>)}
 							</ul>
