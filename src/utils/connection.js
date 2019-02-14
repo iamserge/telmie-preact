@@ -6,6 +6,7 @@ import { host } from "../api";
 import {
     processServerMsg, processChatMsg, processCallMsg,
     reqForbidden, sendOfferData, sendAnswerData, onIceCandidate,
+    encodeXMPPmessage,
 } from './con-helpers'
 import { getCallDetails } from "../api/pros";
 
@@ -100,10 +101,7 @@ class Connection{
                 let arr = [];
                 for (let i=0, len = elems[0].childNodes.length; i < len; i++){
                     let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
-                    text = text.replace(/&quot;/g, '\"');
-                    text = text.replace(/&amp;/g, "\&");
-                    text = text.replace(/&apos;/g, "\'");
-                    const message = JSON.parse(text);
+                    const message = encodeXMPPmessage(text);
                     arr.unshift(message)
                 }
 
@@ -126,10 +124,7 @@ class Connection{
                 this.props.changeUnreadNum
             );
             let body_text = Strophe.Strophe.getText(elems[0]);
-            body_text = body_text.replace(/&quot;/g, '\"');
-            body_text = body_text.replace(/&amp;/g, "\&");
-            body_text = body_text.replace(/&apos;/g, "\'");
-            const message = JSON.parse(body_text);
+            const message = encodeXMPPmessage(body_text);
             this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
             userInfo && this.props.setUsr(userInfo);
         }
@@ -285,15 +280,6 @@ class Connection{
         m.up().c("markable", {xmlns: "urn:xmpp:chat-markers:0"});
         this.connection.send(m);
     }
-    
-    /*
-    {
-        id: uuid,
-        text:
-        senderName
-        timestamp
-    }
-    */
 
     getChatMessages = (clientId, proId, offset = 0, order = 'DESC') => {  
 

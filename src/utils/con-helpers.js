@@ -71,6 +71,14 @@ export const processCallMsg = (body) => {
 	return {type, callId, avtime, bodyInner};
 }
 
+export const encodeXMPPmessage = (msg) => {
+	let text = msg.replace(/&quot;/g, '\"');
+    text = text.replace(/&amp;/g, "\&");
+	text = text.replace(/&apos;/g, "\'");
+	const message = JSON.parse(text);
+	return message;
+}
+
 export const reqForbidden = (callId, from, to, msgGenSend = ()=>{}) => {
 	msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'forbidden', callid: callId});
 }
