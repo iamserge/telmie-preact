@@ -2,15 +2,17 @@ import { getUserDetails } from "../api/pros";
 import { generateJID } from "./index";
 import kUtils from "kurento-utils";
 
-export const setMessages = (id, text, isMy, prevState) => {
+const IS_CLIENT = 0, IS_PRO = 1;
+
+export const setMessages = (id, msg, isMy, prevState) => {
 	const _id = id.split('/')[0];
 	return ({
     chats: {
 		...prevState.chats, 
 		[_id]: prevState.chats[_id] ? [ 
 			...prevState.chats[_id], 
-			{ text, isMy } 
-		] : [ { text, isMy } ],
+			{ ...msg, isMy } 
+		] : [ { ...msg, isMy } ],
 	}
 })};
 
@@ -21,23 +23,33 @@ export const setUser = (user, prevState) => ({
 	}
 });
 
-export const getUserInfo = async (id, userAuth, isPro = false) => {
-	const _id = id.split('@')[0];
-	return await getUserDetails(_id, userAuth, !isPro);
-}
-
 export const processServerMsg = (msg) => {
 	const to = msg.getAttribute('to'),
 		from = msg.getAttribute('from'),
 		type = msg.getAttribute('type'),
+		id = msg.getAttribute('id'),
 		elems = msg.getElementsByTagName('body'),
+		thread = msg.getElementsByTagName('thread'),
 		vcxepElems = msg.getElementsByTagName('vcxep');
-	return {to, from, type, elems, vcxepElems};
+	return {to, from, type, id, elems, thread, vcxepElems};
 }
 
-export const processChatMsg = async (from, _userAuth, isPro, changeUnreadNum) => {
-    changeUnreadNum(from.split('/')[0]);
-    return await getUserInfo(from, _userAuth, isPro);
+export const processChatMsg = async (thread, _userId, _userAuth, changeUnreadNum) => {
+	let fromId, isPro;
+	
+	const participants = thread ? thread.split('-') : [];
+	const userThreadPosition = participants.indexOf(_userId.toString());
+
+	userThreadPosition === IS_CLIENT ? (
+		fromId = participants[IS_PRO],
+		isPro = true
+	) : (
+		fromId = participants[IS_CLIENT],
+		isPro = false
+	);
+	
+	changeUnreadNum(generateJID(fromId, true));
+	return await getUserDetails(fromId, _userAuth, isPro);
 }
 
 export const processCallMsg = (body) => {

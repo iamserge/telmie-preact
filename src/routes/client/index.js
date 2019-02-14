@@ -53,7 +53,7 @@ class Client extends Component {
 								isConnected={this.props.isConnected}
 								connection={this.props.connection}
 								chat={this.props.chats[generateJID(this.state.client.id, true)]}
-								userAuth = { this.props.userData.userAuth }
+								userData = { this.props.userData }
 								comModal={ this.props.communicateModal}
                                 openComModal = { this.props.openComModal } />
 				)}

@@ -109,7 +109,7 @@ class App extends Component {
 		});
 	}
 
-	setMsg = (id, text, isMy = false) => this.setState(prev => setMessages(id, text, isMy, prev));
+	setMsg = (id, msg, isMy = false) => this.setState(prev => setMessages(id, msg, isMy, prev));
 	setUsr = (user) => this.setState(prev => setUser(user, prev));
 
 	componentDidMount(){

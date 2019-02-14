@@ -1,4 +1,5 @@
 import Strophe from 'npm-strophe'
+import uuidv1 from 'uuid/v1'
 import { getCookie, generateJID } from "./index";
 
 import {
@@ -31,8 +32,7 @@ class Connection{
         const {userData : user = {}} = props;
         if (Object.keys(user).length === 0) return;
     
-        const { userAuth, id, pro } = user;
-        this._isPro = !!pro;
+        const { userAuth, id } = user;
         this._curUserId = id;
         this._curUserJID = generateJID(this._curUserId);
         this._userAuth = userAuth || getCookie('USER_AUTH');
@@ -49,7 +49,6 @@ class Connection{
         this._userAuth = "";
         this._curUserId = 0;
         this._curUserJID = '';
-        this._isPro = false;
         this._calleeId = '';
         this._calleeJID = '';
         this.connection.disconnect();
@@ -84,12 +83,23 @@ class Connection{
     }
 
     onMessage = async (msg) => {
-        const { to, from, type, elems, vcxepElems } = processServerMsg(msg);
+        const { 
+            to, from, type, id : messId, elems, thread, vcxepElems 
+        } = processServerMsg(msg);
     
         if (type == "chat" && elems.length > 0) {
-            const userInfo = await processChatMsg(from, this._userAuth, this._isPro, this.props.changeUnreadNum);
-            console.log('new msg from: ', userInfo);
-            this.props.setMsg(from, Strophe.Strophe.getText(elems[0]));
+            const userInfo = await processChatMsg(
+                Strophe.Strophe.getText(thread[0]),
+                this._curUserId,
+                this._userAuth, 
+                this.props.changeUnreadNum
+            );
+            let body_text = Strophe.Strophe.getText(elems[0]);
+            body_text = body_text.replace(/&quot;/g, '\"');
+            body_text = body_text.replace(/&amp;/g, "\&");
+            body_text = body_text.replace(/&apos;/g, "\'");
+            const message = JSON.parse(body_text);
+            this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
             userInfo && this.props.setUsr(userInfo);
         }
     
@@ -224,12 +234,35 @@ class Connection{
 		this.connection.send(m);
     }
     
-    sendMessage = (msg, userID) => {
+    sendMessage = (text, userID, senderName, thread) => {
         console.log(' - [sendMessage] - ');
+        const id = uuidv1();
+        const timestamp = new Date().getTime() / 1000;
+        const msg = {
+            text,
+            senderName,
+            timestamp,
+        }
         const to = generateJID(userID, true);
-		this.props.setMsg(to, msg, true);
-		this.msgGenSend(this._curUserJID, to, 'chat', 'body', {}, msg);
-	}
+		this.props.setMsg(to, { ...msg, id }, true);        
+
+        let m = Strophe
+            .$msg({ to, type: 'chat', id })
+            .c('body')
+            .t(JSON.stringify(msg));
+        m.up().c("thread").t(thread);
+        m.up().c("markable", {xmlns: "urn:xmpp:chat-markers:0"});
+        this.connection.send(m);
+    }
+    
+    /*
+    {
+        id: uuid,
+        text:
+        senderName
+        timestamp
+    }
+    */
 
     setVideoElements = (videoOutput, videoInput) => {
         console.log("[setVideoElements]", videoOutput, videoInput);

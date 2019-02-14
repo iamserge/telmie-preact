@@ -90,9 +90,9 @@ export default class Pro extends Component {
 
 	getCallHistory = (page) => {
 		this.setState({ loading: true, callHistory: [], total: 0 });
-		const {person, isPro, userAuth}  = this.props;
+		const {person, isPro, userData ={} }  = this.props;
 
-		getCallHistory(person.id, !isPro, page, userAuth).then((data) => {
+		getCallHistory(person.id, !isPro, page, userData.userAuth).then((data) => {
 			const { error, message } = data;
 
 			error ? this.setState({
@@ -136,7 +136,10 @@ export default class Pro extends Component {
 
 	onSend = (msg) =>{
 		console.log(msg);
-		msg && this.props.connection.sendMessage(msg, this.props.person.id);
+		const userId = this.props.person.id;
+		const {name, lastName, id: myId} = this.props.userData || {};
+		const thread = this.props.isPro ? `${myId}-${userId}` : `${userId}-${myId}`;
+		msg && this.props.connection.sendMessage(msg, userId, `${name} ${lastName}`, thread);
 	}
 
 	openCall = (videoOutput, videoInput) => {
@@ -224,7 +227,7 @@ export default class Pro extends Component {
 						</div>}
 						<div class={chatStyle.chatArea}>
 							<ul class={chatStyle.messages}>
-								{chat.map((el, i) => <Message {...el} key={i}/>)}
+								{chat.map((el) => <Message {...el} key={el.id}/>)}
 							</ul>
 						</div>
 						<SendForm onSend={this.onSend} isConnected={isConnected}/>
