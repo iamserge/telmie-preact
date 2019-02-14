@@ -50,6 +50,7 @@ class Client extends Component {
 				) : (
 					<ProDetails person = { this.state.client } 
 								isPro = { false }
+								received={this.props.received}
 								isConnected={this.props.isConnected}
 								connection={this.props.connection}
 								chat={this.props.chats[generateJID(this.state.client.id, true)]}

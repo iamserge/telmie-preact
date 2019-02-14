@@ -1,8 +1,7 @@
 import { getUserDetails } from "../api/pros";
 import { generateJID } from "./index";
+import { consts } from "../utils/consts";
 import kUtils from "kurento-utils";
-
-const IS_CLIENT = 0, IS_PRO = 1;
 
 export const setMessages = (id, msg, isMy, prevState) => {
 	const _id = id.split('/')[0];
@@ -15,7 +14,18 @@ export const setMessages = (id, msg, isMy, prevState) => {
 		] : [ { ...msg, isMy } ],
 	}
 })};
-
+export const setMessageHistory = (id, msgArr, count, prevState) => {
+	const _id = id.split('/')[0];
+	return ({
+    chats: {
+		...prevState.chats, 
+		[_id]: prevState.chats[_id] ? [
+			...msgArr,
+			...prevState.chats[_id]
+		] : [ ...msgArr ],
+	},
+	received: count,
+})};
 export const setUser = (user, prevState) => ({
     users: {
 		...prevState.users, 
@@ -40,11 +50,11 @@ export const processChatMsg = async (thread, _userId, _userAuth, changeUnreadNum
 	const participants = thread ? thread.split('-') : [];
 	const userThreadPosition = participants.indexOf(_userId.toString());
 
-	userThreadPosition === IS_CLIENT ? (
-		fromId = participants[IS_PRO],
+	userThreadPosition === consts.THREAD.IS_CLIENT ? (
+		fromId = participants[consts.THREAD.IS_PRO],
 		isPro = true
 	) : (
-		fromId = participants[IS_CLIENT],
+		fromId = participants[consts.THREAD.IS_CLIENT],
 		isPro = false
 	);
 	

@@ -78,6 +78,7 @@ class Pro extends Component {
 								shortlistLoading={this.state.shortlistLoading}
 								shortlistMessage={this.state.shortlistMessage}
 								person = { this.state.pro } 
+								received={this.props.received}
 								isPro = { true }
 								isConnected={this.props.isConnected}
 								connection={this.props.connection}

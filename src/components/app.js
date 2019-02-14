@@ -40,7 +40,7 @@ import {
 
 import Strophe from 'npm-strophe'
 import Connection from '../utils/connection'
-import { setMessages, setUser } from '../utils/con-helpers'
+import { setMessages, setUser, setMessageHistory } from '../utils/con-helpers'
 
 import 'animate.css'
 
@@ -89,12 +89,14 @@ class App extends Component {
 			currentUrl: "",
 
 			chats: {},
+			received: -1,
 			users: {},
 			isConnected: false,
 		}
 
 		this.connection = new Connection({
 			setMsg: this.setMsg,
+			setMsgHistory: this.setMsgHistory,
 			setUsr: this.setUsr,
 			changeUnreadNum: this.props.changeUnreadNum,
 			changeConnectedState: (isConnected) => this.setState({ isConnected }),
@@ -110,6 +112,7 @@ class App extends Component {
 	}
 
 	setMsg = (id, msg, isMy = false) => this.setState(prev => setMessages(id, msg, isMy, prev));
+	setMsgHistory = (id, msgArr, count) => this.setState(prev => setMessageHistory(id, msgArr, count, prev));
 	setUsr = (user) => this.setState(prev => setUser(user, prev));
 
 	componentDidMount(){
@@ -168,7 +171,7 @@ class App extends Component {
 	renderProRoutes = (chats, isConnected) => [
 		...this.renderUserRoutes(chats, isConnected),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
-		<Client path={routes.CLIENT} chats={chats} isConnected={isConnected} connection={this.connection}/>,
+		<Client path={routes.CLIENT} chats={chats} isConnected={isConnected} connection={this.connection} received={this.state.received}/>,
 	];
 
 	renderUserRoutes = (chats, isConnected) => [
@@ -176,7 +179,7 @@ class App extends Component {
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
-		<Pro path={routes.PRO} chats={chats} isConnected={isConnected} connection={this.connection}/>,
+		<Pro path={routes.PRO} chats={chats} isConnected={isConnected} connection={this.connection} received={this.state.received}/>,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>

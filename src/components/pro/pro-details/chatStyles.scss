@@ -155,6 +155,17 @@
             height: 100%;
         }
         .messages{
+            .getMoreWrapper{
+              text-align: center;
+              margin-bottom: 15px;
+              span{
+                border-radius: 15px;
+                background-color: $red;
+                color: white;
+                padding: 3px 10px;
+                cursor: pointer;
+              }
+            }
             width: 100%;
         }
     }

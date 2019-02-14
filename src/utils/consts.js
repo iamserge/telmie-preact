@@ -1,11 +1,17 @@
 export const consts = {
   PAGE_SIZE: 20,
+  MES_HISTORY_SIZE: 15,
   CHAT: 'CHAT',
   CALL: 'CALL',
 
   USER_INFO_TAB: 'User Info',
   CALL_TAB: 'Call with user',
   CALL_HISTORY_TAB: 'Call history',
+
+  THREAD: {
+    IS_CLIENT: 0,
+    IS_PRO: 1,
+  }
 };
 
 export const EN = 'en-us',

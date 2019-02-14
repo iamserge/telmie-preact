@@ -39,6 +39,9 @@ export default class Pro extends Component {
 
 			callSec: 0,
 
+			offset: 0,
+			allHistoryReceived: false,
+
 			tabIndex: getDefaultTabIndex(props),
 		}
 
@@ -50,6 +53,9 @@ export default class Pro extends Component {
 		this.scrollToHashElement();
 	}
 	componentWillReceiveProps(nextProps){
+		((nextProps.received < consts.MES_HISTORY_SIZE) && (nextProps.received !== -1)) 
+			&& this.setState({ allHistoryReceived: true });
+
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
 			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
@@ -135,7 +141,6 @@ export default class Pro extends Component {
 	}
 
 	onSend = (msg) =>{
-		console.log(msg);
 		const userId = this.props.person.id;
 		const {name, lastName, id: myId} = this.props.userData || {};
 		const thread = this.props.isPro ? `${myId}-${userId}` : `${userId}-${myId}`;
@@ -154,10 +159,16 @@ export default class Pro extends Component {
 		this.props.connection.rejectCall(isBusy);
 	}
 
+	getMessages = () => {
+		!this.props.isPro ? this.props.connection.getChatMessages(this.props.person.id, this.props.userData.id, this.state.offset) 
+			: this.props.connection.getChatMessages(this.props.userData.id, this.props.person.id, this.state.offset);
+		this.setState( prev => ({ offset: prev.offset + consts.MES_HISTORY_SIZE }));
+	}
+
 	makeCall = (props) => /*this.state.isConnected ? */
 		props.connection.callRequest(props.person.id, props.comModal.callInfo) /*: this.setState({ isDelayingCall: true })*/;
 	
-	render({person, isPro, isConnected, chat = []}) {
+	render({person, isPro, isConnected, chat = [], userData = {}}) {
 		const { pro = {} } = person;
 		const { callHistory, total, currentPage } = this.state;
 
@@ -227,7 +238,9 @@ export default class Pro extends Component {
 						</div>}
 						<div class={chatStyle.chatArea}>
 							<ul class={chatStyle.messages}>
-								{chat.map((el) => <Message {...el} key={el.id}/>)}
+						{ !this.state.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
+								{chat.map((el) => <Message {...el} isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
+									key={el.id || el.timestamp}/>)}
 							</ul>
 						</div>
 						<SendForm onSend={this.onSend} isConnected={isConnected}/>

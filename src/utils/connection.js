@@ -1,6 +1,7 @@
 import Strophe from 'npm-strophe'
 import uuidv1 from 'uuid/v1'
 import { getCookie, generateJID } from "./index";
+import { host } from "../api";
 
 import {
     processServerMsg, processChatMsg, processCallMsg,
@@ -61,6 +62,7 @@ class Connection{
         if (status == Strophe.Strophe.Status.CONNECTED) {
             console.log('Strophe is connected.');
             this.connection.addHandler(this.onMessage, null, 'message', null, null, null);
+            this.connection.addHandler(this.onIq, null, 'iq', null, null, null);
             this.sendPresence();
     
             /*this.state.isDelayingCall && this.callRequest(this.props.comModal.callInfo);
@@ -80,6 +82,35 @@ class Connection{
                 this.connection.reset();
             }
         }
+    }
+
+    onIq = (msg) => {
+        const type = msg.getAttribute('type'),
+            elems = msg.getElementsByTagName('history');
+        if (type == "result") {
+            if (elems.length > 0) {
+                let thread = Strophe.Strophe.getText(elems[0].childNodes[0].getElementsByTagName('thread')[0]);
+
+                const participants = thread ? thread.split('-') : [];
+                const userThreadPosition = participants.indexOf(this._curUserId.toString());
+
+                const fromId = userThreadPosition === consts.THREAD.IS_CLIENT ? 
+                    participants[consts.THREAD.IS_PRO] : participants[consts.THREAD.IS_CLIENT];
+
+                let arr = [];
+                for (let i=0, len = elems[0].childNodes.length; i < len; i++){
+                    let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
+                    text = text.replace(/&quot;/g, '\"');
+                    text = text.replace(/&amp;/g, "\&");
+                    text = text.replace(/&apos;/g, "\'");
+                    const message = JSON.parse(text);
+                    arr.unshift(message)
+                }
+
+                this.props.setMsgHistory(generateJID(fromId), arr, arr.length);
+            }
+        }
+        return true;
     }
 
     onMessage = async (msg) => {
@@ -263,6 +294,16 @@ class Connection{
         timestamp
     }
     */
+
+    getChatMessages = (clientId, proId, offset = 0, order = 'DESC') => {  
+
+        const m = Strophe
+            .$iq({ id: '#id', to: host, type: 'get' })
+            .c('history', {count: consts.MES_HISTORY_SIZE, offset, order})
+            .t(`${clientId}-${proId}`);
+
+        this.connection.send(m);
+    }
 
     setVideoElements = (videoOutput, videoInput) => {
         console.log("[setVideoElements]", videoOutput, videoInput);
