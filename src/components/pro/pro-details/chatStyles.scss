@@ -35,6 +35,8 @@
 .chatComponent{
     height: 550px;
     position: relative;
+    max-width: 600px;
+    margin: 0 auto;
 
     .connectingDiv{
         position: absolute;
@@ -145,7 +147,7 @@
     .chatArea{
         height: calc(100% - 50px);
         overflow-y: auto;
-        background-color: rgb(168, 168, 168);
+        background-color: rgba(168, 168, 168, .6);
         display: flex;
     
         ul{

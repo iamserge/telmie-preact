@@ -201,11 +201,6 @@
 	}
 }
 
-.tabs{
-	width: 80%;
-    overflow: auto;
-    margin: 0 auto;
-}
 .callsHeader{
 	display: flex;
 	border-bottom: 1px solid black;
@@ -219,9 +214,56 @@
 }
 
 .bottomSection{
-	
+	display: flex;
+	flex-wrap: wrap;
+
+	.tabs{
+		width: 60%;
+		overflow: auto;
+		margin: 0 auto;
+	}
+	.chatWrapper{
+		width: 35%;
+		text-align: center;
+		.chatHeader{
+			color: black;
+			font-size: 20px;
+			display: inline-block;
+			position: relative;
+			padding: 6px 12px;
+			margin-bottom: 10px;
+			
+			&:before, &:after{
+				content: '';
+				position: absolute;
+				height: 70%;
+				left: 0;
+				top: 15%;
+			}
+			&:before{
+				left: 0;
+				border-left: 2px solid gray;
+			}
+			&:after{
+				right: 0;
+				border-right: 2px solid gray;
+			}
+		}
+	}
 }
 
+@media (max-width: 1300px) {
+	.bottomSection{
+		.tabs{
+			margin-bottom: 20px;
+			width: 100%;
+			max-width: 900px;
+		}
+		.chatWrapper{
+			width: 100%;
+		}
+	}
+}
 @media (max-width: 960px) {
     .imageContainer {
         position: relative;

@@ -227,9 +227,10 @@ export default class Pro extends Component {
 									currentPage = { currentPage }/> }
 					</TabPanel>
 				</Tabs>
-				<div>
+				<div class={style.chatWrapper}>
+					<div class={style.chatHeader}>Chat with user</div>
+					<Element name="chatElement"/>
 					<div class={chatStyle.chatComponent}>
-						<Element name="chatElement"/>
 						{ !isConnected && <div class={chatStyle.connectingDiv}>
 							<div class={chatStyle.ldsDefault}>
 								<div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
