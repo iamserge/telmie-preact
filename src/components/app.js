@@ -5,8 +5,7 @@ import Header from './global/header';
 import Footer from './global/footer';
 import Home from '../routes/home';
 import Search from '../routes/search';
-import Pro from '../routes/pro';
-import Client from '../routes/client';
+import User from '../routes/user';
 import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
@@ -172,7 +171,8 @@ class App extends Component {
 	renderProRoutes = (chats, isConnected) => [
 		...this.renderUserRoutes(chats, isConnected),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
-		<Client path={routes.CLIENT} chats={chats} clearChat={this.clearChat} received={this.state.received}
+		<User path={routes.CLIENT} isPro={false}
+			chats={chats} clearChat={this.clearChat} received={this.state.received}
 			isConnected={isConnected} connection={this.connection} />,
 	];
 
@@ -181,7 +181,8 @@ class App extends Component {
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
-		<Pro path={routes.PRO} chats={chats} clearChat={this.clearChat} received={this.state.received}
+		<User path={routes.PRO} isPro={true}
+			chats={chats} clearChat={this.clearChat} received={this.state.received}
 			isConnected={isConnected} connection={this.connection} />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,

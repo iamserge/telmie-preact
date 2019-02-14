@@ -53,6 +53,7 @@ export default class Pro extends Component {
 		this.scrollToHashElement();
 	}
 	componentWillReceiveProps(nextProps){
+
 		((nextProps.received < consts.MES_HISTORY_SIZE) && (nextProps.received !== -1)) 
 			&& this.setState({ allHistoryReceived: true });
 
