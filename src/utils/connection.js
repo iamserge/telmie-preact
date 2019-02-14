@@ -117,15 +117,13 @@ class Connection{
         } = processServerMsg(msg);
     
         if (type == "chat" && elems.length > 0) {
-            const userInfo = await processChatMsg(
-                Strophe.Strophe.getText(thread[0]),
-                this._curUserId,
-                this._userAuth, 
-                this.props.changeUnreadNum
-            );
+            console.log('CHAT', messId);
+            const _thread = Strophe.Strophe.getText(thread[0]);
+            const userInfo = await processChatMsg(_thread, this._curUserId, this._userAuth, this.props.changeUnreadNum);
             let body_text = Strophe.Strophe.getText(elems[0]);
             const message = encodeXMPPmessage(body_text);
             this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
+            this.markChatMessage(this._curUserJID, messId, _thread, 'received');
             userInfo && this.props.setUsr(userInfo);
         }
     
@@ -289,6 +287,20 @@ class Connection{
             .t(`${clientId}-${proId}`);
 
         this.connection.send(m);
+    }
+
+    markChatMessage = (from, id, thread, markType) => {
+
+        let m = Strophe.$msg({ from, to: host, type: 'chat_status', id }).c("thread").t(thread);
+        m.up().c(markType, {xmlns: "urn:xmpp:chat-markers:0"});
+        this.connection.send(m);
+
+        /*
+            <message from='...' id='...' to='...' type='chat_status'>
+              <thread>...</thread>
+              <received xmlns='urn:xmpp:chat-markers:0' />
+            </message>
+        */
     }
 
     setVideoElements = (videoOutput, videoInput) => {
