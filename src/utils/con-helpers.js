@@ -32,6 +32,12 @@ export const setUser = (user, prevState) => ({
 		[user.id]: { ...user },
 	}
 });
+export const clearUserChat = (userId, prevState) => {
+	const userJID = generateJID(userId, true);
+	const chats = { ...prevState.chats };
+	delete chats[userJID];
+	return ({ chats: { ...chats }, received: -1 });
+};
 
 export const processServerMsg = (msg) => {
 	const to = msg.getAttribute('to'),

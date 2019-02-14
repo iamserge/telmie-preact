@@ -83,6 +83,7 @@ class Pro extends Component {
 								isConnected={this.props.isConnected}
 								connection={this.props.connection}
 								chat={this.props.chats[generateJID(this.state.pro.id, true)]}
+								clearChat={this.props.clearChat}
 								userData = { this.props.userData }
 								openComModal = { this.props.openComModal }
 								createCall = { this.createCall }

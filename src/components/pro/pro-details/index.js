@@ -65,6 +65,7 @@ export default class Pro extends Component {
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);
 		this.scrollInterval = null;
+		this.props.clearChat(this.props.person.id);
 	}
 
 	scrollToHashElement = () => {
@@ -148,7 +149,6 @@ export default class Pro extends Component {
 	}
 
 	openCall = (videoOutput, videoInput) => {
-		console.log('person',this.props.person);
 		this.props.createCall(this.props.person.id);
 		this.props.openComModal(consts.CALL, this.props.person, true);
 

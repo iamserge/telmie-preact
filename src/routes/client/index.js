@@ -54,6 +54,7 @@ class Client extends Component {
 								isConnected={this.props.isConnected}
 								connection={this.props.connection}
 								chat={this.props.chats[generateJID(this.state.client.id, true)]}
+								clearChat={this.props.clearChat}
 								userData = { this.props.userData }
 								comModal={ this.props.communicateModal}
                                 openComModal = { this.props.openComModal } />
