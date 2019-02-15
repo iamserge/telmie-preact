@@ -24,6 +24,8 @@ class Connection{
         this._calleeId = '';
         this._calleeJID = '';
 
+        this.offsetAutoGetHistory = 0;
+
         this.props = props;
         console.log('Connection props:',props);
 
@@ -39,9 +41,9 @@ class Connection{
         this._curUserJID = generateJID(this._curUserId);
         this._userAuth = userAuth || getCookie('USER_AUTH');
         this.connection.connect(this._curUserJID, '', this.onConnect);
-        this.connection.rawInput = (data) => {
+        /*this.connection.rawInput = (data) => {
             console.log('rawInput:', data);
-        };
+        };*/
         this.connection.rawOutput = (data) => {
             console.log('rawOutput:', data);
         };
@@ -90,6 +92,7 @@ class Connection{
             elems = msg.getElementsByTagName('history');
         if (type == "result") {
             if (elems.length > 0) {
+                let isDisplayed = false;
                 try {
                     let thread = Strophe.Strophe.getText(elems[0].childNodes[0].getElementsByTagName('thread')[0]);
 
@@ -100,13 +103,30 @@ class Connection{
                         participants[consts.THREAD.IS_PRO] : participants[consts.THREAD.IS_CLIENT];
     
                     let arr = [];
+                    let isDisplayMarked = false;
                     for (let i=0, len = elems[0].childNodes.length; i < len; i++){
+                        isDisplayed = isDisplayed || (
+                            (elems[0].childNodes[i].getElementsByTagName('displayed')[0]) ? true : (
+                                !isDisplayMarked && (
+                                    this.markChatMessage(this._curUserJID, generateJID(fromId, true), elems[0].childNodes[i].getAttribute('id'), thread, 'displayed'),
+                                    isDisplayMarked = true
+                                ),
+                                false
+                            )
+                        );
+
                         let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
                         const message = encodeXMPPmessage(text);
-                        arr.unshift(message)
+                        arr.unshift(message);
                     }
     
                     this.props.setMsgHistory(generateJID(fromId), arr, arr.length);
+                    isDisplayed ? ( 
+                        this.offsetAutoGetHistory = 0 
+                    ) : (
+                        this.offsetAutoGetHistory = this.offsetAutoGetHistory + consts.MES_HISTORY_SIZE,
+                        this.getChatMessages(...participants, this.offsetAutoGetHistory)
+                    )
                 }
                 catch(err){
                     console.log(err);
@@ -124,12 +144,12 @@ class Connection{
         } = processServerMsg(msg);
     
         if (type == "chat" && elems.length > 0) {
-            console.log('CHAT', messId);
             const _thread = Strophe.Strophe.getText(thread[0]);
             const userInfo = await processChatMsg(_thread, this._curUserId, this._userAuth, this.props.changeUnreadNum);
             let body_text = Strophe.Strophe.getText(elems[0]);
             const message = encodeXMPPmessage(body_text);
-            this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
+            
+            //this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
             this.markChatMessage(this._curUserJID, generateJID(userInfo.id, true), messId, _thread, 'received');
             userInfo && this.props.setUsr(userInfo);
         }
@@ -297,17 +317,9 @@ class Connection{
     }
 
     markChatMessage = (from, to, id, thread, markType) => {
-
         let m = Strophe.$msg({ from, to, type: 'chat_status', id }).c("thread").t(thread);
-        m.up().c(markType, {xmlns: "urn:xmpp:chat-markers:0"});
+        m.up().c(markType, {xmlns: "urn:xmpp:chat-markers:0", id});
         this.connection.send(m);
-
-        /*
-            <message from='...' id='...' to='...' type='chat_status'>
-              <thread>...</thread>
-              <received xmlns='urn:xmpp:chat-markers:0' />
-            </message>
-        */
     }
 
     setVideoElements = (videoOutput, videoInput) => {

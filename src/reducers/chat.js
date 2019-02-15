@@ -118,12 +118,11 @@ export const communicateModal = (state = {...initialState}, action) => {
 				person: {},
 			};
 		case actionTypes.CHANGE_UNREAD_MSG:
-			const {from, num} = action;
 			return {
 				...state,
 				unread: {
 					...state.unread,
-					[from]: state.unread[from] ? state.unread[from] + num : num,
+					[action.from]: true,
 				},
 			}
 		case actionTypes.CLEAR_CHATS:

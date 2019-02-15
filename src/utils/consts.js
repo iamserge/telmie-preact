@@ -1,6 +1,6 @@
 export const consts = {
   PAGE_SIZE: 20,
-  MES_HISTORY_SIZE: 15,
+  MES_HISTORY_SIZE: 10,
   CHAT: 'CHAT',
   CALL: 'CALL',
 

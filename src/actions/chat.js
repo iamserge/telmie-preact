@@ -67,10 +67,9 @@ export const setChatPerson = (person) => (dispatch) => dispatch({
 
 });
 
-export const changeUnreadNum = (from, num = 1) => dispatch => dispatch({
+export const changeUnreadNum = (from) => dispatch => dispatch({
 	type: actionTypes.CHANGE_UNREAD_MSG,
 	from,
-	num,
 })
 
 export const clearChats = () => dispatch => dispatch({

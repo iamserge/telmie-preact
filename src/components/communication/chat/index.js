@@ -28,7 +28,7 @@ const Chat = (props) => {
                     <img src="/assets/nouserimage.jpg" alt={fullName} title={fullName}/>
                 )}
             </div>
-            <div class={style.msgCount}>{unread[el]}</div>
+            <div class={style.msgCount}/>
             <div class={style.authorName}>{fullName}</div>
         </li>)
     }

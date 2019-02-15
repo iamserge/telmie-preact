@@ -73,7 +73,8 @@ export default class Pro extends Component {
 							spy: true, smooth: true, duration: 500, offset: 0,
 						}),
 						clearInterval(this.scrollInterval),
-						this.scrollInterval = null
+						this.scrollInterval = null,
+						this.getMessages()
 					)
 				}, 100)),
 			(hash.indexOf('call') + 1) &&
