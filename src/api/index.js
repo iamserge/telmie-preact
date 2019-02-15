@@ -27,4 +27,5 @@ export const apiUrls = {
   WORKING_PRO: apiRoot + 'users/pro/work',
   CALLS: apiRoot + 'calls',
   CALL_HISTORY: (id) => apiRoot + 'calls/user/' + id,
+  GET_COMPANY_TAX_ID: (id) => apiRoot + 'companies/' + id,
 }

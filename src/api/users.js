@@ -347,3 +347,23 @@ export function sendContactData(data){
 			message: `Error! ${err.message && err.message}`,
 	}))
 }
+
+export function checkTaxId(taxId, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.GET_COMPANY_TAX_ID(taxId), { method: 'GET', headers }).then(response => {
+		return response.status === 404 ? ({
+			error: true,
+			message: `Error! ${response.statusText || 'Company not found.'}`,
+		}) : response.json().then(json => {
+			return json;
+		})
+		.catch(err => {
+			console.log(err);
+			return { 
+				error: true,
+			}
+		})
+	})
+}

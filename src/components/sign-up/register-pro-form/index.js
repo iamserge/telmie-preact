@@ -7,7 +7,8 @@ import GeneralInfo from './general-info'
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 import { getCookie, getIntervalStep } from "../../../utils";
-import { getPreparedProState, getDefaultState, accountTypeArr } from "../../../utils/proPending";
+import { getPreparedProState, getDefaultState, accountTypeArr, accountTypes } from "../../../utils/proPending";
+import Spinner from '../../global/spinner';
 
 const STORAGE_ITEM_NAME = 'register_pro_data';
 
@@ -27,6 +28,7 @@ export default class RegisterProForm extends Component{
 			isFieldCorrect: true,
 			isSaveVisible: false,
 			isCancelPendVisible: false,
+			isRegCompanyVisible: false,
 			step: getIntervalStep(data.costPerMinute),
 		}
 
@@ -58,7 +60,20 @@ export default class RegisterProForm extends Component{
 	}
 
 	componentWillReceiveProps(nextProps){
-		( Object.keys(nextProps.userInfo).length !== 0 ) 
+		
+		( !Object.keys(this.props.companyInfo).length && Object.keys(nextProps.companyInfo).length )
+			&& this.setState(prev => ({ 
+				regInfo: { 
+					...prev.regInfo,
+					company: {
+						...prev.regInfo.company,
+						name: nextProps.companyInfo.name,
+					}
+				},
+				isRegCompanyVisible: false,
+			})),
+
+		( Object.keys(nextProps.userInfo).length !== 0 && !nextProps.userInfo.error ) 
 			&& (
 				this.setState({ regInfo: getPreparedProState(nextProps.userInfo) }),
 				localStorage.removeItem(STORAGE_ITEM_NAME)
@@ -114,19 +129,30 @@ export default class RegisterProForm extends Component{
 		const {name, value} = e.target;
 		let that = this;
 
+		(name == `accountType` && value == accountTypes.COMPANY) && this.setState({ isRegCompanyVisible: true });
+
 		this.setState(prev => {
             return (['country','city','line1','postCode'].indexOf(name) === -1) ? (
-				name === 'dob' ? ({
+				['name','taxId'].indexOf(name) !== -1) ? ({
 					regInfo: {	
 						...prev.regInfo,
-						[name]: that.dobFormat(value),
+						company: {
+							...prev.regInfo.company || {},
+							[name]: value,
+						}
 					}
-				}) : ({
-					regInfo: {	
-						...prev.regInfo,
-						[name]: value,
-					}
-				})
+				}) : (
+					name === 'dob' ? ({
+						regInfo: {	
+							...prev.regInfo,
+							[name]: that.dobFormat(value),
+						}
+					}) : ({
+						regInfo: {	
+							...prev.regInfo,
+							[name]: value,
+						}
+					})
 			) : ({
 				regInfo: {	
 					...prev.regInfo,
@@ -164,8 +190,8 @@ export default class RegisterProForm extends Component{
 
 		switch (this.state.regInfo.pending) {
 			case false:
-				regControl = accountType == accountTypeArr[0].value && 
-					(<button className={`uk-button ${style.applyBtn}`} onClick={this.updateHandler}>
+				regControl = (
+					<button className={`uk-button ${style.applyBtn}`} onClick={this.updateHandler}>
 						Submit for review
 					</button>);
 			  	break;
@@ -181,9 +207,9 @@ export default class RegisterProForm extends Component{
 				];
 			  break;
 			default:
-				regControl = accountType == accountTypeArr[0].value && 
-					(<button className={`uk-button ${style.applyBtn}`} onClick={this.registerHandler}>
-						Apply as {this.state.regInfo.accountType && this.state.regInfo.accountType.toLowerCase()}
+				regControl = (
+					<button className={`uk-button ${style.applyBtn}`} onClick={this.registerHandler}>
+						Apply as {accountType && accountType.toLowerCase()}
 					</button>)
 		  }
 		
@@ -205,29 +231,20 @@ export default class RegisterProForm extends Component{
     }
     
     renderCompanyFields = (fieldsDisabled, isShow) => {
-		const {
-			businessName,
-			compHouseNumber,
-			compAddress,
-			compCity,
-			compPostCode,
-			compCountry,
-		} = this.state.regInfo;
-
+		const { company = {}, } = this.state.regInfo;
+		
 		return <div style = {isShow && {display: 'none'}}>
 				<div className="input-container">
-					<label for="businessName">Business name</label>
-					<input type="text" name="businessName" value={businessName} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
-
-					{this.validator.message('businessName', businessName, 'compRequired', 'validation-tooltip',  {required: 'Please enter name'})}
+					<label for="name">Business name</label>
+					<input type="text" name="name" value={company.name} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
 				</div>
 				<div className="input-container">
-					<label for="compHouseNumber">Companies House registration number</label>
-					<input type="text" name="compHouseNumber" value={compHouseNumber} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
+					<label for="taxId">Companies House registration number</label>
+					<input type="text" name="taxId" value={company.taxId} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
 
-					{this.validator.message('compHouseNumber', compHouseNumber, 'compRequired', 'validation-tooltip',  {required: 'Please enter registration number'})}
+					{this.validator.message('taxId', company.taxId, 'compRequired', 'validation-tooltip',  {required: 'Please enter registration number'})}
 				</div>
-				<div className="input-container">
+				{/*<div className="input-container">
 					<label for="compAddress">Company address</label>
 					<input type="text" name="compAddress" value={compAddress} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
 
@@ -252,7 +269,7 @@ export default class RegisterProForm extends Component{
 					<input type="text" name="compCountry" value={compCountry} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
 
 					{this.validator.message('compCountry', compCountry, 'compRequired', 'validation-tooltip',  {required: 'Please enter country'})}
-				</div>
+				</div>*/}
 			</div>
     }
     
@@ -421,23 +438,48 @@ export default class RegisterProForm extends Component{
 		this.props.cancelProPending(this.props.userData.id, userAuth);
 		this.setState({ isCancelPendVisible: false });
 	}
+
+
+	cancelChackingTaxId = () => {
+		this.setState(prev => ({ 
+			isRegCompanyVisible: false,
+			regInfo: {	
+				...prev.regInfo,
+				accountType: accountTypes.INDIVIDUAL,
+				company: {},
+			},
+		}));
+		this.props.cancelChackingTax();
+	}
+	checkTaxId = () => {
+		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
+		const { company = {} } = this.state.regInfo;
+		this.props.checkCompanyTaxId(company.taxId, userAuth);
+	}
     
     render() {
 		const fieldsDisabled = this.state.regInfo.active === false;
+		const { company = {} } = this.state.regInfo;
+		const { userInfo={}, userData, failureMessage } = this.props;
 
         return  (
 			<div class = {`uk-container-small ${style.registerPro}`}>
-				<div class={ style.content }>
-					{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit Pro details</h2>) }
-						
-					<GeneralInfo accountType={this.state.regInfo.accountType}
-						onChangeHandler={this.onChangeHandler}
-						userData={this.props.userData}/>
+				{ this.props.isLoaded ? (
+					<div class={ style.content }>
+						{ fieldsDisabled ? (<h2>Register as a Pro</h2>) : (<h2>Edit Pro details</h2>) }
+							
+						<GeneralInfo accountType={this.state.regInfo.accountType}
+							onChangeHandler={this.onChangeHandler}
+							isPending={userInfo.pending}
+							userData={userData}/>
 
-					{this.renderIndividualFields(fieldsDisabled)}
+						{this.renderIndividualFields(fieldsDisabled)}
 
-					{this.renderApplyArea()}
-				</div>
+						{this.renderApplyArea()}
+					</div>
+				) : (
+					<Spinner/>
+				)}
 
 				<Modal isVisible = {this.state.isCancelPendVisible}
 					title='Do you want to cancel your application?'
@@ -452,6 +494,18 @@ export default class RegisterProForm extends Component{
 					cancelText = "Don’t save my details."
 					onOk = {this.saveData}
 					onCancel={this.closeSaveModal}/>
+				
+				<Modal isVisible = {(this.state.isRegCompanyVisible && this.state.regInfo.accountType === accountTypes.COMPANY)}
+					title='Enter tax ID to check'
+					okText="Check."
+					cancelText = "Cancel."
+					onOk = {this.checkTaxId}
+					onCancel={this.cancelChackingTaxId}>
+					<input type="text" name="taxId" value={company.taxId} onChange={this.onChangeHandler} className="uk-input"/>
+					{(failureMessage.length > 0) && (
+						<div className={style.error} style={{ margin: 0, marginTop: 10 }}>{failureMessage}</div>
+					)}
+				</Modal>
 			</div>)
     }
 }

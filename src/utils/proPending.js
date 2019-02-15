@@ -1,9 +1,14 @@
+export const accountTypes = {
+	INDIVIDUAL: 'INDIVIDUAL',
+	COMPANY: 'COMPANY',
+}
+
 export const accountTypeArr = [{
 	name: 'Individual',
-	value: 'INDIVIDUAL'
+	value: accountTypes.INDIVIDUAL,
 },{
 	name: 'Company',
-	value: 'COMPANY'
+	value: accountTypes.COMPANY,
 }];
 
 const currencyArr = [
@@ -54,11 +59,15 @@ export const getDefaultState = () => {
 }
 
 export const getPreparedProState = (userData) => { 
-	const { dob={} } = userData;
+	const { dob={}, address={} } = userData;
 	
 	return {
 		...userData,
-		accountType: accountTypeArr[0].value,
+		address: {
+			country: "GB",
+			...address,
+		},
+		accountType: userData.accountType || accountTypeArr[0].value,
 		time: timeArr[0].value,
 		currency: currencyArr[0].value,
 		dob: {

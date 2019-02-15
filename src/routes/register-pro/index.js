@@ -6,7 +6,7 @@ import Modal from '../../components/modal'
 import {  } from '../../actions/user';
 import { route } from 'preact-router';
 import { getCategories, changeLocaleLangs, changeLocale } from '../../actions/user';
-import { getProRegistrationInfo, cancelProPending, registerPro } from '../../api/users';
+import { getProRegistrationInfo, cancelProPending, registerPro, checkTaxId } from '../../api/users';
 import { getCookie } from "../../utils";
 import { convertProState } from "../../utils/proPending";
 
@@ -21,8 +21,11 @@ class RegisterPro extends Component {
 			regData: null,
 			userInfo: {},
 			isInfoRegisterVisible: false,
+			isRegCompanyVisible: false,
 			failureMessage: '',
 			loading: false,
+
+			incorrectTax: false,
 		}
 	}
 
@@ -36,6 +39,24 @@ class RegisterPro extends Component {
 		userInfo.error ? 
 			this.setState({ failureMessage: userInfo.message, loading: false }) 
 			: this.setState({ userInfo: convertProState(userInfo), loading: false });
+	}
+
+	checkCompanyTaxId = async (taxId, authData) => {
+		this.setState({ loading: true });
+		const companyInfo = await checkTaxId(taxId, authData);
+
+		companyInfo.error ? 
+			this.setState({ 
+				failureMessage: companyInfo.message || '',
+				loading: false,
+				incorrectTax: true,
+			}) 
+			: this.setState({ 
+				companyInfo: { ...companyInfo }, 
+				failureMessage: '',
+				loading: false,
+				incorrectTax: false,
+			});
 	}
 
 	makeProPending = async (data, userAuth) => {
@@ -52,6 +73,7 @@ class RegisterPro extends Component {
 			: this.setState({ 
 				userInfo: data, 
 				isInfoRegisterVisible: true,
+				failureMessage: '',
 				loading: false
 			});
 	}
@@ -62,6 +84,13 @@ class RegisterPro extends Component {
 		const userInfo = await getProRegistrationInfo(props.userData.id, userAuth);
 
 		this.setState({ userInfo });
+	}
+
+	cancelChackingTax = () => {
+		this.setState({
+			incorrectTax: false,
+			failureMessage: '',
+		})
 	}
 
 	componentDidMount(){
@@ -77,20 +106,26 @@ class RegisterPro extends Component {
 	}
 
 	render() {
-		return ((Object.keys(this.props.userData).length != 0) 
+		const isLoaded = (Object.keys(this.props.userData).length != 0) 
 			&& (Object.keys(this.props.dataFromServer).length != 0)
 			&& (Object.keys(this.state.userInfo).length != 0)
-			&& !this.state.loading) ? (
-				<div>
+			&& !this.state.loading;
+
+		return <div>
 					<RegisterProForm userData={this.props.userData}
 						userInfo = { this.state.userInfo }
 						regData = { this.state.regData }
+						companyInfo = { this.state.companyInfo || {} }
 						registerPro = {this.makeProPending}
 						cancelProPending = {this.cancelProPending}
 						failureMessage = {this.state.failureMessage}
 						dataFromServer = {this.props.dataFromServer}
+						checkCompanyTaxId={ this.checkCompanyTaxId }
+						incorrectTax={ this.state.incorrectTax }
+						cancelChackingTax={ this.cancelChackingTax }
 						sendCode={() => {}}
-						verifyCode={() => {}}/>
+						verifyCode={() => {}}
+						isLoaded={isLoaded}/>
 					
 					<Modal isVisible = {this.state.isInfoRegisterVisible}
 						title='Your changes will be sent for review'
@@ -100,9 +135,6 @@ class RegisterPro extends Component {
 						Please note that every new profile change has to go trough verification process
 					</Modal>
 				</div>
-			) : (
-				<Spinner />
-			)
 	}
 }
 

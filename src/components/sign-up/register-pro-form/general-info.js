@@ -3,8 +3,8 @@ import Radio from '../../radio'
 import { accountTypeArr } from "../../../utils/proPending";
 import style from './style.scss';
 
-const GeneralInfo = ({ accountType, userData={}, onChangeHandler}) => {
-    const {name, lastName, email} = userData;
+const GeneralInfo = ({ accountType, userData={}, onChangeHandler, isPending}) => {
+    const {name, lastName, email, pro } = userData;
 
     return (<div class = {style.generalInfo}>
         <div>
@@ -18,9 +18,10 @@ const GeneralInfo = ({ accountType, userData={}, onChangeHandler}) => {
         </div>
 
         <Radio name='accountType'
+            wrapperClass={style.radioWapper}
             value={accountType} 
             label='I am:' 
-            disabled={true}
+            disabled={pro || isPending}
             onChange = {onChangeHandler}
             data = {accountTypeArr}/>
         <em style={{display: "block", textAlign: "center", color: "gray"}}>Registration as a Company is coming soon.</em>
