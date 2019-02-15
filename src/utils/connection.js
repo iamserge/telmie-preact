@@ -130,7 +130,7 @@ class Connection{
             let body_text = Strophe.Strophe.getText(elems[0]);
             const message = encodeXMPPmessage(body_text);
             this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
-            this.markChatMessage(this._curUserJID, messId, _thread, 'received');
+            this.markChatMessage(this._curUserJID, generateJID(userInfo.id, true), messId, _thread, 'received');
             userInfo && this.props.setUsr(userInfo);
         }
     
@@ -296,9 +296,9 @@ class Connection{
         this.connection.send(m);
     }
 
-    markChatMessage = (from, id, thread, markType) => {
+    markChatMessage = (from, to, id, thread, markType) => {
 
-        let m = Strophe.$msg({ from, to: host, type: 'chat_status', id }).c("thread").t(thread);
+        let m = Strophe.$msg({ from, to, type: 'chat_status', id }).c("thread").t(thread);
         m.up().c(markType, {xmlns: "urn:xmpp:chat-markers:0"});
         this.connection.send(m);
 
