@@ -90,22 +90,29 @@ class Connection{
             elems = msg.getElementsByTagName('history');
         if (type == "result") {
             if (elems.length > 0) {
-                let thread = Strophe.Strophe.getText(elems[0].childNodes[0].getElementsByTagName('thread')[0]);
+                try {
+                    let thread = Strophe.Strophe.getText(elems[0].childNodes[0].getElementsByTagName('thread')[0]);
 
-                const participants = thread ? thread.split('-') : [];
-                const userThreadPosition = participants.indexOf(this._curUserId.toString());
-
-                const fromId = userThreadPosition === consts.THREAD.IS_CLIENT ? 
-                    participants[consts.THREAD.IS_PRO] : participants[consts.THREAD.IS_CLIENT];
-
-                let arr = [];
-                for (let i=0, len = elems[0].childNodes.length; i < len; i++){
-                    let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
-                    const message = encodeXMPPmessage(text);
-                    arr.unshift(message)
+                    const participants = thread ? thread.split('-') : [];
+                    const userThreadPosition = participants.indexOf(this._curUserId.toString());
+    
+                    const fromId = userThreadPosition === consts.THREAD.IS_CLIENT ? 
+                        participants[consts.THREAD.IS_PRO] : participants[consts.THREAD.IS_CLIENT];
+    
+                    let arr = [];
+                    for (let i=0, len = elems[0].childNodes.length; i < len; i++){
+                        let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
+                        const message = encodeXMPPmessage(text);
+                        arr.unshift(message)
+                    }
+    
+                    this.props.setMsgHistory(generateJID(fromId), arr, arr.length);
                 }
-
-                this.props.setMsgHistory(generateJID(fromId), arr, arr.length);
+                catch(err){
+                    console.log(err);
+                    return true;
+                }
+                
             }
         }
         return true;
