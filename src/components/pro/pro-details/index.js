@@ -35,6 +35,7 @@ export default class Pro extends Component {
 		super(props);
 		this.state = {
 			loading: false,
+			isHistoryDelayed: false,
 			callHistory: [],
 			total: 0,
 			currentPage: 1,
@@ -61,6 +62,11 @@ export default class Pro extends Component {
 			|| (prevChat.chat && nextChat.chat && prevChat.chat.length !== nextChat.chat.length)
 		) && nextProps.changeOffset(nextChat.chat.length);
 
+		!this.props.isConnected && nextProps.isConnected && this.state.isHistoryDelayed && (
+			this.getMessages(),
+			this.setState({ isHistoryDelayed: false })
+		);
+
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
 			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
@@ -84,7 +90,7 @@ export default class Pro extends Component {
 						}),
 						clearInterval(this.scrollInterval),
 						this.scrollInterval = null,
-						this.getMessages()
+						this.props.isConnected ? this.getMessages() : this.setState({ isHistoryDelayed: true })
 					)
 				}, 100)),
 			(hash.indexOf('call') + 1) &&
