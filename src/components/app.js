@@ -39,7 +39,7 @@ import {
 
 import Strophe from 'npm-strophe'
 import Connection from '../utils/connection'
-import { setMessages, setUser, setMessageHistory, clearUserChat } from '../utils/con-helpers'
+import { setMessages, setUser, setMessageHistory, clearUserChat, isCurrentUserRoute } from '../utils/con-helpers'
 
 import 'animate.css'
 
@@ -110,13 +110,24 @@ class App extends Component {
 		});
 	}
 
-	setMsg = (id, msg, isMy = false) => {
-		//console.log('currentUrl',this.state.currentUrl);
-		this.setState(prev => setMessages(id, msg, isMy, prev));
+	setMsg = (userId, isPro, id, msg, isMy = false) => {
+		isCurrentUserRoute(this.state.currentUrl, userId, isPro) 
+			&& this.setState(prev => setMessages(id, msg, isMy, prev));
 	}
 	setMsgHistory = (id, msgArr, count) => this.setState(prev => setMessageHistory(id, msgArr, count, prev));
 	setUsr = (user) => this.setState(prev => setUser(user, prev));
 	clearChat = (userId) => this.setState(prev => clearUserChat(userId, prev));
+	setDisplayedStatus = (userJID) => this.setState(prev => ({
+		chats: {
+			...prev.chats, 
+			[userJID]: {
+				...prev.chats[userJID],
+				isDisplayed: true,
+				mesId: '',
+				thread: '',
+			}
+		},
+	}));
 
 	componentDidMount(){
 		this.connection.initializeConnection(this.props);
@@ -171,22 +182,32 @@ class App extends Component {
 		}));
 	}
 
-	renderProRoutes = (chats, isConnected) => [
-		...this.renderUserRoutes(chats, isConnected),
+	renderProRoutes = () => [
+		...this.renderUserRoutes(),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
 		<User path={routes.CLIENT} isPro={false}
-			chats={chats} clearChat={this.clearChat} received={this.state.received}
-			isConnected={isConnected} connection={this.connection} />,
+			chats={this.state.chats}
+			users={this.state.users}
+			clearChat={this.clearChat}
+			setDisplayedStatus={this.setDisplayedStatus}
+			received={this.state.received}
+			isConnected={this.state.isConnected}
+			connection={this.connection} />,
 	];
 
-	renderUserRoutes = (chats, isConnected) => [
+	renderUserRoutes = () => [
 		...this.renderDefaultRoutes(),
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
 		<User path={routes.PRO} isPro={true}
-			chats={chats} clearChat={this.clearChat} received={this.state.received}
-			isConnected={isConnected} connection={this.connection} />,
+			chats={this.state.chats}
+			users={this.state.users}
+			clearChat={this.clearChat} 
+			setDisplayedStatus={this.setDisplayedStatus}
+			received={this.state.received}
+			isConnected={this.state.isConnected}
+			connection={this.connection} />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>
@@ -241,8 +262,8 @@ class App extends Component {
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
 							(user.pro != null) ? 
-								this.renderProRoutes(this.state.chats, this.state.isConnected) 
-								: this.renderUserRoutes(this.state.chats, this.state.isConnected)
+								this.renderProRoutes() 
+								: this.renderUserRoutes()
 							: this.renderDefaultRoutes()}
 						<ErrorRoute default />
 					</Router>

@@ -2,7 +2,7 @@ import { getUserDetails } from "../../../api/pros";
 import { generateJID } from "../../../utils";
 import kUtils from "kurento-utils";
 
-export const setMessages = (id, text, isMy, prevState) => {
+/*export const setMessages = (id, text, isMy, prevState) => {
 	const _id = id.split('/')[0];
 	return ({
     chats: {
@@ -12,7 +12,7 @@ export const setMessages = (id, text, isMy, prevState) => {
 			{ text, isMy } 
 		] : [ { text, isMy } ],
 	}
-})};
+})};*/
 
 export const setUser = (user, prevState) => ({
     users: {

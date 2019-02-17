@@ -149,7 +149,7 @@ class Connection{
             let body_text = Strophe.Strophe.getText(elems[0]);
             const message = encodeXMPPmessage(body_text);
             
-            //this.props.setMsg(generateJID(userInfo.id), {...message, id: messId});
+            this.props.setMsg(userInfo.id, userInfo.isUserPro, generateJID(userInfo.id), {...message, id: messId, thread: _thread});
             this.markChatMessage(this._curUserJID, generateJID(userInfo.id, true), messId, _thread, 'received');
             userInfo && this.props.setUsr(userInfo);
         }
@@ -285,7 +285,7 @@ class Connection{
 		this.connection.send(m);
     }
     
-    sendMessage = (text, userID, senderName, thread) => {
+    sendMessage = (text, userID, isPro, senderName, thread) => {
         console.log(' - [sendMessage] - ');
         const id = uuidv1();
         const timestamp = new Date().getTime() / 1000;
@@ -295,7 +295,7 @@ class Connection{
             timestamp,
         }
         const to = generateJID(userID, true);
-		this.props.setMsg(to, { ...msg, id }, true);        
+		this.props.setMsg(userID, isPro, to, { ...msg, id }, true);        
 
         let m = Strophe
             .$msg({ to, type: 'chat', id })

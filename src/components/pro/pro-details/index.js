@@ -5,11 +5,13 @@ import ProTopInfo from './pro-top-info';
 import PriceInfo from './price-info';
 import Spinner from '../../global/spinner';
 import YouTube from 'react-youtube';
+import TrackVisibility from 'react-on-screen';
 import CallHistory from "./call-history-tab";
 import { getCallHistory } from "../../../api/users";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Element, scroller } from 'react-scroll'
 import { consts } from '../../../utils/consts'
+import { generateJID } from '../../../utils/'
 
 import "react-tabs/style/react-tabs.css";
 
@@ -51,6 +53,15 @@ export default class Pro extends Component {
 	}
 	componentWillReceiveProps(nextProps){
 
+		console.log('[componentWillReceiveProps] Pro-Details', nextProps);
+		const { chat: prevChat = {} } = this.props;
+		const { chat: nextChat = {} } = nextProps;
+
+		(
+			(!prevChat.chat && nextChat.chat) 
+			|| (prevChat.chat && nextChat.chat && prevChat.chat.length !== nextChat.chat.length)
+		) && nextProps.changeOffset(nextChat.chat.length);
+
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
 			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
@@ -61,6 +72,10 @@ export default class Pro extends Component {
 		clearInterval(this.scrollInterval);
 		this.scrollInterval = null;
 	}
+
+	/*checkUserInChats = (props) => {
+		props.users.indexOf()
+	}*/
 
 	scrollToHashElement = () => {
 		const {hash} = window.location;
@@ -140,7 +155,7 @@ export default class Pro extends Component {
 		const userId = this.props.person.id;
 		const {name, lastName, id: myId} = this.props.userData || {};
 		const thread = this.props.isPro ? `${myId}-${userId}` : `${userId}-${myId}`;
-		msg && this.props.connection.sendMessage(msg, userId, `${name} ${lastName}`, thread);
+		msg && this.props.connection.sendMessage(msg, userId, this.props.isPro, `${name} ${lastName}`, thread);
 	}
 
 	openCall = (videoOutput, videoInput) => {
@@ -163,9 +178,11 @@ export default class Pro extends Component {
 	makeCall = (props) => /*this.state.isConnected ? */
 		props.connection.callRequest(props.person.id, props.comModal.callInfo) /*: this.setState({ isDelayingCall: true })*/;
 	
-	render({person, isPro, isConnected, chat = [], userData = {}}) {
+	render({person, isPro, isConnected, chat = {}, userData = {}}) {
 		const { pro = {} } = person;
 		const { callHistory, total, currentPage } = this.state;
+
+		const { chat : msgArr = [], isDisplayed, mesId, thread } = chat;
 
 		return (<div>
 			<div class={style.person}>
@@ -235,8 +252,20 @@ export default class Pro extends Component {
 						<div class={chatStyle.chatArea}>
 							<ul class={chatStyle.messages}>
 						{ !this.props.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
-								{chat.map((el) => <Message {...el} isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
-									key={el.id || el.timestamp}/>)}
+								{msgArr.map((el, i) => <Message {...el} 
+														isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
+														key={el.id || el.timestamp}/>
+								)}
+								<TrackVisibility style={{clear: "both", float: "left", width: '100%'}}>
+									{({ isVisible = false }) =>  {
+										isVisible && !isDisplayed && mesId
+											&& (
+												this.props.setDisplayedStatus(generateJID(person.id, true)),
+												this.props.connection.markChatMessage(generateJID(userData.id), generateJID(person.id, true), mesId, thread, 'displayed')
+											);
+										console.log('isVisible', isVisible, chat);
+									}}
+								</TrackVisibility>
 							</ul>
 						</div>
 						<SendForm onSend={this.onSend} isConnected={isConnected}/>

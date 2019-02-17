@@ -86,12 +86,14 @@ class User extends Component {
     createCall = (cid, isPro = false) => this.props.isPro 
 		&& this.props.createCall(cid, isPro, this.props.userData.userAuth);
 		
-	changeOffset = () => this.setState( prev => ({ offset: prev.offset + consts.MES_HISTORY_SIZE }));
+	changeOffset = (num = 0) => this.setState( prev => ({ 
+		offset: num ? num : prev.offset + consts.MES_HISTORY_SIZE ,
+	}));
 
 	render() {
 
         const { 
-            isPro, chats, isConnected, userData, communicateModal, openComModal
+            isPro, chats, users, isConnected, userData, communicateModal, openComModal
         } = this.props;
 
         const proProps = isPro ? {
@@ -100,8 +102,7 @@ class User extends Component {
             shortlistMessage: this.state.shortlistMessage,
             createCall: this.createCall,
             cnageShortlist: this.shortlist,
-        } : {};
-
+		} : {};
 
 		return (
 			<div id="pro" className="uk-container" >
@@ -118,10 +119,11 @@ class User extends Component {
                         userData = { userData } 
                         comModal={ communicateModal }
                         openComModal = { openComModal }
-						chat={ chats[generateJID(this.state.user.id, true)] || [] }
+						chat={ chats[generateJID(this.state.user.id, true)] || {} }
 						offset={ this.state.offset }
 						changeOffset = { this.changeOffset }
 						allHistoryReceived = { this.state.allHistoryReceived }
+						setDisplayedStatus={this.props.setDisplayedStatus}
                         {...proProps}
                         />
 				)}

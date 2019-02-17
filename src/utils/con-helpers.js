@@ -1,17 +1,35 @@
 import { getUserDetails } from "../api/pros";
 import { generateJID } from "./index";
 import { consts } from "../utils/consts";
+import { routes } from '../components/app'
 import kUtils from "kurento-utils";
 
+export const isCurrentUserRoute = (url, userId, isPro) => {
+	const isProRoute = (url.indexOf(routes.PRO_FOR_COMP) === 0);
+	const isClientRoute = (url.indexOf(routes.CLIENT_FOR_COMP) === 0);
+	let urlSplit;
+
+	return (isProRoute || isClientRoute) ? (
+		urlSplit = url.split('/'),
+		urlSplit[urlSplit.length - 1] === userId.toString() ? 
+			(isPro === isProRoute) : false		
+	) : false;
+}
 export const setMessages = (id, msg, isMy, prevState) => {
 	const _id = id.split('/')[0];
 	return ({
     chats: {
 		...prevState.chats, 
-		[_id]: prevState.chats[_id] ? [ 
-			...prevState.chats[_id], 
-			{ ...msg, isMy } 
-		] : [ { ...msg, isMy } ],
+		[_id]: {
+			chat: prevState.chats[_id] ? 
+				prevState.chats[_id].chat ? 
+					[ ...prevState.chats[_id].chat, { ...msg, isMy } ] 
+					: [ { ...msg, isMy } ]
+				: [ { ...msg, isMy } ],
+			isDisplayed: isMy,
+			mesId: isMy ? '' : msg.id,
+			thread: isMy ? '' : msg.thread,
+		},
 	}
 })};
 export const setMessageHistory = (id, msgArr, count, prevState) => {
@@ -19,10 +37,14 @@ export const setMessageHistory = (id, msgArr, count, prevState) => {
 	return ({
     chats: {
 		...prevState.chats, 
-		[_id]: prevState.chats[_id] ? [
-			...msgArr,
-			...prevState.chats[_id]
-		] : [ ...msgArr ],
+		[_id]: {
+			chat: prevState.chats[_id] ? 
+				prevState.chats[_id].chat ? 
+					[ ...msgArr, ...prevState.chats[_id].chat ]
+					: [ ...msgArr ]
+				: [ ...msgArr ],
+			isDisplayed: true,
+		}
 	},
 	received: count,
 })};
