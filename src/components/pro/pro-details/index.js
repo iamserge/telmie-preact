@@ -73,10 +73,6 @@ export default class Pro extends Component {
 		this.scrollInterval = null;
 	}
 
-	/*checkUserInChats = (props) => {
-		props.users.indexOf()
-	}*/
-
 	scrollToHashElement = () => {
 		const {hash} = window.location;
 
@@ -181,7 +177,6 @@ export default class Pro extends Component {
 	render({person, isPro, isConnected, chat = {}, userData = {}}) {
 		const { pro = {} } = person;
 		const { callHistory, total, currentPage } = this.state;
-
 		const { chat : msgArr = [], isDisplayed, mesId, thread } = chat;
 
 		return (<div>

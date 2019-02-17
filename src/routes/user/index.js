@@ -37,7 +37,8 @@ class User extends Component {
         window.scrollTo(0,0);
         const { userId, userData= {}, isPro } = this.props;
 		getUserDetails(userId, userData.userAuth, isPro).then((data) => {
-	    	this.setState({ user: data, loading: false, isShortlisted: isPro ? data.inShortlistForCurrent : false });
+			this.setState({ user: data, loading: false, isShortlisted: isPro ? data.inShortlistForCurrent : false });
+			this.checkUserInChats(this.props, data);
 		});
 	}
 	componentWillReceiveProps(nextProps){
@@ -50,7 +51,8 @@ class User extends Component {
                 this.setState({ user: {}, loading: true, allHistoryReceived: false, offset: 0 }),
                 nextProps.clearChat(this.props.userId),
                 getUserDetails(nextProps.userId, nextProps.userData.userAuth, nextProps.isPro).then((data) => {
-                    this.setState({ user: data, loading: false, isShortlisted: nextProps.isPro ? data.inShortlistForCurrent : false });
+					this.setState({ user: data, loading: false, isShortlisted: nextProps.isPro ? data.inShortlistForCurrent : false });
+					this.checkUserInChats(nextProps, data);
                 })
             )
 	}
@@ -59,7 +61,14 @@ class User extends Component {
 		this.clearMsgTimeout = null;
 		this.props.clearChat(this.props.userId);
 	}
-    
+	
+	checkUserInChats = (props, user) => {
+		(Object.keys(props.users).indexOf(user.id.toString()) + 1) && (
+			props.chooseChatPerson(user, false),
+			window.location.hash = 'chat'
+		);
+	}
+
     clearMsg = () => this.setState({ shortlistMessage: ''});
 	fetchPage= (props) => {
 		props.changeLocale();
@@ -93,7 +102,7 @@ class User extends Component {
 	render() {
 
         const { 
-            isPro, chats, users, isConnected, userData, communicateModal, openComModal
+            isPro, chats, isConnected, userData, communicateModal, openComModal
         } = this.props;
 
         const proProps = isPro ? {

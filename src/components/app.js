@@ -146,14 +146,14 @@ class App extends Component {
 			);
 	}
 
-	chooseChatPerson = (person) => {
-		let users = this.state.users;
+	chooseChatPerson = (person, witRedirect = true ) => {
+		let users = { ...this.state.users };
 		delete users[person.id];
 		this.setState({ users });
 		this.props.chooseChatPerson(person);
-		person.isUserPro ? 
+		witRedirect && (person.isUserPro ? 
 			route(routes.PRO_FOR_COMP + person.id + '#chat') 
-			: route(routes.CLIENT_FOR_COMP + person.id + '#chat');
+			: route(routes.CLIENT_FOR_COMP + person.id + '#chat'));
 	}
 
 
@@ -192,6 +192,7 @@ class App extends Component {
 			setDisplayedStatus={this.setDisplayedStatus}
 			received={this.state.received}
 			isConnected={this.state.isConnected}
+			chooseChatPerson={this.chooseChatPerson}
 			connection={this.connection} />,
 	];
 
@@ -207,6 +208,7 @@ class App extends Component {
 			setDisplayedStatus={this.setDisplayedStatus}
 			received={this.state.received}
 			isConnected={this.state.isConnected}
+			chooseChatPerson={this.chooseChatPerson}
 			connection={this.connection} />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
