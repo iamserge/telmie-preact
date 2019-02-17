@@ -60,7 +60,10 @@ export default class Pro extends Component {
 		(
 			(!prevChat.chat && nextChat.chat) 
 			|| (prevChat.chat && nextChat.chat && prevChat.chat.length !== nextChat.chat.length)
-		) && nextProps.changeOffset(nextChat.chat.length);
+		) && (
+			nextChat.chat.length - (prevChat.chat ? prevChat.chat.length : 0) === 1 && this.scrollToChatEnd(),
+			nextProps.changeOffset(nextChat.chat.length)
+		);
 
 		!this.props.isConnected && nextProps.isConnected && this.state.isHistoryDelayed && (
 			this.getMessages(),
@@ -179,6 +182,12 @@ export default class Pro extends Component {
 	makeCall = (props) => /*this.state.isConnected ? */
 		props.connection.callRequest(props.person.id, props.comModal.callInfo) /*: this.setState({ isDelayingCall: true })*/;
 	
+	scrollToChatEnd = () => {
+		scroller.scrollTo('scroll-container-end', {
+			spy: true, smooth: true, duration: 500, offset: -50, containerId: 'containerElement',
+		});
+	}
+	
 	render({person, isPro, isConnected, chat = {}, userData = {}}) {
 		const { pro = {} } = person;
 		const { callHistory, total, currentPage } = this.state;
@@ -250,23 +259,25 @@ export default class Pro extends Component {
 							</div>
 						</div>}
 						<div class={chatStyle.chatArea}>
-							<ul class={chatStyle.messages}>
-						{ !this.props.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
-								{msgArr.map((el, i) => <Message {...el} 
-														isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
-														key={el.id || el.timestamp}/>
-								)}
-								<TrackVisibility style={{clear: "both", float: "left", width: '100%'}}>
-									{({ isVisible = false }) =>  {
-										isVisible && !isDisplayed && mesId
-											&& (
-												this.props.setDisplayedStatus(generateJID(person.id, true)),
-												this.props.connection.markChatMessage(generateJID(userData.id), generateJID(person.id, true), mesId, thread, 'displayed')
-											);
-										console.log('isVisible', isVisible, chat);
-									}}
-								</TrackVisibility>
+							<Element id="containerElement" style={{height: '100%', width: '100%', overflow: 'auto', paddingBottom: 15}} >
+							<ul class={chatStyle.messages} ref={el => this.containerElem = el} id="chatList">
+								{ !this.props.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
+									{msgArr.map((el, i) => <Message {...el} 
+															isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
+															key={el.id || el.timestamp}/>
+									)}
+									<TrackVisibility style={{clear: "both", float: "left", width: '100%'}}>
+										{({ isVisible = false }) =>  {
+											isVisible && !isDisplayed && mesId
+												&& (
+													this.props.setDisplayedStatus(generateJID(person.id, true)),
+													this.props.connection.markChatMessage(generateJID(userData.id), generateJID(person.id, true), mesId, thread, 'displayed')
+												);
+											return <Element name="scroll-container-end"/>
+										}}
+									</TrackVisibility>
 							</ul>
+							</Element>
 						</div>
 						<SendForm onSend={this.onSend} isConnected={isConnected}/>
 					</div>
