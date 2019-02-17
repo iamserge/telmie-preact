@@ -115,7 +115,10 @@ class App extends Component {
 			&& this.setState(prev => setMessages(id, msg, isMy, prev));
 	}
 	setMsgHistory = (id, msgArr, count) => this.setState(prev => setMessageHistory(id, msgArr, count, prev));
-	setUsr = (user) => this.setState(prev => setUser(user, prev));
+	setUsr = (user) => {
+		!isCurrentUserRoute(this.state.currentUrl, user.id, user.isUserPro)  
+		&&  this.setState(prev => setUser(user, prev));
+	};
 	clearChat = (userId) => this.setState(prev => clearUserChat(userId, prev));
 	setDisplayedStatus = (userJID) => this.setState(prev => ({
 		chats: {

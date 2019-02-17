@@ -85,8 +85,8 @@ export const processChatMsg = async (thread, _userId, _userAuth, changeUnreadNum
 		fromId = participants[consts.THREAD.IS_CLIENT],
 		isPro = false
 	);
-	
-	changeUnreadNum(generateJID(fromId, true)); 
+	!isCurrentUserRoute(window.location.pathname, fromId, isPro) 
+		&& changeUnreadNum(generateJID(fromId, true)); 
 	const _usr = await getUserDetails(fromId, _userAuth, isPro) || {};
 	return { ..._usr, isUserPro: isPro };
 }

@@ -53,7 +53,6 @@ export default class Pro extends Component {
 	}
 	componentWillReceiveProps(nextProps){
 
-		console.log('[componentWillReceiveProps] Pro-Details', nextProps);
 		const { chat: prevChat = {} } = this.props;
 		const { chat: nextChat = {} } = nextProps;
 
