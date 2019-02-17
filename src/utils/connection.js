@@ -106,13 +106,14 @@ class Connection{
                     let isDisplayMarked = false;
                     for (let i=0, len = elems[0].childNodes.length; i < len; i++){
                         isDisplayed = isDisplayed || (
-                            (elems[0].childNodes[i].getElementsByTagName('displayed')[0]) ? true : (
-                                !isDisplayMarked && (
-                                    this.markChatMessage(this._curUserJID, generateJID(fromId, true), elems[0].childNodes[i].getAttribute('id'), thread, 'displayed'),
-                                    isDisplayMarked = true
-                                ),
-                                false
-                            )
+                            elems[0].childNodes[i].getAttribute('to').split('@')[0] === this._curUserId.toString() ? (
+                                elems[0].childNodes[i].getElementsByTagName('displayed')[0]) ? true : (
+                                    !isDisplayMarked && (
+                                        this.markChatMessage(this._curUserJID, generateJID(fromId, true), elems[0].childNodes[i].getAttribute('id'), thread, 'displayed'),
+                                        isDisplayMarked = true
+                                    ),
+                                    false
+                                ) : true
                         );
 
                         let text = Strophe.Strophe.getText(elems[0].childNodes[i].getElementsByTagName('body')[0]);
