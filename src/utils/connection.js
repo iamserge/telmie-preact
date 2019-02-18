@@ -372,7 +372,15 @@ class Connection{
         const cInfo = this.props.getCInfo() || {};
 		this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'finished', callid: cInfo.callId});
 		this.stopCommunication();
-	}
+    }
+    
+    muteAudio = (isMuted) => {
+        this.webRtcPeer.peerConnection.getSenders().forEach(element => {
+            element.track && element.track.kind === 'audio' && (
+                element.track.enabled = !isMuted
+            );
+        });
+    }
     
 }
 

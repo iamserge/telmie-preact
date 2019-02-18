@@ -10,17 +10,43 @@ import chatStyle from './chatStyles.scss';
 import "react-tabs/style/react-tabs.css";
 
 class CallTab extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isCallerMuted: false,
+            isAudioMuted: false,
+        };
+    }
     componentDidMount(){
         this.props.comModal.isIncoming && this.props.connection.setVideoElements(this.videoOutput, this.videoInput);
     }
 
     componentWillReceiveProps(nextProps){
-        (!this.props.comModal.isIncoming && nextProps.comModal.isIncoming) 
+        const { comModal : prevModal } = this.props;
+        const { comModal : nextModal } = nextProps;
+
+        (prevModal.isSpeaking && !nextModal.isSpeaking) && this.setState({
+            isCallerMuted: false,
+            isAudioMuted: false,
+        });
+
+        (!prevModal.isIncoming && nextModal.isIncoming) 
             && nextProps.connection.setVideoElements(this.videoOutput, this.videoInput);
     }
 
     openCall = () => {
         this.props.openCall(this.videoOutput, this.videoInput);
+    }
+
+    muteCaller = () => {
+        this.setState(prev => ({ isCallerMuted: !prev.isCallerMuted }));
+    }
+    muteAudio = () => {
+        this.setState(prev => {
+            const isAudioMuted = !prev.isAudioMuted;
+            this.props.connection.muteAudio(isAudioMuted);
+            return { isAudioMuted };
+        })
     }
 
     render(){
@@ -45,14 +71,8 @@ class CallTab extends Component {
 
     //const _changeType = (type) => () => changeType(type);
 
-        const btns = (isBusy || error) ? [{
-            txt: chatBtns.cancel,
-            handler: () => {} //props.closeModal,
-        },{
-            txt: chatBtns.textMe,
-            handler: () => {}//_changeType(consts.CHAT),
-        }] 
-            : isOutcoming ? [{
+        const btns = (isBusy || error) ? 
+            [] : isOutcoming ? [{
                 txt: chatBtns.decline,
                 handler: (e) => this.props.rejectCall(),
             }] : [];
@@ -60,24 +80,27 @@ class CallTab extends Component {
 
 
         return (
-            <div>
+            <div style={{textAlign: "center"}}>
 				<div>{title}</div>
                 { isPro && <div class={chatStyle.info}>{_info}</div> }
 
                 <div style={{position: 'relative'}}>
-
                     <video class={chatStyle.callerStream}
-                        //style={{display: (isCalling || isSpeaking) ? 'block' : 'none' }}
                         ref={el => this.videoOutput = el}
                         autoPlay
-                        muted
-                        /*muted={videoOptions.muteSpeaker}*//>
+                        muted/>
                     <video class={chatStyle.calleeStream}
                         poster={person.avatar ? `${apiRoot}image/${person.avatar.id}` : "/assets/nouserimage.jpg"}
-                        //style={{display: (isSpeaking) ? 'block' : 'none' }}
                         ref={el => this.videoInput = el}
                         autoPlay
+                        muted={this.state.isCallerMuted}
                         />
+                </div>
+
+                <div class={style.controls}>
+                    {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
+                    <ControlBtn type={chatBtns.control.mute} clickHandler={this.muteAudio} isTurnOff={this.state.isAudioMuted}/>
+                    <ControlBtn type={chatBtns.control.speaker} clickHandler={this.muteCaller} isTurnOff={this.state.isCallerMuted}/>
                 </div>
 
                 {
@@ -94,14 +117,8 @@ class CallTab extends Component {
                             : 'Connecting to server'}
                     </div> 
                 }
-                
-                { isPro && this.props.isConnected && <button id={style.callPro} class={`uk-button ${style.userControlBtn}`} onClick={this.openCall}>Call Pro</button> }
 
-                {/*<div class={style.controls}>
-                    <ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>
-                    <ControlBtn type={chatBtns.control.mute} clickHandler={callControls.mute} isTurnOff={videoOptions.mute}/>
-                    <ControlBtn type={chatBtns.control.speaker} clickHandler={callControls.muteSpeaker} isTurnOff={videoOptions.muteSpeaker}/>
-                </div> */}
+                { isPro && this.props.isConnected && <button id={style.callPro} class={`uk-button ${style.userControlBtn}`} onClick={this.openCall}>Call Pro</button> }
             </div>
         )
     }
