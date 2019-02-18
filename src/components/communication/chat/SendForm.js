@@ -32,7 +32,7 @@ class SendForm extends Component {
 
     render(){
         return (<div class={style.sendForm}>
-            <textarea onKeyDown={this.keyHandler} onChange={this.changeHandler} value={this.state.value}/>
+            <textarea onKeyPress={this.keyHandler} onInput={this.changeHandler} value={this.state.value}/>
             <FontAwesome name="arrow-circle-right" size="3x" onClick={this.sendHandler}/>
         </div>)
     }
