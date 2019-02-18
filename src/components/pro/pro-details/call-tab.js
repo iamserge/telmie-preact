@@ -15,6 +15,8 @@ class CallTab extends Component {
         this.state = {
             isCallerMuted: false,
             isAudioMuted: false,
+
+            callSec: 0,
         };
     }
     componentDidMount(){
@@ -25,10 +27,13 @@ class CallTab extends Component {
         const { comModal : prevModal } = this.props;
         const { comModal : nextModal } = nextProps;
 
-        (prevModal.isSpeaking && !nextModal.isSpeaking) && this.setState({
-            isCallerMuted: false,
-            isAudioMuted: false,
-        });
+        (prevModal.isSpeaking && !nextModal.isSpeaking) && (
+            this.setState({
+                isCallerMuted: false,
+                isAudioMuted: false,
+            }),
+            this.undoCallSecInterval()
+        );
 
         (!prevModal.isIncoming && nextModal.isIncoming) 
             && nextProps.connection.setVideoElements(this.videoOutput, this.videoInput);
@@ -49,8 +54,19 @@ class CallTab extends Component {
         })
     }
 
+    undoCallSecInterval = () => {
+		clearInterval(this.callSecondsInterval);
+		this.callSecondsInterval = null;
+    }
+    setCallSecInterval = () => {
+        this.callSecondsInterval = setInterval(
+            () => this.setState(prev => ({ callSec: prev.callSec + 1})),
+            1000
+        );
+    }
+
     render(){
-        const { isPro, comModal, seconds, person } = this.props;
+        const { isPro, comModal, person } = this.props;
         const { isIncoming, isOutcoming, isBusy, isCalling, callInfo = {}, isSpeaking }  = comModal;
         const {error, info } = callInfo;
         const { costPerMinute : cpm = 0 } = person.pro || {};
@@ -61,7 +77,7 @@ class CallTab extends Component {
                 : isOutcoming ? 'Calling Pro' : isIncoming ? 'Telmie user is calling' : '';
         const _info = error ? info : 
             (isSpeaking && isOutcoming) ? (
-                cTime = secToMS(seconds),
+                cTime = secToMS(this.state.callSec),
                 `£${cpm}/min - ${!!cTime.m ? cTime.m + ':' : ''}${cTime.s} - £${cTime.s > 0 ? cpm * cTime.m + cpm : cpm * cTime.m}` 
             ) : (
                 (isBusy && !isCalling) ? 

@@ -40,8 +40,6 @@ export default class Pro extends Component {
 			total: 0,
 			currentPage: 1,
 
-			callSec: 0,
-
 			tabIndex: getDefaultTabIndex(props),
 		}
 
@@ -232,7 +230,6 @@ export default class Pro extends Component {
 							person={person}
 							isConnected={isConnected}
 							connection={this.props.connection}
-							seconds={this.state.callSec}
 							comModal={this.props.comModal}
 							rejectCall={this.rejectCall}
 							openCall={this.openCall}/>
