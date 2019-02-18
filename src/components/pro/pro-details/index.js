@@ -51,6 +51,7 @@ export default class Pro extends Component {
 
 	componentDidMount(){
 		this.scrollToHashElement();
+		this.props.isConnected ? this.getMessages(this.props) : this.setState({ isHistoryDelayed: true });
 	}
 	componentWillReceiveProps(nextProps){
 
@@ -66,9 +67,12 @@ export default class Pro extends Component {
 		);
 
 		!this.props.isConnected && nextProps.isConnected && this.state.isHistoryDelayed && (
-			this.getMessages(),
+			this.getMessages(nextProps),
 			this.setState({ isHistoryDelayed: false })
 		);
+
+		(!Object.keys(this.props.person).length && Object.keys(nextProps.person).length) 
+			&& nextProps.isConnected ? this.getMessages(nextProps) : this.setState({ isHistoryDelayed: true });
 
 		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
 			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
@@ -92,8 +96,7 @@ export default class Pro extends Component {
 							spy: true, smooth: true, duration: 500, offset: 0,
 						}),
 						clearInterval(this.scrollInterval),
-						this.scrollInterval = null,
-						this.props.isConnected ? this.getMessages() : this.setState({ isHistoryDelayed: true })
+						this.scrollInterval = null
 					)
 				}, 100)),
 			(hash.indexOf('call') + 1) &&
@@ -173,10 +176,10 @@ export default class Pro extends Component {
 		this.props.connection.rejectCall(isBusy);
 	}
 
-	getMessages = () => {
-		!this.props.isPro ? this.props.connection.getChatMessages(this.props.person.id, this.props.userData.id, this.props.offset) 
-			: this.props.connection.getChatMessages(this.props.userData.id, this.props.person.id, this.props.offset);
-		this.props.changeOffset();
+	getMessages = (props) => {
+		!props.isPro ? props.connection.getChatMessages(props.person.id, props.userData.id, props.offset) 
+			: props.connection.getChatMessages(props.userData.id, props.person.id, props.offset);
+		props.changeOffset();
 	}
 
 	makeCall = (props) => /*this.state.isConnected ? */
@@ -261,7 +264,10 @@ export default class Pro extends Component {
 						<div class={chatStyle.chatArea}>
 							<Element id="containerElement" style={{height: '100%', width: '100%', overflow: 'auto', paddingBottom: 15}} >
 							<ul class={chatStyle.messages} ref={el => this.containerElem = el} id="chatList">
-								{ !this.props.allHistoryReceived && <li class={chatStyle.getMoreWrapper} onClick={this.getMessages}><span>Get more</span></li> }
+								{ !this.props.allHistoryReceived 
+									&& <li class={chatStyle.getMoreWrapper} onClick={() => this.getMessages(this.props)}>
+										<span>Get more</span>
+									</li> }
 									{msgArr.map((el, i) => <Message {...el} 
 															isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
 															key={el.id || el.timestamp}/>
