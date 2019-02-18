@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { secToMS } from '../../../utils/index'
+import { secToMS, getTotalPrice } from '../../../utils/index'
 import { chatBtns } from '../../../utils/consts'
 import { apiRoot } from "../../../api";
 
@@ -26,6 +26,11 @@ class CallTab extends Component {
     componentWillReceiveProps(nextProps){
         const { comModal : prevModal } = this.props;
         const { comModal : nextModal } = nextProps;
+
+        (!prevModal.isSpeaking && nextModal.isSpeaking) && (
+            this.setState({ callSec: 0, }),
+            this.setCallSecInterval()
+        );
 
         (prevModal.isSpeaking && !nextModal.isSpeaking) && (
             this.setState({
@@ -75,15 +80,19 @@ class CallTab extends Component {
         const title = isSpeaking ? 'On call' 
             : isCalling ? 'Connecting'
                 : isOutcoming ? 'Calling Pro' : isIncoming ? 'Telmie user is calling' : '';
+
         const _info = error ? info : 
-            (isSpeaking && isOutcoming) ? (
+            this.state.callSec ? (
                 cTime = secToMS(this.state.callSec),
-                `£${cpm}/min - ${!!cTime.m ? cTime.m + ':' : ''}${cTime.s} - £${cTime.s > 0 ? cpm * cTime.m + cpm : cpm * cTime.m}` 
-            ) : (
-                (isBusy && !isCalling) ? 
-                    "Sorry, I'm busy now. Please text me & I will respond ASAP." 
-                    : !isIncoming && `You will pay £${cpm} per minute for this call`
-            );
+                `Time: ${cTime.m}:${cTime.s} - Total: £${getTotalPrice(cTime, cpm)}` )
+                : (isSpeaking && isOutcoming) ? (
+                    cTime = secToMS(this.state.callSec),
+                    `£${cpm}/min - ${cTime.m}:${cTime.s} - £${getTotalPrice(cTime, cpm)}` 
+                ) : (
+                    (isBusy && !isCalling) ? 
+                        "Sorry, I'm busy now. Please text me & I will respond ASAP." 
+                        : !isIncoming && `You will pay £${cpm} per minute for this call`
+                );
 
     //const _changeType = (type) => () => changeType(type);
 
@@ -98,7 +107,6 @@ class CallTab extends Component {
         return (
             <div style={{textAlign: "center"}}>
 				<div>{title}</div>
-                { isPro && <div class={chatStyle.info}>{_info}</div> }
 
                 <div style={{position: 'relative'}}>
                     <video class={chatStyle.callerStream}
@@ -112,6 +120,8 @@ class CallTab extends Component {
                         muted={this.state.isCallerMuted}
                         />
                 </div>
+
+                { isPro && <div class={chatStyle.info}>{_info}</div> }
 
                 <div class={style.controls}>
                     {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
@@ -134,7 +144,7 @@ class CallTab extends Component {
                     </div> 
                 }
 
-                { isPro && this.props.isConnected && <button id={style.callPro} class={`uk-button ${style.userControlBtn}`} onClick={this.openCall}>Call Pro</button> }
+                { isPro && !isCalling && !isSpeaking && this.props.isConnected && <button id={style.callPro} class={`uk-button ${style.userControlBtn}`} onClick={this.openCall}>Call Pro</button> }
             </div>
         )
     }

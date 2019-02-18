@@ -83,7 +83,11 @@ export function secToMS(sec = 0){
   const s = sec % 60;
   const m = (sec - s) / 60;
   
-  return {m, s};
+  return {m : m.toString().padStart(2, '0'), s : s.toString().padStart(2, '0')};
+}
+export function getTotalPrice(timeObj, cpm){
+  return timeObj.s > 0 ? cpm * timeObj.m + cpm : cpm * timeObj.m;
+
 }
 
 export function getIntervalStep(val){
