@@ -46,11 +46,6 @@ export const processCall = () => dispatch => dispatch({
     type: actionTypes.PROCESSING_CALL,
 })
 
-export const changeComType = (type) => dispatch => dispatch({
-    type: actionTypes.CHANGE_COMMUNICATION_TYPE,
-    modalType: type,
-});
-
 export const createCall = (cid, isPro, auth) => async (dispatch) => {
 	let response = await chatAPI.createCall(cid, isPro, auth);
 

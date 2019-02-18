@@ -41,18 +41,6 @@ export const communicateModal = (state = {...initialState}, action) => {
 				isSpeaking: false,
 				isPickUp: false,
             };
-        case actionTypes.CHANGE_COMMUNICATION_TYPE: 
-            return {
-                ...state,
-                type: action.modalType,
-                isOutcoming: false,
-				isIncoming: false,
-                isBusy: false,
-				isCalling: false,
-				isSpeaking: false,
-				isPickUp: false,
-                callInfo: {},
-            }
         case actionTypes.PROCESSING_CALL:
             return {
                 ...state,

@@ -7,7 +7,7 @@ import { chatBtns } from '../../../utils/consts'
 
 
 const Call = ({ 
-    communicateModal = {}, rejectCall, pickUp, changeType, videoOptions, callControls, ...props
+    communicateModal = {}, rejectCall, pickUp, ...props
 }) => {
     const { person = {}, isIncoming, isOutcoming, isBusy, isCalling, callInfo = {}, isSpeaking }  = communicateModal;
     const {error, info } = callInfo;
