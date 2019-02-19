@@ -55,7 +55,8 @@ export default class Pro extends Component {
 
 		const { chat: prevChat = {} } = this.props;
 		const { chat: nextChat = {} } = nextProps;
-
+		const { comModal : prevModal } = this.props;
+		const { comModal : nextModal } = nextProps;
 		(
 			(!prevChat.chat && nextChat.chat) 
 			|| (prevChat.chat && nextChat.chat && prevChat.chat.length !== nextChat.chat.length)
@@ -72,11 +73,17 @@ export default class Pro extends Component {
 		(!Object.keys(this.props.person).length && Object.keys(nextProps.person).length) 
 			&& nextProps.isConnected ? this.getMessages(nextProps) : this.setState({ isHistoryDelayed: true });
 
-		(this.props.comModal.type === consts.CALL && this.props.comModal.isOutcoming 
-			&& !this.props.comModal.isBusy && !nextProps.comModal.isBusy 
-			&& !this.props.comModal.isCalling && !nextProps.comModal.isCalling
-			&& nextProps.comModal.callInfo.callId)
+		(prevModal.type === consts.CALL && prevModal.isOutcoming 
+			&& !prevModal.isBusy && !nextModal.isBusy 
+			&& !prevModal.isCalling && !nextModal.isCalling && !nextModal.isSpeaking
+			&& nextModal.callInfo.callId)
 				&& this.makeCall(nextProps);
+		
+		(!prevModal.isPickUp && nextModal.isIncoming && nextModal.isPickUp) 
+			&& ( this.state.tabIndex === this.tabs.indexOf(consts.CALL_TAB) ?
+				this.props.connection.reqGranted()
+				: this.onTabSelect(this.tabs.indexOf(consts.CALL_TAB))
+			);
 	}
 	componentWillUnmount(){
 		clearInterval(this.scrollInterval);

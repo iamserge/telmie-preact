@@ -76,7 +76,6 @@ class Communication extends Component {
 	// new func
 	requestGranted = () => {
 		route(routes.CLIENT_FOR_COMP + this.props.comModal.person.id + '#call');
-		this.props.connection.reqGranted();
 		this.props.pickUp();
 	};
 

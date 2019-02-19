@@ -20,7 +20,12 @@ class CallTab extends Component {
         };
     }
     componentDidMount(){
-        this.props.comModal.isIncoming && this.props.connection.setVideoElements(this.videoOutput, this.videoInput);
+        const { comModal = {} } = this.props;
+        comModal.isIncoming && comModal.isPickUp 
+            && (
+                this.props.connection.reqGranted(),
+                this.props.connection.setVideoElements(this.videoOutput, this.videoInput)
+            );
     }
 
     componentWillReceiveProps(nextProps){
