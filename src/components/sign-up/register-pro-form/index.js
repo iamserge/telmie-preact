@@ -231,9 +231,10 @@ export default class RegisterProForm extends Component{
     }
     
     renderCompanyFields = (fieldsDisabled, isShow) => {
-		const { company = {}, } = this.state.regInfo;
+		console.log(this.state.regInfo);
+		const { company } = this.state.regInfo;
 		
-		return <div style = {isShow && {display: 'none'}}>
+		return company && <div style = {isShow && {display: 'none'}}>
 				<div className="input-container">
 					<label for="name">Business name</label>
 					<input type="text" name="name" value={company.name} disabled={fieldsDisabled} onChange={this.onChangeHandler} className="uk-input"/>
@@ -459,7 +460,7 @@ export default class RegisterProForm extends Component{
     
     render() {
 		const fieldsDisabled = this.state.regInfo.active === false;
-		const { company = {} } = this.state.regInfo;
+		const { company } = this.state.regInfo;
 		const { userInfo={}, userData, failureMessage } = this.props;
 
         return  (
@@ -495,7 +496,7 @@ export default class RegisterProForm extends Component{
 					onOk = {this.saveData}
 					onCancel={this.closeSaveModal}/>
 				
-				<Modal isVisible = {(this.state.isRegCompanyVisible && this.state.regInfo.accountType === accountTypes.COMPANY)}
+				{ company && <Modal isVisible = {(this.state.isRegCompanyVisible && this.state.regInfo.accountType === accountTypes.COMPANY)}
 					title='Enter tax ID to check'
 					okText="Check."
 					cancelText = "Cancel."
@@ -505,7 +506,7 @@ export default class RegisterProForm extends Component{
 					{(failureMessage.length > 0) && (
 						<div className={style.error} style={{ margin: 0, marginTop: 10 }}>{failureMessage}</div>
 					)}
-				</Modal>
+				</Modal> }
 			</div>)
     }
 }
