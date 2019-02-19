@@ -11,7 +11,7 @@ export const isCurrentUserRoute = (url, userId, isPro) => {
 
 	return (isProRoute || isClientRoute) ? (
 		urlSplit = url.split('/'),
-		urlSplit[urlSplit.length - 1] === userId.toString() ? 
+		urlSplit[urlSplit.length - 1].indexOf(userId.toString()) === 0 ? 
 			(isPro === isProRoute) : false		
 	) : false;
 }
