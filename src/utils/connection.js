@@ -203,6 +203,7 @@ class Connection{
                     this.props.processCall();
                     //timer ???
                     this.webRtcPeer = sendOfferData(this._curUserJID, this._calleeJID, this.msgGenSend, options, cInfo);
+                    this.setPeerStateControl(this.webRtcPeer.peerConnection);
                     break;
                 case 'offerData':
                     console.log('type - offerData');
@@ -216,6 +217,7 @@ class Connection{
                         (this.videoInput && this.videoOutput) && (
                             this.props.processCall(),
                             this.webRtcPeer = sendAnswerData(this._curUserJID, this._calleeJID, bodyInner, this.msgGenSend, options, cInfo),
+                            this.setPeerStateControl(this.webRtcPeer.peerConnection),
                             clearInterval(this.waitVideoElemsInterval),
                             this.waitVideoElemsInterval = null
                         )
@@ -260,9 +262,23 @@ class Connection{
                     }
                     this.webRtcPeer && this.webRtcPeer.addIceCandidate(candidate);
                     break;
+                case 'connectionLost':
+                    this.props.undoAutoFinishNotif();
+                    this.undoAutoFinish();
+                    this.stopCommunication();
+                    break;
             }
         }
         return true;
+    }
+
+    setPeerStateControl = (pc) => {
+        pc.oniceconnectionstatechange = () => this.connsectionIceStateCallback(pc);
+    }
+    connsectionIceStateCallback = (pc) => {
+        (pc) && (
+            pc.iceConnectionState === 'disconnected' && this.rtcConnectionLost()
+        );
     }
 
     // -- Timeouts start ---
@@ -361,13 +377,22 @@ class Connection{
     }
 
     stopCommunication = () => {
-		this.props.closeComModal();
+        this.props.closeComModal();
 		this.webRtcPeer && (
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
 		);
     }
     
+    rtcConnectionLost = () => {
+        this.props.undoAutoFinishNotif();
+        this.undoAutoFinish();
+
+        const cInfo = this.props.getCInfo() || {};
+		this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'rtcConnectionLost', callid: cInfo.callId});
+		this.stopCommunication();
+    }
+
     finishCall = () => {
         this.props.undoAutoFinishNotif();
         this.undoAutoFinish();
