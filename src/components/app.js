@@ -36,8 +36,8 @@ import {
 	caleeIsBusy,
 	processCall, speaking, 
 } from '../actions/chat'
+import Notification from "./communication/notification";
 
-import Strophe from 'npm-strophe'
 import Connection from '../utils/connection'
 import { setMessages, setUser, setMessageHistory, clearUserChat, isCurrentUserRoute } from '../utils/con-helpers'
 
@@ -91,6 +91,7 @@ class App extends Component {
 			received: -1,
 			users: {},
 			isConnected: false,
+			showNotif: false,
 		}
 
 		this.connection = new Connection({
@@ -106,6 +107,8 @@ class App extends Component {
 			caleeIsBusy: this.props.caleeIsBusy,
 			processCall: this.props.processCall,
 			speaking: this.props.speaking,
+			setAutoFinishNotif: this.setAutoFinishNotif,
+			undoAutoFinishNotif: this.undoAutoFinishNotif,
 
 		});
 	}
@@ -157,6 +160,20 @@ class App extends Component {
 		witRedirect && (person.isUserPro ? 
 			route(routes.PRO_FOR_COMP + person.id + '#chat') 
 			: route(routes.CLIENT_FOR_COMP + person.id + '#chat'));
+	}
+
+	hideNotif = () => {
+		this.setState({ showNotif: false });
+		clearTimeout(this.hideNotifTimeout);
+		this.hideNotifTimeout = null;
+	};
+	setAutoFinishNotif = () => {
+		this.hideNotifTimeout = setTimeout(this.hideNotif, 5000);
+		this.setState({ showNotif: true });
+	}
+	undoAutoFinishNotif = () => {
+		clearTimeout(this.hideNotifTimeout);
+		this.hideNotifTimeout = null;
 	}
 
 
@@ -272,6 +289,7 @@ class App extends Component {
 							: this.renderDefaultRoutes()}
 						<ErrorRoute default />
 					</Router>
+					<Notification isShown={this.state.showNotif} onClick={this.hideNotif}/>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
 				<Communication 

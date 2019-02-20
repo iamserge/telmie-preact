@@ -24,7 +24,6 @@ const GeneralInfo = ({ accountType, userData={}, onChangeHandler, isPending}) =>
             disabled={pro || isPending}
             onChange = {onChangeHandler}
             data = {accountTypeArr}/>
-        <em style={{display: "block", textAlign: "center", color: "gray"}}>Registration as a Company is coming soon.</em>
     </div>)
 }
 

@@ -191,7 +191,6 @@ class Connection{
                     this.undoAutoReject();
                     (cInfo.callerId === this._curUserId) ? 
                         this.props.caleeIsBusy() : this.props.closeComModal();
-                    
                     break;
                 case 'forbidden':
                     console.log('type - forbidden');
@@ -242,9 +241,10 @@ class Connection{
                     console.log('type - speaking');
                     this.props.speaking();
                     break;
-                /*case 'avtimeEnded':
+                case 'avtimeEnded':
+                    this.props.setAutoFinishNotif();
                     this.setAutoFinish();
-                    break;*/
+                    break;
                 case 'finished':
                     console.log('type - finished');
                     this.stopCommunication();
@@ -271,6 +271,14 @@ class Connection{
 	undoAutoReject = () => {
 		clearTimeout(this.autoRejectTimeout);
 		this.autoRejectTimeout = null;
+    }
+
+    setAutoFinish = () => {
+        this.autoFinishTimeout = setTimeout(this.finishCall, 60000);
+    }
+    undoAutoFinish = () => {
+		clearTimeout(this.autoFinishTimeout);
+		this.autoFinishTimeout = null;
     }
     // -- Timeouts end ---
 
@@ -353,21 +361,16 @@ class Connection{
     }
 
     stopCommunication = () => {
-		//this.undoCallSecInterval();
 		this.props.closeComModal();
 		this.webRtcPeer && (
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
 		);
-		/*this.setState({ options: {
-			mute: false,
-			video: false,
-			muteSpeaker: false,
-		}})*/
     }
     
     finishCall = () => {
-		//this.undoAutoFinish();
+        this.props.undoAutoFinishNotif();
+        this.undoAutoFinish();
 
         const cInfo = this.props.getCInfo() || {};
 		this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'finished', callid: cInfo.callId});

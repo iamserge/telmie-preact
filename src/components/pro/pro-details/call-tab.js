@@ -128,11 +128,11 @@ class CallTab extends Component {
 
                 { isPro && <div class={chatStyle.info}>{_info}</div> }
 
-                <div class={style.controls}>
+                { isSpeaking && <div class={style.controls}>
                     {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
                     <ControlBtn type={chatBtns.control.mute} clickHandler={this.muteAudio} isTurnOff={this.state.isAudioMuted}/>
                     <ControlBtn type={chatBtns.control.speaker} clickHandler={this.muteCaller} isTurnOff={this.state.isCallerMuted}/>
-                </div>
+                </div> } 
 
                 {
                     isSpeaking ? [

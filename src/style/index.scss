@@ -392,6 +392,7 @@ button.white-btn {
 .mainContainer {
 	height: calc(100% - 80px);
 	margin-top: 130px;
+	position: relative;
 	@media (max-width: 880px) {
 		margin-top: 64px;
 	}

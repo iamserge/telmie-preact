@@ -31,33 +31,13 @@ class Communication extends Component {
 
 	componentWillUnmount(){
 		this.autoRejectTimeout && this.undoAutoReject();
-		(this.autoFinishTimeout || this.hideNotifTimeout) && this.undoAutoFinish();
 		this.callSecondsInterval && this.undoCallSecInterval();
-	}
-
-
-	setAutoFinish = () => {
-		//this.autoFinishTimeout = setTimeout(this.finishCall, 60000);
-		this.hideNotifTimeout = setTimeout(this.hideNotif, 5000);
-		this.setState({ showNotif: true });
-	}
-	undoAutoFinish = () => {
-		clearTimeout(this.autoFinishTimeout);
-		clearTimeout(this.hideNotifTimeout);
-		this.autoFinishTimeout = null;
-		this.hideNotifTimeout = null;
 	}
 
 	undoCallSecInterval = () => {
 		clearInterval(this.callSecondsInterval);
 		this.callSecondsInterval = null;
 	}
-
-	hideNotif = () => {
-		this.setState({ showNotif: false });
-		clearTimeout(this.hideNotifTimeout);
-		this.hideNotifTimeout = null;
-	};
 
 	onClose = () => {
 		this.autoRejectTimeout && (
@@ -103,7 +83,6 @@ class Communication extends Component {
 				</div>
 			)}
 			<div class={style.closeBtn} onClick={this.onClose}/>
-			<Notification isShown={this.state.showNotif} onClick={this.hideNotif}/>
 		</div>)
   	}
 }

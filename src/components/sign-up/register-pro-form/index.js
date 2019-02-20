@@ -231,7 +231,6 @@ export default class RegisterProForm extends Component{
     }
     
     renderCompanyFields = (fieldsDisabled, isShow) => {
-		console.log(this.state.regInfo);
 		const { company } = this.state.regInfo;
 		
 		return company && <div style = {isShow && {display: 'none'}}>
