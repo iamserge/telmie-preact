@@ -49,8 +49,8 @@ export const ControlBtn = ({type, clickHandler, isTurnOff}) => {
             break;
     }
 
-    return src && (<div class={style.controlBtn}>
-        <img src={src} onClick={clickHandler}/>
+    return src && (<div class={style.controlBtn} onClick={clickHandler}>
+        <img src={src}/>
         { isTurnOff && <div class={style.lineThrough}/>}
     </div>)
 }
