@@ -1,4 +1,6 @@
 import { h } from 'preact';
+import FontAwesome from 'react-fontawesome';
+
 import style from './style.scss';
 import btnCallEnd from '../../../assets/btnCallEnd.png'
 import btnCallStart from '../../../assets/btnCallStart.png'
@@ -35,22 +37,27 @@ export const Btn = ({text, clickHandler}) => {
     </div>)
 }
 
-export const ControlBtn = ({type, clickHandler, isTurnOff}) => {
-    let src;
+export const ControlBtn = ({type, clickHandler, isTurnOff, isFullScreen}) => {
+    let el;
     switch (type){
         case chatBtns.control.mute:
-            src = btnControlMute;
+            el = <img src={btnControlMute}/>;
             break;
         case chatBtns.control.speaker:
-            src = btnControlSpeaker;
+            el = <img src={btnControlSpeaker}/>;
             break;
         case chatBtns.control.video:
-            src = btnControlVideo;
+            el = <img src={btnControlVideo}/>;
+            break;
+        case chatBtns.control.fullScreen:
+            el = isFullScreen ? 
+                <FontAwesome name="compress" size="3x" /> 
+                : <FontAwesome name="expand" size="3x" />
             break;
     }
 
-    return src && (<div class={style.controlBtn} onClick={clickHandler}>
-        <img src={src}/>
+    return el && (<div class={style.controlBtn} onClick={clickHandler}>
+        {el}
         { isTurnOff && <div class={style.lineThrough}/>}
     </div>)
 }

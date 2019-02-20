@@ -17,6 +17,9 @@ class CallTab extends Component {
             isAudioMuted: false,
 
             callSec: 0,
+
+            isFullScreen: false,
+            isFullScreenClass: false,
         };
     }
     componentDidMount(){
@@ -26,6 +29,9 @@ class CallTab extends Component {
                 this.props.connection.reqGranted(),
                 this.props.connection.setVideoElements(this.videoOutput, this.videoInput)
             );
+        document.fullscreenEnabled 
+            ? document.addEventListener('fullscreenchange', this.changeFullScreenMode) 
+            : document.addEventListener('keydown', this.escHandler);
     }
 
     componentWillReceiveProps(nextProps){
@@ -42,12 +48,25 @@ class CallTab extends Component {
                 isCallerMuted: false,
                 isAudioMuted: false,
             }),
-            this.undoCallSecInterval()
+            this.undoCallSecInterval(),
+            document.fullscreenEnabled ?
+                this.state.isFullScreen && this.setState({ isFullScreen: false })
+                : this.state.isFullScreenClass && this.setState({ isFullScreenClass: false, })
         );
 
         (!prevModal.isIncoming && nextModal.isIncoming) 
             && nextProps.connection.setVideoElements(this.videoOutput, this.videoInput);
     }
+
+    componentWillUnmount(){
+        document.fullscreenEnabled 
+            ? document.removeEventListener('fullscreenchange', this.changeFullScreenMode)
+            : document.removeEventListener('keydown', this.escHandler);
+    }
+
+    changeFullScreenMode = () => this.setState(prev => ({ isFullScreen: !prev.isFullScreen }));
+    escHandler = (e) => this.state.isFullScreenClass && e.keyCode == 27 
+        && this.setState({ isFullScreenClass: false, });
 
     openCall = () => {
         this.props.openCall(this.videoOutput, this.videoInput);
@@ -75,7 +94,17 @@ class CallTab extends Component {
         );
     }
 
+    fullScreen = () => {
+        document.fullscreenEnabled ? (
+            this.state.isFullScreen ? 
+                document.exitFullscreen() : this.videosContainer.requestFullscreen()
+        ) : (
+            this.setState(prev => ({ isFullScreenClass: !prev.isFullScreenClass }))
+        );
+    }
+
     render(){
+        const { callSec, isFullScreenClass, isCallerMuted, isAudioMuted, isFullScreen, } = this.state;
         const { isPro, comModal, person } = this.props;
         const { isIncoming, isOutcoming, isBusy, isCalling, callInfo = {}, isSpeaking }  = comModal;
         const {error, info } = callInfo;
@@ -87,11 +116,11 @@ class CallTab extends Component {
                 : isOutcoming ? 'Calling Pro' : isIncoming ? 'Telmie user is calling' : '';
 
         const _info = error ? info : 
-            this.state.callSec ? (
-                cTime = secToMS(this.state.callSec),
+            callSec ? (
+                cTime = secToMS(callSec),
                 `Time: ${cTime.m}:${cTime.s} - Total: £${getTotalPrice(cTime, cpm)}` )
                 : (isSpeaking && isOutcoming) ? (
-                    cTime = secToMS(this.state.callSec),
+                    cTime = secToMS(callSec),
                     `£${cpm}/min - ${cTime.m}:${cTime.s} - £${getTotalPrice(cTime, cpm)}` 
                 ) : (
                     (isBusy && !isCalling) ? 
@@ -99,21 +128,14 @@ class CallTab extends Component {
                         : !isIncoming && `You will pay £${cpm} per minute for this call`
                 );
 
-    //const _changeType = (type) => () => changeType(type);
-
-        const btns = (isBusy || error) ? 
-            [] : isOutcoming ? [{
-                txt: chatBtns.decline,
-                handler: (e) => this.props.rejectCall(),
-            }] : [];
-        
+    //const _changeType = (type) => () => changeType(type);        
 
 
         return (
-            <div style={{textAlign: "center"}}>
+            <div style={{textAlign: "center", position: 'relative'}}>
 				<div>{title}</div>
 
-                <div style={{position: 'relative'}}>
+                <div class={`${chatStyle.videosContainer} ${isFullScreenClass && chatStyle.fullScreen}`} ref={el => this.videosContainer = el}>
                     <video class={chatStyle.callerStream}
                         ref={el => this.videoOutput = el}
                         autoPlay
@@ -122,32 +144,27 @@ class CallTab extends Component {
                         poster={person.avatar ? `${apiRoot}image/${person.avatar.id}` : "/assets/nouserimage.jpg"}
                         ref={el => this.videoInput = el}
                         autoPlay
-                        muted={this.state.isCallerMuted}
+                        muted={isCallerMuted}
                         />
-                </div>
-
-                { isPro && <div class={chatStyle.info}>{_info}</div> }
-
-                { isSpeaking && <div class={style.controls}>
-                    {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
-                    <ControlBtn type={chatBtns.control.mute} clickHandler={this.muteAudio} isTurnOff={this.state.isAudioMuted}/>
-                    <ControlBtn type={chatBtns.control.speaker} clickHandler={this.muteCaller} isTurnOff={this.state.isCallerMuted}/>
-                </div> } 
-
-                {
-                    isSpeaking ? [
-                        <div style={{textAlign: 'center'}}></div>,
-                        <div class={chatStyle.btnArea}>
-                            <Btn text={chatBtns.finish} clickHandler={this.props.connection.finishCall}/>
-                        </div>
-                    ] 
-                        :
+                    { isPro && <div class={chatStyle.info}>{_info}</div> }
                     <div class={chatStyle.btnArea}>
-                        {this.props.isConnected ? 
-                            btns.map(el => <Btn text={el.txt} key={el.txt} clickHandler={el.handler}/>) 
-                            : 'Connecting to server'}
-                    </div> 
-                }
+                        {
+                            isSpeaking ? 
+                                <Btn text={chatBtns.finish} clickHandler={this.props.connection.finishCall}/>
+                                : this.props.isConnected ? 
+                                    (isBusy || error) && <Btn text={chatBtns.decline} clickHandler={this.props.rejectCall}/>
+                                    : 'Connecting to server'
+                        }
+                        { isSpeaking && <div class={chatStyle.controls}>
+                            {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
+                            <ControlBtn type={chatBtns.control.mute} clickHandler={this.muteAudio} isTurnOff={isAudioMuted}/>
+                            <ControlBtn type={chatBtns.control.speaker} clickHandler={this.muteCaller} isTurnOff={isCallerMuted}/>
+                            <ControlBtn type={chatBtns.control.fullScreen} clickHandler={this.fullScreen} isFullScreen={isFullScreen || isFullScreenClass}/>
+                        </div> } 
+                    </div>
+                    
+                    
+                </div>
 
                 { isPro && !isCalling && !isSpeaking && this.props.isConnected && <button id={style.callPro} class={`uk-button ${style.userControlBtn}`} onClick={this.openCall}>Call Pro</button> }
             </div>

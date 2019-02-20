@@ -379,6 +379,9 @@ button.white-btn {
 	border: none !important;
 }
 
+#drift-widget-container{
+	z-index: 1999 !important;
+}
 
 #app {
 	min-height: 500px;

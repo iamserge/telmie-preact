@@ -98,5 +98,6 @@ export const chatBtns = {
     speaker: 'speaker',
     video: 'video',
     mute: 'mute',
+    fullScreen: 'full-screen',
   }
 };
