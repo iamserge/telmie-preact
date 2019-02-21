@@ -115,7 +115,8 @@
     "simple-react-validator": "0.0.6",
     "uikit": "^3.0.0-beta.40",
     "uuid": "^3.3.2",
-    "velocity-animate": "^1.5.1"
+    "velocity-animate": "^1.5.1",
+    "webrtc-adapter": "^7.2.0"
   },
   "jest": {
     "verbose": true,

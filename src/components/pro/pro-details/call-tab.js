@@ -69,7 +69,7 @@ class CallTab extends Component {
         && this.setState({ isFullScreenClass: false, });
 
     openCall = () => {
-        this.props.openCall(this.videoOutput, this.videoInput);
+          this.props.openCall(this.videoOutput, this.videoInput);
     }
 
     muteCaller = () => {
@@ -152,7 +152,7 @@ class CallTab extends Component {
                             isSpeaking ? 
                                 <Btn text={chatBtns.finish} clickHandler={this.props.connection.finishCall}/>
                                 : this.props.isConnected ? 
-                                    (isBusy || error) && <Btn text={chatBtns.decline} clickHandler={this.props.rejectCall}/>
+                                    (!(isBusy || error)) && isOutcoming && <Btn text={chatBtns.decline} clickHandler={this.props.rejectCall}/>
                                     : 'Connecting to server'
                         }
                         { isSpeaking && <div class={chatStyle.controls}>

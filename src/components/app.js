@@ -30,6 +30,7 @@ import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
+import adapter from 'webrtc-adapter';
 import { RU, EN, IT, ES, PL, AE, PT, DE, langs } from "../utils/consts";
 import { 
 	openComModal, closeComModal, changeUnreadNum, chooseChatPerson, clearChats, getCallInfo,
@@ -137,6 +138,22 @@ class App extends Component {
 
 	componentDidMount(){
 		this.connection.initializeConnection(this.props);
+
+		if (navigator.mediaDevices === undefined) {
+			navigator.mediaDevices = {};
+		}
+		  
+		if (navigator.mediaDevices.getUserMedia === undefined) {
+			navigator.mediaDevices.getUserMedia = function(constraints) {
+				let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			
+				return (getUserMedia) ? 
+					new Promise(function(resolve, reject) {
+						getUserMedia.call(navigator, constraints, resolve, reject);
+					})
+					: Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+			}
+		}
 	}
 
 	componentWillReceiveProps(nextProps){

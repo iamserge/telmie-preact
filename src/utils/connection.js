@@ -30,6 +30,8 @@ class Connection{
         console.log('Connection props:',props);
 
         this.webRtcPeer;
+
+        this.localStream = null;
     };
 
     initializeConnection = (props) => {
@@ -347,10 +349,12 @@ class Connection{
         this.connection.send(m);
     }
 
-    setVideoElements = (videoOutput, videoInput) => {
+    setVideoElements = (videoOutput, videoInput, localStream) => {
         console.log("[setVideoElements]", videoOutput, videoInput);
         this.videoOutput = videoOutput;
-		this.videoInput = videoInput;
+        this.videoInput = videoInput;
+        
+        localStream && (this.localStream = localStream);
     }
 
     callRequest = (userID, callInfo) => {
@@ -369,19 +373,35 @@ class Connection{
         this._calleeJID = '';
         isBusy === true ? 
             this.props.caleeIsBusy() : this.props.closeComModal();
+        this.stopLocalStream();
     }
     
     reqGranted = () => {
-        const cInfo = this.props.getCInfo() || {};
-        this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'granted', callid: cInfo.callId});
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            .then((stream) => {
+                this.localStream = stream;
+                const cInfo = this.props.getCInfo() || {};
+                this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'granted', callid: cInfo.callId});
+            })
+            .catch(function(err) {
+                console.log(err.name + ": " + err.message);
+            });
     }
 
     stopCommunication = () => {
         this.props.closeComModal();
+        this.stopLocalStream();
 		this.webRtcPeer && (
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
 		);
+    }
+
+    stopLocalStream = () => {
+        this.localStream && (
+            this.localStream.getTracks().forEach(track => track.stop()),
+            this.localStream = null
+        );
     }
     
     rtcConnectionLost = () => {

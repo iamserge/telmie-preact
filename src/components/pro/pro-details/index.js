@@ -171,10 +171,18 @@ export default class Pro extends Component {
 	}
 
 	openCall = (videoOutput, videoInput) => {
-		this.props.createCall(this.props.person.id);
-		this.props.openComModal(consts.CALL, this.props.person, true);
+		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            .then((stream) => {
+                this.props.createCall(this.props.person.id);
+				this.props.openComModal(consts.CALL, this.props.person, true);
 
-		this.props.connection.setVideoElements(videoOutput, videoInput);
+				this.props.connection.setVideoElements(videoOutput, videoInput, stream);
+            })
+            .catch(function(err) {
+                console.log(err.name + ": " + err.message);
+			});
+			
+		
 	};
 
 	rejectCall = (isBusy = false) => {
