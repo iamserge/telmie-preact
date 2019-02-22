@@ -158,6 +158,16 @@
     margin-bottom: 20px;
 }
 
+.noCards{
+    text-align: center;
+    padding-top: 10px;
+
+    span{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
 @media (max-width: 880px) {
     .settingsPage{
         flex-direction: column;

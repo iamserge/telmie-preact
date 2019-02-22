@@ -2,10 +2,8 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import Card from "../card"
 import FontAwesome from 'react-fontawesome';
-import SimpleReactValidator from 'simple-react-validator';
-import ToggleItem from "../toggle-item"
-import ImageUploader from 'react-images-upload';
 import AccSettings from "./accaunt-settings";
+import CreditCard from "../credit-card";
 import { route } from "preact-router";
 import { apiRoot } from "../../api";
 import { changeDateISOFormat } from '../../utils/index'
@@ -21,6 +19,10 @@ class GeneralTab extends Component{
         }
     }
 
+    componentDidMount(){
+        this.props.getCards();
+    }
+
     componentWillReceiveProps(nextProps){
         this.setState({ loadingSettings: false, })
     }
@@ -34,7 +36,7 @@ class GeneralTab extends Component{
 	onSwitchWorkPro = () => {
 		this.setState({loadingSettings: true});
 		this.props.switchWorkingPro();
-	}
+    }
 
     renderGeneralInfo = () => {
         const {userData = {}} = this.props;
@@ -78,8 +80,10 @@ class GeneralTab extends Component{
     }
 
     render(){
-        const {userData = {}} = this.props;
-        const {name, lastName, pro, avatar } = userData;
+        const {userData = {}, creditCards = {}} = this.props;
+        const {name, lastName, avatar } = userData;
+        const {loading, cards, error, errorMsg} = creditCards;
+
     
         return (
             <div class={style.contentContainer}>
@@ -98,6 +102,23 @@ class GeneralTab extends Component{
                     </div>
     
                     {this.renderGeneralInfo()}
+                </Card>
+
+                <Card headerText='Credit card'>
+                    {loading ? 
+                        <div class={style.noCards}>Loading cards</div> 
+                        : !error && (
+                            cards.length ? 
+                                cards.map(card => (<CreditCard {...card} key={card.token}
+                                    addCard={this.props.addCard} 
+                                    deleteCard={this.props.deleteCard}/>))
+                                : <div class={style.noCards}>
+                                    No cards. <span onClick={this.props.addCard}>Add a card</span>
+                                </div>
+                        )
+                    }
+
+                    { errorMsg && <div>{errorMsg}</div> }
                 </Card>
 
                 <AccSettings userData = { userData } 

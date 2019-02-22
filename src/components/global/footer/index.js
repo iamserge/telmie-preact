@@ -49,7 +49,7 @@ export default class Footer extends Component {
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<div class={style.copyright}>Copyright &copy;2018 TELMIE UK LTD., London, UK</div>
-					<div style={{fontSize: 10}}>19.02.2019 16:09</div>
+					<div style={{fontSize: 10}}>21.02.2019 14:44</div>
 				</div>
 				<div className="uk-navbar-right" id={style.right}>
 					<nav id={style.footerLinks}>

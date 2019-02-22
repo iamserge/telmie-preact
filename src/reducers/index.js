@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
 	sendContactMessage: user.sendContactMessage,
 	locale: user.locale,
 	communicateModal: chat.communicateModal,
+	creditCards: user.creditCards,
 });
 
 export default rootReducer;

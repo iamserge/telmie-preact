@@ -3,6 +3,8 @@ import { api } from "prismic-javascript";
 export const host = 'sr461.2dayhost.com';
 //export const host = 'telmie.com';
 
+// remove date of build from Footer
+
 export const apiRoot = 'https://'+host+'/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
@@ -28,4 +30,6 @@ export const apiUrls = {
   CALLS: apiRoot + 'calls',
   CALL_HISTORY: (id) => apiRoot + 'calls/user/' + id,
   GET_COMPANY_TAX_ID: (id) => apiRoot + 'companies/' + id,
+  GET_CARDS: apiRoot + 'wallet/cards',
+  GET_STRIPE_KEY: apiRoot + 'wallet/token'
 }

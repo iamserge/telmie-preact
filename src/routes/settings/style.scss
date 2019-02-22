@@ -1,0 +1,25 @@
+@import './src/style/variables';
+
+.addCardModal{
+    width: 400px;
+
+    .label{
+        margin-bottom: 30px;
+        display: block;
+        font-size: 24px;
+    }
+
+    .cardElement{
+        margin-bottom: 30px;
+    }
+
+    .errMsg{
+        color: $red;
+        margin-top: 15px;
+    }
+
+    .addSuccess{
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+}
