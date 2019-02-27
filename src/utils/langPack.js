@@ -1,4 +1,4 @@
-import { EN, RU, IT, ES, PL, AE, PT, DE } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE, PT, DE, FR } from "../utils/consts";
 
 
 export const langPack = {
@@ -361,5 +361,50 @@ export const langPack = {
         },
         FAQ: 'FAQ',
         MORE_FAQ: 'Mehr FAQ',
+    },
+    [FR]: {
+        DOWNLOAD_APP_BTN: "Télécharger l'appli",//
+        HOMEPAGE_FAQ_TITLE: 'Questions les plus populaires',//
+        GENERAL_QUESTIONS: 'Questions Générales',
+        CUSTOMERS_QUESTIONS: 'Clients',//
+        EXPERTS_QUESTIONS: 'Experts',
+        PAYMENTS_QUESTIONS: 'Paiements',
+        BLOG_TITLE: 'Blog',
+        FULL_STORY_BTN: 'Histoire complète',//
+        OTHER_POSTS: 'Autres Posts',
+        HEADER: {
+            HOW_IT_WORKS: 'Comment ça marche',//
+            BECOME_PRO: 'Devenir un pro',//
+            BLOG: 'Blog',
+            FAQ: 'FAQ',
+            CONTACT: 'Nous contacter',
+        },
+        FOOTER: {
+            HOME: 'Accueil',
+            CONTACT: 'Nous contacter',
+            BLOG: 'Blog',
+            POLICY: 'Politique de Confidentialité',
+            TERMS: 'Modalités',
+            FAQ: 'FAQ',
+        },
+        CONTACT_US: {
+            title: 'Nous contacter',//
+            subTitle: 'Une question ? Écrivez-nous.',
+            name: 'Nom',
+            email: 'E-mail',
+            company: 'Société',
+            subject: 'Sujet',
+            message: 'Saisissez votre message',
+            success: 'Merci de nous avoir contacté',
+            submitBtn: 'Soumettre',
+        },
+        SERVICES: {
+            LANGUAGE_PRACTICE: "Pratique d'une langue",//
+            IMMIGRATION_CONSULTANT: 'Expert en Immigration',
+            IMMIGRATION_ADVICE: 'Conseils en immigration',//
+            LANGUAGE_LEARNERS: 'Apprentissage de langue',//
+        },
+        FAQ: 'FAQ',
+        MORE_FAQ: 'Plus de FAQ',
     },
 }

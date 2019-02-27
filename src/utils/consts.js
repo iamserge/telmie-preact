@@ -9,7 +9,8 @@ export const EN = 'en-us',
   PL = 'pl',
   AE = 'ar-ae',
   PT = 'pt-br',
-  DE = 'de-de';
+  DE = 'de-de',
+  FR = 'fr-fr';
 
 export const langs = {
   [EN]: {
@@ -59,6 +60,12 @@ export const langs = {
     lang: DE,
     name: 'de',
     emoji: '🇩🇪',
+  },
+  [FR]: {
+    code: 'fr',
+    lang: FR,
+    name: 'fr',
+    emoji: '🇫🇷',
   }
 };
 
