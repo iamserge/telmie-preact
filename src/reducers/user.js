@@ -286,33 +286,3 @@ export const sendContactMessage = (state = {errorMsg: '', isSent: false}, action
 			return state;
 	}
 };
-
-export const creditCards = (state = {cards: [], error: false, loading: false}, action) => {
-	switch (action.type) {
-
-		case actionTypes.MODIFYING_CARDS:
-			return {
-				...state,
-				cards: [],
-				loading: true,
-				error: false,
-				errorMsg: '',
-			}
-		case actionTypes.GETING_CARDS_SUCCESS:
-			return {
-				...state,
-				cards: action.cards,
-				loading: false,
-			}
-		case actionTypes.GETING_CARDS_FAILURE:
-			return {
-				...state,
-				error: true,
-				errorMsg: action.message,
-				loading: false,
-			}
-
-		default:
-			return state;
-	}
-};

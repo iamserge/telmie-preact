@@ -45,7 +45,7 @@ export default class Settings extends Component {
                 tabContent = <GeneralTab {...this.props}/>;
                 break;
             case 'pro':
-                tabContent = <ProDetailsTab userData={userData}/>;
+                tabContent = <ProDetailsTab {...this.props}/>;
                 break;
             case 'preview':
                 tabContent = <PreviewTab/>;

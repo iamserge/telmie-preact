@@ -6,9 +6,12 @@ import style from './style.scss';
 import Settings from '../../components/settings';
 import Modal from '../../components/modal';
 
-import { changeLocaleLangs, changeLocale, switchEmailNotif, switchWorkingPro, 
-	getCreditCards, deleteCreditCard, addCreditCard, } from '../../actions/user';
-import { getStripeKey } from "../../api/users";
+import { changeLocaleLangs, changeLocale, switchEmailNotif, switchWorkingPro, } from '../../actions/user';
+import {
+	getCreditCards, deleteCreditCard, addCreditCard, 
+	getBankAcc, deleteBankAcc, addBankAcc
+} from '../../actions/wallet';
+import { getStripeKey } from "../../api/wallet";
 import Spinner from '../../components/global/spinner';
 import { getCookie } from "../../utils";
 
@@ -19,6 +22,9 @@ class SettingsPage extends Component {
 		super(props);
 		this.state = {
 			cardName: '',
+
+			stripeBankMsg: '',
+			stripeBankErr: false,
 
 			addCardModal: false,
 			isSripeRedy: false,
@@ -74,11 +80,53 @@ class SettingsPage extends Component {
 	}
 	addCard = async () => {
 		this.setState({ addCardModal: true, });
+		let _userAuth,
+			publishableKey;
 
-		let _userAuth = this.getAuth();	
-		const publishableKey = await getStripeKey(_userAuth);
-		this.stripe = Stripe(publishableKey);
+		!this.stripe && (
+			_userAuth = this.getAuth(),
+			publishableKey = await getStripeKey(_userAuth),
+			this.stripe = Stripe(publishableKey)
+		);
 		this.setState({ isSripeRedy: true, });
+	}
+	
+	getBankAcc = () => {
+		let _userAuth = this.getAuth();		
+		this.props.getBankAcc(_userAuth);
+	}
+	deleteBankAcc = (token) => {
+		let _userAuth = this.getAuth();		
+		this.props.deleteBankAcc(token, _userAuth);
+	}
+	addBankAcc = async (routing_number, account_number, holder_name, holder_type, clearCallback) => {
+		this.setState({ stripeBankErr: false, stripeBankMsg: 'Adding new bank account...'});
+		let _userAuth,
+			publishableKey;
+
+		!this.stripe && (
+			_userAuth = this.getAuth(),
+			publishableKey = await getStripeKey(_userAuth),
+			this.stripe = Stripe(publishableKey)
+		);
+
+		this.stripe.createToken('bank_account', { 
+			country: 'GB',
+			currency: 'gbp',
+			routing_number,
+			account_number,
+			account_holder_name: holder_name,
+			account_holder_type: holder_type,
+		 }).then((result) => {
+			result.error ? 
+				this.setState({ stripeBankMsg: result.error.message || 'Error with Stripe.', stripeBankErr: true }) 
+				: (
+					this.setState({ stripeBankMsg: '', stripeBankErr: false }),
+					clearCallback(),
+					this.props.addBankAcc(result.token.id, this.getAuth())
+				);
+		});
+
 	}
 
 	closeCardModal = () => this.setState({ 
@@ -105,7 +153,7 @@ class SettingsPage extends Component {
 	}
 
 	render() {
-		const {userData = {}, creditCards ={}} = this.props;
+		const {userData = {}, creditCards ={}, bankAccounts = {}} = this.props;
 		const { loading, errorMsg } = creditCards;
 		return (
 			<div className="uk-container uk-container-small">
@@ -113,11 +161,20 @@ class SettingsPage extends Component {
 				{(Object.keys(userData).length != 0) ? (
                     <Settings userData = { this.props.userData }
 						switchEmailNotif = { this.switchEmailNotif }
+						switchWorkingPro={ this.switchWorkingPro }
+
 						getCards={this.getCards}
 						deleteCard={this.deleteCard}
 						addCard={this.addCard}
 						creditCards={creditCards}
-						switchWorkingPro={ this.switchWorkingPro }/>
+
+						getBankAcc={this.getBankAcc}
+						deleteBankAcc={this.deleteBankAcc}
+						addBankAcc={this.addBankAcc}
+						stripeBankMsg={this.state.stripeBankMsg}
+						stripeBankErr={this.state.stripeBankErr}
+						bankAccounts={bankAccounts}
+						/>
 				) : (
 					<Spinner />
 				)}
@@ -155,6 +212,7 @@ class SettingsPage extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	creditCards: state.creditCards,
+	bankAccounts: state.bankAccounts,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -165,6 +223,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getCreditCards,
 	deleteCreditCard,
 	addCreditCard,
+	getBankAcc,
+	deleteBankAcc,
+	addBankAcc
 }, dispatch);
 
 export default connect(

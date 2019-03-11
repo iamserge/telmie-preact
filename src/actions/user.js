@@ -126,18 +126,6 @@ const sendContactMessage = () => ({
 	type: actionTypes.SEND_CONTACT_MESS
 });
 
-const modifyingCards = () => ({
-	type: actionTypes.MODIFYING_CARDS
-});
-const getCardsSuccess = (cards) => ({
-	type: actionTypes.GETING_CARDS_SUCCESS,
-	cards,
-});
-const getCardsFailure = (message) => ({
-	type: actionTypes.GETING_CARDS_FAILURE,
-	message,
-});
-
 export const changeLocale = (lang) => dispatch => {
 	dispatch({
 		type: actionTypes.CHANGE_LOCALE,
@@ -307,32 +295,3 @@ export const sendContactData = (data) => async (dispatch) => {
 }
 
 export const clearContactData = () => (dispatch) => dispatch(sendContactMessage());
-
-export const getCreditCards = (authData) => async (dispatch) => {
-	dispatch(modifyingCards());
-
-	let response = await user.getCards(authData);
-
-	(response.error) ? 
-		dispatch(getCardsFailure(response.message || 'Error in getting cards.')) 
-		: dispatch(getCardsSuccess(response));
-}
-export const deleteCreditCard = (token, authData) => async (dispatch) => {
-	dispatch(modifyingCards());
-
-	let response = await user.deleteCard(token, authData);
-
-	(response.error) ? 
-		dispatch(getCardsFailure(response.message || 'Error in deleting a card.')) 
-		: dispatch(getCardsSuccess(response));
-}
-
-export const addCreditCard = (token, authData) => async (dispatch) => {
-	dispatch(modifyingCards());
-
-	let response = await user.addCard(token, authData);
-
-	(response.error) ? 
-		dispatch(getCardsFailure(response.message || 'Error in adding a card.')) 
-		: dispatch(getCardsSuccess(response));
-}

@@ -31,5 +31,6 @@ export const apiUrls = {
   CALL_HISTORY: (id) => apiRoot + 'calls/user/' + id,
   GET_COMPANY_TAX_ID: (id) => apiRoot + 'companies/' + id,
   GET_CARDS: apiRoot + 'wallet/cards',
+  GET_BANK_ACC: apiRoot + 'wallet/bank',
   GET_STRIPE_KEY: apiRoot + 'wallet/token'
 }

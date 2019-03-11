@@ -3,6 +3,7 @@ import { actionTypes } from '../actions';
 
 import * as user from './user';
 import * as chat from './chat';
+import * as wallet from './wallet'
 
 
 const rootReducer = combineReducers({
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
 	sendContactMessage: user.sendContactMessage,
 	locale: user.locale,
 	communicateModal: chat.communicateModal,
-	creditCards: user.creditCards,
+	creditCards: wallet.creditCards,
+	bankAccounts: wallet.bankAccount,
 });
 
 export default rootReducer;
