@@ -122,6 +122,12 @@ export const sendOfferData = (from, to, msgGenSend = ()=>{}, options = {}, cInfo
 	const webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(err){
 		err && console.log(err); // & setCallState(NO_CALL);
 
+		this.peerConnection.getSenders().forEach(element => {
+			element.track && element.track.kind === 'video' && (
+				element.track.enabled = false
+			);
+		});
+
 		this.generateOffer(function(err, offerSdp) {
 			err && console.log(err); // & setCallState(NO_CALL);
 			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'offerData', callid: cInfo.callId}, offerSdp);
@@ -135,6 +141,12 @@ export const sendAnswerData = (from, to, sdpOffer, msgGenSend = ()=>{}, options 
 	const webRtcPeer = kUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(err){
 		err && console.log(err); // & setCallState(NO_CALL);
 	
+		this.peerConnection.getSenders().forEach(element => {
+			element.track && element.track.kind === 'video' && (
+				element.track.enabled = false
+			);
+		});
+
 		this.processOffer(sdpOffer,(err, sdpAnswer) => {
 			err && console.log(err); // & setCallState(NO_CALL);
 			msgGenSend(from, to, 'vcxep', 'vcxep', {type: 'answerData', callid: cInfo.callId}, sdpAnswer);

@@ -15,6 +15,7 @@ class CallTab extends Component {
         this.state = {
             isCallerMuted: false,
             isAudioMuted: false,
+            isVideoMuted: true,
 
             callSec: 0,
 
@@ -82,6 +83,13 @@ class CallTab extends Component {
             return { isAudioMuted };
         })
     }
+    muteVideo = () => {
+        this.setState(prev => {
+            const isVideoMuted = !prev.isVideoMuted;
+            this.props.connection.muteVideo(isVideoMuted);
+            return { isVideoMuted };
+        })
+    }
 
     undoCallSecInterval = () => {
 		clearInterval(this.callSecondsInterval);
@@ -104,7 +112,7 @@ class CallTab extends Component {
     }
 
     render(){
-        const { callSec, isFullScreenClass, isCallerMuted, isAudioMuted, isFullScreen, } = this.state;
+        const { callSec, isFullScreenClass, isCallerMuted, isAudioMuted, isVideoMuted, isFullScreen, } = this.state;
         const { isPro, comModal, person } = this.props;
         const { isIncoming, isOutcoming, isBusy, isCalling, callInfo = {}, isSpeaking }  = comModal;
         const {error, info } = callInfo;
@@ -156,7 +164,7 @@ class CallTab extends Component {
                                     : 'Connecting to server'
                         }
                         { isSpeaking && <div class={chatStyle.controls}>
-                            {/*<ControlBtn type={chatBtns.control.video} clickHandler={callControls.video} isTurnOff={videoOptions.video}/>*/}
+                            <ControlBtn type={chatBtns.control.video} clickHandler={this.muteVideo} isTurnOff={isVideoMuted}/>
                             <ControlBtn type={chatBtns.control.mute} clickHandler={this.muteAudio} isTurnOff={isAudioMuted}/>
                             <ControlBtn type={chatBtns.control.speaker} clickHandler={this.muteCaller} isTurnOff={isCallerMuted}/>
                             <ControlBtn type={chatBtns.control.fullScreen} clickHandler={this.fullScreen} isFullScreen={isFullScreen || isFullScreenClass}/>

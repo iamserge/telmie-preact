@@ -93,7 +93,7 @@ class User extends Component {
 	}
 
     createCall = (cid, isPro = false) => this.props.isPro 
-		&& this.props.createCall(cid, isPro, this.props.userData.userAuth);
+		&& this.props.createCall(cid, isPro, this.props.userData.userAuth, this.props.connection.stopCommunication);
 		
 	changeOffset = (num = 0) => this.setState( prev => ({ 
 		offset: num ? num : prev.offset + consts.MES_HISTORY_SIZE ,

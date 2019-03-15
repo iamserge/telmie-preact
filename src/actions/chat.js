@@ -46,12 +46,13 @@ export const processCall = () => dispatch => dispatch({
     type: actionTypes.PROCESSING_CALL,
 })
 
-export const createCall = (cid, isPro, auth) => async (dispatch) => {
+export const createCall = (cid, isPro, auth, errCallback) => async (dispatch) => {
 	let response = await chatAPI.createCall(cid, isPro, auth);
 
-	(response.error) ? 
-		dispatch(createCallErrorAction(response))
-		: dispatch(createCallAction(response));
+	(response.error) ? (
+		dispatch(createCallErrorAction(response)),
+		errCallback && errCallback()
+	) : dispatch(createCallAction(response));
 };
 
 export const chooseChatPerson = (person) => (dispatch) => dispatch({

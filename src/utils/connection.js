@@ -188,6 +188,12 @@ class Connection{
                         this.props.openComModal(consts.CALL, person, false, true);
                     }
                     break;
+                case 'dis_video':
+                    console.log('dis_video');
+                    break;
+                case 'en_video':
+                    console.log('en_video');
+                    break;
                 case 'reject':
                     console.log('type - reject');
                     this.undoAutoReject();
@@ -223,8 +229,7 @@ class Connection{
                             clearInterval(this.waitVideoElemsInterval),
                             this.waitVideoElemsInterval = null
                         )
-                    }, 100);
-                    
+                    }, 100);                  
                     
                     break;
                 case 'answerData':
@@ -234,7 +239,7 @@ class Connection{
                     });
                     break;
                 case 'accept':
-                    console.log('type - accept');
+                    console.log('type - accept');                    
                     this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'speaking', callid: cInfo.callId});
                     /*this.callSecondsInterval = setInterval(
                         () => this.setState(prev => ({ callSec: prev.callSec + 1})),
@@ -425,6 +430,17 @@ class Connection{
     muteAudio = (isMuted) => {
         this.webRtcPeer.peerConnection.getSenders().forEach(element => {
             element.track && element.track.kind === 'audio' && (
+                element.track.enabled = !isMuted
+            );
+        });
+    }
+
+    muteVideo = (isMuted) => {
+        const cInfo = this.props.getCInfo() || {};
+        const type = isMuted ? 'dis_video' : 'en_video';
+		this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type, callid: cInfo.callId});
+        this.webRtcPeer.peerConnection.getSenders().forEach(element => {
+            element.track && element.track.kind === 'video' && (
                 element.track.enabled = !isMuted
             );
         });
