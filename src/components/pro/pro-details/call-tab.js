@@ -147,11 +147,13 @@ class CallTab extends Component {
                     <video class={chatStyle.callerStream}
                         ref={el => this.videoOutput = el}
                         autoPlay
+                        playsInline
                         muted/>
                     <video class={chatStyle.calleeStream}
                         poster={person.avatar ? `${apiRoot}image/${person.avatar.id}` : "/assets/nouserimage.jpg"}
                         ref={el => this.videoInput = el}
                         autoPlay
+                        playsInline
                         muted={isCallerMuted}
                         />
                     { isPro && <div class={chatStyle.info}>{_info}</div> }
