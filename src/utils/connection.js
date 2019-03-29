@@ -199,6 +199,7 @@ class Connection{
                     this.undoAutoReject();
                     (cInfo.callerId === this._curUserId) ? 
                         this.props.caleeIsBusy() : this.props.closeComModal();
+                    this.stopCommunication();
                     break;
                 case 'forbidden':
                     console.log('type - forbidden');

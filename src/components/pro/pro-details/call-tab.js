@@ -48,6 +48,7 @@ class CallTab extends Component {
             this.setState({
                 isCallerMuted: false,
                 isAudioMuted: false,
+                isVideoMuted: true,
             }),
             this.undoCallSecInterval(),
             document.fullscreenEnabled ?
