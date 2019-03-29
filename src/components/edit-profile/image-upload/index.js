@@ -48,6 +48,7 @@ export default class ImageUpload extends Component {
         if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
             return;
         }
+        console.log(this.cropper.getCroppedCanvas().toDataURL());
         this.cropper.getCroppedCanvas().toBlob(blob => {
             this.props.onDrop(blob);
         });
