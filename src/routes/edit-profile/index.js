@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import EditProfileForm from '../../components/edit-profile/edit-profile-form';
 import style from './style.scss';
-import { editDetails, uploadPhoto, changeLocaleLangs, changeLocale } from '../../actions/user';
+import { editDetails, uploadPhoto, clearuploadPhotoStatus, changeLocaleLangs, changeLocale } from '../../actions/user';
 import Spinner from '../../components/global/spinner';
 import { getCookie } from "../../utils";
 
@@ -42,6 +42,7 @@ class EditProfile extends Component {
 						userData = { this.props.userData } 
 						editDetails = { this.editDetails } 
 						uploadPhoto = { this.props.uploadPhoto }
+						clearuploadPhotoStatus = { this.props.clearuploadPhotoStatus }
 						/>
 				) : (
 					<Spinner />
@@ -63,6 +64,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	uploadPhoto,
 	changeLocaleLangs,
 	changeLocale,
+	clearuploadPhotoStatus,
 }, dispatch);
 
 export default connect(

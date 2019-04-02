@@ -69,6 +69,7 @@ export default class EditProfileForm extends Component {
 	render() {
 		const userData  = this.props.userData;
 		const { name, lastName } = this.state.userInfo;
+		const avatarID = (userData.avatar == null) ? null : userData.avatar.id;
 
 		if (!this.state.loading) {
 			return (
@@ -78,8 +79,8 @@ export default class EditProfileForm extends Component {
 					)}
 					<div className={style.imageContainer}>
 						<div className={style.image}>
-							{ (userData.avatar != null) ? (
-								<img src={apiRoot + 'image/' + userData.avatar.id} alt={userData.name + ' ' + userData.lastName} />
+							{ (avatarID !== null) ? (
+								<img src={apiRoot + 'image/' + avatarID} alt={userData.name + ' ' + userData.lastName} />
 							) : (
 								<img src="/assets/nouserimage.jpg" alt={userData.name + ' ' + userData.lastName} />
 							)}
@@ -94,7 +95,9 @@ export default class EditProfileForm extends Component {
 								maxFileSize={5242880}
 							/>*/}
 
-							<ImageUpload onDrop={this.onDrop} imgExtension={['jpg', 'png', 'gif']} maxFileSize={5242880}/>
+							<ImageUpload onDrop={this.onDrop} imgExtension={['jpg', 'jpeg', 'png', 'gif']} maxFileSize={5242880} 
+								clearuploadPhotoStatus = { this.props.clearuploadPhotoStatus }
+								avatarID = {avatarID} uploadFailure={userData.avatarUploadError}/>
 							
 							
 						</div>

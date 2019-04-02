@@ -274,20 +274,19 @@ export function resetPassword(data){
 
 export function uploadPhoto(authData, photo){
 	let headers = new Headers();
-	headers.append("Content-Type", "multipart/from-data");
+	//headers.append("Content-Type", "multipart/from-data");
 	headers.append("Authorization", "Basic " + authData);
-	/*let formData = new FormData();
-	formData.append('file', photo);*/
-	console.log('photo', photo);
-	return fetch(apiUrls.UPLOAD_PHOTO, { credentials: 'include', method: 'POST',  headers: headers, body: photo }).then(response => {
-    if (response.status === 401){
-			return {};
-		} else {
-			return {
-				success: true
-			};
-		}
+	let formData = new FormData();
+	formData.append('file', photo);
+	
 
+	return fetch(apiUrls.UPLOAD_PHOTO, { credentials: 'include', method: 'POST',  headers: headers, body: formData }).then(response => {
+	
+		return response.json().then(res => ({...res, error: response.status !== 201}))
+			.catch(err => {
+				console.log(err);
+				return { error: true }
+			});
 	}, error => {
 		throw new Error(error.message);
 	});

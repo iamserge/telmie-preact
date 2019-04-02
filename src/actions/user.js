@@ -249,9 +249,17 @@ export const getTransactions = (authData, num) => async (dispatch) => {
 
 
 export const uploadPhoto = (authData, photo) => async (dispatch) => {
-	const photoUrl = await user.uploadPhoto(authData, photo);
-	dispatch(photoUploaded(photoUrl));
+	const response = await user.uploadPhoto(authData, photo);
+	response.error ? 
+		dispatch({
+			type: actionTypes.PHOTO_UPLOAD_FAILURE,
+			errorMsg: response.message || 'Upload photo error!',
+		}) : dispatch(photoUploaded(response));
 };
+
+export const clearuploadPhotoStatus = () => (dispatch) => dispatch({
+	type: actionTypes.PHOTO_UPLOAD_CLEAR_STATUS,
+});
 
 
 export const sendCode = (email, reason) => async (dispatch) => {

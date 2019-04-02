@@ -4,6 +4,21 @@
     width: 900px;
     padding-left: 50px !important;
     padding-right: 50px !important;
+
+    .spinnerContainer{
+        max-height: 250px;
+        width: 250px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .errorContainer{
+        color: $red;
+        font-size: 18px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
     .test{
         display: flex;
         flex-wrap: wrap;

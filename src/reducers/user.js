@@ -23,6 +23,23 @@ export const loggedInUser = (state = {}, action) => {
 		case actionTypes.LOGGED_OFF:
 			return {};
 
+		case actionTypes.PHOTO_UPLOADED:
+			return {
+				...state,
+				avatar: action.photo,
+				avatarUploadError: '',				
+			}
+		case actionTypes.PHOTO_UPLOAD_FAILURE:
+			return {
+				...state,
+				avatarUploadError: action.errorMsg,
+			}
+		case actionTypes.PHOTO_UPLOAD_CLEAR_STATUS:
+			return {
+				...state,
+				avatarUploadError: '',
+			}
+
 		default:
 			return state;
 	}

@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import Modal from '../../modal';
+import Spinner from '../../global/spinner';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import style from './style.scss';
@@ -14,8 +15,33 @@ export default class ImageUpload extends Component {
             isVisible: false,
             file: '',
             cropResult: null,
+            loading: false,
+            error: "",
         }
     }
+
+    componentWillReceiveProps(nextProps){
+        (nextProps.avatarID !== this.props.avatarID) && this.resetState();
+
+        (nextProps.uploadFailure != this.props.uploadFailure) && (
+            this.setState({
+                loading: false,
+                error: nextProps.uploadFailure,
+            }),
+            this.fileUpload.value = ''
+        );
+    }
+
+    resetState = () => (
+        this.setState({
+            isVisible: false,
+            file: '',
+            cropResult: null,
+            loading: false,
+            error: "",
+        }),
+        this.fileUpload.value = ''
+    );
 
     onImgChange = (e) => {
 		let files;
@@ -36,19 +62,15 @@ export default class ImageUpload extends Component {
     }
     
     onCancel = () => {
-        this.setState({
-            isVisible: false,
-            file: '',
-            cropResult: null,
-        });
-        this.fileUpload.value = '';
-    }
+        this.props.clearuploadPhotoStatus();
+        this.resetState();
+    };
 
     onOk = () => {
         if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
             return;
         }
-        console.log(this.cropper.getCroppedCanvas().toDataURL());
+        this.setState({ isVisible: true, loading: true, error: '' });
         this.cropper.getCroppedCanvas().toBlob(blob => {
             this.props.onDrop(blob);
         });
@@ -68,7 +90,7 @@ export default class ImageUpload extends Component {
 
                 <Modal isVisible= {this.state.isVisible}
                     modalClass={style.modal}
-                    onCancel={this.onCancel}>
+                    onCancel={() => {}}>
                     <div class={style.test}>
                     <div class={style.cropperWrapper}>
                             <Cropper
@@ -83,10 +105,17 @@ export default class ImageUpload extends Component {
                     <div class={style.preview}>
                         <div className={`img-preview ${style.imgPreview}`}
                             ref={el => this.preview = el}/>
-                        <div class={style.btnsWrapper}>
-                            <button onClick={this.onOk} class='red-btn'>OK</button>
-                            <button onClick={this.onCancel}>Cancel</button>
-                        </div>
+                        {
+                            !this.state.loading ? (
+                                <div class={style.btnsWrapper}>
+                                    <button onClick={this.onOk} class='red-btn'>OK</button>
+                                    <button onClick={this.onCancel}>Cancel</button>
+                                    {this.state.error && <div class={style.errorContainer}>{this.state.error}</div> }
+                                </div>
+                            ) : (
+                                <div class={style.spinnerContainer}><Spinner /></div>
+                            )
+                        }
                     </div>
                     </div>
                 </Modal>
