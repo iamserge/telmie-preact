@@ -23,7 +23,7 @@ export default class Transactions extends Component {
 
 				<div className={style.inner}>
 					{ (!this.props.withoutBalance && !this.props.loading) && <div class={style.balanceLine}>
-						<BalanceItem balance={balance} text='Free credits'/>
+						<BalanceItem balance={balance} text='Telmie credit'/>
 						<BalanceItem balance={proBalance} text='Earnings'/>
 					</div> }
 

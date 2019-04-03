@@ -4,9 +4,7 @@ import style from './style.scss';
 const BalanceItem = ({balance = '', text, className = ''}) => {
     const balanceArr = balance.toString().split('.');
 
-    return balance === 0 ? 
-        <div>Free</div>
-        : balance && (
+    return (
         <div class={`${style.balanceItem} ${className}`}>
             <div class={style.balanceAmount}>
                 <span style={{fontSize: '36px'}}>£{balanceArr[0]}</span>
