@@ -54,6 +54,25 @@ export const bankAccount = (state = {banks: [], error: false, loading: false}, a
 				errorMsg: action.message,
 				loading: false,
 			}
+		
+		case actionTypes.VERIFICATION_ID_UPLOADED:
+			return {
+				...state,
+				verificationIdComplete: true,
+				verificationIdError: '',			
+			}
+		case actionTypes.VERIFICATION_ID_UPLOAD_FAILURE:
+			return {
+				...state,
+				verificationIdComplete: false,
+				verificationIdError: action.errorMsg,
+			}
+		case actionTypes.VERIFICATION_ID_STATUS_RESET:
+			return {
+				...state,
+				verificationIdComplete: false,
+				verificationIdError: '',
+			}
 
 		default:
 			return state;

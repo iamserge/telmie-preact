@@ -9,7 +9,7 @@ import Modal from '../../components/modal';
 import { changeLocaleLangs, changeLocale, switchEmailNotif, switchWorkingPro, } from '../../actions/user';
 import {
 	getCreditCards, deleteCreditCard, addCreditCard, 
-	getBankAcc, deleteBankAcc, addBankAcc
+	getBankAcc, deleteBankAcc, addBankAcc, uploadVerificationID, resetVerificationIdStatus
 } from '../../actions/wallet';
 import { getStripeKey } from "../../api/wallet";
 import Spinner from '../../components/global/spinner';
@@ -174,6 +174,9 @@ class SettingsPage extends Component {
 						stripeBankMsg={this.state.stripeBankMsg}
 						stripeBankErr={this.state.stripeBankErr}
 						bankAccounts={bankAccounts}
+
+						uploadVerificationID={this.props.uploadVerificationID}
+						resetVerificationIdStatus={this.props.resetVerificationIdStatus}
 						/>
 				) : (
 					<Spinner />
@@ -225,7 +228,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	addCreditCard,
 	getBankAcc,
 	deleteBankAcc,
-	addBankAcc
+	addBankAcc,
+	uploadVerificationID,
+	resetVerificationIdStatus,
 }, dispatch);
 
 export default connect(

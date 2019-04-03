@@ -32,5 +32,6 @@ export const apiUrls = {
   GET_COMPANY_TAX_ID: (id) => apiRoot + 'companies/' + id,
   GET_CARDS: apiRoot + 'wallet/cards',
   GET_BANK_ACC: apiRoot + 'wallet/bank',
-  GET_STRIPE_KEY: apiRoot + 'wallet/token'
+  GET_STRIPE_KEY: apiRoot + 'wallet/token',
+  VERIFICATION_ID: apiRoot + 'wallet/documentid',
 }

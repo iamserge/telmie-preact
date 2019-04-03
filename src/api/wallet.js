@@ -93,3 +93,23 @@ export function getStripeKey(authData){
 		})
 	})
 }
+
+export const uploadVerification = (authData, file) => {
+	let headers = new Headers();
+	//headers.append("Content-Type", "multipart/from-data");
+	headers.append("Authorization", "Basic " + authData);
+	let formData = new FormData();
+	formData.append('document', file);
+	
+
+	return fetch(apiUrls.VERIFICATION_ID, { credentials: 'include', method: 'POST',  headers, body: formData }).then(response => {
+	
+		return response.json().then(res => ({...res, error: response.status !== 200}))
+			.catch(err => {
+				console.log(err);
+				return { error: response.status !== 200 }
+			});
+	}, error => {
+		throw new Error(error.message);
+	});
+}

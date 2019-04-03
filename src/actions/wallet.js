@@ -86,3 +86,16 @@ export const addBankAcc = (token, authData) => async (dispatch) => {
 		dispatch(getBanksFailure(response.message || 'Error in adding a card.')) 
 		: dispatch(getBanksSuccess(response));
 }
+
+export const uploadVerificationID = (authData, file) => async (dispatch) => {
+	const response = await wallet.uploadVerification(authData, file);
+	response.error ? 
+		dispatch({
+			type: actionTypes.VERIFICATION_ID_UPLOAD_FAILURE,
+			errorMsg: response.message || 'Upload error!',
+		}) : dispatch({ type: actionTypes.VERIFICATION_ID_UPLOADED });
+};
+
+export const resetVerificationIdStatus = () => (dispatch) => dispatch({
+	type: actionTypes.VERIFICATION_ID_STATUS_RESET,
+});

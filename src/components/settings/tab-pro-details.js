@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import Card from "../card"
+import Spinner from '../global/spinner'
 import SimpleReactValidator from 'simple-react-validator'
 import BankItem from '../bank-account'
 import { route } from 'preact-router';
@@ -16,6 +17,10 @@ class ProDetailsTab extends Component {
         this.state = {
             routing_number: '',
             account_number: '',
+
+            uploading: false,
+            uploadError: '',
+            uploadSuccess: false,
         };
 
         this.validator = new SimpleReactValidator();
@@ -23,6 +28,27 @@ class ProDetailsTab extends Component {
 
     componentDidMount(){
         this.props.getBankAcc();
+    }
+
+    componentWillReceiveProps(nextProps){
+        const { verificationIdComplete, verificationIdError } = nextProps.bankAccounts;
+        const { verificationIdComplete : prevVerifiComplete, verificationIdError : prevVerifError } = this.props;
+        
+        (verificationIdComplete !== prevVerifiComplete && verificationIdComplete === true) && this.setState({
+            uploading: false,
+            uploadError: '',
+            uploadSuccess: true,
+        });
+
+        (verificationIdError !== prevVerifError) && this.setState({
+            uploadError: verificationIdError,
+            uploading: false,
+            uploadSuccess: false,
+        });
+    }
+
+    componentWillUnmount(){
+        this.props.resetVerificationIdStatus();
     }
 
     onEditPro = () => {
@@ -57,6 +83,21 @@ class ProDetailsTab extends Component {
 			this.validator.showMessages();
 			this.forceUpdate();
 		}
+    }
+
+    uploadHandler = (e) => {
+        let files = null;
+		if (e.dataTransfer) {
+            files = e.dataTransfer.files;
+		} else if (e.target) {
+		    files = e.target.files;
+        }
+        
+        if(files){
+            this.setState({ uploading: true, uploadError: '' });
+            this.props.uploadVerificationID(this.props.userData.userAuth, files[0]);
+            this.fileUpload.value = '';
+        }
     }
 
     render(){
@@ -255,11 +296,22 @@ class ProDetailsTab extends Component {
     
                     <Card headerText="ID Verification">
                         <div class={style.cardInfoText}>
-                            Please upload your ID to lift the £2,000 limit of your payouts. The ID should be either a UK passport or a UK driving licence in the name of Mykola Adeyev. 
+                            Please upload your ID to lift the £2,000 limit of your payouts. The ID should be either a UK passport or a UK driving licence in the name of {userData.name} {userData.lastName}. 
                         </div>
-                        <button className='uk-button' onClick={() => {}}>
-                            Upload
-                        </button>
+                        {
+                            !this.state.uploading ? [
+                                <label for="file-upload" class={style.chooseFileButton}>
+                                    Upload
+                                </label>,
+                                <input id="file-upload" type="file" style={{display: 'none'}} onChange={this.uploadHandler} ref={el => this.fileUpload = el}/>,
+                                this.state.uploadError && <div class={!this.state.uploadSuccess && style.errorContainer}>
+                                    {this.props.uploadSuccess ? 'Uploaded!' : this.state.uploadError}
+                                </div>
+                            ] : (
+                                <div class={style.spinnerContainer}><Spinner/></div>
+                            )
+                        }
+                        
                     </Card>
                 </div>
             )
