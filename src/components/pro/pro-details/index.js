@@ -244,6 +244,7 @@ export default class Pro extends Component {
 						<CallTab isPro={isPro}
 							person={person}
 							isConnected={isConnected}
+							userVideoStream = { this.props.userVideoStream }
 							connection={this.props.connection}
 							comModal={this.props.comModal}
 							rejectCall={this.rejectCall}

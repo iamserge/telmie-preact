@@ -122,7 +122,8 @@ class User extends Component {
 					<Spinner />
 				) : (
 					<ProDetails isPro = { isPro }
-                        person = { this.state.user }
+						person = { this.state.user }
+						userVideoStream = { this.props.userVideoStream }
                         connection={ this.props.connection }
                         isConnected={ isConnected }
                         userData = { userData } 

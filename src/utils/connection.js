@@ -61,9 +61,7 @@ class Connection{
     };
 
     onConnect = (status) => {		
-    
-        console.log('[onConnect] connection', { ...this.connection });
-    
+        
         if (status == Strophe.Strophe.Status.CONNECTED) {
             console.log('Strophe is connected.');
             this.connection.addHandler(this.onMessage, null, 'message', null, null, null);
@@ -190,9 +188,11 @@ class Connection{
                     break;
                 case 'dis_video':
                     console.log('dis_video');
+                    this.props.changeVideoStreamStatus(false);
                     break;
                 case 'en_video':
                     console.log('en_video');
+                    this.props.changeVideoStreamStatus(true);
                     break;
                 case 'reject':
                     console.log('type - reject');
@@ -216,10 +216,6 @@ class Connection{
                     break;
                 case 'offerData':
                     console.log('type - offerData');
-                    console.log('this._curUserJID', this._curUserJID);
-                    console.log('this._calleeJID', this._calleeJID);
-                    console.log('this.videoOutput', this.videoOutput);
-                    console.log('this.videoInput', this.videoInput);
 
                     this.waitVideoElemsInterval = setInterval(() => {
                         console.log('wait interval', this.videoInput, this.videoOutput);

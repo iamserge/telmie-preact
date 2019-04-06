@@ -93,6 +93,7 @@ class App extends Component {
 			users: {},
 			isConnected: false,
 			showNotif: false,
+			userVideoStream: false,
 		}
 
 		this.connection = new Connection({
@@ -104,13 +105,13 @@ class App extends Component {
 			getCInfo: () => this.props.communicateModal.callInfo,
 			getCallInfo: this.props.getCallInfo,
 			openComModal: this.props.openComModal,
-			closeComModal: this.props.closeComModal,
+			closeComModal: this.closeComModal,
 			caleeIsBusy: this.props.caleeIsBusy,
 			processCall: this.props.processCall,
 			speaking: this.props.speaking,
 			setAutoFinishNotif: this.setAutoFinishNotif,
 			undoAutoFinishNotif: this.undoAutoFinishNotif,
-
+			changeVideoStreamStatus: this.changeUserVideoStreamStatus,
 		});
 	}
 
@@ -135,6 +136,12 @@ class App extends Component {
 			}
 		},
 	}));
+
+	closeComModal = () => {
+		this.setState({ userVideoStream: false });
+		this.props.closeComModal();
+	}
+	changeUserVideoStreamStatus = (status) => this.setState({ userVideoStream: status });
 
 	componentDidMount(){
 		this.connection.initializeConnection(this.props);
@@ -230,6 +237,7 @@ class App extends Component {
 			received={this.state.received}
 			isConnected={this.state.isConnected}
 			chooseChatPerson={this.chooseChatPerson}
+			userVideoStream={this.state.userVideoStream}
 			connection={this.connection} />,
 	];
 
@@ -246,6 +254,7 @@ class App extends Component {
 			received={this.state.received}
 			isConnected={this.state.isConnected}
 			chooseChatPerson={this.chooseChatPerson}
+			userVideoStream={this.state.userVideoStream}
 			connection={this.connection} />,
 		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
@@ -286,8 +295,6 @@ class App extends Component {
 			userData : user  = {}, locale, communicateModal, openComModal, 
 		} = this.props;
 		const { unread : newChats } = communicateModal;
-
-		console.log('APP STATE', { ...this.state });
 
 		return (
 			<div id="app">

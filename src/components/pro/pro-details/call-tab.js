@@ -139,6 +139,7 @@ class CallTab extends Component {
 
     //const _changeType = (type) => () => changeType(type);        
 
+        const avatarLink = person.avatar ? `${apiRoot}image/${person.avatar.id}` : "/assets/nouserimage.jpg";
 
         return (
             <div style={{textAlign: "center", position: 'relative'}}>
@@ -149,14 +150,24 @@ class CallTab extends Component {
                         ref={el => this.videoOutput = el}
                         autoPlay
                         playsInline
-                        muted/>
-                    <video class={chatStyle.calleeStream}
-                        poster={person.avatar ? `${apiRoot}image/${person.avatar.id}` : "/assets/nouserimage.jpg"}
-                        ref={el => this.videoInput = el}
-                        autoPlay
-                        playsInline
-                        muted={isCallerMuted}
-                        />
+                        muted
+                        style={{ visibility: isVideoMuted ? "hidden" : "visible"}}/>
+                    <div class={chatStyle.calleeStreamWrapper}>
+                        <video class={chatStyle.calleeStream}
+                            poster={avatarLink}
+                            ref={el => this.videoInput = el}
+                            autoPlay
+                            playsInline
+                            muted={isCallerMuted}
+                            //style={{ visibility: this.props.userVideoStream ? "visible" : "hidden"}}
+                            />
+                        <div class={chatStyle.posterDiv} 
+                            style={{
+                                background: `url(${avatarLink}) center no-repeat`,
+                                visibility: this.props.userVideoStream ? "hidden" : "visible",
+                            }}/>
+                    </div>
+                    
                     { isPro && <div class={chatStyle.info}>{_info}</div> }
                     <div class={chatStyle.btnArea}>
                         {
