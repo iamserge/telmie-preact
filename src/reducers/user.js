@@ -7,12 +7,12 @@ export const loggedInUser = (state = {}, action) => {
 		case actionTypes.LOG_IN_SUCCESS:
 			user = action.userData;
 			user.userAuth = action.userAuth;
-			return user;
+			return { ...user };
 
 		case actionTypes.EDIT_SUCCESS:
 			user = action.userData;
 			user.userAuth = action.userAuth;
-			return user;
+			return { ...user };
 			
 		case actionTypes.EDIT_FAILURE:
 			return {

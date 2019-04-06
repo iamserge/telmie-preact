@@ -43,8 +43,8 @@ const photoUploaded = (photo) => ({
 
 const editSuccess = (response, userAuth) => ({
 	type: actionTypes.EDIT_SUCCESS,
-  userData: response,
-  userAuth: userAuth
+  	userData: response,
+  	userAuth,
 });
 const editFailure = () => ({
 	type: actionTypes.EDIT_FAILURE,
@@ -202,19 +202,19 @@ export const editDetails = (data, userAuth) => async (dispatch) => {
 	const response = await user.editDetails(data, userAuth);
 	(Object.keys(response).length === 0 || response.error) ?
 		dispatch(editFailure())
-		: dispatch(editSuccess(response, data.userAuth));
+		: dispatch(editSuccess(response, userAuth));
 };
 export const switchEmailNotif = (data, userAuth) => async (dispatch) => {
 	const response = await user.switchData(apiUrls.EMAIL_NOTIFICATIONS, data, userAuth);
 	(Object.keys(response).length === 0 || response.error) ?
 		dispatch(editFailure())
-		: dispatch(editSuccess(response, data.userAuth));
+		: dispatch(editSuccess(response, userAuth));
 };
 export const switchWorkingPro = (data, userAuth) => async (dispatch) => {
 	const response = await user.switchData(apiUrls.WORKING_PRO, data, userAuth);
 	(Object.keys(response).length === 0 || response.error) ?
 		dispatch(editFailure())
-		: dispatch(editSuccess(response, data.userAuth));
+		: dispatch(editSuccess(response, userAuth));
 };
 export const fetchRegistration = () => (dispatch) => {
 	dispatch(fetchingRegistration());
