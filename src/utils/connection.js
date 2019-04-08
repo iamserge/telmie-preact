@@ -27,10 +27,9 @@ class Connection{
         this.offsetAutoGetHistory = 0;
 
         this.props = props;
-        console.log('Connection props:',props);
 
         this.webRtcPeer;
-
+        this.candidates = [];
         this.localStream = null;
     };
 
@@ -205,6 +204,7 @@ class Connection{
                     console.log('type - forbidden');
                     this.undoAutoReject();
                     this.props.caleeIsBusy();
+                    this.candidates = [];
                     break;
                 case 'granted':
                     console.log('type - granted');
@@ -224,7 +224,12 @@ class Connection{
                             this.webRtcPeer = sendAnswerData(this._curUserJID, this._calleeJID, bodyInner, this.msgGenSend, options, cInfo),
                             this.setPeerStateControl(this.webRtcPeer.peerConnection),
                             clearInterval(this.waitVideoElemsInterval),
-                            this.waitVideoElemsInterval = null
+                            this.waitVideoElemsInterval = null,
+                            setTimeout(()=> {
+                                this.candidates.forEach(c => {
+                                    this.webRtcPeer.addIceCandidate(c, (...rest) => console.log('added candidate', c, ...rest));
+                                });
+                            })
                         )
                     }, 100);                  
                     
@@ -265,6 +270,12 @@ class Connection{
                         sdpMLineIndex: obj.index,
                     }
                     this.webRtcPeer && this.webRtcPeer.addIceCandidate(candidate);
+                    console.log("add ice candidate", !!this.webRtcPeer, candidate);
+                    if (!this.webRtcPeer) {
+                        this.candidates.push(candidate);
+                    } else {
+                        this.webRtcPeer && this.webRtcPeer.addIceCandidate(candidate);
+                    }
                     break;
                 case 'connectionLost':
                     this.props.undoAutoFinishNotif();
@@ -393,6 +404,7 @@ class Connection{
     stopCommunication = () => {
         this.props.closeComModal();
         this.stopLocalStream();
+        this.candidates = [];
 		this.webRtcPeer && (
 			this.webRtcPeer.dispose(),
 			this.webRtcPeer = null
