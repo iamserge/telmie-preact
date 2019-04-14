@@ -171,15 +171,18 @@ export default class Pro extends Component {
 	}
 
 	openCall = (videoOutput, videoInput) => {
-		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+		const { connection ={} } = this.props;
+		navigator.mediaDevices.getUserMedia(connection.mediaConstraints)
             .then((stream) => {
                 this.props.createCall(this.props.person.id);
 				this.props.openComModal(consts.CALL, this.props.person, true);
 
-				this.props.connection.setVideoElements(videoOutput, videoInput, stream);
+				connection.setVideoElements(videoOutput, videoInput, stream);
             })
-            .catch(function(err) {
-                console.log(err.name + ": " + err.message);
+            .catch((err) => {
+				connection.rejectCall();
+				connection.stopCommunication();
+				alert(err.name + ": " + err.message);
 			});
 			
 		

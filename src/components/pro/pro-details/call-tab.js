@@ -85,11 +85,12 @@ class CallTab extends Component {
         })
     }
     muteVideo = () => {
-        this.setState(prev => {
-            const isVideoMuted = !prev.isVideoMuted;
-            this.props.connection.muteVideo(isVideoMuted);
-            return { isVideoMuted };
-        })
+        this.props.connection.mediaConstraints.video &&
+            this.setState(prev => {
+                const isVideoMuted = !prev.isVideoMuted;
+                this.props.connection.muteVideo(isVideoMuted);
+                return { isVideoMuted };
+            })
     }
 
     undoCallSecInterval = () => {

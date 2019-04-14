@@ -174,3 +174,22 @@ export const videoCapture = (isDisabled, msgGenSend = ()=>{}, props) => {
 	const type = isDisabled ? "dis_video" : "en_video";
 	msgGenSend(address, 'vcxep', 'vcxep', {type, callid: callInfo.callId});
 }
+
+export const getMediaConstraints = () => {
+	return navigator.mediaDevices.enumerateDevices().then((deviceInfos) => {
+		let audio = false, video = false;
+
+		deviceInfos.forEach(device => {
+			(device.kind === 'videoinput') ? ( 
+				video = true 
+			) : (
+				(device.kind === 'audioinput') && ( audio = true )
+			);
+		});
+		
+		return { audio, video };
+	  }).catch(err => {
+		console.log('navigator.MediaDevices.getUserMedia error: ', err.message, err.name);
+		return { audio: true, video: false }
+	  });
+}

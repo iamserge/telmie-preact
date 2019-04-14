@@ -6,7 +6,7 @@ import { host } from "../api";
 import {
     processServerMsg, processChatMsg, processCallMsg,
     reqForbidden, sendOfferData, sendAnswerData, onIceCandidate,
-    encodeXMPPmessage,
+    encodeXMPPmessage, getMediaConstraints,
 } from './con-helpers'
 import { getCallDetails } from "../api/pros";
 
@@ -31,9 +31,11 @@ class Connection{
         this.webRtcPeer;
         this.candidates = [];
         this.localStream = null;
+
+        this.mediaConstraints = {video: false, audio: false};
     };
 
-    initializeConnection = (props) => {
+    initializeConnection = async (props) => {
         const {userData : user = {}} = props;
         if (Object.keys(user).length === 0) return;
     
@@ -41,6 +43,7 @@ class Connection{
         this._curUserId = id;
         this._curUserJID = generateJID(this._curUserId);
         this._userAuth = userAuth || getCookie('USER_AUTH');
+        this.mediaConstraints = await getMediaConstraints();
         this.connection.connect(this._curUserJID, '', this.onConnect);
         /*this.connection.rawInput = (data) => {
             console.log('rawInput:', data);
@@ -162,7 +165,8 @@ class Connection{
             const options = {
                 localVideo : this.videoOutput,
                 remoteVideo : this.videoInput,
-                onicecandidate : onIceCandidate(this._curUserJID, this._calleeJID, cInfo, this.msgGenSend)
+                onicecandidate : onIceCandidate(this._curUserJID, this._calleeJID, cInfo, this.msgGenSend),
+                mediaConstraints: this.mediaConstraints,
             };
     
             switch (type){
@@ -390,14 +394,16 @@ class Connection{
     }
     
     reqGranted = () => {
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        navigator.mediaDevices.getUserMedia(this.mediaConstraints)
             .then((stream) => {
                 this.localStream = stream;
                 const cInfo = this.props.getCInfo() || {};
                 this.msgGenSend(this._curUserJID, this._calleeJID, 'vcxep', 'vcxep', {type: 'granted', callid: cInfo.callId});
             })
-            .catch(function(err) {
-                console.log(err.name + ": " + err.message);
+            .catch((err) => {
+                this.rejectCall();
+                this.stopCommunication();
+                alert(err.name + ": " + err.message);
             });
     }
 

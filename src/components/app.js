@@ -144,7 +144,6 @@ class App extends Component {
 	changeUserVideoStreamStatus = (status) => this.setState({ userVideoStream: status });
 
 	componentDidMount(){
-		this.connection.initializeConnection(this.props);
 
 		if (navigator.mediaDevices === undefined) {
 			navigator.mediaDevices = {};
@@ -161,6 +160,7 @@ class App extends Component {
 					: Promise.reject(new Error('getUserMedia is not implemented in this browser'));
 			}
 		}
+		this.connection.initializeConnection(this.props);
 	}
 
 	componentWillReceiveProps(nextProps){
