@@ -22,8 +22,10 @@ export default class LogInForm extends Component {
 		this.setState({loading: false})
 	}
 	logIn = () => {
-		this.props.logIn(window.btoa(this.state.email + ':' + this.state.password));
-		this.setState({loading: true})
+		this.state.email === 'info@telmie.com' && (
+			this.props.logIn(window.btoa(this.state.email + ':' + this.state.password)),
+			this.setState({loading: true})
+		)
 	}
 	onChange(e){
 		let name = e.target.name,
