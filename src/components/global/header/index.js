@@ -184,12 +184,13 @@ class Header extends Component {
             )*/}
 
             { !isLogin  ? (
-              <nav>
+              null
+              /*<nav>
                 <ul class="uk-navbar-nav" >
                   <li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
                   <li><Link href={routes.LOG_IN}>Login</Link></li>
                 </ul>
-              </nav>
+              </nav>*/
             ) : (
               <div class={style.loggedInContainer}>
                 <div class="mobile-hide">
@@ -254,11 +255,12 @@ class Header extends Component {
             }
                 
             { !isLogin  ? (
-              <div>
+              null
+              /*<div>
                 <Hr color={'#5C636E'} height={1}/>
                 <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
                 <Link href={routes.LOG_IN}>Login</Link>
-              </div>
+              </div>*/
             ) : (
               <div>
                 <Hr color={'#5C636E'} height={1}/>
