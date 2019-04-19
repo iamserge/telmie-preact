@@ -4,121 +4,149 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { getCalls } from '../../api/users'
 import style from './style.scss';
-import { logIn } from '../../actions/user';
-import { route } from 'preact-router';
+import { changeLocaleLangs, changeLocale } from '../../actions/user';
 import AllActivity from '../../components/profile/all-activity';
-import Spinner from '../../components/global/spinner';
-import { processActivities } from '../../utils';
-const MAX_ITEMS = 10;
+import SimpleSearch from '../../components/simple-search'
+import SideBar from '../../components/search/sidebar';
 
+const MAX_ITEMS = 10;
+const proSortingItems = [{
+	name: 'Last activity date',
+	value: 'date'
+},{
+	name: 'Name',
+	value: 'name'
+},{
+	name: 'Profession',
+	value: 'trade'
+}];
 
 class Activity extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			proCalls: [],
-			isProCalls: this.props.isProCalls,
 			activity: [],
 			cutActivity: [],
 			currentPage: 1,
 			loading: false,
-		}
-		this.showConsultedMe = this.showConsultedMe.bind(this);
-		this.showConsulted = this.showConsulted.bind(this);
-		this.nextPage = this.nextPage.bind(this);
-		this.previousPage = this.previousPage.bind(this);
-		this.changePage = this.changePage.bind(this);
-		this.changeActivityPage = this.changeActivityPage.bind(this);
-	}
-	componentDidMount(){
-		if (this.props.userData.userAuth) {
-			let that = this;
-			this.setState({
-				loading: true
-			})
-			getCalls(this.props.userData.userAuth, this.state.isProCalls).then(function(data) {
-				let processed = processActivities(data);
-		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
-				});
-			}).catch(function(error) {
-					that.setState({
-						activity: [],
-						loading: false
-					})
-			});
+			sortBy: 'date',
+
+			isSearched: false,
+			sActivity: [],
+			sCutActivity: [],
 		}
 	}
-	nextPage(){
-		this.setState({
-			currentPage: this.state.currentPage++
-		});
-		this.changeActivityPage(this.state.currentPage++);
-	}
-	previousPage(){
-		this.setState({
-			currentPage: this.state.currentPage--
-		});
-		this.changeActivityPage(this.state.currentPage--);
-	}
-	changePage(page) {
-		this.setState({
-			currentPage: page
-		});
-		this.changeActivityPage(page);
-	}
-	changeActivityPage(page){
-		this.setState({
-			cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
-		})
-	}
 
-	showConsulted(){
-		this.setState({
-			proCalls: false
-		})
-	}
-	showConsultedMe(){
-		this.setState({
-			proCalls: true
-		})
-	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.userData.userAuth != this.props.userData.userAuth || this.props.isProCalls != nextProps.isProCalls) {
-			let that = this;
-
-			getCalls(nextProps.userData.userAuth, nextProps.isProCalls).then(function(data) {
-				let processed = processActivities(data);
-		    that.setState({
-					activity: processed,
-					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
-				});
-			}).catch(function(error) {
-					that.setState({
-						activity: [],
-						loading: false
-					})
-			});
-		} else {
+	onSearch = async (val) =>{
+		if (!val){
 			this.setState({
+				loading: false,
+				isSearched: false, 
+				sActivity: [],
+				sCutActivity: [],
+			});
+			return;
+		}
+
+		const _val = val.toLowerCase();
+
+		this.setState({ loading: true, isSearched: true, sActivity: [], sCutActivity: [] });
+
+		const result = await this.state.activity.filter(el => (el.lastName.toLowerCase().indexOf(_val) +1 || el.name.toLowerCase().indexOf(_val) +1));
+
+		this.setState({
+			loading: false,
+			currentPage: 1,
+			sActivity: result,
+			sCutActivity: result.slice(0, MAX_ITEMS)
+		});
+	}
+
+	getData = (props, sortBy = '') => {
+		this.setState({ loading: true, activity: [], cutActivity: [] });
+		getCalls(props.userData.userAuth, props.isProCalls, null, sortBy).then((data) => {
+			const { results  = []} = data;
+		   	this.setState({
+				loading: false,
+				activity: results,
+				cutActivity: results.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
+			});
+		}).catch((error) => {
+			console.log(error);
+			this.setState({
+				activity: [],
 				loading: false
 			})
-		}
+		});
+		
 	}
+	componentDidMount(){
+		(this.props.userData.userAuth) && this.getData(this.props);
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
+	}
+	nextPage = () => {
+		const currentPage = this.state.currentPage + 1;
+		this.setState({ currentPage });
+		this.changeActivityPage(currentPage);
+	}
+	previousPage = () => {
+		const currentPage = this.state.currentPage - 1;
+		this.setState({ currentPage });
+		this.changeActivityPage(currentPage);
+	}
+	changePage = (page) => {
+		this.setState({ currentPage: page });
+		this.changeActivityPage(page);
+	}
+	changeActivityPage = (page) => {
+		window.scrollTo(0,0);
+		this.state.isSearched ?
+			this.setState({
+				sCutActivity: this.state.sActivity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			})
+			: this.setState({
+				cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+			});			
+	}
+
+	showConsulted = () => this.setState({ proCalls: false });
+
+	showConsultedMe = () => this.setState({ proCalls: true });
+
+	componentWillReceiveProps(nextProps) {
+		(nextProps.userData.userAuth != this.props.userData.userAuth 
+			|| this.props.isProCalls != nextProps.isProCalls) &&
+			this.getData(nextProps);
+	}
+
+	sortToggleSwitched = (sortBy) => {
+		this.setState({ sortBy });
+		this.getData(this.props, sortBy);
+	}
+
 	render() {
-		const user = this.props.userData;
+		const allActivity = this.state.isSearched ? this.state.sActivity : this.state.activity,
+			activity = this.state.isSearched ? this.state.sCutActivity : this.state.cutActivity;
+
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>
 					 { this.props.isProCalls ? "My Clients" : "My Pros"}
 				</h1>
+				{ !this.props.isProCalls && <SideBar style={{marginTop: 40}} 
+												items={proSortingItems}
+												disabled={this.state.loading}
+												sortToggleSwitched = { this.sortToggleSwitched } 
+												sortBy = { this.state.sortBy }/> }
+				{ this.props.isProCalls && <SimpleSearch onSearch={this.onSearch}
+														placeholder='Find a client'/> }
 				<AllActivity
 					showConsultedMe = { this.showConsultedMe }
 					showConsulted = { this.showConsulted }
-					activity = { this.state.cutActivity }
-					allActivity = { this.state.activity }
+					activity = { activity }
+					allActivity = { allActivity }
 					currentPage = { this.state.currentPage }
 					client = {this.props.isProCalls}
 					loading = { this.state.loading }
@@ -141,8 +169,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	getCalls
-
+	getCalls,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

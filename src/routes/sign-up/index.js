@@ -17,11 +17,9 @@ class SignUp extends Component {
 		this.fetchPage(this.props);
 	}
 	fetchPage= (props) => {
+		window.scrollTo(0, 0);
 		props.changeLocale();
 		props.changeLocaleLangs([]);
-	}
-	componentWillReceiveProps(nextProps){
-		
 	}
 	render() {
 

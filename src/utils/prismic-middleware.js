@@ -179,6 +179,7 @@ export function processAuthorInfo(postData){
         return null;
     }
 }
+
 export function processBlogBtn(postData){
     try{
         let link = postData.primary.button_link;
@@ -193,6 +194,7 @@ export function processBlogBtn(postData){
         return {};
     }
 }
+
 const processDate = (date, locale = "en-us") => {
     let dateObj = new Date(date);
     

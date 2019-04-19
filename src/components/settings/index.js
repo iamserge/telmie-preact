@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import Card from "./card"
+import Card from "../card"
 
 import ProDetailsTab from './tab-pro-details'
 import GeneralTab from './tab-general'
@@ -42,12 +42,10 @@ export default class Settings extends Component {
 
         switch (this.state.activeLink) {
             case 'general':
-                tabContent = <GeneralTab userData={userData}
-                                        editDetails={this.props.editDetails}
-                                        uploadPhoto={this.props.uploadPhoto}/>;
+                tabContent = <GeneralTab {...this.props}/>;
                 break;
             case 'pro':
-                tabContent = <ProDetailsTab userData={userData}/>;
+                tabContent = <ProDetailsTab {...this.props}/>;
                 break;
             case 'preview':
                 tabContent = <PreviewTab/>;

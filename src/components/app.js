@@ -5,17 +5,14 @@ import Header from './global/header';
 import Footer from './global/footer';
 import Home from '../routes/home';
 import Search from '../routes/search';
-import Pro from '../routes/pro';
+import User from '../routes/user';
 import StaticPage from '../routes/static-page';
 import LogIn from '../routes/log-in';
-import LogOut from '../routes/log-in/log-out';
 import SignUp from '../routes/sign-up';
 import LogInOrSignup from '../routes/login-or-signup';
-import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
-import Shortlist from '../routes/shortlist';
 import ForgotPassword from '../routes/forgot-password';
 import SettingsPage from '../routes/settings';
 import RegisterPro from '../routes/register-pro';
@@ -26,13 +23,24 @@ import BlogPage from '../routes/blog';
 import LanguagePractice from '../routes/language-practice';
 import ImmigrationLaw from '../routes/immigration-law';
 import LanguageLearners from '../routes/language-learners';
+import Communication from "./communication/communication-component"
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids, types, tags } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import ReactGA from 'react-ga';
+import adapter from 'webrtc-adapter';
 import { RU, EN, IT, ES, PL, AE, PT, DE, FR, langs } from "../utils/consts";
+import { 
+	openComModal, closeComModal, changeUnreadNum, chooseChatPerson, clearChats, getCallInfo,
+	caleeIsBusy,
+	processCall, speaking, 
+} from '../actions/chat'
+import Notification from "./communication/notification";
+
+import Connection from '../utils/connection'
+import { setMessages, setUser, setMessageHistory, clearUserChat, isCurrentUserRoute } from '../utils/con-helpers'
 
 import 'animate.css'
 
@@ -42,6 +50,8 @@ export const routes = {
 	SEARCH_FOR_COMP: '/search/',
 	PRO: '/pro/:userId',
 	PRO_FOR_COMP: '/pro/',
+	CLIENT: '/client/:userId',
+	CLIENT_FOR_COMP: '/client/',
 	FAQ: '/help',
 	FAQ_LINK: '/#faq',
 	TERMS: '/terms',
@@ -52,10 +62,8 @@ export const routes = {
 	BECOME_PRO_LINK: '/#become-pro',
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
-	PROFILE: '/profile',
 	MY_PROS: '/my-pros',
 	MY_CLIENTS: '/my-clients',
-	MY_SHORTLIST: '/my-shortlist',
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile',
 	LOGIN_OR_SIGNUP: '/login-or-signup',
@@ -79,8 +87,120 @@ class App extends Component {
 		this.state = {
 			prismicCtx: null,
 			currentUrl: "",
+
+			chats: {},
+			received: -1,
+			users: {},
+			isConnected: false,
+			showNotif: false,
+			userVideoStream: false,
 		}
+
+		this.connection = new Connection({
+			setMsg: this.setMsg,
+			setMsgHistory: this.setMsgHistory,
+			setUsr: this.setUsr,
+			changeUnreadNum: this.props.changeUnreadNum,
+			changeConnectedState: (isConnected) => this.setState({ isConnected }),
+			getCInfo: () => this.props.communicateModal.callInfo,
+			getCallInfo: this.props.getCallInfo,
+			openComModal: this.props.openComModal,
+			closeComModal: this.closeComModal,
+			caleeIsBusy: this.props.caleeIsBusy,
+			processCall: this.props.processCall,
+			speaking: this.props.speaking,
+			setAutoFinishNotif: this.setAutoFinishNotif,
+			undoAutoFinishNotif: this.undoAutoFinishNotif,
+			changeVideoStreamStatus: this.changeUserVideoStreamStatus,
+		});
 	}
+
+	setMsg = (userId, isPro, id, msg, isMy = false) => {
+		isCurrentUserRoute(this.state.currentUrl, userId, isPro) 
+			&& this.setState(prev => setMessages(id, msg, isMy, prev));
+	}
+	setMsgHistory = (id, msgArr, count) => this.setState(prev => setMessageHistory(id, msgArr, count, prev));
+	setUsr = (user) => {
+		!isCurrentUserRoute(this.state.currentUrl, user.id, user.isUserPro)  
+		&&  this.setState(prev => setUser(user, prev));
+	};
+	clearChat = (userId) => this.setState(prev => clearUserChat(userId, prev));
+	setDisplayedStatus = (userJID) => this.setState(prev => ({
+		chats: {
+			...prev.chats, 
+			[userJID]: {
+				...prev.chats[userJID],
+				isDisplayed: true,
+				mesId: '',
+				thread: '',
+			}
+		},
+	}));
+
+	closeComModal = () => {
+		this.setState({ userVideoStream: false });
+		this.props.closeComModal();
+	}
+	changeUserVideoStreamStatus = (status) => this.setState({ userVideoStream: status });
+
+	componentDidMount(){
+
+		if (navigator.mediaDevices === undefined) {
+			navigator.mediaDevices = {};
+		}
+		  
+		if (navigator.mediaDevices.getUserMedia === undefined) {
+			navigator.mediaDevices.getUserMedia = function(constraints) {
+				let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			
+				return (getUserMedia) ? 
+					new Promise(function(resolve, reject) {
+						getUserMedia.call(navigator, constraints, resolve, reject);
+					})
+					: Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+			}
+		}
+		this.connection.initializeConnection(this.props);
+	}
+
+	componentWillReceiveProps(nextProps){
+		const {userData : prevUser = {}} = this.props;
+		const isPrevLogedIn = !!Object.keys(prevUser).length;
+		(!isPrevLogedIn) && this.connection.initializeConnection(nextProps);
+
+		(isPrevLogedIn && Object.keys(nextProps.userData).length === 0) 
+			&& (
+				this.connection.disconnect(),
+				this.setState({ chats: {}, users: {} }),
+				this.props.clearChats()
+			);
+	}
+
+	chooseChatPerson = (person, witRedirect = true ) => {
+		let users = { ...this.state.users };
+		delete users[person.id];
+		this.setState({ users });
+		this.props.chooseChatPerson(person);
+		witRedirect && (person.isUserPro ? 
+			route(routes.PRO_FOR_COMP + person.id + '#chat') 
+			: route(routes.CLIENT_FOR_COMP + person.id + '#chat'));
+	}
+
+	hideNotif = () => {
+		this.setState({ showNotif: false });
+		clearTimeout(this.hideNotifTimeout);
+		this.hideNotifTimeout = null;
+	};
+	setAutoFinishNotif = () => {
+		this.hideNotifTimeout = setTimeout(this.hideNotif, 5000);
+		this.setState({ showNotif: true });
+	}
+	undoAutoFinishNotif = () => {
+		clearTimeout(this.hideNotifTimeout);
+		this.hideNotifTimeout = null;
+	}
+
+
 
 	componentWillMount() {
 		ReactGA.initialize('UA-127710081-1');
@@ -90,7 +210,6 @@ class App extends Component {
 			console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
 		});
   	}
-
 
 	handleRoute = e => {
 		ReactGA.pageview(e.url);
@@ -110,36 +229,37 @@ class App extends Component {
 	renderProRoutes = () => [
 		...this.renderUserRoutes(),
 		<Activity path={routes.MY_CLIENTS} isProCalls = { true } />,
+		<User path={routes.CLIENT} isPro={false}
+			chats={this.state.chats}
+			users={this.state.users}
+			clearChat={this.clearChat}
+			setDisplayedStatus={this.setDisplayedStatus}
+			received={this.state.received}
+			isConnected={this.state.isConnected}
+			chooseChatPerson={this.chooseChatPerson}
+			userVideoStream={this.state.userVideoStream}
+			connection={this.connection} />,
 	];
 
-	/*renderUserRoutes = () => [
+	renderUserRoutes = () => [
 		...this.renderDefaultRoutes(),
 		<Search path={routes.SEARCH} />, 
 		<Activity path={routes.MY_PROS} isProCalls = { false } />,
 		<AllTransactions path={routes.TRANSACTIONS} />,
-		<Pro path={routes.PRO} />,
-		<Shortlist path={routes.MY_SHORTLIST} />,
-		<Profile path = { routes.PROFILE } />,
-		<EditProfile path = { routes.EDIT_PROFILE } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+		<User path={routes.PRO} isPro={true}
+			chats={this.state.chats}
+			users={this.state.users}
+			clearChat={this.clearChat} 
+			setDisplayedStatus={this.setDisplayedStatus}
+			received={this.state.received}
+			isConnected={this.state.isConnected}
+			chooseChatPerson={this.chooseChatPerson}
+			userVideoStream={this.state.userVideoStream}
+			connection={this.connection} />,
+		<EditProfile path = { routes.EDIT_PROFILE } />,
 		<RegisterPro path = { routes.REGISTER_PRO } />,
 		<SettingsPage path = { routes.SETTINGS }/>
-	];*/
-	renderUserRoutes = () => [
-		...this.renderDefaultRoutes(),
-		<Search path={routes.SEARCH} />, 
-		<Pro path={routes.PRO} />,
 	];
-
-	/*renderDefaultRoutes = () => [
-		...this.renderLangRoutes(langs[EN].code),
-		...this.renderLangRoutes(langs[RU].code),
-		...this.renderLangRoutes(langs[IT].code),
-
-		<LogIn path = { routes.LOG_IN } />,
-		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
-		<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
-		<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
-	];*/
 
 	renderDefaultRoutes = () => [
 		...this.renderLangRoutes(langs[EN].code),
@@ -153,7 +273,9 @@ class App extends Component {
 		...this.renderLangRoutes(langs[FR].code),
 
 		<LogIn path = { routes.LOG_IN } />,
-		<LogOut path = '/log-out' />
+		<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>,
+		<LogInOrSignup path = { routes.LOGIN_OR_SIGNUP } />,
+		<ForgotPassword path = { routes.FORGOT_PASSWORD } />,
 	];
 
 	renderLangRoutes = (lang) => ([
@@ -167,23 +289,43 @@ class App extends Component {
 		<StaticPage path = { langRoutes(lang, routes.TERMS) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.TERMS}/>,
 		<StaticPage path = { langRoutes(lang, routes.PRIVACY) } prismicCtx = { this.state.prismicCtx } type={types.STATIC_PAGE} tag={tags.PRIVACY} />,
 		<ContactRoute path = { langRoutes(lang, routes.CONTACT_US) }/>,
-	])
+	]);
 
 	render() {
-		const {userData : user  = {}, locale} = this.props;
+		const {
+			userData : user  = {}, locale, communicateModal, openComModal, 
+		} = this.props;
+		const { unread : newChats } = communicateModal;
 
 		return (
 			<div id="app">
-				<Header locale={locale} currentUrl = {this.state.currentUrl} prismicCtx = { this.state.prismicCtx } uid = { uids[locale].MESSAGE }/>
+				<Header locale={locale}
+					currentUrl = {this.state.currentUrl}
+					prismicCtx = { this.state.prismicCtx }
+					uid = { uids[locale].MESSAGE }
+					openComModal={openComModal}
+					newChats={newChats}/>
 				<div className="mainContainer" style={ { minHeight: window.outerHeight - 80}}>
 					<Router onChange={this.handleRoute}>
 						{(Object.keys(user).length !== 0) ? 
-							(user.pro != null) ? this.renderProRoutes() : this.renderUserRoutes()
+							(user.pro != null) ? 
+								this.renderProRoutes() 
+								: this.renderUserRoutes()
 							: this.renderDefaultRoutes()}
 						<ErrorRoute default />
 					</Router>
+					<Notification isShown={this.state.showNotif} onClick={this.hideNotif}/>
 				</div>
 				<Footer locale={locale} currentUrl = {this.state.currentUrl}/>
+				<Communication 
+					connection={this.connection}
+					isConnected={this.state.isConnected}
+					users={this.state.users}
+					chooseChatPerson={this.chooseChatPerson}
+							
+					user={this.props.userData} 
+					comModal={communicateModal} 
+					openComModal={openComModal}/>
 			</div>
 		);
 	}
@@ -192,9 +334,20 @@ class App extends Component {
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
 	locale: state.locale.locale,
+	communicateModal: state.communicateModal,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	openComModal,
+	closeComModal,
+	changeUnreadNum,
+	chooseChatPerson,
+	clearChats,
+	getCallInfo,
+	caleeIsBusy,
+	processCall,
+	speaking,
+}, dispatch);
 
 export default connect(
 	mapStateToProps,

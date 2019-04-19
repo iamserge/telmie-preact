@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { hideSearchBox } from '../../actions';
 import Prismic from 'prismic-javascript';
 import PrismicReact from 'prismic-reactjs';
 import Spinner from '../../components/global/spinner';
@@ -178,7 +177,7 @@ class HomePage extends Component {
 
 					{ pageData.mainSection && <div class={`${style.infoContainer} wow fadeIn`}>	
 						<InfoComponent mainSection={pageData.mainSection} locale={locale} 
-							hiddenSearchBox={this.props.hiddenSearchBox} hideSearchBox = { this.props.hideSearchBox } isLogin = { Object.keys(user).length !== 0 } />
+							isLogin = { Object.keys(user).length !== 0 } />
 					</div> }
 
 					<div class={`${style.photoContainer} wow zoomIn`}>
@@ -245,7 +244,6 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	hiddenSearchBox: state.hiddenSearchBox,
 	verifySuccess: state.verifySuccess,
 	verifyFailure: state.verifyFailure,
 	userData: state.loggedInUser,
@@ -254,7 +252,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	hideSearchBox,
 	verify,
 	sendContactData,
 	clearContactData,

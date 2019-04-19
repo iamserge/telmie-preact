@@ -1,0 +1,32 @@
+.creditCard{
+    display: flex;
+    padding: 10px 5px;
+
+    .cardType{
+        min-width: 120px;
+        text-align: center;
+        padding: 0 5px;   
+    }
+
+    .cardNumber{
+        font-weight: bold;
+    }
+
+    .cardControls{
+        display: flex;
+        margin: 0 0 0 auto;
+        div{
+            text-decoration: underline;
+            cursor: pointer;
+            &:last-child{
+                margin-left: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 640px) {
+        padding: 5px 2px;
+        font-size: 16px;
+    }
+}
+

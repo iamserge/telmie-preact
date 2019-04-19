@@ -2,12 +2,10 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import * as router from 'preact-router';
 import style from './style.scss';
-import Search from '../search';
 import Select from './select';
 import Hr from '../../hr';
 import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
-import { hideSearchBox } from '../../../actions';
 import { apiRoot } from '../../../api';
 import { logIn, logOff, changeLocale } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
@@ -15,20 +13,9 @@ import Redirect from '../redirect';
 import { Link as ScrollLink } from 'react-scroll'
 import { routes, langRoutes } from '../../app'
 import { langPack } from '../../../utils/langPack';
-import { EN, RU, langs } from '../../../utils/consts';
+import { EN, RU, langs, consts } from '../../../utils/consts';
+import { getCookie } from '../../../utils';
 import { processGlobalMessage } from '../../../utils/prismic-middleware'
-
-
-const getCookie = (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
 
 class Header extends Component {
   constructor(props){
@@ -91,14 +78,18 @@ class Header extends Component {
       : !this.state.isTop && this.setState({isTop: true});
   }
   
-  logOff(){
+  logOff = () => {
     this.setState({
       loggedOff: true
     });
     this.props.logOff();
+    router.route(routes.HOME);
+
   };
 
   toggleMobileMenu = () => this.setState(prev => ({mobileMenuOpened: !prev.mobileMenuOpened}));
+
+  openComModal = () => this.props.openComModal(consts.CHAT);
 
 	render() {
     const {userData : user  = {}, locale : localeObj} = this.props;
@@ -115,6 +106,8 @@ class Header extends Component {
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_PRACTICE ) + 1)
       || !!(this.props.currentUrl.toString().indexOf(routes.LANGUAGE_LEARNERS) + 1);
     const { globalMessage } = this.state;
+
+    const newChats = (this.props.newChats && Object.keys(this.props.newChats).length) || '';
 
 		return (
       <header class={`uk-navbar uk-navbar-container ${!this.state.isTop && style.smallHeader} ${globalMessage && 'globalMessage'}`} 
@@ -146,12 +139,13 @@ class Header extends Component {
 
             <ul class="uk-navbar-nav" id={style.leftNav}>
               {
-                /*isLogin ? ([
+                isLogin ? ([
                   (user.pro != null) && (<li><Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link></li>),
                   <li><Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link></li>,
                   <li><Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link></li>,
                   (user.pro == null) && (<li><Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link></li>)
-                ]) :*/
+                ]) :
+
                 isServicePage ? null : ([
                   <li>{isAtHome ?
                     <ScrollLink spy={true} smooth={true} offset={globalMessage ? -120 : -50} duration={500} to="howWorksElement">{langPack[locale].HEADER.HOW_IT_WORKS}</ScrollLink> 
@@ -183,13 +177,13 @@ class Header extends Component {
           
               <Select isLocale={true} locale={locale} changeLocale={this.props.changeLocale} languages={languages} />
             { /*this.props.currentUrl != '/' && (
-                <Search hiddenSearchBox = {this.props.hiddenSearchBox} 
-                  hideSearchBox = { this.props.hideSearchBox } 
+                <Search
+                  
                   isLogin = {isLogin} 
                   home= { false }/>
             )*/}
 
-            {/* !isLogin  ? (
+            { !isLogin  ? (
               <nav>
                 <ul class="uk-navbar-nav" >
                   <li><Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link></li>
@@ -209,28 +203,24 @@ class Header extends Component {
                   ) : (
                     <img src="/assets/nouserimage.jpg" alt={user.name + ' ' + user.lastName} />
                   )}
-
+                  {newChats && <div class={style.newChats}>{newChats}</div>}
                 </div>
                 <div class={style.dropdown + ' uk-dropdown'}>
                     <ul class="uk-nav uk-dropdown-nav">
-                        <li><Link href="/profile">My Account</Link></li>
-                        <li class="uk-nav-divider"></li>
-                        <li><Link href="/my-pros">My Pros</Link></li>
-                        {(user.pro != null) && (
-                            <li><Link href="/my-clients">My Clients</Link></li>
-                        )}
-                        <li><Link href="/my-shortlist">My Shortlist</Link></li>
-                        <li><Link href="/transactions">Money</Link></li>
-                        <li><Link href="/edit-profile">Edit Profile</Link></li>
-                        <li><Link href="/register-pro">Register as Pro</Link></li>
-                        <li class="uk-nav-divider"></li>
+                        <li><Link href={routes.EDIT_PROFILE}>Edit Profile</Link></li>
+                        <li><Link href={routes.REGISTER_PRO}>
+                          { user.pro ? 'Edit Pro details' : 'Register as Pro'}
+                          </Link></li>
                         <li><Link href={routes.SETTINGS}>Settings</Link></li>
-                        <li><a onClick={()=>this.logOff()}>Log out</a></li>
+                        { newChats && <li class={style.chats} onClick={this.openComModal}>New Chats: {newChats}</li>}
+                        <li class="uk-nav-divider"></li>
+                        <li><a onClick={this.logOff}>Log out</a></li>
                     </ul>
                 </div>
 
               </div>
-            )*/}
+            )}
+
           </div>
           <div id={style.mobileNav} class={this.state.mobileMenuOpened ? style.opened : ''}>
             <div class={style.mobileNavHeader}>
@@ -263,7 +253,7 @@ class Header extends Component {
               : <Link href={langRoutes(langs[locale].code, routes.CONTACT_US)} onClick={this.toggleMobileMenu}>{langPack[locale].HEADER.CONTACT}</Link>
             }
                 
-            {/* !isLogin  ? (
+            { !isLogin  ? (
               <div>
                 <Hr color={'#5C636E'} height={1}/>
                 <Link href={routes.SIGN_UP} id={style.signUp}>Sign up</Link>
@@ -277,19 +267,19 @@ class Header extends Component {
                 {(user.pro != null) && (
                     <Link href="/my-clients">My Clients</Link>
                 )}
-                <Link href="/my-shortlist">My Shortlist</Link>
                 <Link href="/transactions">Money</Link>
                 <Link href="/edit-profile">Edit Profile</Link>
                 <Link href="/register-pro">Register as Pro</Link>
                 <Link href="/edit-profile">Edit Profile</Link>*/}
-                {/*(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+                {(user.pro != null) && <Link activeClassName={style.activeLink} href={routes.MY_CLIENTS}>My Clients</Link>}
+
                 <Link activeClassName={style.activeLink} href={routes.MY_PROS}>My Pros</Link>
                 <Link activeClassName={style.activeLink} href={routes.TRANSACTIONS}>Money</Link>
                 {(user.pro == null) && <Link activeClassName={style.activeLink} href={routes.REGISTER_PRO}>Become a Pro</Link>}
                 <Link activeClassName={style.activeLink} href={routes.SETTINGS}>Settings</Link>
                 <a onClick={()=>this.logOff()}>Log out</a>
               </div>
-            )*/}
+            )}
 
           </div>
         </div>
@@ -308,14 +298,12 @@ class Header extends Component {
 
 
 const mapStateToProps = (state) => ({
-	hiddenSearchBox: state.hiddenSearchBox,
   userData: state.loggedInUser,
   locale: state.locale,
 });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	hideSearchBox,
 	logIn,
   logOff,
   changeLocale,

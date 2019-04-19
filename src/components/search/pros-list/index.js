@@ -4,7 +4,7 @@ import style from './style.scss';
 import Pro from '../pro';
 
 export default class ProsList extends Component {
-	render({pros}) {
+	render({pros = []}) {	
 		return (
 			<div id={style.prosList} className={this.props.full && style.full}>
 				{ pros.map(pro => (

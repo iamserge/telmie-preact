@@ -1,0 +1,32 @@
+.bankAcc{
+    display: flex;
+    padding: 10px 5px;
+
+    .bankName{
+        min-width: 120px;
+        text-align: center;
+        padding: 0 5px;   
+    }
+
+    .bankNumber{
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .bankCountry{
+        
+    }
+
+    .bankControls{
+        display: flex;
+        margin: 0 0 0 auto;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+        padding: 5px 2px;
+        font-size: 16px;
+    }
+}
+

@@ -1,0 +1,9 @@
+.callItem{
+    display: flex;
+    border-bottom: 1px solid gray;
+    padding: 5px;
+    & > div{
+        width: 100%;
+        text-align: center;
+    }
+}

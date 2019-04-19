@@ -1,23 +1,37 @@
 import { api } from "prismic-javascript";
 
-//export const apiRoot = 'http://sr461.2dayhost.com/api/'; // for dev server
-export const apiRoot = 'https://telmie.com/api/'; // for prod server
+export const host = 'sr461.2dayhost.com';
+//export const host = 'telmie.com';
+
+// remove date of build from Footer
+
+export const apiRoot = 'https://'+host+'/api/';
 export const apiUrls = {
   REGISTER: apiRoot + 'users',
   EDIT_DETAILS: apiRoot + 'users/',
-  SEARCH_USERS: apiRoot + 'users/pro?q=',
+  SEARCH_USERS: apiRoot + 'users/pro/filter?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   GET_PRO_USER_DETAILS: (proId) => apiRoot + 'users/pro/' + proId,
+  GET_CLIENT_USER_DETAILS: (proId) => apiRoot + 'users/client/' + proId,
   LOG_IN: apiRoot + 'auth',
-  GET_PRO_CALLS: apiRoot + 'users/activity?isConsultant=true&size=9999&page=',
-  GET_PERSONAL_CALLS: apiRoot + 'users/activity?isConsultant=false&size=9999&page=',
-  GET_TRANSACTIONS: apiRoot + 'cards/history',
+  GET_PRO_CALLS: apiRoot + 'users/activity?isPro=true',
+  GET_PERSONAL_CALLS: apiRoot + 'users/activity?isPro=false',
+  GET_TRANSACTIONS: apiRoot + 'wallet',
   VERIFY_USER: apiRoot + 'users/signup',
   ADD_TO_SHORTLIST: (id) => apiRoot + 'shortlist/' + id,
   RESET_PASSWORD: apiRoot  + 'security/reset',
   UPLOAD_PHOTO: apiRoot + 'image',
   SEND_CODE: apiRoot + 'code',
-  REGISTER_PRO: apiRoot + 'users/pro',
+  REGISTER_PRO: (id) => apiRoot + 'users/'+ id + '/pro',
   GET_CATEGORIES: apiRoot + 'categories',
   SEND_CONTACT_DATA: apiRoot + 'help/contact',
+  EMAIL_NOTIFICATIONS: apiRoot + 'users/emailNotifications',
+  WORKING_PRO: apiRoot + 'users/pro/work',
+  CALLS: apiRoot + 'calls',
+  CALL_HISTORY: (id) => apiRoot + 'calls/user/' + id,
+  GET_COMPANY_TAX_ID: (id) => apiRoot + 'companies/' + id,
+  GET_CARDS: apiRoot + 'wallet/cards',
+  GET_BANK_ACC: apiRoot + 'wallet/bank',
+  GET_STRIPE_KEY: apiRoot + 'wallet/token',
+  VERIFICATION_ID: apiRoot + 'wallet/documentid',
 }

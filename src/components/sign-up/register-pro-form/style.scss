@@ -101,12 +101,6 @@ $font-size: 18px;
 				cursor: default !important;
 			}
 		}
-		
-		.error {
-			color: $red;
-			text-align: center;
-		  	margin-bottom: 10px;
-		}
 
 		h2 {
 			text-align: center;
@@ -148,7 +142,11 @@ $font-size: 18px;
             }
             .applyBtn {
                 width: auto;
-            }
+			}
+			
+			button:not(:last-child){
+				margin-right: 15px;
+			}
 		}
 		
 		.generalInfo{
@@ -172,5 +170,19 @@ $font-size: 18px;
 			}
 		}
 	}
+
+	.radioWapper{
+		display: flex !important;
+		& > div{
+			display: flex !important;
+			padding-top: 3px;
+		}
+	}
 	
+}
+
+.error {
+	color: $red;
+	text-align: center;
+	  margin-bottom: 10px;
 }

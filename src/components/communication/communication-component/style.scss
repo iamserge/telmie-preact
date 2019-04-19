@@ -1,0 +1,53 @@
+
+
+.callAreaBackground{
+    position: fixed;
+    top: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: .7);
+}
+
+.callArea{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    //width: 90%;
+    max-width: 800px;
+    //height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, - 50%);
+    background-color: transparent;
+    //overflow: auto;
+}
+
+.closeBtn{
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.4;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    &:before, &:after {
+        position: absolute;
+        left: 15px;
+        content: ' ';
+        height: 33px;
+        width: 2px;
+        background-color: white;
+    }
+    &:before {
+        transform: rotate(45deg);
+      }
+    &:after {
+        transform: rotate(-45deg);
+      }
+}

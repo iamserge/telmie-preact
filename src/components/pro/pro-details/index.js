@@ -1,119 +1,311 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
 import style from './style.scss';
-import ReactStars from 'react-stars';
-import { apiRoot } from '../../../api'
-import { route } from 'preact-router';
-import FontAwesome from 'react-fontawesome';
+import UserVerticalInfo from './user-vertical-info';
+import ProTopInfo from './pro-top-info';
+import PriceInfo from './price-info';
+import Spinner from '../../global/spinner';
 import YouTube from 'react-youtube';
-import Collapse from 'rc-collapse'
-import 'rc-collapse/assets/index.css';
-import {routes} from '../../app'
+import TrackVisibility from 'react-on-screen';
+import CallHistory from "./call-history-tab";
+import { getCallHistory } from "../../../api/users";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Element, scroller } from 'react-scroll'
+import { consts } from '../../../utils/consts'
+import { generateJID } from '../../../utils/'
+
+import "react-tabs/style/react-tabs.css";
+
+import Message from '../../communication/chat/Message'
+import SendForm from '../../communication/chat/SendForm'
+import CallTab from './call-tab'
+import chatStyle from './chatStyles.scss';
+
+const getTabs = (isPro) => isPro ? 
+	[consts.USER_INFO_TAB, consts.CALL_TAB, consts.CALL_HISTORY_TAB] 
+	: [consts.CALL_TAB, consts.CALL_HISTORY_TAB];
+
+const getDefaultTabIndex = (props) => {
+	return (window.location.hash.indexOf('call') + 1) ? 
+		(getTabs(props.isPro).indexOf(consts.CALL_TAB) || 0)
+		: 0;
+}
 
 export default class Pro extends Component {
-  constructor(props){
+	constructor(props){
 		super(props);
 		this.state = {
-			showCallProPopup: false
+			loading: false,
+			isHistoryDelayed: false,
+			callHistory: [],
+			total: 0,
+			currentPage: 1,
+
+			tabIndex: getDefaultTabIndex(props),
 		}
+
+		this.tabs = getTabs(props.isPro);
+		this.bottomSection = null;
 	}
-	showCallProPopup(){
-		this.setState({
-			showCallProPopup: true
-		})
+
+	componentDidMount(){
+		this.scrollToHashElement();
+		this.props.isConnected ? this.getMessages(this.props) : this.setState({ isHistoryDelayed: true });
 	}
-	render({person}) {
+	componentWillReceiveProps(nextProps){
+
+		const { chat: prevChat = {} } = this.props;
+		const { chat: nextChat = {} } = nextProps;
+		const { comModal : prevModal } = this.props;
+		const { comModal : nextModal } = nextProps;
+		(
+			(!prevChat.chat && nextChat.chat) 
+			|| (prevChat.chat && nextChat.chat && prevChat.chat.length !== nextChat.chat.length)
+		) && (
+			nextChat.chat.length - (prevChat.chat ? prevChat.chat.length : 0) === 1 && this.scrollToChatEnd(),
+			nextProps.changeOffset(nextChat.chat.length)
+		);
+
+		!this.props.isConnected && nextProps.isConnected && this.state.isHistoryDelayed && (
+			this.getMessages(nextProps),
+			this.setState({ isHistoryDelayed: false })
+		);
+
+		(!Object.keys(this.props.person).length && Object.keys(nextProps.person).length) 
+			&& nextProps.isConnected ? this.getMessages(nextProps) : this.setState({ isHistoryDelayed: true });
+
+		(prevModal.type === consts.CALL && prevModal.isOutcoming 
+			&& !prevModal.isBusy && !nextModal.isBusy 
+			&& !prevModal.isCalling && !nextModal.isCalling && !nextModal.isSpeaking
+			&& nextModal.callInfo.callId)
+				&& this.makeCall(nextProps);
+		
+		(!prevModal.isPickUp && nextModal.isIncoming && nextModal.isPickUp) 
+			&& ( this.state.tabIndex === this.tabs.indexOf(consts.CALL_TAB) ?
+				this.props.connection.reqGranted()
+				: this.onTabSelect(this.tabs.indexOf(consts.CALL_TAB))
+			);
+	}
+	componentWillUnmount(){
+		clearInterval(this.scrollInterval);
+		this.scrollInterval = null;
+	}
+
+	scrollToHashElement = () => {
+		const {hash} = window.location;
+
+		hash && (
+			(hash.indexOf('chat') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.bottomSection !== null && (
+						scroller.scrollTo('chatElement', {
+							spy: true, smooth: true, duration: 500, offset: 0,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100)),
+			(hash.indexOf('call') + 1) &&
+				(this.scrollInterval = setInterval(() => {
+					this.bottomSection !== null && (
+						scroller.scrollTo('callElement', {
+							spy: true, smooth: true, duration: 500, offset: -100,
+						}),
+						clearInterval(this.scrollInterval),
+						this.scrollInterval = null
+					)
+				}, 100))
+		)
+	}
+
+	getCallHistory = (page) => {
+		this.setState({ loading: true, callHistory: [], total: 0 });
+		const {person, isPro, userData ={} }  = this.props;
+
+		getCallHistory(person.id, !isPro, page, userData.userAuth).then((data) => {
+			const { error, message } = data;
+
+			error ? this.setState({
+				loading: false,
+				error: true,
+				message
+			}) : this.setState({
+				loading: false,
+				error: false,
+				callHistory: data.results,
+				total: data.total,
+			})
+		}).catch((error) => {
+			console.log(error);
+			this.setState({
+				loading: false,
+				error: true,
+			})
+		});
+	}
+
+	onTabSelect = (index, prevIndex) => {
+		(this.tabs[index] === consts.CALL_HISTORY_TAB) && this.getCallHistory();
+		(this.tabs[prevIndex] === consts.CALL_HISTORY_TAB) && this.setState({ callHistory: [], total: 0, });
+
+		this.setState({ tabIndex: index });
+	}
+
+	nextPage= () => {
+		this.setState({ currentPage: this.state.currentPage + 1 });
+		this.getCallHistory(this.state.currentPage);
+	}
+	previousPage = () => {
+		this.setState({ currentPage: this.state.currentPage - 1 });
+		this.getCallHistory(this.state.currentPage - 1);
+	}
+	changePage = (page) => {
+		this.setState({ currentPage: page });
+		this.getCallHistory(page - 1);
+	}
+
+	onSend = (msg) =>{
+		const userId = this.props.person.id;
+		const {name, lastName, id: myId} = this.props.userData || {};
+		const thread = this.props.isPro ? `${myId}-${userId}` : `${userId}-${myId}`;
+		msg && this.props.connection.sendMessage(msg, userId, this.props.isPro, `${name} ${lastName}`, thread);
+	}
+
+	openCall = (videoOutput, videoInput) => {
+		const { connection ={} } = this.props;
+		navigator.mediaDevices.getUserMedia(connection.mediaConstraints)
+            .then((stream) => {
+                this.props.createCall(this.props.person.id);
+				this.props.openComModal(consts.CALL, this.props.person, true);
+
+				connection.setVideoElements(videoOutput, videoInput, stream);
+            })
+            .catch((err) => {
+				connection.rejectCall();
+				connection.stopCommunication();
+				alert(err.name + ": " + err.message);
+			});
+			
+		
+	};
+
+	rejectCall = (isBusy = false) => {
+		this.props.connection.rejectCall(isBusy);
+	}
+
+	getMessages = (props) => {
+		!props.isPro ? props.connection.getChatMessages(props.person.id, props.userData.id, props.offset) 
+			: props.connection.getChatMessages(props.userData.id, props.person.id, props.offset);
+		props.changeOffset();
+	}
+
+	makeCall = (props) => /*this.state.isConnected ? */
+		props.connection.callRequest(props.person.id, props.comModal.callInfo) /*: this.setState({ isDelayingCall: true })*/;
+	
+	scrollToChatEnd = () => {
+		scroller.scrollTo('scroll-container-end', {
+			spy: true, smooth: true, duration: 500, offset: -50, containerId: 'containerElement',
+		});
+	}
+	
+	render({person, isPro, isConnected, chat = {}, userData = {}}) {
 		const { pro = {} } = person;
+		const { callHistory, total, currentPage } = this.state;
+		const { chat : msgArr = [], isDisplayed, mesId, thread } = chat;
 
-		return (
+		return (<div>
 			<div class={style.person}>
-				<div className={style.imageContainer}>
-					<div className={style.image}>
-						{ (person.avatar != null) ? (
-							<img class="hexmask" src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
-						) : (
-							<img class="hexmask" src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
-						)}
-					</div>
-					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>TEXT PRO</button>
-					<button  id={style.callPro} className="uk-button" onClick={()=>{this.setState({showCallProPopup: true})}}>CALL PRO</button>
-
-					{this.props.isShortlisted ? (
-						<span className={style.success}>
-							<span class={style.txt}><span aria-hidden="true" class="fa fa-check"/> Shortlisted</span>
-							<button id={style.callPro} disabled={this.props.shortlistLoading} class={`uk-button ${style.btn}`} onClick={() => {this.props.cnageShortlist(person.id, true)}}>Remove</button>
-						</span>
-					) : (
-						<button  id={style.callPro} disabled={this.props.shortlistLoading} className="uk-button" onClick={() => {this.props.cnageShortlist(person.id)}}>Shortlist</button>
-					)}
-
-					{
-						<div class={style.actionsInfo}> 
-							{this.props.shortlistLoading ? <p class={style.loading}>Loading</p> : this.props.shortlistMessage }
-						</div>
-					}
-				</div>
+				<UserVerticalInfo person={person} />
 
 				<div className={style.info}>
-					<div className={style.nameAndTitle}>
-						<span className={style.proRoundel}>PRO</span>
-						<h2>{person.name} {person.lastName}</h2>
-						<h3>{pro.profession}</h3>
-					</div>
-					<div className={style.prof}>
-						<Link href={routes.SEARCH_FOR_COMP + pro.category} >{pro.category}</Link>
-						<FontAwesome name="angle-right"/>
-						<Link href={routes.SEARCH_FOR_COMP + pro.subCategory} >{pro.subCategory}</Link>
-					</div>
-
-					<Collapse accordion={false} defaultActiveKey = "info" className={style.description}>
-						<Collapse.Panel header={'Info'} key='info'>
-							{pro.professionDescription}
-							{pro.video && pro.video.length > 0 && (
-								<div class={style.videoContainer}>
-									<YouTube videoId={ pro.video } />
-								</div>
-							)}
-						</Collapse.Panel>
-
-						<Collapse.Panel header={'Chat'} key='chat'>
-							Chat
-						</Collapse.Panel>
-
-						<Collapse.Panel header={'Call history'} key='call-history'>
-							Call history
-						</Collapse.Panel>
-					</Collapse>
+					<ProTopInfo person={person} pro={pro} isPro={isPro}/>
 				</div>
 
-				<div className={style.priceContainer}>
-					<div className={style.price}>
-						&pound;{pro.costPerMinute} /<span>min</span>
-					</div>
-					<div className={style.raiting}>
-						<span>
-							{(pro.review != null) ? pro.review.count : 0} sessions
-						</span>
-						<ReactStars
-						  count={5}
-						  value={(pro.review != null) ? pro.review.rating : 0}
-							edit={false}
-							size={25} />
-					</div>
-				</div>			
-				{ this.state.showCallProPopup && (
-					<div>
-						<div className="modal" onClick={()=>{this.setState({showCallProPopup: false})}}>
-							<a class="uk-modal-close uk-close"></a>
-						</div>
-						<div className="modalInner">
-							<span className={style.note}>Please, download the <a target="_blank" href="https://itunes.apple.com/us/app/telmie/id1345950689">Telmie App</a> on your Apple device to call the Pro. In the near future it will be possible to call directly from the website. Thank you!</span>
-							<a href="https://itunes.apple.com/us/app/telmie/id1345950689" target="_blank"><img style="width:150px;height:51px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxohVpmd3NAgCI4gViHb91fWNHeZqSDNlztqhaJs_ea5B791nnxw" /></a>
-						</div>
-					</div>
-				)}
+				{ isPro && <PriceInfo pro={pro} isPro={isPro} {...this.props}/> }
 				
 			</div>
-		)
+			<div class={style.bottomSection} ref={el => this.bottomSection = el}>
+				<Element name="callElement"/>
+				<Tabs className={`${style.tabs} ${this.state.loading && 'loading-tabs'}`}
+					selectedIndex={this.state.tabIndex}
+					onSelect={this.onTabSelect}>
+					
+					<TabList>
+						{ this.tabs.map(el => <Tab>{el}</Tab>) }
+					</TabList>
+
+					{ isPro && <TabPanel>
+						{pro.professionDescription}
+						{pro.video && pro.video.length > 0 && (
+							<div class={style.videoContainer}>
+								<div class={style.videoIntro}>Video introduction</div>
+								<YouTube videoId={ pro.video } />
+							</div>
+						)}
+					</TabPanel> }
+
+					<TabPanel className={chatStyle.callArea}>
+						<CallTab isPro={isPro}
+							person={person}
+							isConnected={isConnected}
+							userVideoStream = { this.props.userVideoStream }
+							connection={this.props.connection}
+							comModal={this.props.comModal}
+							rejectCall={this.rejectCall}
+							openCall={this.openCall}/>
+					</TabPanel>
+
+					<TabPanel>
+						{ this.state.loading ? 
+							<Spinner/> 
+							: this.state.error ? 
+								<div style={{textAlign: 'center'}}>Error in getting call history. {this.state.message}</div> 
+								: <CallHistory list = { total }
+									changePage = { this.changePage }
+									nextPage = { this.nextPage }
+									previousPage = { this.previousPage }
+									callHistory = { callHistory }
+									currentPage = { currentPage }/> }
+					</TabPanel>
+				</Tabs>
+				<div class={style.chatWrapper}>
+					<div class={style.chatHeader}>Chat with user</div>
+					<Element name="chatElement"/>
+					<div class={chatStyle.chatComponent}>
+						{ !isConnected && <div class={chatStyle.connectingDiv}>
+							<div class={chatStyle.ldsDefault}>
+								<div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/><div/>
+								<div>Connecting</div>
+							</div>
+						</div>}
+						<div class={chatStyle.chatArea}>
+							<Element id="containerElement" style={{height: '100%', width: '100%', overflow: 'auto', paddingBottom: 15}} >
+							<ul class={chatStyle.messages} ref={el => this.containerElem = el} id="chatList">
+								{ !this.props.allHistoryReceived 
+									&& <li class={chatStyle.getMoreWrapper} onClick={() => this.getMessages(this.props)}>
+										<span>Get more</span>
+									</li> }
+									{msgArr.map((el, i) => <Message {...el} 
+															isMy={el.isMy || el.senderName === `${userData.name} ${userData.lastName}`}
+															key={el.id || el.timestamp}/>
+									)}
+									<TrackVisibility style={{clear: "both", float: "left", width: '100%'}}>
+										{({ isVisible = false }) =>  {
+											isVisible && !isDisplayed && mesId
+												&& (
+													this.props.setDisplayedStatus(generateJID(person.id, true)),
+													this.props.connection.markChatMessage(generateJID(userData.id), generateJID(person.id, true), mesId, thread, 'displayed')
+												);
+											return <Element name="scroll-container-end"/>
+										}}
+									</TrackVisibility>
+							</ul>
+							</Element>
+						</div>
+						<SendForm onSend={this.onSend} isConnected={isConnected}/>
+					</div>
+				</div>
+			</div>
+			
+		</div>)
 	}
 }

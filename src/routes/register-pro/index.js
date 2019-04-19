@@ -2,88 +2,153 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import style from './style.scss';
+import Modal from '../../components/modal'
 import {  } from '../../actions/user';
 import { route } from 'preact-router';
-import { registerPro, getCategories } from '../../actions/user';
+import { getCategories, changeLocaleLangs, changeLocale } from '../../actions/user';
+import { getProRegistrationInfo, cancelProPending, registerPro, checkTaxId } from '../../api/users';
+import { getCookie } from "../../utils";
+import { convertProState } from "../../utils/proPending";
 
 import Spinner from '../../components/global/spinner';
 
 import RegisterProForm from '../../components/sign-up/register-pro-form'
 
-const getCookie = (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
 class RegisterPro extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			regData: null
+			regData: null,
+			userInfo: {},
+			isInfoRegisterVisible: false,
+			isRegCompanyVisible: false,
+			failureMessage: '',
+			loading: false,
+
+			incorrectTax: false,
 		}
+	}
+
+	closeInfoRegisterModal = () => this.setState({isInfoRegisterVisible: false});
+
+	cancelProPending = async (id, authData) => {
+		window.scrollTo(0,0);
+		this.setState({ loading: true });
+		const userInfo = await cancelProPending(id, authData);
+
+		userInfo.error ? 
+			this.setState({ failureMessage: userInfo.message, loading: false }) 
+			: this.setState({ userInfo: convertProState(userInfo), loading: false });
+	}
+
+	checkCompanyTaxId = async (taxId, authData) => {
+		this.setState({ loading: true });
+		const companyInfo = await checkTaxId(taxId, authData);
+
+		companyInfo.error ? 
+			this.setState({ 
+				failureMessage: companyInfo.message || '',
+				loading: false,
+				incorrectTax: true,
+			}) 
+			: this.setState({ 
+				companyInfo: { ...companyInfo }, 
+				failureMessage: '',
+				loading: false,
+				incorrectTax: false,
+			});
+	}
+
+	makeProPending = async (data, userAuth) => {
+		window.scrollTo(0,0);
+		this.setState({ loading: true });
+		const userInfo = await registerPro(data, userAuth);
+
+		userInfo.error ? 
+			this.setState({ 
+				userInfo: data,
+				failureMessage: userInfo.message,
+				loading: false 
+			}) 
+			: this.setState({ 
+				userInfo: data, 
+				isInfoRegisterVisible: true,
+				failureMessage: '',
+				loading: false
+			});
+	}
+
+	prepareRoute = async (props) => {
+		let userAuth = props.userData.userAuth || getCookie('USER_AUTH'); 
+		props.getCategories(userAuth);
+		const userInfo = await getProRegistrationInfo(props.userData.id, userAuth);
+
+		this.setState({ userInfo });
+	}
+
+	cancelChackingTax = () => {
+		this.setState({
+			incorrectTax: false,
+			failureMessage: '',
+		})
 	}
 
 	componentDidMount(){
-		let userAuth = this.props.userData.userAuth || getCookie('USER_AUTH'); 
-		this.props.getCategories(userAuth);
-		this.fetchPage(this.props);
+		window.scrollTo(0,0);
+		this.prepareRoute(this.props);
+		this.props.changeLocaleLangs([]);
+		this.props.changeLocale();
 	}
 
-	fetchPage(props) {
-		if (props.prismicCtx) {
-		// We are using the function to get a document by its uid
-		return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-			if (doc) {
-			// We put the retrieved content in the state as a doc variable
-			this.setState({ regData: doc.data });
-			} else {
-			// We changed the state to display error not found if no matched doc
-			this.setState({ notFound: !doc });
-			}
-		});
-				/*
-				return props.prismicCtx.api.query('').then(function(response) {
-				console.log(response);
-				});*/
-		}
-		return null;
-	}
-
-	componentWillReceiveProps(nextProps){
-		this.fetchPage(nextProps);
+	componentWillReceiveProps(nextProps, nextState) {
+		(nextProps.userData.userAuth != this.props.userData.userAuth) &&
+			this.prepareRoute(nextProps);
 	}
 
 	render() {
-		return ((Object.keys(this.props.userData).length != 0) && (Object.keys(this.props.dataFromServer).length != 0)) ? (
-				<RegisterProForm userData={this.props.userData}
-					regData = { this.state.regData }
-					registerPro = {this.props.registerPro}
-					registerFailureMessage = {this.props.registerFailureMessage}
-					getCategories = {this.props.getCategories}
-					dataFromServer = {this.props.dataFromServer}
-					sendCode={() => {}}
-					verifyCode={() => {}}/>
-			) : (
-				<Spinner />
-			)
+		const isLoaded = (Object.keys(this.props.userData).length != 0) 
+			&& (Object.keys(this.props.dataFromServer).length != 0)
+			&& (Object.keys(this.state.userInfo).length != 0)
+			&& !this.state.loading;
+
+		return <div>
+					<RegisterProForm userData={this.props.userData}
+						userInfo = { this.state.userInfo }
+						regData = { this.state.regData }
+						companyInfo = { this.state.companyInfo || {} }
+						registerPro = {this.makeProPending}
+						cancelProPending = {this.cancelProPending}
+						failureMessage = {this.state.failureMessage}
+						dataFromServer = {this.props.dataFromServer}
+						checkCompanyTaxId={ this.checkCompanyTaxId }
+						incorrectTax={ this.state.incorrectTax }
+						cancelChackingTax={ this.cancelChackingTax }
+						sendCode={() => {}}
+						verifyCode={() => {}}
+						isLoaded={isLoaded}/>
+					
+					<Modal isVisible = {this.state.isInfoRegisterVisible}
+						title='Your changes will be sent for review'
+						okText="OK"
+						onOk = {this.closeInfoRegisterModal}
+						onCancel={this.closeInfoRegisterModal}>
+						Please note that every new profile change has to go trough verification process
+					</Modal>
+				</div>
 	}
 }
 
 const mapStateToProps = (state) => ({
 	userData: state.loggedInUser,
-	registerFailureMessage: state.registerFailureMessage,
 	dataFromServer: state.dataFromServer,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	registerPro,
+	cancelProPending,
 	getCategories,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

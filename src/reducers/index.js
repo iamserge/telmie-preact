@@ -2,26 +2,15 @@ import { combineReducers } from 'redux';
 import { actionTypes } from '../actions';
 
 import * as user from './user';
-
-const hiddenSearchBoxReduxer = (state = {}, action) => {
-	switch (action.type) {
-
-		case actionTypes.HIDE_SEARCH_BOX:
-			return true;
-
-		default:
-			return false;
-	}
-};
-
+import * as chat from './chat';
+import * as wallet from './wallet'
 
 
 const rootReducer = combineReducers({
-	hiddenSearchBox: hiddenSearchBoxReduxer,
 	loggedInUser: user.loggedInUser,
 	logInFailure: user.logInError,
-	loggedInUserProCalls: user.proCalls,
-	loggedInUserPersonalCalls: user.personalCalls,
+	/*loggedInUserProCalls: user.proCalls,
+	loggedInUserPersonalCalls: user.personalCalls,*/
 	loggedInUserActivity: user.activity,
 	loggedInUserTransactions: user.transactions,
 	registerSuccess: user.registerSuccess,
@@ -30,7 +19,6 @@ const rootReducer = combineReducers({
 	verifyFailure: user.verifyFailure,
 	resetSuccess: user.resetSuccess,
 	resetFailure: user.resetFailure,
-	shortlistPros: user.shortlistPros,
 	sendCodeSuccess: user.sendCodeSuccess,
 	sendCodeFailureMessage: user.sendCodeFailureMessage,
 	verifyCodeSuccess: user.verifyCodeSuccess,
@@ -38,6 +26,9 @@ const rootReducer = combineReducers({
 	dataFromServer: user.dataFromServer,
 	sendContactMessage: user.sendContactMessage,
 	locale: user.locale,
+	communicateModal: chat.communicateModal,
+	creditCards: wallet.creditCards,
+	bankAccounts: wallet.bankAccount,
 });
 
 export default rootReducer;

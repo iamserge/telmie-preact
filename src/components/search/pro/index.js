@@ -9,7 +9,7 @@ import { routes } from "../../app";
 export default class Pro extends Component {
 	goToPro = (id) => route(routes.PRO_FOR_COMP + id);
 
-	render({person}) {
+	render({person = {}}) {
 		return (
 			<div class={style.person} onClick={()=>{this.goToPro(person.id)}}>
 				<div className={style.image}>

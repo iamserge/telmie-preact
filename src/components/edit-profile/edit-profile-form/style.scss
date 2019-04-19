@@ -10,22 +10,6 @@
 		width: 100%;
 		font-weight: bold;
 	}
-	:global {
-		.fileContainer {
-			box-shadow: none;
-			.chooseFileButton {
-				padding: 0 30px;
-				vertical-align: middle;
-				font-size: 20px;
-				line-height: 38px;
-				text-align: center;
-				text-decoration: none;
-				border-radius: 0;
-				background-color: $red;
-			}
-		}
-		
-	}
 }
 #passwordContainer {
 	position: relative;
@@ -164,16 +148,10 @@
 	}
 }
 .upload {
-    width: 250px;
-	> button {
-		font-size: 14px;
-    height: 38px;
-        
-		> span {
-			color: white;
-		}
-	}
+	width: 250px;
+	margin-top: 10px;
 }
+
 @media (max-width: 880px) {
     .image {
         width: 200px;
@@ -190,7 +168,7 @@
         
     }
     .upload {
-            width: 200px;
+			width: 200px;
         }
 }
 .free {

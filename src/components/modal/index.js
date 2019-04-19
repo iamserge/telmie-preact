@@ -49,13 +49,13 @@ class Modal extends Component {
     }
 
     render(props){
-        const {isVisible, title, okText, onOk, cancelText, onCancel} = props;
+        const {isVisible, title, okText, onOk, cancelText, onCancel, modalClass=''} = props;
 
         return isVisible == false ? 
             null 
             : ( 
                 <div class={style.backdrop} onClick={this.handleOutsideClick}>
-                    <div class={style.modal} ref={node => { this.node = node; }}>
+                    <div class={`${style.modal} ${modalClass}`} ref={node => { this.node = node; }}>
                         {title && (<div class={style.title}>
                             {title}
                         </div>)}

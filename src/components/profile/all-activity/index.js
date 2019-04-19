@@ -9,14 +9,13 @@ export default class AllActivity extends Component {
 
 	render({activity}) {
 		return (
-			<div className={style.activityList}>
+			<div className={`${style.activityList} ${!this.props.client && style.withSorting}`}>
 				<div className={style.inner}>
 					<div className={style.header}>
 						<div className={style.contact}>Contact</div>
+						<div class={style.type}>Type</div>
 						<div className={style.date}>Date</div>
-						<div>Duration</div>
-						<div>Price</div>
-						<div>Status</div>
+						<div class={style.count}>Count</div>
 					</div>
 					{ activity.length > 0 && activity.map(activity => (
 						<Activity key={ activity.id } activity={ activity } client = {this.props.client}/>

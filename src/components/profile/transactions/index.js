@@ -2,45 +2,44 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
-import Transaction from '../transaction'
+import TransactionItem from './transaction-item'
+import BalanceItem from './balance-item'
 import { routes } from '../../app'
 
 export default class Transactions extends Component {
 
-	render({transactions}) {
-		if(!Array.isArray(this.state.cutTransactions)){
-			transactions = [];
-		}
-		else if (typeof this.props.limit != 'undefined') {
-			transactions = transactions.slice(0, this.props.limit);
-		}
+	render({balance, proBalance, total, results = []}) {
 
 		return (
 			<div className={style.transactions}>
 
-					{ (typeof this.props.limit != 'undefined') && (
-						<h2>
-							{ this.props.title }
-							<Link href={routes.TRANSACTIONS}>View all</Link>
-						</h2>
-					)}
+				{ (this.props.withoutBalance) && (
+					<h2>
+						{ this.props.title }
+						<Link href={routes.TRANSACTIONS}>View all</Link>
+					</h2>
+				)}
 
 
 				<div className={style.inner}>
-					<div className={style.header}>
-						<div className={style.contact}>Contact</div>
-						<div className={style.date}>Date</div>
+					{ (!this.props.withoutBalance && !this.props.loading) && <div class={style.balanceLine}>
+						<BalanceItem balance={balance} text='Telmie credit'/>
+						<BalanceItem balance={proBalance} text='Earnings'/>
+					</div> }
+
+					<div class={`${style.tableRow} ${style.tableHeader}`}>
+						<div>Transaction</div>
+						<div>Date</div>
 						<div>Duration</div>
-						<div>Money In</div>
-						<div>Money Out</div>
+						<div>Balance</div>
 					</div>
 					{ this.props.loading && (
 						<div className={style.spinnerContainer}><Spinner /></div>
 					)}
-					{ transactions.length > 0 && !this.props.loading  && transactions.map(transaction => (
-						<Transaction key={ transaction.id } transaction={ transaction }/>
+					{ results.length > 0 && !this.props.loading  && results.map(transaction => (
+						<TransactionItem key={ transaction.id } { ...transaction }/>
 					))}
-					{ transactions.length == 0 && !this.props.loading && (
+					{ results.length == 0 && !this.props.loading && (
 						<div className={style.empty}>No recent transactions</div>
 					)}
 

@@ -14,6 +14,7 @@ class LogInOrSignup extends Component {
 	}
 
 	fetchPage= (props) => {
+		window.scrollTo(0, 0);
 		props.changeLocale();
 		props.changeLocaleLangs([]);
 	}

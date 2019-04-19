@@ -1,6 +1,10 @@
 @import './src/style/variables';
 .activityList {
 	margin-top: 40px;
+
+	&.withSorting{
+		margin-left: 200px;
+	}
 	h2 {
 		a {
 			float: right;
@@ -54,7 +58,7 @@
 		width: 12%;
 	}
 	.type {
-		width: 8%;
+		width: 25%;
 	}
 	.contact {
 		width: 40%;
@@ -62,9 +66,22 @@
 	.date {
 		width: 20%;
 	}
+	.count{
+		width: 15%;
+		text-align: center;
+	}
     border-bottom: 1px solid $blue;
 
 }
 .spinnerContainer {
 	margin: 20px 0;
+}
+
+
+@media (max-width: 880px){
+    .activityList {	
+		&.withSorting{
+			margin-left: 0;
+		}
+	}
 }

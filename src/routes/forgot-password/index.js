@@ -29,6 +29,7 @@ class EditProfile extends Component {
 		this.validator = new SimpleReactValidator();
 	}
 	componentDidMount(){
+		window.scrollTo(0, 0);
 		this.fetchPage(this.props);
 	}
 	componentWillReceiveProps(nextProps) {

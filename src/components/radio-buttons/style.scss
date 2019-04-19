@@ -1,0 +1,53 @@
+
+@import './src/style/variables';
+
+$bg: #332f35;
+$fg: lighten($bg,20%);
+$borderWidth: 2px;
+
+.radioGroup{
+    border: solid $borderWidth $backgroundGrey;
+    display: inline-block;
+    margin: 15px 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+    input[type=radio] {
+        position: absolute;
+        visibility: hidden;
+        display: none;
+    }
+      
+    label {
+        color: $grey;
+        display: inline-block;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 5px 20px;
+    }
+
+    input[type=radio]:disabled + label{
+        cursor: default;
+    }
+      
+    input[type=radio]:checked + label{
+        color: white;
+        background: $backgroundGrey;
+    }
+      
+    label + input[type=radio] + label {
+        border-left: solid $borderWidth $backgroundGrey;
+    }
+}
+
+@media (max-width: 640px){
+    .radioGroup{
+        border: none;
+        border-radius: 0;
+          
+        label {
+            border: solid $borderWidth $backgroundGrey;
+            margin: 0 2px 2px 0;
+        }
+    }
+}
