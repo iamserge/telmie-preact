@@ -1,7 +1,7 @@
 import { api } from "prismic-javascript";
 
-export const host = 'sr461.2dayhost.com';
-//export const host = 'telmie.com';
+//export const host = 'sr461.2dayhost.com';
+export const host = 'telmie.com';
 
 // remove date of build from Footer
 
