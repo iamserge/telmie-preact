@@ -1,4 +1,4 @@
-import { EN, RU } from "../utils/consts";
+import { EN, RU, IT, ES, PL, AE, PT, DE, FR } from "../utils/consts";
 export const uids = {
 	[EN]: {
 		CONTACT_US: 'WoRRbigAACgAco9L',
@@ -14,6 +14,27 @@ export const uids = {
 		//IMMIGRATION_ADVICE: 'W_1Z1hEAAC4AGOiI',
 		/*SHORT_REVIEWS: 'W-0TkBAAACkAeSLm',*/
 		MESSAGE: 'XATouRAAADsA1qY3',
+	},
+	[IT]: {
+		MESSAGE: 'XBpjiBEAACcAYCHS',
+	},
+	[ES]: {
+		MESSAGE: 'XC-L8xEAACMAvKAs',
+	},
+	[PL]: {
+		MESSAGE: 'XEhg5xUAACQAvYtk',
+	},
+	[AE]: {
+		MESSAGE: 'XEhgmRUAACUAvYoL',
+	},
+	[PT]: {
+		MESSAGE: 'XE22fxQAACEALIfu',
+	},
+	[DE]: {
+		MESSAGE: 'XGb1uhAAACgAlRki',
+	},
+	[FR]: {
+		MESSAGE: 'XHVVsBIAACMAg5YJ',
 	}
 };
 
@@ -28,6 +49,7 @@ export const tags = {
 	PRIVACY: 'Privacy',
 	TERMS: 'Terms',
 	IMMIGRATION_ADVICE: 'ImmigrationAdvice',
+	IMMIGRATION_CLIENTS: 'ImmigrationAdviceClients',
 	LANGUAGE_PRACTICE: 'LanguagePractice',
 	LANGUAGE_LEARNERS: 'LanguageLearners',
 }

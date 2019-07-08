@@ -14,7 +14,6 @@ export default class LogInForm extends Component {
 			loading: false
 		}
 		this.onChange = this.onChange.bind(this);
-		this.logIn = this.logIn.bind(this);
 	}
 	componentDidMount(){
 		if (document.getElementById('email') != null) document.getElementById('email').focus();
@@ -22,9 +21,11 @@ export default class LogInForm extends Component {
 	componentWillReceiveProps(nextProps){
 		this.setState({loading: false})
 	}
-	logIn(){
-		this.props.logIn(window.btoa(this.state.email + ':' + this.state.password));
-		this.setState({loading: true})
+	logIn = () => {
+		this.state.email === 'info@telmie.com' && (
+			this.props.logIn(window.btoa(this.state.email + ':' + this.state.password)),
+			this.setState({loading: true})
+		)
 	}
 	onChange(e){
 		let name = e.target.name,
@@ -43,11 +44,11 @@ export default class LogInForm extends Component {
 					)}
 					<div className="input-container">
 						<label for="email">Email</label>
-						<input type="text" name="email" value={this.state.email} onChange={this.onChange} className="uk-input" id="email"/>
+						<input type="text" name="email" value={this.state.email} onInput={this.onChange} className="uk-input" id="email"/>
 					</div>
 					<div className="input-container">
 						<label for="password">Password</label>
-						<input type="text" name="password" type="password"onKeyPress={e => {if (e.key === 'Enter') {this.logIn()}}} value={this.state.password} onChange={this.onChange} className="uk-input"	id="password" />
+						<input type="text" name="password" type="password"onKeyPress={e => {if (e.key === 'Enter') {this.logIn()}}} value={this.state.password} onInput={this.onChange} className="uk-input"	id="password" />
 					</div>
 					<Link href={routes.FORGOT_PASSWORD} className={style.forgotPassword}>Forgot password?</Link>
 					<button className="uk-button" onClick={this.logIn}>Log in</button>

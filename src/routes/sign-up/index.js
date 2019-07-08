@@ -1,13 +1,9 @@
 import { h, Component } from 'preact';
-import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import style from './style.scss';
-import { register, fetchRegistration, sendCode, fetchSendCode, verifyCode } from '../../actions/user';
-import Prismic from 'prismic-javascript';
-import PrismicReact from 'prismic-reactjs';
-import { route } from 'preact-router';
+import { register, fetchRegistration, sendCode, fetchSendCode, verifyCode, changeLocale, changeLocaleLangs } from '../../actions/user';
 import Redirect from '../../components/global/redirect';
 
 class SignUp extends Component {
@@ -20,27 +16,10 @@ class SignUp extends Component {
 	componentDidMount(){
 		this.fetchPage(this.props);
 	}
-	fetchPage(props) {
-    if (props.prismicCtx) {
-      // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
-        if (doc) {
-          // We put the retrieved content in the state as a doc variable
-          this.setState({ regData: doc.data });
-        } else {
-          // We changed the state to display error not found if no matched doc
-          this.setState({ notFound: !doc });
-        }
-      });
-			/*
-			return props.prismicCtx.api.query('').then(function(response) {
-			   console.log(response);
-			});*/
-    }
-    return null;
-  }
-	componentWillReceiveProps(nextProps){
-		this.fetchPage(nextProps);
+	fetchPage= (props) => {
+		window.scrollTo(0, 0);
+		props.changeLocale();
+		props.changeLocaleLangs([]);
 	}
 	render() {
 
@@ -92,7 +71,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	fetchRegistration,
 	sendCode,
 	fetchSendCode,
-	verifyCode
+	verifyCode,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

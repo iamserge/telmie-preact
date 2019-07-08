@@ -2,14 +2,11 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import EditProfileForm from '../../components/edit-profile/edit-profile-form';
 import style from './style.scss';
-import { register, fetchRegistration, sendCode, fetchSendCode, verifyCode, resetPassword } from '../../actions/user';import Spinner from '../../components/global/spinner';
+import { sendCode, fetchSendCode, verifyCode, resetPassword, changeLocale, changeLocaleLangs } from '../../actions/user';
+import Spinner from '../../components/global/spinner';
 import SimpleReactValidator from 'simple-react-validator';
 import  Timer from "react-time-counter";
-
-import { route } from 'preact-router';
-import Redirect from '../../components/global/redirect';
 
 class EditProfile extends Component {
 	constructor(props){
@@ -32,7 +29,8 @@ class EditProfile extends Component {
 		this.validator = new SimpleReactValidator();
 	}
 	componentDidMount(){
-
+		window.scrollTo(0, 0);
+		this.fetchPage(this.props);
 	}
 	componentWillReceiveProps(nextProps) {
 		if (this.props.sendCodeSuccess.length == 0 && nextProps.sendCodeSuccess.length != 0) {
@@ -42,6 +40,10 @@ class EditProfile extends Component {
 		if (!this.props.verifyCodeSuccess && nextProps.verifyCodeSuccess) {
 			this.setState({ codeVerified: true })
 		}
+	}
+	fetchPage= (props) => {
+		props.changeLocale();
+		props.changeLocaleLangs([]);
 	}
 	sendCode(){
 		if (this.validator.fieldValid('email')) {
@@ -198,7 +200,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	resetPassword,
 	sendCode,
 	fetchSendCode,
-	verifyCode
+	verifyCode,
+	changeLocaleLangs,
+	changeLocale,
 }, dispatch);
 
 export default connect(

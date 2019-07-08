@@ -5,6 +5,7 @@
 .person {
 	margin-bottom: 20px;
 	position: relative;
+	display: flex;
 	border-bottom: 1px solid $lightGrey;
 	padding: 15px 20px;
 	margin-bottom: 25px;
@@ -44,34 +45,35 @@
 	}
 }
 .info {
-	width: 60%;
-	margin-left: 20px;
-	height: 107px;
-  position: relative;
+	width: calc(80% - 122px);
+	padding-left: 15px;
+	min-height: 107px;
+  	position: relative;
 	h2 {
         padding-top: 6px;
-    margin-bottom: 0;
-    font-size: 25px;
+    	margin-bottom: 0;
+    	font-size: 25px;
         color: $black;
-            padding-left: 0;
+        padding-left: 0;
 	}
 	h3 {
-    margin-top: 2px;
+		margin-top: 2px;
+		margin-bottom: 10px !important;
 		font-size: 17px;
 		font-weight: 500;
 		color: $red;
-		span {
-	    background-color: $backgroundGrey;
-	    color: white;
-	    padding: 4px 9px;
-	    font-size: 13px;
-	    border-radius: 10px;
-	    margin-left: 8px;
+		div {
+			display: inline-block;
+			background-color: $backgroundGrey;
+			color: white;
+			padding: 4px 9px;
+			font-size: 13px;
+			border-radius: 10px;
+			margin-left: 8px;
 		}
 	}
 	.raiting {
-		position: absolute;
-		bottom: 5px;
+		line-height: 20px;
 		span {
 			text-transform: uppercase;
 			color: $grey;
@@ -80,8 +82,7 @@
 		> div {
 			display: inline-block;
 			margin-left: 10px;
-	    position: relative;
-	    top: 12px;
+	    	position: relative;
 		}
 	}
 }

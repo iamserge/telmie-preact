@@ -2,122 +2,74 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
 import Switch from 'react-toggle-switch'
+import { Link } from 'preact-router/match';
 import SimpleReactValidator from 'simple-react-validator';
 import { apiRoot } from '../../../api';
 import { generateProfessionsArray } from '../../../utils';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 import ImageUploader from 'react-images-upload';
+import { routes } from "../../app";
 
-let Services = [
-	{
-		name: "Education",
-		categories: ["Language tutor", "Language practice", "Exams preparation", "Science", "Business studies", "Social science", "Drawing", "Music", "Dance"]
-	},
-	{
-		name: "Services",
-		categories: ["Interpreter", "Negotiator/mediator", "Therapist", "Listener", "Speech therapist", "Fortun teller", "Astrologist", "Personal assistant", "Career coach"]
-	},
-	{
-		name: "Consultancy",
-		categories: ["Legal", "Medical", "Business", "Family", "Investment", "Tech support", "Beautician"]
-	},
-	{
-		name: "Health&Lifestyle",
-		categories: ["Personal trainer", "Yuga instructor", "Meditation instructor", "Dietologist", "Sport coach", "Fitness professional", "Spiritual coach"]
-	},
-]
+import ImageUpload from '../image-upload'
+
+const setUserInfo = (user) => {
+	return {
+		name: user.name,
+		lastName: user.lastName,
+	}
+}
+
 export default class EditProfileForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: this.props.userData.name,
-			lastName: this.props.userData.lastName,
-			mobile: (this.props.userData.mobile != 'TBC') ? this.props.userData.mobile : '' ,
-			dateOfBirth: (this.props.userData.dateOfBirth != 'TBC') ? this.props.userData.dateOfBirth : '' ,
-			location: (this.props.userData.location != 'TBC') ? this.props.userData.location : '' ,
+			userInfo: setUserInfo(this.props.userData),
 
-			profession: (this.props.userData.pro != null) ? this.props.userData.pro.profession : '',
-			professionDescription: (this.props.userData.pro != null) ? this.props.userData.pro.professionDescription : '',
-			sectorCategory: (this.props.userData.pro != null) ? this.props.userData.pro.subCategory : '',
-			sector: (this.props.userData.pro != null) ? this.props.userData.pro.category : '',
-			rate: (this.props.userData.pro != null) ? this.props.userData.pro.costPerMinute : '',
-			sectorCategories: [],
-			pro: (this.props.userData.pro != null) ? true : null ,
 			loading: false,
-			registerPro: false
+			isModify: false,
 		}
-		this.onChange = this.onChange.bind(this);
-		this.onSelectSector = this.onSelectSector.bind(this);
-		this.handleSelectChange = this.handleSelectChange.bind(this);
-		this.onSliderChange = this.onSliderChange.bind(this);
-		this.signUp = this.signUp.bind(this);
-		this.onDrop = this.onDrop.bind(this);
-		this.validator = new SimpleReactValidator();
+		this.validator = new SimpleReactValidator({
+			name: {
+				message: "The name isn't valid.",
+				rule: (val, params, validator) => /^[A-Za-z\s\-]+$/.test(val)
+			}  
+		});
 		
 	}
+	
+	componentWillReceiveProps(nextProps){
+		this.setState({loading: false, isModify: false, userInfo: setUserInfo(nextProps.userData)})
+	}
+	onDrop = (picture) => {
+		this.props.uploadPhoto(this.props.userData.userAuth, picture);
+	}
+	onChange = (e) => {
+		const {name, value} = e.target;
+		this.setState(prev => ({
+			...prev,
+			userInfo: {
+				...prev.userInfo,
+				[name]: value,
+			},
+			isModify: true,
+		}))
+	}
 
-	signUp(){
-		if( this.validator.allValid() ){
-			let registerData = {
-				name: this.state.firstName,
-				lastName: this.state.lastName,
-				email: this.state.email,
-				password: this.state.password
-			}
-			if (this.state.pro) {
-				registerData.pro = {
-					category: this.state.sector,
-					costPerMinute: this.state.rate,
-					profession: this.state.profession,
-					professionDescription: this.state.professionDescription,
-					subCategory: this.state.sectorCategory
-				}
-			}
-			this.props.register(registerData);
-			this.setState({loading: true})
+	onSave = () => {
+		if (this.validator.allValid()) {
+			this.setState({loading: true});
+			this.props.editDetails(this.state.userInfo);
 		} else {
 			this.validator.showMessages();
 			this.forceUpdate();
 		}
 	}
-	componentDidMount(){
-		if (document.getElementById('firstName') != null) document.getElementById('firstName').focus();
-	}
-	componentWillReceiveProps(nextProps){
-		this.setState({loading: false})
-	}
-	onSelectSector(count){
-		this.setState({
-			sector: Services[count].name,
-			sectorCategories: Services[count].categories,
-			sectorCategory: ''
-		})
 
-	}
-	onDrop(picture) {
-		this.props.uploadPhoto(this.props.userData.userAuth, picture[0]);
-	}
-	onSliderChange(rate) {
-		this.setState({ rate: rate.toFixed(2)  })
-	}
-	handleSelectChange(e){
-		this.setState({sectorCategory: event.target.value});
-	}
-	onChange(e){
-		let name = e.target.name,
-				value = e.target.value,
-				newState = {};
-		newState[name] = value;
-		this.setState(newState)
-	}
-
-	render({}) {
+	render() {
 		const userData  = this.props.userData;
-		let maxRate = (this.props.regData && this.props.regData.max_rate)  ? this.props.regData.max_rate : 10,
-				step = (this.props.regData && this.props.regData.rate_slider_step)  ? this.props.regData.rate_slider_step : 0.1;
-
-		if (this.props.regData && this.props.regData.registration_profession_options) Services = generateProfessionsArray(this.props.regData.registration_profession_options);
+		const { name, lastName } = this.state.userInfo;
+		const avatarID = (userData.avatar == null) ? null : userData.avatar.id;
 
 		if (!this.state.loading) {
 			return (
@@ -127,21 +79,26 @@ export default class EditProfileForm extends Component {
 					)}
 					<div className={style.imageContainer}>
 						<div className={style.image}>
-							{ (userData.avatar != null) ? (
-								<img src={apiRoot + 'image/' + userData.avatar.id} alt={userData.name + ' ' + userData.lastName} />
+							{ (avatarID !== null) ? (
+								<img src={apiRoot + 'image/' + avatarID} alt={userData.name + ' ' + userData.lastName} />
 							) : (
 								<img src="/assets/nouserimage.jpg" alt={userData.name + ' ' + userData.lastName} />
 							)}
 						</div>
 						<div className={style.upload}>
 
-							<ImageUploader
+							{/*<ImageUploader
 								withIcon={false}
 								buttonText='Upload new'
 								onChange={this.onDrop}
 								imgExtension={['.jpg', '.png', '.gif']}
 								maxFileSize={5242880}
-							/>
+							/>*/}
+
+							<ImageUpload onDrop={this.onDrop} imgExtension={['jpg', 'jpeg', 'png', 'gif']} maxFileSize={5242880} 
+								clearuploadPhotoStatus = { this.props.clearuploadPhotoStatus }
+								avatarID = {avatarID} uploadFailure={userData.avatarUploadError}/>
+							
 							
 						</div>
 
@@ -150,106 +107,41 @@ export default class EditProfileForm extends Component {
 						<div className="double-input-container">
 							<div className="input-container">
 								<label for="firstName">First name</label>
-								<input type="text" name="name" value={this.state.name} onChange={this.onChange} className="uk-input" id="name"/>
+								<input type="text" name="name" value={name} onChange={this.onChange} className="uk-input" id="name"/>
 
-								{this.validator.message('firstName', this.state.firstName, 'required', 'validation-tooltip', {required: 'Please enter first name'})}
+								{this.validator.message('firstName', name, 'required|name', 'validation-tooltip', {required: 'Please enter first name'})}
 							</div>
 							<div className="input-container">
 								<label for="password">Last name</label>
-								<input type="text" name="lastName" value={this.state.lastName} onChange={this.onChange} className="uk-input"	id="lastName" />
+								<input type="text" name="lastName" value={lastName} onChange={this.onChange} className="uk-input"	id="lastName" />
 
-								{this.validator.message('lastName', this.state.lastName, 'required', 'validation-tooltip right', {required: 'Please enter last name'})}
+								{this.validator.message('lastName', lastName, 'required|name', 'validation-tooltip right', {required: 'Please enter last name'})}
 							</div>
 						</div>
-						<div className="double-input-container">
+						{/*<div className="double-input-container">
 							<div className="input-container">
 								<label for="firstName">Mobile phone</label>
-								<input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} className="uk-input" id="mobile"/>
+								<input type="text" name="mobile" value={mobile} onChange={this.onChange} className="uk-input" id="mobile"/>
 
 							</div>
 							<div className="input-container">
 								<label for="password">Location</label>
-								<input type="text" name="location" value={this.state.location} onChange={this.onChange} className="uk-input"	id="location" />
+								<input type="text" name="location" value={location} onChange={this.onChange} className="uk-input"	id="location" />
 
 							</div>
 						</div>
 						<div className="input-container">
 							<label for="dateOfBirth">Date of birth</label>
-							<input type="date" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
+							<input type="date" name="dateOfBirth" value={dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
+						</div>*/}
+
+						<div className="switchContainer" id={style.proSwitch}>
+						{ (this.props.userData.pro) ? 
+							<Link href={routes.REGISTER_PRO}>Edit Pro details</Link> 
+							: <Link href={routes.REGISTER_PRO}>Register as pro</Link>}
 						</div>
-						{ (!this.state.pro) && (
-							<div className="switchContainer" id={style.proSwitch}>
-								<Switch onClick={()=>this.setState({registerPro: !this.state.registerPro})} on={this.state.registerPro}/>
-								<span>Register as pro?</span>
-							</div>
-						)}
 
-						{ (this.state.pro || this.state.registerPro ) && (
-							<div id={style.proFormContainer}>
-								<h3>Pro details</h3>
-								<div id={style.services}>
-									<label>Sector</label>
-									<div>
-										{ Services.map((service,index) => (
-												<div onClick={()=>this.onSelectSector(index)} className={(this.state.sector == service.name) ? style.selected : ''}> {service.name}</div>
-											))
-										}
-									</div>
-
-									{this.validator.message('sector', this.state.sector, 'required', 'validation-tooltip',  {required: 'Please select sector'})}
-								</div>
-								{ this.state.sectorCategories.length > 0 && (
-									<div className="input-container" id={style.selectContainer}>
-										<label for="profession">Category</label>
-										<select className="uk-select" name="sectorCategory" value={this.state.sectorCategory} onChange={this.handleSelectChange}>
-											<option value="">Please select category</option>
-											{ this.state.sectorCategories.map(category => (
-													<option value={category}>{category}</option>
-												))
-											}
-							        options={this.state.sectorCategories}
-							      </select>
-
-										{this.validator.message('sectorCategory', this.state.sectorCategory, 'required', 'validation-tooltip',  {required: 'Please select category'})}
-									</div>
-								)}
-								<div>
-									<div className="input-container">
-										<label for="profession">Profession</label>
-										<input type="text" name="profession" value={this.state.profession} onChange={this.onChange} className="uk-input" id="profession"/>
-
-										{this.validator.message('profession', this.state.profession, 'required', 'validation-tooltip',  {required: 'Please enter profession'})}
-									</div>
-									<div className="input-container" id={style.descriptionContainer}>
-										<label for="professionDescription">Description</label>
-										<textarea name="professionDescription" value={this.state.professionDescription} onChange={this.onChange} className="uk-input" id={style.professionDescription}/>
-
-										{this.validator.message('professionDescription', this.state.professionDescription, 'required', 'validation-tooltip',  {required: 'Please enter description'})}
-									</div>
-									<div className="input-container" id={style.rateContainer}>
-										<label for="rate">Rate</label>
-										<Slider
-						          min={0}
-						          max={maxRate}
-						          step={step}
-						          value={this.state.rate}
-						          onChange={this.onSliderChange}
-						        />
-										{this.state.rate == "0.00" ? (
-											<div className={style.rate}>
-												<span className={style.free}>Free</span>
-											</div>
-										): (
-											<div className={style.rate}>
-												<span>£{this.state.rate} </span>
-												per minute
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						)}
-						<button className="uk-button" onClick={()=>{this.setState({loading: true});this.props.editDetails(this.state)}}>Save</button>
+						<button className="uk-button" onClick={this.onSave}>Save</button>
 					</div>
 
 

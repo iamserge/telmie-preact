@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import SimpleReactValidator from 'simple-react-validator';
 import Spinner from '../../global/spinner';
 import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import { EN, AE } from "../../../utils/consts";
 
 import style from './style.scss';
 
@@ -57,7 +57,7 @@ export default class ContactForm extends Component {
         const {errorMsg = '', isSent = false} = info;
         
         return (
-            <div class={style.contuctContainer}>
+            <div class={`${style.contuctContainer} ${locale===AE && 'arabic-text'}`}>
                 <div class={style.header}>{langPack[locale].CONTACT_US.title}</div>
                 <div class={style.subHeader}>{langPack[locale].CONTACT_US.subTitle}</div>
                 

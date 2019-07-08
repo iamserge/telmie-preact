@@ -307,7 +307,12 @@ button.white-btn {
 	margin: 0 auto;
 	min-height: 0;
 }
-
+.uk-button{
+	&:disabled{
+		background-color: #b8b6b6 !important;
+		cursor: default;
+	}
+}
 .vimeo {
 	position: relative;
 	height: 350px;
@@ -374,6 +379,9 @@ button.white-btn {
 	border: none !important;
 }
 
+#drift-widget-container{
+	z-index: 1999 !important;
+}
 
 #app {
 	min-height: 500px;
@@ -387,6 +395,7 @@ button.white-btn {
 .mainContainer {
 	height: calc(100% - 80px);
 	margin-top: 130px;
+	position: relative;
 	@media (max-width: 880px) {
 		margin-top: 64px;
 	}
@@ -453,6 +462,40 @@ button.white-btn {
 		.fa {
 			font-family: FontAwesome;
 		}
+	}
+}
+
+.arabic-text{
+	direction: rtl;
+}
+
+.react-tabs__tab-list{
+	border: none !important;
+}
+.react-tabs__tab{
+	font-size: 20px;
+	color: black !important;
+	border: none !important;
+	border-radius: 0 !important;
+	& + .react-tabs__tab::before {
+		content: '';
+		border-left: 2px solid gray;
+		position: absolute;
+		height: 70%;
+		left: 0;
+		top: 15%;
+	}
+}
+.react-tabs__tab--selected{
+	color: $red !important;
+}
+.react-tabs__tab-panel{
+	padding-top: 20px;
+}
+.loading-tabs{
+	overflow: hidden !important;
+	.spinner{
+		padding: 40px 0px !important;
 	}
 }
 

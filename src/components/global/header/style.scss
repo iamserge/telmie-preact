@@ -156,6 +156,7 @@
     
     ul {
       border: none;
+      width: auto;
       li{
         cursor: pointer;
       }
@@ -268,6 +269,18 @@
     right: 0;
     top: 98%;
     display: none;
+    .chats{
+      padding: 0 10px;
+      font-size: 14px;
+      font-family: 'Krub', sans-serif;
+      font-weight: 500;
+      color: $red;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    &>ul{
+      line-height: 25px !important;
+    }
   }
   &:hover {
     > span {
@@ -290,7 +303,7 @@
     width: 42px;
     height: 42px;
     position: absolute;
-    top: 0;
+    top: calc(50% - 20px);;
     left: 0;
     z-index: 100;
     background-size: 100%;
@@ -299,6 +312,23 @@
     width: 42px;
     height: 42px;
     object-fit: cover;
+  }
+  .newChats{
+    position: absolute;
+    z-index: 101;
+    top: 10px;
+    right: -10px;
+    height: 22px;
+    width: auto;
+    min-width: 22px;
+    padding: 1px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    background-color: $red;
+    border-radius: 50%;
+    
   }
 }
 
@@ -410,6 +440,27 @@
   #leftNav {
     margin-left: 20px;
   }
+  #expandMobileMenu {
+    display: block;
+
+    &.opened {
+      display: none;
+    }
+  }
+  #leftNav {
+    display: none;
+  }
+  #mobileShadow {
+    display: block;
+    z-index: 1003;
+  }
+  #mobileNav {
+    display: block;
+    padding: 20px;
+    &.opened {
+      transform: translate(0, 0);
+    }
+  }
 }
 
 @media (max-width: 880px) {
@@ -435,25 +486,17 @@
   .loggedInContainer {
     left: -28px;
   }
-  #expandMobileMenu {
-    display: block;
-
-    &.opened {
-      display: none;
-    }
-  }
   #logo {
     padding-left: 0;
     img {
       height: 30px;
     }
   }
-  #leftNav {
-    display: none;
-  }
-  #mobileShadow {
-    display: block;
-    z-index: 1003;
+
+  .avatar {
+      .newChats{
+      top: -10px;
+    }
   }
   /*#signUp {
       border-top: 1px solid #f7f7f7;
@@ -462,12 +505,16 @@
       height: auto;
       margin-top: 0;
   }*/
-  #mobileNav {
-    display: block;
-    padding: 20px;
-    &.opened {
-      transform: translate(0, 0);
+}
+
+@media (max-width: 640px) {
+  .navbarRight{
+    nav{
+      display: none;
     }
+  }
+  #mobileNav{
+    
   }
 }
 

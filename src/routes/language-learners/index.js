@@ -15,12 +15,9 @@ import AppDetails from '../../components/new-landing/app-details'
 import { route } from 'preact-router';
 
 import style from './style.scss';
-import { routes } from "../../components/app";
 
 import { processTextPageData, processReviewsData, getPage } from '../../utils/prismic-middleware';
 import { changeLocaleLangs, changeLocale } from '../../actions/user';
-
-const appLink = 'https://itunes.apple.com/us/app/telmie/id1345950689';
 
 class LanguageLearners extends Component {
   constructor(props){
@@ -58,14 +55,6 @@ class LanguageLearners extends Component {
     });
   };
 
-  ga = () => ({
-    downloadApp: () => {
-      (this.props.path === routes.LANGUAGE_LEARNERS) 
-        && gtag('event', 'conversion', { 'send_to': 'AW-820107229/nZvmCKu8jZABEN2vh4cD'});
-      window.open(appLink);
-    }
-  })
-
   render() {
     if (!this.state.fetchingPage) {
       const pageData = this.state.page;
@@ -75,21 +64,22 @@ class LanguageLearners extends Component {
       return (
         <div id="language-learners" lang={locale} class="service-page">
 
-          <TextBlockMain content={pageData.becomePro} onDownloadApp = {this.ga().downloadApp} locale={locale}/>
+          <TextBlockMain content={pageData.becomePro} dBtn = {pageData.downloadBtn}/>
 
-          <HowWorksSteps content={pageData.steps} title={pageData.titles} locale={locale} onDownloadApp = {this.ga().downloadApp} />
+          <HowWorksSteps content={pageData.steps} title={pageData.titles} dBtn = {pageData.downloadBtn} />
 
           <TextBlock content={pageData.info} />
 
-          <WhyChooseUs content={pageData.reasons} title={pageData.titles} locale={locale} onDownloadApp = {this.ga().downloadApp} />
+          <WhyChooseUs content={pageData.reasons} title={pageData.titles} dBtn = {pageData.downloadBtn} />
 
           {/*<HappyUsers content={reviewsData} />*/}
 
           <div class={style.iosAppSection}>
-            <AppDetails onDownloadApp = {this.ga().downloadApp} content={pageData.app} />
+            <AppDetails content={pageData.app}/>
           </div>
 
-          <ScrollToTop showUnder={150} style={{zIndex: 1002 }}>
+
+          <ScrollToTop showUnder={150} style={{zIndex: 1002, bottom: 100, right: 38}}>
             <div class='top-btn'><FontAwesome name='angle-up' size='2x'/></div>
           </ScrollToTop>
         </div>

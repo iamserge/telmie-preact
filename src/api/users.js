@@ -5,7 +5,7 @@ export function logIn(authData){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.LOG_IN, { method: 'POST', headers: headers}).then(response => {
+	return fetch(apiUrls.LOG_IN, { method: 'GET', headers: headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}
@@ -18,61 +18,107 @@ export function logIn(authData){
 	});
 }
 
-export function getCalls(authData, isProCalls){
+export function getCalls(authData, isProCalls, num, sort = ''){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers}).then(response => {
-    if (response.status === 401){
+	let additionalQuery = num ? `&size=${num}` : '';
+	sort && (additionalQuery = `${additionalQuery}&sort=${sort}`);
+	return fetch(
+		(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS) + additionalQuery,
+		{ method: 'GET', headers}
+	).then(response => {
+		if (response.status === 401){
 			return {};
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json().then(json =>  json);
 
 	}, error => {
 		throw new Error(error.message);
 	});
 }
 
-
-
-export function getTransactions(authData, pageNumber){
+export function getCallHistory(id, isPro = false, page, authData){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.GET_TRANSACTIONS, { method: 'GET', headers: headers}).then(response => {
+	let additionalQuery = `?isPro=${isPro}`;
+	page && (additionalQuery = `${additionalQuery}&page=${page}`);
+	return fetch(apiUrls.CALL_HISTORY(id) + additionalQuery, { method: 'GET', headers}).then(response => {
+		return response.json().then(json => (response.status === 200 || response.status === 201) ? 
+			json : ({
+				error: true,
+				message: json.message
+			}));
+
+	}, error => {
+		console.log(error);
+		return ({
+			error: true,
+			text: error,
+		})
+	});
+}
+
+
+export function getTransactions(authData, num){
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	const additionalQuery = num ? `?size=${num}` : '';
+	return fetch(apiUrls.GET_TRANSACTIONS + additionalQuery, { method: 'POST', headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json()
+			.then(json => json)
+			.catch(err => {
+				console.log(err);
+				return {error: true}
+			});
 
 	}, error => {
 		throw new Error(error.message);
 	});
 }
 
-export function editDetails(data){
+export function editDetails(data, userAuth){
 
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
-	headers.append("Authorization", "Basic " + data.userAuth);
-	return fetch(apiUrls.EDIT_DETAILS + data.id, { method: 'PUT', headers: headers, body: JSON.stringify( data )}).then(response => {
+	headers.append("Authorization", "Basic " + userAuth);
+	return fetch(apiUrls.EDIT_DETAILS + data.id, { method: 'PUT', headers, body: JSON.stringify( data )}).then(response => {
     if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
-			return {};
+			return { error: true };
 		}
-		return response.json().then(json => {
-			return json;
-		});
+		return response.json()
+			.then(json => json)
+			.catch(err => {
+				console.log(err);
+				return { error: true };
+			});
 
 	}, error => {
 		throw new Error(error.message);
 	});
 }
 
-
+export function switchData(url, isOn, userAuth){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + userAuth);
+	return fetch(url, { method: isOn ? 'POST' : 'DELETE', headers, }).then(response => {
+		return response.status !== 200 ?
+			{ error: true } 
+			: response.json().then(json => json)
+				.catch(err => {
+					console.log(err);
+					return { error: true };
+				});
+	}, error => {
+		throw new Error(error.message);
+	});
+}
 
 export function verify(token){
 
@@ -118,12 +164,11 @@ export function register(data){
 }
 
 export function registerPro(data, authData){
-
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(data.id), { method: 'POST', headers, body: JSON.stringify(data)}).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
@@ -144,40 +189,47 @@ export function registerPro(data, authData){
 					} 
 			)
 		})
-		
-		
 	})
 }
 
-export function updatePro(data, authData){
-
+export function getProRegistrationInfo(id, authData){
 	let headers = new Headers();
 	headers.append("Content-Type", "application/json ");
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.REGISTER_PRO, { method: 'PUT', headers, body: JSON.stringify(data)}).then(response => {
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'GET', headers }).then(response => {
 		return response.json().then(json => {
 			return json.status === 400 ? {
 				error: true,
-				message: json.message
 			} : json;
 		})
 		.catch(err => {
-			return response.status === 403 ? (
-				{ 
-					error: true,
-					message: 'User is not registered as pro'
-				}
-			) : (
-				response.status === 401 && 
-					{
-						error: true, 
-						message: 'Full authentication is required to access this resource'
-					} 
-			)
+			console.log(err);
+			return { 
+				error: true,
+				gettingError: true,
+			}
 		})
-		
-		
+	})
+}
+
+export function cancelProPending(id, authData){
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.REGISTER_PRO(id), { method: 'DELETE', headers }).then(response => {
+		return response.json().then(json => {
+			return json.status === 400 ? {
+				error: true,
+			} : json;
+		})
+		.catch(err => {
+			console.log(err);
+			return { 
+				error: true,
+			}
+		})
 	})
 }
 
@@ -222,20 +274,19 @@ export function resetPassword(data){
 
 export function uploadPhoto(authData, photo){
 	let headers = new Headers();
-	headers.append("Content-Type", "multipart/from-data");
+	//headers.append("Content-Type", "multipart/from-data");
 	headers.append("Authorization", "Basic " + authData);
 	let formData = new FormData();
 	formData.append('file', photo);
-	console.log(formData.get('file'));
-	return fetch(apiUrls.UPLOAD_PHOTO, { credentials: 'include', method: 'POST',  headers: headers, body: formData }).then(response => {
-    if (response.status === 401){
-			return {};
-		} else {
-			return {
-				success: true
-			};
-		}
+	
 
+	return fetch(apiUrls.UPLOAD_PHOTO, { credentials: 'include', method: 'POST',  headers: headers, body: formData }).then(response => {
+	
+		return response.json().then(res => ({...res, error: response.status !== 201}))
+			.catch(err => {
+				console.log(err);
+				return { error: true }
+			});
 	}, error => {
 		throw new Error(error.message);
 	});
@@ -294,4 +345,24 @@ export function sendContactData(data){
 			error: true,
 			message: `Error! ${err.message && err.message}`,
 	}))
+}
+
+export function checkTaxId(taxId, authData){
+	let headers = new Headers();
+	headers.append("Authorization", "Basic " + authData);
+
+	return fetch(apiUrls.GET_COMPANY_TAX_ID(taxId), { method: 'GET', headers }).then(response => {
+		return response.status === 404 ? ({
+			error: true,
+			message: `Error! ${response.statusText || 'Company not found.'}`,
+		}) : response.json().then(json => {
+			return json;
+		})
+		.catch(err => {
+			console.log(err);
+			return { 
+				error: true,
+			}
+		})
+	})
 }

@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import ReactGA from 'react-ga';
 import style from './style.scss';
 import AnimatedImage from '../animated-image'
 import { setEmphasizedText } from '../../../utils'
 import { langPack } from "../../../utils/langPack";
-import { EN } from "../../../utils/consts";
+import { EN, labelsGA } from "../../../utils/consts";
 
 //const greetings = [ 'Привет', 'Hola', 'Hello', '嗨', 'Oi', 'مرحبا', 'Bonjour' ];
 
@@ -14,12 +14,13 @@ class TextBlockMain extends Component {
     super(props);
   }
 
-  downloadApp = this.props.onDownloadApp ? 
-    this.props.onDownloadApp 
-    : () => this.props.appLink && window.open(this.props.appLink);
+  downloadApp = () => ReactGA.outboundLink({
+      label: labelsGA.downloadAppClick
+    }, () => this.props.dBtn.btnLink && window.location.assign(this.props.dBtn.btnLink));
 
   render() {
     const { content, locale = EN } = this.props;
+    const { btnText, btnLink } =this.props.dBtn
 
     return (
       <div class={`${style.TextBlock} uk-container`}>
@@ -27,7 +28,8 @@ class TextBlockMain extends Component {
           {setEmphasizedText(content, style.header)}
           <div class={style.text}>{content.text}</div>
 
-          <button class='red-btn' onClick={this.downloadApp}>{langPack[locale].DOWNLOAD_APP_BTN}</button>
+          { btnText && btnLink && 
+            <button class='red-btn' onClick={this.downloadApp}>{btnText}</button> }
           {/*
               <div class={style.buttons}>
                 <Link href=""><button class='red-btn main-btn'>Sign up <span>free</span> <span>& Become Pro</span></button></Link>

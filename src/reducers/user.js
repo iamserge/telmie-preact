@@ -1,7 +1,5 @@
 import { actionTypes } from '../actions';
-import { concat, orderBy, map, without, uniqBy } from 'lodash';
-import { EN, RU } from "../utils/consts";
-
+import { EN, RU, langs } from "../utils/consts";
 
 export const loggedInUser = (state = {}, action) => {
 	let user;
@@ -9,34 +7,58 @@ export const loggedInUser = (state = {}, action) => {
 		case actionTypes.LOG_IN_SUCCESS:
 			user = action.userData;
 			user.userAuth = action.userAuth;
-			return user;
+			return { ...user };
 
 		case actionTypes.EDIT_SUCCESS:
 			user = action.userData;
 			user.userAuth = action.userAuth;
-			return user;
+			return { ...user };
+			
+		case actionTypes.EDIT_FAILURE:
+			return {
+				...state,
+				errorInUpdate: true
+			};
 
 		case actionTypes.LOGGED_OFF:
 			return {};
+
+		case actionTypes.PHOTO_UPLOADED:
+			return {
+				...state,
+				avatar: action.photo,
+				avatarUploadError: '',				
+			}
+		case actionTypes.PHOTO_UPLOAD_FAILURE:
+			return {
+				...state,
+				avatarUploadError: action.errorMsg,
+			}
+		case actionTypes.PHOTO_UPLOAD_CLEAR_STATUS:
+			return {
+				...state,
+				avatarUploadError: '',
+			}
 
 		default:
 			return state;
 	}
 };
 
-const localeGet = () => {
-	switch (window.location.pathname.split('/')[1]){
-		case RU: return RU;
-		default: return EN;
-	}
+export const localeGet = () => {
+	const _path = window.location.pathname.split('/')[1];
+	let _lang = '';
+	Object.keys(langs).some(el => langs[el].code === _path ? (_lang = el, true) : false)
+
+	return _lang;
 }
 export const locale = (state = { locale: localeGet() || EN  }, action) => {
 	switch (action.type) {
 		case actionTypes.CHANGE_LOCALE:
-			const { code = EN } = action;
+			const { lang = EN } = action;
 			return {
 				...state,
-				locale: code,
+				locale: lang,
 			};
 		case actionTypes.CHANGE_LOCALE_LANGS:
 			return {
@@ -108,7 +130,7 @@ export const resetFailure = (state = "", action) => {
 	}
 };
 
-export const proCalls = (state = [], action) => {
+/*export const proCalls = (state = [], action) => {
 	switch (action.type) {
 
 		case actionTypes.PRO_CALLS_RECEIVED:
@@ -128,43 +150,23 @@ export const personalCalls = (state = [], action) => {
 		default:
 			return state;
 	}
-};
+};*/
 
-export const activity = (state = [], action) => {
-	let activity;
+export const activity = (state = {}, action) => {
+	
 	switch (action.type) {
 		case actionTypes.PERSONAL_CALLS_RECEIVED:
-			let personalCalls = action.calls.results.map((activity)=>{
-				let newActivity = activity;
-				newActivity.type = "PERSONAL"
-				return newActivity;
-			});
-
-			activity = state.concat(personalCalls);
-			activity = orderBy(activity, 'date', 'desc');
-			activity = map(activity, (entry) => {
-				if (entry.status != 'SHORTLIST') return entry;
-			});
-			activity = without(activity, undefined);
-			return activity.slice(0, 10);
+			return {
+				...state,
+				personCalls: action.calls.slice(0, 10)
+			};
 
 
 		case actionTypes.PRO_CALLS_RECEIVED:
-			let proCalls = action.calls.results.map((activity)=>{
-				let newActivity = activity;
-				newActivity.type = "PRO"
-				return newActivity;
-			});
-
-			activity = state.concat(proCalls);
-			activity = orderBy(activity, 'date', 'desc');
-
-			activity = map(activity, (entry) => {
-				if (entry.status != 'SHORTLIST') return entry;
-			});
-			activity = without(activity, undefined);
-
-			return activity.slice(0, 10);
+			return {
+				...state,
+				proCalls: action.calls.slice(0, 10)
+			};
 
 		default:
 			return state;
@@ -177,35 +179,12 @@ export const transactions = (state = [], action) => {
 	switch (action.type) {
 
 		case actionTypes.TRANSACTIONS_RECEIVED:
-			let transactions = orderBy(action.transactions, 'date', 'desc');
-			return transactions;
+			return action.transactions;
 
 		default:
 			return state;
 	}
 };
-
-
-export const shortlistPros = (state = [], action) => {
-	switch (action.type) {
-
-		case actionTypes.SHORTLIST_RECEIVED:
-			let shortlist = map(action.shortlist, (entry) => {
-				if (entry.status == 'SHORTLIST') return entry.contact;
-			});
-			shortlist = without(shortlist, undefined);
-			shortlist = uniqBy(shortlist, (pro)=> {
-				return pro.id;
-			})
-			return shortlist;
-
-		default:
-			return state;
-	}
-};
-
-
-
 
 export const verifySuccess = (state = {}, action) => {
 	switch (action.type) {

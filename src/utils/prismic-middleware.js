@@ -1,14 +1,17 @@
 import Prismic from 'prismic-javascript';
 import { route } from 'preact-router';
-import { RU, EN } from "./consts";
+import { RU, EN, langs } from "./consts";
+import { routes } from '../components/app'
 
-function compareUrlLocale(props){
+export function compareUrlLocale(props){
     const urlLocale = props.path.toString().split('/')[1];
+    let _lang = '';
 
-    return props.locale === urlLocale ? props.locale : (
-        urlLocale === RU ? 
-            (props.changeLocale(RU), RU) 
-            : props.locale === EN ? props.locale : (props.changeLocale(EN), EN)
+    return langs[props.locale].code === urlLocale ? props.locale : (
+        Object.keys(langs).some(el => {
+            return (langs[el].code === urlLocale) ? (_lang = el, true) : false
+        }) ? 
+            (props.changeLocale(_lang), _lang) : (props.changeLocale(EN), EN)
     )
 }
 export function getPage(props ={}, urlEng){
@@ -34,6 +37,7 @@ export function getPage(props ={}, urlEng){
         }
     }).catch(e => {
         console.log(e);
+        route(routes.HOME, true);
         return null;
     })
 }
@@ -94,25 +98,44 @@ function processTagsInText(postData){
 }
 
 export function processPostText(postData){
-    let serialiseText = (type, content, tags) => {
+    let prevType = null,
+        tmpContent = [],
+        _content = null,
+        isForClear = false;
+    
+    const textLen = postData.primary.text.length;
+
+    let serialiseText = (type, content, tags, i) => {
+        isForClear && (
+            tmpContent = [],
+            _content = null,
+            isForClear = false
+        )
+        isForClear = ( prevType == 'o-list-item' && type != 'o-list-item' );
+        isForClear && ( _content = (<ol>{[...tmpContent]}</ol>) );
+        prevType = type;
+
         switch (type) {
             case 'list-item':
-                return (<li>{content}</li>);
+                return [_content, <li>{content}</li>];
+            case 'o-list-item':
+                return (i + 1 === textLen) ? (
+                    <ol>{[...tmpContent, <li key={i}>{content}</li>]}</ol>
+                ) : (
+                    tmpContent.push(<li key={i}>{content}</li>), null 
+                )
             case 'heading2':
-                return (<h2>{content}</h2>);
+                return [_content, <h2>{content}</h2>];
             case 'heading3':
-                return (<h3>{content}</h3>);
+                return [_content, <h3>{content}</h3>];
             default:
-                return (<p>{processContent(content, tags)}</p>);
+                return [_content, <p>{processContent(content, tags)}</p>];
         }
-        },
-        nodes = [];
+        };
 
-    postData.primary.text.forEach((text)=>{
-        nodes.push(serialiseText(text.type, text.text,text.spans))
+    return postData.primary.text.map((text, i)=>{
+        return serialiseText(text.type, text.text, text.spans, i)
     });
-    
-    return nodes;
 }
 
 
@@ -131,7 +154,7 @@ export function processPostQuote(postData){
     try{
         return {
             text: postData.primary.quote[0].text,
-            author: postData.primary.author[0].text
+            author: postData.primary.author[0] ? postData.primary.author[0].text : '',
         }
     }
     catch(e){
@@ -156,6 +179,22 @@ export function processAuthorInfo(postData){
         return null;
     }
 }
+
+export function processBlogBtn(postData){
+    try{
+        let link = postData.primary.button_link;
+        return {
+            text: postData.primary.button_text[0].text,
+            link,
+            isExternal: (link.indexOf('http://') === 0) || (link.indexOf('https://') === 0),
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {};
+    }
+}
+
 const processDate = (date, locale = "en-us") => {
     let dateObj = new Date(date);
     
@@ -267,7 +306,9 @@ export function processHomepageData(data = {}){
         processedData.mainSection = {
             title: data.title[0].text,
             subTitle: data.sub_title[0].text,
-            typedWords: data.typed_words[0].text
+            typedWords: data.typed_words[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -280,7 +321,9 @@ export function processHomepageData(data = {}){
         processedData.howItWorks = {
             title: data.how_it_works_title[0].text,
             text: data.how_it_works[0].text,
-            videoID: data.how_it_works_video.video_id
+            videoID: data.how_it_works_video.video_id,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -302,6 +345,7 @@ export function processHomepageData(data = {}){
             title: data.app_title[0].text,
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -314,7 +358,9 @@ export function processHomepageData(data = {}){
     try{
         processedData.becomePro = {
             title: data.earn_more_title[0].text,
-            text: data.earn_more_text[0].text
+            text: data.earn_more_text[0].text,
+            btnText: data.buttom_title[0] && data.buttom_title[0].text,
+            btnLink: data.button_link.url,
         };
     } catch(e){
         console.log(e);
@@ -386,15 +432,28 @@ const getInfo = (data) => {
 
 export function processTextPageData(data){
     let processedData = {};
+    let btnLink, btnText;
 
-    processedData = { ...data };
+    try{
+        btnLink = data.button_link.url;
+        btnText = data.button_title[0] && data.button_title[0].text;
+    } catch(e){
+        console.log(e);
+        btnLink = '';
+        btnTetxt = '';
+    }
+    //processedData = { ...data };
+    processedData.downloadBtn = {
+        btnLink,
+        btnText,
+    };
 
     try{
         processedData.becomePro = {
             img: data.earn_money_image.url,
             title: data.earn_money_title[0].text,
             emphasized: data.emphasize_title_part[0].text,
-            text: data.earn_money_text[0].text
+            text: data.earn_money_text[0].text,
         };
     } catch(e){
         console.log(e);
@@ -430,6 +489,7 @@ export function processTextPageData(data){
             title: data.app_title[0] ? data.app_title[0].text : '',
             text: data.app_text[0] ? data.app_text[0].text : '',
             img: data.app_image.url,
+            btnLink,
         };
     } catch(e){
         console.log(e);
@@ -440,6 +500,7 @@ export function processTextPageData(data){
         };
     }
     
+    console.log(processedData)
 
     return processedData;
 }

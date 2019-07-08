@@ -1,4 +1,5 @@
 import * as user from '../api/users';
+import { apiUrls } from "../api";
 import { actionTypes } from './index';
 const setCookie = (name,value,days) => {
     var expires = "";
@@ -42,8 +43,8 @@ const photoUploaded = (photo) => ({
 
 const editSuccess = (response, userAuth) => ({
 	type: actionTypes.EDIT_SUCCESS,
-  userData: response,
-  userAuth: userAuth
+  	userData: response,
+  	userAuth,
 });
 const editFailure = () => ({
 	type: actionTypes.EDIT_FAILURE,
@@ -99,12 +100,6 @@ const proCallsReceived = (response) => ({
 	calls: response
 });
 
-const shortlistReceived = (response) => ({
-	type: actionTypes.SHORTLIST_RECEIVED,
-	shortlist: response
-});
-
-
 const personalCallsReceived = (response) => ({
 	type: actionTypes.PERSONAL_CALLS_RECEIVED,
 	calls: response
@@ -131,10 +126,10 @@ const sendContactMessage = () => ({
 	type: actionTypes.SEND_CONTACT_MESS
 });
 
-export const changeLocale = (code) => dispatch => {
+export const changeLocale = (lang) => dispatch => {
 	dispatch({
 		type: actionTypes.CHANGE_LOCALE,
-		code,
+		lang,
 	})
 }
 
@@ -179,16 +174,11 @@ export const register = (data) => async (dispatch) => {
 	}
 };
 
-export const registerPro = (data, authData, isForUpdate = false) => async (dispatch) => {
-	let response = isForUpdate ? 
-		await user.updatePro(data, authData)
-		: await user.registerPro(data, authData);
+export const registerPro = (data, authData) => async (dispatch) => {
+	let response = await user.registerPro(data, authData);
 
-	if (response.error) {
-		dispatch(registerFailure(response.message));
-	} else {
-		dispatch(logInSuccess(response, authData));
-	}
+	(response.error) ? 
+		dispatch(registerFailure(response.message)) : dispatch(logInSuccess(response, authData));
 }
 
 export const getCategories = (authData) => async (dispatch) => {
@@ -208,61 +198,68 @@ export const verify = (token) => async (dispatch) => {
 	}
 };
 
-export const editDetails = (data) => async (dispatch) => {
-	const response = await user.editDetails(data);
-	if (Object.keys(response).length === 0) {
-		dispatch(editFailure());
-	} else {
-
-		dispatch(editSuccess(response, data.userAuth));
-
-	}
+export const editDetails = (data, userAuth) => async (dispatch) => {
+	const response = await user.editDetails(data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, userAuth));
+};
+export const switchEmailNotif = (data, userAuth) => async (dispatch) => {
+	const response = await user.switchData(apiUrls.EMAIL_NOTIFICATIONS, data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, userAuth));
+};
+export const switchWorkingPro = (data, userAuth) => async (dispatch) => {
+	const response = await user.switchData(apiUrls.WORKING_PRO, data, userAuth);
+	(Object.keys(response).length === 0 || response.error) ?
+		dispatch(editFailure())
+		: dispatch(editSuccess(response, userAuth));
 };
 export const fetchRegistration = () => (dispatch) => {
 	dispatch(fetchingRegistration());
 };
-export const getShortlist = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, false);
+
+export const getProCalls = (authData, num) => async (dispatch) => {
+	dispatch(proCallsReceived([]));
+	const response = await user.getCalls(authData, true, num);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
-		dispatch(shortlistReceived(response));
+		dispatch(proCallsReceived(response.results));
 	}
 };
 
-export const getProCalls = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, true);
+export const getPersonalCalls = (authData, num) => async (dispatch) => {
+	dispatch(personalCallsReceived([]));
+	const response = await user.getCalls(authData, false, num);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
-		dispatch(proCallsReceived(response));
-	}
-};
-
-export const getPersonalCalls = (authData) => async (dispatch) => {
-	const response = await user.getCalls(authData, false);
-	if (Object.keys(response).length === 0) {
-		dispatch(authFailure());
-	} else {
-		dispatch(personalCallsReceived(response));
+		dispatch(personalCallsReceived(response.results));
 	}
 };
 
 
-export const getTransactions = (authData) => async (dispatch) => {
-	const response = await user.getTransactions(authData);
-
+export const getTransactions = (authData, num) => async (dispatch) => {
+	const response = await user.getTransactions(authData, num);
 	dispatch(transactionsReceived(response));
 
 };
 
 
 export const uploadPhoto = (authData, photo) => async (dispatch) => {
-	const photoUrl = await user.uploadPhoto(authData, photo);
-
-	dispatch(photoUploaded(photoUrl));
-
+	const response = await user.uploadPhoto(authData, photo);
+	response.error ? 
+		dispatch({
+			type: actionTypes.PHOTO_UPLOAD_FAILURE,
+			errorMsg: response.message || 'Upload photo error!',
+		}) : dispatch(photoUploaded(response));
 };
+
+export const clearuploadPhotoStatus = () => (dispatch) => dispatch({
+	type: actionTypes.PHOTO_UPLOAD_CLEAR_STATUS,
+});
 
 
 export const sendCode = (email, reason) => async (dispatch) => {

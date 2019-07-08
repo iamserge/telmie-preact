@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import PhotoCard from './photo-card';
 import PhotoCardsCol from './photo-card/photo-cards-col'
-import callBtn from '../../../assets/new-landing-page/callButton.png'
+import callBtn from '../../../assets/btnCallEnd.png'
 import callBtns from "../../../assets/new-landing-page/group2.png";
 
 class PhotoCards extends Component{
@@ -11,8 +11,12 @@ class PhotoCards extends Component{
 		this.randomArr = [0, 129, 78, 0];
 		return cards.map((card, index) => (
 			Array.isArray(card) ? 
-				<PhotoCardsCol cards={card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/> 
-				: <PhotoCard key={card.id} {...card} cardStyle={{marginTop: this.randomArr[index + startIndex]}}/>
+				<PhotoCardsCol cards={card} 
+					cardStyle={{marginTop: this.randomArr[index + startIndex]}}
+					locale={this.props.locale}/> 
+				: <PhotoCard key={card.id} {...card} 
+					cardStyle={{marginTop: this.randomArr[index + startIndex]}}
+					locale={this.props.locale}/>
 		))
 	}
 

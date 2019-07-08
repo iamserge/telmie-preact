@@ -8,10 +8,6 @@
   padding-top: 76px;
   padding-bottom: 76px;
   letter-spacing: -0.3px;
-  @media (max-width: 880px) {
-    padding: 76px 30px 76px 40px;
-    width: 100%;
-  }
 
   blockquote {
     max-width: 980px;
@@ -52,6 +48,18 @@
       top: 50%;
       left: 0;
       margin-top: -2px;
+    }
+  }
+
+  @media (max-width: 880px) {
+    padding: 60px 30px;
+    width: 100%;
+
+    blockquote {
+      padding-left: 45px;
+      &:before {
+        width: 30px;
+      }
     }
   }
 }

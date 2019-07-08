@@ -4,12 +4,12 @@ import style from './style.scss';
 import ReactStars from 'react-stars'
 import { apiRoot } from '../../../api'
 import { route } from 'preact-router';
+import { routes } from "../../app";
 
 export default class Pro extends Component {
-	goToPro(id){
-		route('/pro/' + id);
-	}
-	render({person}) {
+	goToPro = (id) => route(routes.PRO_FOR_COMP + id);
+
+	render({person = {}}) {
 		return (
 			<div class={style.person} onClick={()=>{this.goToPro(person.id)}}>
 				<div className={style.image}>
@@ -21,7 +21,7 @@ export default class Pro extends Component {
 				</div>
 				<div className={style.info}>
 					<h2>{person.name} {person.lastName}</h2>
-					<h3>{person.pro.profession} <span>{person.pro.category}</span></h3>
+					<h3>{person.pro.profession} <div>{person.pro.category}</div></h3>
 					<div className={style.raiting}>
 						<span>
 							{(person.pro.review != null) ? person.pro.review.count : 0} sessions
